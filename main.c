@@ -143,7 +143,7 @@ void read_class_file(ClassFile *cf, FILE *fp)
   }
 
   cf->fields_count = u2Read(fp);
-  // fields
+  // fields -> field_info
   cf->fields = (field_info *)malloc(sizeof(field_info) * cf->fields_count);
   for (field_info *field = cf->fields; field < cf->fields + cf->fields_count; field++)
   {
@@ -189,7 +189,7 @@ void read_class_file(ClassFile *cf, FILE *fp)
   }
 
   cf->attributes_count = u2Read(fp);
-  // attributes
+  // attributes -> attributes_info
   cf->attributes = (attribute_info *)malloc(sizeof(attribute_info) * cf->attributes_count);
   for (attribute_info *attr = cf->attributes; attr < cf->attributes + cf->attributes_count; attr++)
   {
