@@ -4,10 +4,6 @@
 #define u2 uint16_t
 #define u4 uint32_t
 
-// Para o constante_pool temos que:
-// 	-	Informacoes simbolicas sao salvas no constant_pool.
-// 	-	Cada entrada em pool tem a forma cp
-
 enum
 {
   CONSTANT_Class = 7,
@@ -140,20 +136,20 @@ typedef struct
 // class type
 typedef struct
 {
-  uint32_t magic;         // 0xCAFEBABE
-  uint16_t minor_version; // M.m
-  uint16_t major_version;
-  uint16_t constant_pool_count;
+  u4 magic;         // 0xCAFEBABE
+  u2 minor_version; // M.m
+  u2 major_version;
+  u2 constant_pool_count;
   cp_info *constant_pool; //[constant_pool - 1];
-  uint16_t access_flags;
-  uint16_t this_class;
-  uint16_t super_class;
-  uint16_t interfaces_count;
-  uint16_t *interfaces; //[interfaces_count];
-  uint16_t fields_count;
+  u2 access_flags;
+  u2 this_class;
+  u2 super_class;
+  u2 interfaces_count;
+  u2 *interfaces; //[interfaces_count];
+  u2 fields_count;
   field_info *fields; //[fields_count];
-  uint16_t methods_count;
+  u2 methods_count;
   method_info *methods; //[methods_count];
-  uint16_t attributes_count;
+  u2 attributes_count;
   attribute_info *attributes; //[attributes_count];
 } ClassFile;

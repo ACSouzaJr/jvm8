@@ -3,12 +3,12 @@
 #include <stdio.h>
 #include "structures.h"
 
-uint8_t u1Read(FILE *);
-uint16_t u2Read(FILE *);
-uint32_t u4Read(FILE *);
+u1 u1Read(FILE *);
+u2 u2Read(FILE *);
+u4 u4Read(FILE *);
 
 void read_class_file(ClassFile *, FILE *);
-void print_class_file(ClassFile *arquivoClass);
+void print_class_file(ClassFile *cf);
 
 int main(int argc, char const *argv[])
 {
@@ -24,7 +24,7 @@ int main(int argc, char const *argv[])
   return 0;
 }
 
-uint8_t u1Read(FILE *file)
+u1 u1Read(FILE *file)
 {
   // u1 buffer;
   // fread(&buffer, sizeof(u1), 1, file);
@@ -33,7 +33,7 @@ uint8_t u1Read(FILE *file)
   return toReturn;
 }
 
-uint16_t u2Read(FILE *file)
+u2 u2Read(FILE *file)
 {
   // u2 buffer;
   // fread(&buffer, sizeof(u2), 1, file);
@@ -43,7 +43,7 @@ uint16_t u2Read(FILE *file)
   return toReturn;
 }
 
-uint32_t u4Read(FILE *file)
+u4 u4Read(FILE *file)
 {
   // u4 buffer;
   // fread(&buffer, sizeof(u4), 1, file);
@@ -61,7 +61,7 @@ void read_class_file(ClassFile *cf, FILE *fp)
   cf->minor_version = u2Read(fp);
   cf->major_version = u2Read(fp);
   cf->constant_pool_count = u2Read(fp);
-  // cp_info
+  // constant_pool -> cp_info
   cf->constant_pool = (cp_info *)malloc(sizeof(cp_info) * (cf->constant_pool_count - 1));
 
   for (cp_info *cp = cf->constant_pool; cp < cf->constant_pool + cf->constant_pool_count - 1; cp++)
@@ -135,135 +135,190 @@ void read_class_file(ClassFile *cf, FILE *fp)
   cf->this_class = u2Read(fp);
   cf->super_class = u2Read(fp);
   cf->interfaces_count = u2Read(fp);
-  // interface
+  // interface -> u2
+  cf->interfaces = (u2 *)malloc(sizeof(u2) * cf->interfaces_count);
+  for (u2 *interface = cf->interfaces; interface < cf->interfaces + cf->interfaces_count; interface++)
+  {
+    *interface = u2Read(fp);
+  }
+
   cf->fields_count = u2Read(fp);
   // fields
+  cf->fields = (field_info *)malloc(sizeof(field_info) * cf->fields_count);
+  for (field_info *field = cf->fields; field < cf->fields + cf->fields_count; field++)
+  {
+    field->access_flags = u2Read(fp);
+    field->name_index = u2Read(fp);
+    field->descriptor_index = u2Read(fp);
+    field->attributes_count = u2Read(fp);
+    field->attributes = (attribute_info *)malloc(sizeof(attribute_info) * field->attributes_count);
+    for (attribute_info *attr = field->attributes; attr < field->attributes + field->attributes_count; attr++)
+    {
+      attr->attribute_name_index = u2Read(fp);
+      attr->attribute_length = u4Read(fp);
+      attr->info = (u1 *)malloc(sizeof(u1 *) * attr->attribute_length);
+      for (
+          u1 *i = attr->info; i < i + attr->attribute_length; i++)
+      {
+        *i = u1Read(fp);
+      }
+    }
+  }
+
   cf->methods_count = u2Read(fp);
-  // methods
+  // methods -> method_info
+  cf->methods = (method_info *)malloc(sizeof(method_info) * cf->methods_count);
+  for (method_info *method = cf->methods; method < cf->methods + cf->methods_count; method++)
+  {
+    method->access_flags = u2Read(fp);
+    method->name_index = u2Read(fp);
+    method->descriptor_index = u2Read(fp);
+    method->attributes_count = u2Read(fp);
+    method->attributes = (attribute_info *)malloc(sizeof(attribute_info) * method->attributes_count);
+    for (attribute_info *attr = method->attributes; attr < method->attributes + method->attributes_count; attr++)
+    {
+      attr->attribute_name_index = u2Read(fp);
+      attr->attribute_length = u4Read(fp);
+      attr->info = (u1 *)malloc(sizeof(u1 *) * attr->attribute_length);
+      for (
+          u1 *i = attr->info; i < attr->info + attr->attribute_length; i++)
+      {
+        *i = u1Read(fp);
+      }
+    }
+  }
+
   cf->attributes_count = u2Read(fp);
   // attributes
+  cf->attributes = (attribute_info *)malloc(sizeof(attribute_info) * cf->attributes_count);
+  for (attribute_info *attr = cf->attributes; attr < cf->attributes + cf->attributes_count; attr++)
+  {
+    attr->attribute_name_index = u2Read(fp);
+    attr->attribute_length = u4Read(fp);
+    attr->info = (u1 *)malloc(sizeof(u1 *) * attr->attribute_length);
+    for (
+        u1 *i = attr->info; i < attr->info + attr->attribute_length; i++)
+    {
+      *i = u1Read(fp);
+    }
+  }
 }
 
-void print_class_file(ClassFile *arquivoClass)
+void print_class_file(ClassFile *cf)
 {
+  printf("Magic: %08X\n", cf->magic);
+  printf("Minor Version: %04x\n", cf->minor_version);
+  printf("Major Version: %04x\n", cf->major_version);
+  printf("Constant Pool Count: %04x\n", cf->constant_pool_count);
 
-  cp_info *aux;
-  method_info *auxMethod;
-  attribute_info *auxAttribute;
-
-  printf("Magic: %08x\n", arquivoClass->magic);
-  printf("Minor Version: %04x\n", arquivoClass->minor_version);
-  printf("Major Version: %04x\n", arquivoClass->major_version);
-  printf("Constant Pool Count: %04x\n", arquivoClass->constant_pool_count);
-
-  for (aux = arquivoClass->constant_pool; aux < arquivoClass->constant_pool + arquivoClass->constant_pool_count - 1; aux++)
+  for (cp_info *cp = cf->constant_pool; cp < cf->constant_pool + cf->constant_pool_count - 1; cp++)
   {
-    printf("TAG: %02x\n", aux->tag);
-    switch (aux->tag)
+    printf("TAG: %02x\n", cp->tag);
+    switch (cp->tag)
     {
     case CONSTANT_Class:
-      printf("Class Name Index: %04x\n", aux->Class.name_index);
+      printf("Class Name Index: %04x\n", cp->Class.name_index);
       break;
     case CONSTANT_Fieldref:
-      printf("Fieldref Class Index: %04x\n", aux->Fieldref.class_index);
-      printf("Fieldref Name and Type Index: %04x\n", aux->Fieldref.name_and_type_index);
+      printf("Fieldref Class Index: %04x\n", cp->Fieldref.class_index);
+      printf("Fieldref Name and Type Index: %04x\n", cp->Fieldref.name_and_type_index);
       break;
     case CONSTANT_Methodref:
-      printf("Methodref Class Index: %04x\n", aux->Methodref.class_index);
-      printf("Methodref Name and Type Index: %04x\n", aux->Methodref.name_and_type_index);
+      printf("Methodref Class Index: %04x\n", cp->Methodref.class_index);
+      printf("Methodref Name and Type Index: %04x\n", cp->Methodref.name_and_type_index);
       break;
     case CONSTANT_InterfaceMethodref:
-      printf("InterfaceMethodref Class Index: %04x\n", aux->InterfaceMethodref.class_index);
-      printf("InterfaceMethodref Name and Type Index: %04x\n", aux->InterfaceMethodref.name_and_type_index);
+      printf("InterfaceMethodref Class Index: %04x\n", cp->InterfaceMethodref.class_index);
+      printf("InterfaceMethodref Name and Type Index: %04x\n", cp->InterfaceMethodref.name_and_type_index);
       break;
     case CONSTANT_String:
-      printf("String Index: %04x\n", aux->String.string_index);
+      printf("String Index: %04x\n", cp->String.string_index);
       break;
     case CONSTANT_Integer:
-      printf("Integer Bytes: %04x\n", aux->Integer.bytes);
+      printf("Integer Bytes: %04x\n", cp->Integer.bytes);
       break;
     case CONSTANT_Float:
-      printf("Float Bytes: %04x\n", aux->Float.bytes);
+      printf("Float Bytes: %04x\n", cp->Float.bytes);
       break;
     case CONSTANT_Long:
-      printf("Long High Bytes: %04x\n", aux->Long.high_bytes);
-      printf("Long Low Bytes: %04x\n", aux->Long.low_bytes);
+      printf("Long High Bytes: %04x\n", cp->Long.high_bytes);
+      printf("Long Low Bytes: %04x\n", cp->Long.low_bytes);
       break;
     case CONSTANT_Double:
-      printf("Double High Bytes: %04x\n", aux->Double.high_bytes);
-      printf("Double Low Bytes: %04x\n", aux->Double.low_bytes);
+      printf("Double High Bytes: %04x\n", cp->Double.high_bytes);
+      printf("Double Low Bytes: %04x\n", cp->Double.low_bytes);
       break;
     case CONSTANT_NameAndType:
-      printf("Name and Type - Name Index: %04x\n", aux->NameAndType.name_index);
-      printf("Name and Type - Descriptor Index: %04x\n", aux->NameAndType.descriptor_index);
+      printf("Name and Type - Name Index: %04x\n", cp->NameAndType.name_index);
+      printf("Name and Type - Descriptor Index: %04x\n", cp->NameAndType.descriptor_index);
       break;
     case CONSTANT_Utf8:
-      printf("UTF8 Length: %02x\n", aux->Utf8.length);
+      printf("UTF8 Length: %02x\n", cp->Utf8.length);
       printf("Bytes: ");
-      for (u1 *i = aux->Utf8.bytes; i < aux->Utf8.bytes + aux->Utf8.length; i++)
+      for (u1 *i = cp->Utf8.bytes; i < cp->Utf8.bytes + cp->Utf8.length; i++)
       {
         printf("%02x ", *i);
       }
       printf("\n");
       break;
     case CONSTANT_MethodHandle:
-      printf("MethodHandle Reference Kind: %02x\n", aux->MethodHandle.reference_kind);
-      printf("MethodHandle Reference Index: %04x\n", aux->MethodHandle.reference_index);
+      printf("MethodHandle Reference Kind: %02x\n", cp->MethodHandle.reference_kind);
+      printf("MethodHandle Reference Index: %04x\n", cp->MethodHandle.reference_index);
       break;
     case CONSTANT_MethodType:
-      printf("MethodType Descriptor Index: %04x\n", aux->MethodType.descriptor_index);
+      printf("MethodType Descriptor Index: %04x\n", cp->MethodType.descriptor_index);
       break;
     case CONSTANT_InvokeDynamic:
-      printf("InvokeDynamic - Bootstrap Method Attr Index: %04x\n", aux->InvokeDynamic.bootstrap_method_attr_index);
-      printf("InvokeDynamic - Name and Type Index: %04x\n", aux->InvokeDynamic.name_and_type_index);
+      printf("InvokeDynamic - Bootstrap Method Attr Index: %04x\n", cp->InvokeDynamic.bootstrap_method_attr_index);
+      printf("InvokeDynamic - Name and Type Index: %04x\n", cp->InvokeDynamic.name_and_type_index);
       break;
     default:
-      printf("Default\n");
+      printf("Ignored\n");
       break;
     }
   }
 
-  printf("Access Flags: %04x\n", arquivoClass->access_flags);
-  printf("This Class: %04x\n", arquivoClass->this_class);
-  printf("Super Class: %04x\n", arquivoClass->super_class);
-  printf("Interfaces Count: %04x\n", arquivoClass->interfaces_count);
-  printf("Fields Count: %04x\n", arquivoClass->fields_count);
-  printf("Methods Count: %04x\n", arquivoClass->methods_count);
+  printf("Access Flags: %04x\n", cf->access_flags);
+  printf("This Class: %04x\n", cf->this_class);
+  printf("Super Class: %04x\n", cf->super_class);
+  printf("Interfaces Count: %04x\n", cf->interfaces_count);
+  printf("Fields Count: %04x\n", cf->fields_count);
+  printf("Methods Count: %04x\n", cf->methods_count);
 
-  for (auxMethod = arquivoClass->methods; auxMethod < arquivoClass->methods + arquivoClass->methods_count; auxMethod++)
+  for (method_info *mi = cf->methods; mi < cf->methods + cf->methods_count; mi++)
   {
-    printf("Access Flags do método: %04x\n", auxMethod->access_flags);
-    printf("Name index do método: %04x\n", auxMethod->name_index);
-    printf("Descriptor Index do método: %04x\n", auxMethod->descriptor_index);
-    printf("Attributes Count do método: %04x\n", auxMethod->attributes_count);
+    printf("Methods Access Flags: %04x\n", mi->access_flags);
+    printf("Methods Name index: %04x\n", mi->name_index);
+    printf("Methods Descriptor Index: %04x\n", mi->descriptor_index);
+    printf("Methods Attributes Count: %04x\n", mi->attributes_count);
 
-    for (auxAttribute = auxMethod->attributes; auxAttribute < auxMethod->attributes + auxMethod->attributes_count; auxAttribute++)
+    for (attribute_info *ai = mi->attributes; ai < mi->attributes + mi->attributes_count; ai++)
     {
-      printf("Attribute Name Index: %04x\n", auxAttribute->attribute_name_index);
-      printf("Attribute Length: %08x\n", auxAttribute->attribute_length);
-      if (auxAttribute->attribute_length > 0)
+      printf("Attribute Name Index: %04x\n", ai->attribute_name_index);
+      printf("Attribute Length: %08x\n", ai->attribute_length);
+      if (ai->attribute_length > 0)
       {
         printf("Attribute Info: ");
-        for (u1 *c = (auxAttribute->info); c < (auxAttribute->info) + (auxAttribute->attribute_length); c++)
+        for (u1 *i = (ai->info); i < (ai->info) + (ai->attribute_length); i++)
         {
-          printf("%02x ", *c);
+          printf("%02x ", *i);
         }
         printf("\n");
       }
     }
   }
 
-  printf("Atributos da Classe: %02x\n", arquivoClass->attributes_count);
-  for (auxAttribute = arquivoClass->attributes; auxAttribute < arquivoClass->attributes + arquivoClass->attributes_count; auxAttribute++)
+  printf("Attributes Count: %02x\n", cf->attributes_count);
+  for (attribute_info *ai = cf->attributes; ai < cf->attributes + cf->attributes_count; ai++)
   {
-    printf("Attribute Name Index: %04x\n", auxAttribute->attribute_name_index);
-    printf("Attribute Length: %08x\n", auxAttribute->attribute_length);
-    if (auxAttribute->attribute_length > 0)
+    printf("Attribute Name Index: %04x\n", ai->attribute_name_index);
+    printf("Attribute Length: %08x\n", ai->attribute_length);
+    if (ai->attribute_length > 0)
     {
       printf("Attribute Info: ");
-      for (u1 *c = (auxAttribute->info); c < (auxAttribute->info) + (auxAttribute->attribute_length); c++)
+      for (u1 *i = (ai->info); i < (ai->info) + (ai->attribute_length); i++)
       {
-        printf("%02x ", *c);
+        printf("%02x ", *i);
       }
       printf("\n");
     }
