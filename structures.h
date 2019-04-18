@@ -4,6 +4,9 @@
 #define u2 uint16_t
 #define u4 uint32_t
 
+/**
+  Tabela contendo o valor para cada tag da constante (tipo id)
+*/
 enum
 {
   CONSTANT_Class = 7,
@@ -22,6 +25,12 @@ enum
   CONSTANT_InvokeDynamic = 18
 } pool_tags;
 
+/**
+  Struct para indicar o tipo de constant_pool
+  (tendo uma tag associada e mais atributos em função da constante)
+  
+  Union: serve para alocar espaço pra maior struct
+*/
 typedef struct
 {
   u1 tag;
