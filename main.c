@@ -103,8 +103,8 @@ void read_class_file(ClassFile *cf, FILE *fp)
       cp->Double.low_bytes = u4Read(fp);
       break;
     case CONSTANT_NameAndType:
-      cp->NameAndType.descriptor_index = u2Read(fp);
       cp->NameAndType.name_index = u2Read(fp);
+      cp->NameAndType.descriptor_index = u2Read(fp);
       break;
     case CONSTANT_Utf8:
       cp->Utf8.length = u2Read(fp);
@@ -207,70 +207,70 @@ void read_class_file(ClassFile *cf, FILE *fp)
 void print_class_file(ClassFile *cf)
 {
   printf("Magic: %08X\n", cf->magic);
-  printf("Minor Version: %04x\n", cf->minor_version);
-  printf("Major Version: %04x\n", cf->major_version);
-  printf("Constant Pool Count: %04x\n", cf->constant_pool_count);
+  printf("Minor Version: %02d\n", cf->minor_version);
+  printf("Major Version: %02d\n", cf->major_version);
+  printf("Constant Pool Count: %02d\n", cf->constant_pool_count);
 
   for (cp_info *cp = cf->constant_pool; cp < cf->constant_pool + cf->constant_pool_count - 1; cp++)
   {
-    printf("TAG: %02x\n", cp->tag);
+    printf("TAG: %02d\n", cp->tag);
     switch (cp->tag)
     {
     case CONSTANT_Class:
-      printf("Class Name Index: %04x\n", cp->Class.name_index);
+      printf("Class Name Index: %02d\n", cp->Class.name_index);
       break;
     case CONSTANT_Fieldref:
-      printf("Fieldref Class Index: %04x\n", cp->Fieldref.class_index);
-      printf("Fieldref Name and Type Index: %04x\n", cp->Fieldref.name_and_type_index);
+      printf("Fieldref Class Index: %02d\n", cp->Fieldref.class_index);
+      printf("Fieldref Name and Type Index: %02d\n", cp->Fieldref.name_and_type_index);
       break;
     case CONSTANT_Methodref:
-      printf("Methodref Class Index: %04x\n", cp->Methodref.class_index);
-      printf("Methodref Name and Type Index: %04x\n", cp->Methodref.name_and_type_index);
+      printf("Methodref Class Index: %02d\n", cp->Methodref.class_index);
+      printf("Methodref Name and Type Index: %02d\n", cp->Methodref.name_and_type_index);
       break;
     case CONSTANT_InterfaceMethodref:
-      printf("InterfaceMethodref Class Index: %04x\n", cp->InterfaceMethodref.class_index);
-      printf("InterfaceMethodref Name and Type Index: %04x\n", cp->InterfaceMethodref.name_and_type_index);
+      printf("InterfaceMethodref Class Index: %02d\n", cp->InterfaceMethodref.class_index);
+      printf("InterfaceMethodref Name and Type Index: %02d\n", cp->InterfaceMethodref.name_and_type_index);
       break;
     case CONSTANT_String:
-      printf("String Index: %04x\n", cp->String.string_index);
+      printf("String Index: %02d\n", cp->String.string_index);
       break;
     case CONSTANT_Integer:
-      printf("Integer Bytes: %04x\n", cp->Integer.bytes);
+      printf("Integer Bytes: %02d\n", cp->Integer.bytes);
       break;
     case CONSTANT_Float:
-      printf("Float Bytes: %04x\n", cp->Float.bytes);
+      printf("Float Bytes: %02d\n", cp->Float.bytes);
       break;
     case CONSTANT_Long:
-      printf("Long High Bytes: %04x\n", cp->Long.high_bytes);
-      printf("Long Low Bytes: %04x\n", cp->Long.low_bytes);
+      printf("Long High Bytes: %02d\n", cp->Long.high_bytes);
+      printf("Long Low Bytes: %02d\n", cp->Long.low_bytes);
       break;
     case CONSTANT_Double:
-      printf("Double High Bytes: %04x\n", cp->Double.high_bytes);
-      printf("Double Low Bytes: %04x\n", cp->Double.low_bytes);
+      printf("Double High Bytes: %02d\n", cp->Double.high_bytes);
+      printf("Double Low Bytes: %02d\n", cp->Double.low_bytes);
       break;
     case CONSTANT_NameAndType:
-      printf("Name and Type - Name Index: %04x\n", cp->NameAndType.name_index);
-      printf("Name and Type - Descriptor Index: %04x\n", cp->NameAndType.descriptor_index);
+      printf("Name and Type - Name Index: %02d\n", cp->NameAndType.name_index);
+      printf("Name and Type - Descriptor Index: %02d\n", cp->NameAndType.descriptor_index);
       break;
     case CONSTANT_Utf8:
-      printf("UTF8 Length: %02x\n", cp->Utf8.length);
+      printf("UTF8 Length: %02d\n", cp->Utf8.length);
       printf("Bytes: ");
       for (u1 *i = cp->Utf8.bytes; i < cp->Utf8.bytes + cp->Utf8.length; i++)
       {
-        printf("%02x ", *i);
+        printf("%c", *i);
       }
       printf("\n");
       break;
     case CONSTANT_MethodHandle:
-      printf("MethodHandle Reference Kind: %02x\n", cp->MethodHandle.reference_kind);
-      printf("MethodHandle Reference Index: %04x\n", cp->MethodHandle.reference_index);
+      printf("MethodHandle Reference Kind: %02d\n", cp->MethodHandle.reference_kind);
+      printf("MethodHandle Reference Index: %02d\n", cp->MethodHandle.reference_index);
       break;
     case CONSTANT_MethodType:
-      printf("MethodType Descriptor Index: %04x\n", cp->MethodType.descriptor_index);
+      printf("MethodType Descriptor Index: %02d\n", cp->MethodType.descriptor_index);
       break;
     case CONSTANT_InvokeDynamic:
-      printf("InvokeDynamic - Bootstrap Method Attr Index: %04x\n", cp->InvokeDynamic.bootstrap_method_attr_index);
-      printf("InvokeDynamic - Name and Type Index: %04x\n", cp->InvokeDynamic.name_and_type_index);
+      printf("InvokeDynamic - Bootstrap Method Attr Index: %02d\n", cp->InvokeDynamic.bootstrap_method_attr_index);
+      printf("InvokeDynamic - Name and Type Index: %02d\n", cp->InvokeDynamic.name_and_type_index);
       break;
     default:
       printf("Ignored\n");
@@ -278,24 +278,24 @@ void print_class_file(ClassFile *cf)
     }
   }
 
-  printf("Access Flags: %04x\n", cf->access_flags);
-  printf("This Class: %04x\n", cf->this_class);
-  printf("Super Class: %04x\n", cf->super_class);
-  printf("Interfaces Count: %04x\n", cf->interfaces_count);
-  printf("Fields Count: %04x\n", cf->fields_count);
-  printf("Methods Count: %04x\n", cf->methods_count);
+  printf("Access Flags: %02d\n", cf->access_flags);
+  printf("This Class: %02d\n", cf->this_class);
+  printf("Super Class: %02d\n", cf->super_class);
+  printf("Interfaces Count: %02d\n", cf->interfaces_count);
+  printf("Fields Count: %02d\n", cf->fields_count);
+  printf("Methods Count: %02d\n", cf->methods_count);
 
   for (method_info *mi = cf->methods; mi < cf->methods + cf->methods_count; mi++)
   {
-    printf("Methods Access Flags: %04x\n", mi->access_flags);
-    printf("Methods Name index: %04x\n", mi->name_index);
-    printf("Methods Descriptor Index: %04x\n", mi->descriptor_index);
-    printf("Methods Attributes Count: %04x\n", mi->attributes_count);
+    printf("Methods Access Flags: %02d\n", mi->access_flags);
+    printf("Methods Name index: %02d\n", mi->name_index);
+    printf("Methods Descriptor Index: %02d\n", mi->descriptor_index);
+    printf("Methods Attributes Count: %02d\n", mi->attributes_count);
 
     for (attribute_info *ai = mi->attributes; ai < mi->attributes + mi->attributes_count; ai++)
     {
-      printf("Attribute Name Index: %04x\n", ai->attribute_name_index);
-      printf("Attribute Length: %08x\n", ai->attribute_length);
+      printf("Attribute Name Index: %02d\n", ai->attribute_name_index);
+      printf("Attribute Length: %02d\n", ai->attribute_length);
       if (ai->attribute_length > 0)
       {
         printf("Attribute Info: ");
@@ -308,11 +308,11 @@ void print_class_file(ClassFile *cf)
     }
   }
 
-  printf("Attributes Count: %02x\n", cf->attributes_count);
+  printf("Attributes Count: %02d\n", cf->attributes_count);
   for (attribute_info *ai = cf->attributes; ai < cf->attributes + cf->attributes_count; ai++)
   {
-    printf("Attribute Name Index: %04x\n", ai->attribute_name_index);
-    printf("Attribute Length: %08x\n", ai->attribute_length);
+    printf("Attribute Name Index: %02d\n", ai->attribute_name_index);
+    printf("Attribute Length: %02d\n", ai->attribute_length);
     if (ai->attribute_length > 0)
     {
       printf("Attribute Info: ");
