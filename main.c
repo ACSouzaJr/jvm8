@@ -206,10 +206,24 @@ void read_class_file(ClassFile *cf, FILE *fp)
 
 void print_class_file(ClassFile *cf)
 {
+  printf("General Info\n");
+  printf("< --------------------- >\n");
+
   printf("Magic: %08X\n", cf->magic);
   printf("Minor Version: %02d\n", cf->minor_version);
   printf("Major Version: %02d\n", cf->major_version);
   printf("Constant Pool Count: %02d\n", cf->constant_pool_count);
+  printf("Access Flags: %#04x\n", cf->access_flags);
+  printf("This Class: cp_info #%d <%s>\n", cf->this_class, cf->constant_pool[cf->constant_pool[cf->this_class - 1].Class.name_index - 1].Utf8.bytes);
+  printf("Super Class: cp_info #%d <%s>\n", cf->super_class, cf->constant_pool[cf->constant_pool[cf->super_class - 1].Class.name_index - 1].Utf8.bytes);
+  printf("Interfaces Count: %02d\n", cf->interfaces_count);
+  printf("Fields Count: %02d\n", cf->fields_count);
+  printf("Methods Count: %02d\n", cf->methods_count);
+  printf("Attributes Count: %02d\n", cf->attributes_count);
+
+  printf("< --------------------- >\n");
+  printf("Constant Pool \n");
+  printf("< --------------------- >\n");
 
   for (cp_info *cp = cf->constant_pool; cp < cf->constant_pool + cf->constant_pool_count - 1; cp++)
   {
@@ -276,14 +290,11 @@ void print_class_file(ClassFile *cf)
       printf("Ignored\n");
       break;
     }
+    printf("< --------------------- >\n");
   }
 
-  printf("Access Flags: %02d\n", cf->access_flags);
-  printf("This Class: %02d\n", cf->this_class);
-  printf("Super Class: %02d\n", cf->super_class);
-  printf("Interfaces Count: %02d\n", cf->interfaces_count);
-  printf("Fields Count: %02d\n", cf->fields_count);
-  printf("Methods Count: %02d\n", cf->methods_count);
+  printf("Methods \n");
+  printf("< --------------------- >\n");
 
   for (method_info *mi = cf->methods; mi < cf->methods + cf->methods_count; mi++)
   {
@@ -306,9 +317,12 @@ void print_class_file(ClassFile *cf)
         printf("\n");
       }
     }
+    printf("< --------------------- >\n");
   }
 
-  printf("Attributes Count: %02d\n", cf->attributes_count);
+  printf("Attributes \n");
+  printf("< --------------------- >\n");
+
   for (attribute_info *ai = cf->attributes; ai < cf->attributes + cf->attributes_count; ai++)
   {
     printf("Attribute Name Index: %02d\n", ai->attribute_name_index);
@@ -322,5 +336,6 @@ void print_class_file(ClassFile *cf)
       }
       printf("\n");
     }
+    printf("< --------------------- >\n");
   }
 }
