@@ -1,3 +1,16 @@
+/*
+Projeto JVM para o Professor Doutor Ladeira
+Universidade de Brasília - 01/2019
+Software Básico - Turma A
+Projeto Leitor e Exibidor de arquivo .class
+
+Alunos: Nicholas Marques - 15/0019343
+				Antônio Júnior - 16/0112745
+				Yan Galli - 16/0149207
+				Vinícius Costa e Silva - 15/0052138
+				João Gabriel - XX/XXXXXXX
+*/
+
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
