@@ -6,8 +6,8 @@ Projeto Leitor e Exibidor de arquivo .class
 
 Alunos: Nicholas Marques - 15/0019343
 				Antônio Júnior - 16/0112745
-				Yan Galli - 16/XXXXXXX
-				Vinícius - XX/XXXXXXX
+				Yan Galli - 16/0149207
+				Vinícius Costa e Silva - 15/0052138
 				João Gabriel - XX/XXXXXXX
 */
 
