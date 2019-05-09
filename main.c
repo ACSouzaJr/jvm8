@@ -22,6 +22,7 @@ u4 u4Read(FILE *);
 
 void read_class_file(ClassFile *, FILE *);
 void print_class_file(ClassFile *cf);
+void free_class_file(ClassFile *cf);
 
 int main(int argc, char const *argv[])
 {
@@ -71,6 +72,11 @@ u4 u4Read(FILE *file)
 void read_class_file(ClassFile *cf, FILE *fp)
 {
   cf->magic = u4Read(fp);
+  if (cf->magic != 0xCAFEBABE)
+  {
+    printf("Esse arquivo nao é .class");
+    return;
+  }
   cf->minor_version = u2Read(fp);
   cf->major_version = u2Read(fp);
   cf->constant_pool_count = u2Read(fp);
@@ -319,6 +325,7 @@ void print_class_file(ClassFile *cf)
     for (attribute_info *ai = mi->attributes; ai < mi->attributes + mi->attributes_count; ai++)
     {
       printf("Attribute Name Index: %02d\n", ai->attribute_name_index);
+      printf("Attribute Name: %s\n", cf->constant_pool[ai->attribute_name_index - 1].Utf8.bytes);
       printf("Attribute Length: %02d\n", ai->attribute_length);
       if (ai->attribute_length > 0)
       {
@@ -339,6 +346,7 @@ void print_class_file(ClassFile *cf)
   for (attribute_info *ai = cf->attributes; ai < cf->attributes + cf->attributes_count; ai++)
   {
     printf("Attribute Name Index: %02d\n", ai->attribute_name_index);
+    printf("Attribute Name: %s\n", cf->constant_pool[ai->attribute_name_index - 1].Utf8.bytes);
     printf("Attribute Length: %02d\n", ai->attribute_length);
     if (ai->attribute_length > 0)
     {
@@ -351,4 +359,8 @@ void print_class_file(ClassFile *cf)
     }
     printf("< --------------------- >\n");
   }
+}
+
+void free_class_file(ClassFile *cf)
+{
 }

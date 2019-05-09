@@ -131,6 +131,7 @@ typedef struct
   u2 descriptor_index;
   u2 attributes_count;
   attribute_info *attributes; //[attributes_count];
+  // code, exception, etc
 } method_info;
 
 typedef struct
@@ -139,6 +140,7 @@ typedef struct
   u2 name_index;
   u2 descriptor_index;
   u2 attributes_count;
+  // Cosntant value
   attribute_info *attributes; //[attributes_count];
 } field_info;
 
