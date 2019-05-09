@@ -32,7 +32,8 @@ int main(int argc, char const *argv[])
   // printf("%x", readUnsignedShort(pFile));
   // printf("%x", u4Read(pFile));
   read_class_file(cf, pFile);
-  print_class_file(cf);
+  // print_class_file(cf);
+  free_class_file(cf);
   free(cf);
   fclose(pFile);
   return 0;
@@ -225,91 +226,91 @@ void read_class_file(ClassFile *cf, FILE *fp)
 
 void print_class_file(ClassFile *cf)
 {
-  printf("General Info\n");
-  printf("< --------------------- >\n");
+  printf("General Info \n");
+  printf("< --------------------- > \n");
 
-  printf("Magic: %08X\n", cf->magic);
-  printf("Minor Version: %02d\n", cf->minor_version);
-  printf("Major Version: %02d\n", cf->major_version);
-  printf("Constant Pool Count: %02d\n", cf->constant_pool_count);
-  printf("Access Flags: %#04x\n", cf->access_flags);
-  printf("This Class: cp_info #%d <%s>\n", cf->this_class, cf->constant_pool[cf->constant_pool[cf->this_class - 1].Class.name_index - 1].Utf8.bytes);
-  printf("Super Class: cp_info #%d <%s>\n", cf->super_class, cf->constant_pool[cf->constant_pool[cf->super_class - 1].Class.name_index - 1].Utf8.bytes);
-  printf("Interfaces Count: %02d\n", cf->interfaces_count);
-  printf("Fields Count: %02d\n", cf->fields_count);
-  printf("Methods Count: %02d\n", cf->methods_count);
-  printf("Attributes Count: %02d\n", cf->attributes_count);
+  printf("Magic: %08X \n", cf->magic);
+  printf("Minor Version: %02d \n", cf->minor_version);
+  printf("Major Version: %02d \n", cf->major_version);
+  printf("Constant Pool Count: %02d \n", cf->constant_pool_count);
+  printf("Access Flags: %#04x \n", cf->access_flags);
+  printf("This Class: cp_info #%d <%s> \n", cf->this_class, cf->constant_pool[cf->constant_pool[cf->this_class - 1].Class.name_index - 1].Utf8.bytes);
+  printf("Super Class: cp_info #%d <%s> \n", cf->super_class, cf->constant_pool[cf->constant_pool[cf->super_class - 1].Class.name_index - 1].Utf8.bytes);
+  printf("Interfaces Count: %02d \n", cf->interfaces_count);
+  printf("Fields Count: %02d \n", cf->fields_count);
+  printf("Methods Count: %02d \n", cf->methods_count);
+  printf("Attributes Count: %02d \n", cf->attributes_count);
 
-  printf("< --------------------- >\n");
-  printf("Constant Pool \n");
-  printf("< --------------------- >\n");
+  printf("< --------------------- > \n");
+  printf("Constant Pool  \n");
+  printf("< --------------------- > \n");
 
   for (cp_info *cp = cf->constant_pool; cp < cf->constant_pool + cf->constant_pool_count - 1; cp++)
   {
-    printf("TAG: %02d\n", cp->tag);
+    printf("TAG: %02d \n", cp->tag);
     switch (cp->tag)
     {
     case CONSTANT_Class:
-      printf("Class Name Index: %02d\n", cp->Class.name_index);
+      printf("Class Name Index: %02d \n", cp->Class.name_index);
       break;
     case CONSTANT_Fieldref:
-      printf("Fieldref Class Index: %02d\n", cp->Fieldref.class_index);
-      printf("Fieldref Name and Type Index: %02d\n", cp->Fieldref.name_and_type_index);
+      printf("Fieldref Class Index: %02d \n", cp->Fieldref.class_index);
+      printf("Fieldref Name and Type Index: %02d \n", cp->Fieldref.name_and_type_index);
       break;
     case CONSTANT_Methodref:
-      printf("Methodref Class Index: %02d\n", cp->Methodref.class_index);
-      printf("Methodref Name and Type Index: %02d\n", cp->Methodref.name_and_type_index);
+      printf("Methodref Class Index: %02d \n", cp->Methodref.class_index);
+      printf("Methodref Name and Type Index: %02d \n", cp->Methodref.name_and_type_index);
       break;
     case CONSTANT_InterfaceMethodref:
-      printf("InterfaceMethodref Class Index: %02d\n", cp->InterfaceMethodref.class_index);
-      printf("InterfaceMethodref Name and Type Index: %02d\n", cp->InterfaceMethodref.name_and_type_index);
+      printf("InterfaceMethodref Class Index: %02d \n", cp->InterfaceMethodref.class_index);
+      printf("InterfaceMethodref Name and Type Index: %02d \n", cp->InterfaceMethodref.name_and_type_index);
       break;
     case CONSTANT_String:
-      printf("String Index: %02d\n", cp->String.string_index);
+      printf("String Index: %02d \n", cp->String.string_index);
       break;
     case CONSTANT_Integer:
-      printf("Integer Bytes: %02d\n", cp->Integer.bytes);
+      printf("Integer Bytes: %02d \n", cp->Integer.bytes);
       break;
     case CONSTANT_Float:
-      printf("Float Bytes: %02d\n", cp->Float.bytes);
+      printf("Float Bytes: %02d \n", cp->Float.bytes);
       break;
     case CONSTANT_Long:
-      printf("Long High Bytes: %02d\n", cp->Long.high_bytes);
-      printf("Long Low Bytes: %02d\n", cp->Long.low_bytes);
+      printf("Long High Bytes: %02d \n", cp->Long.high_bytes);
+      printf("Long Low Bytes: %02d \n", cp->Long.low_bytes);
       break;
     case CONSTANT_Double:
-      printf("Double High Bytes: %02d\n", cp->Double.high_bytes);
-      printf("Double Low Bytes: %02d\n", cp->Double.low_bytes);
+      printf("Double High Bytes: %02d \n", cp->Double.high_bytes);
+      printf("Double Low Bytes: %02d \n", cp->Double.low_bytes);
       break;
     case CONSTANT_NameAndType:
-      printf("Name and Type - Name Index: %02d\n", cp->NameAndType.name_index);
-      printf("Name and Type - Descriptor Index: %02d\n", cp->NameAndType.descriptor_index);
+      printf("Name and Type - Name Index: %02d \n", cp->NameAndType.name_index);
+      printf("Name and Type - Descriptor Index: %02d \n", cp->NameAndType.descriptor_index);
       break;
     case CONSTANT_Utf8:
-      printf("UTF8 Length: %02d\n", cp->Utf8.length);
+      printf("UTF8 Length: %02d \n", cp->Utf8.length);
       printf("Bytes: ");
       for (u1 *i = cp->Utf8.bytes; i < cp->Utf8.bytes + cp->Utf8.length; i++)
       {
         printf("%c", *i);
       }
-      printf("\n");
+      printf(" \n");
       break;
     case CONSTANT_MethodHandle:
-      printf("MethodHandle Reference Kind: %02d\n", cp->MethodHandle.reference_kind);
-      printf("MethodHandle Reference Index: %02d\n", cp->MethodHandle.reference_index);
+      printf("MethodHandle Reference Kind: %02d \n", cp->MethodHandle.reference_kind);
+      printf("MethodHandle Reference Index: %02d \n", cp->MethodHandle.reference_index);
       break;
     case CONSTANT_MethodType:
-      printf("MethodType Descriptor Index: %02d\n", cp->MethodType.descriptor_index);
+      printf("MethodType Descriptor Index: %02d \n", cp->MethodType.descriptor_index);
       break;
     case CONSTANT_InvokeDynamic:
-      printf("InvokeDynamic - Bootstrap Method Attr Index: %02d\n", cp->InvokeDynamic.bootstrap_method_attr_index);
-      printf("InvokeDynamic - Name and Type Index: %02d\n", cp->InvokeDynamic.name_and_type_index);
+      printf("InvokeDynamic - Bootstrap Method Attr Index: %02d \n", cp->InvokeDynamic.bootstrap_method_attr_index);
+      printf("InvokeDynamic - Name and Type Index: %02d \n", cp->InvokeDynamic.name_and_type_index);
       break;
     default:
-      printf("Ignored\n");
+      printf("Ignored \n");
       break;
     }
-    printf("< --------------------- >\n");
+    printf("< --------------------- > \n");
   }
 
   printf("Methods \n");
@@ -325,8 +326,8 @@ void print_class_file(ClassFile *cf)
     for (attribute_info *ai = mi->attributes; ai < mi->attributes + mi->attributes_count; ai++)
     {
       printf("Attribute Name Index: %02d\n", ai->attribute_name_index);
-      printf("Attribute Name: %s\n", cf->constant_pool[ai->attribute_name_index - 1].Utf8.bytes);
-      printf("Attribute Length: %02d\n", ai->attribute_length);
+      printf("Attribute Name: %s \n", cf->constant_pool[ai->attribute_name_index - 1].Utf8.bytes);
+      printf("Attribute Length: %02d \n", ai->attribute_length);
       if (ai->attribute_length > 0)
       {
         printf("Attribute Info: ");
@@ -334,20 +335,20 @@ void print_class_file(ClassFile *cf)
         {
           printf("%02x ", *i);
         }
-        printf("\n");
+        printf(" \n");
       }
     }
-    printf("< --------------------- >\n");
+    printf("< --------------------- > \n");
   }
 
-  printf("Attributes \n");
-  printf("< --------------------- >\n");
+  printf("Attributes  \n");
+  printf("< --------------------- > \n");
 
   for (attribute_info *ai = cf->attributes; ai < cf->attributes + cf->attributes_count; ai++)
   {
-    printf("Attribute Name Index: %02d\n", ai->attribute_name_index);
-    printf("Attribute Name: %s\n", cf->constant_pool[ai->attribute_name_index - 1].Utf8.bytes);
-    printf("Attribute Length: %02d\n", ai->attribute_length);
+    printf("Attribute Name Index: %02d \n", ai->attribute_name_index);
+    printf("Attribute Name: %s \n", cf->constant_pool[ai->attribute_name_index - 1].Utf8.bytes);
+    printf("Attribute Length: %02d \n", ai->attribute_length);
     if (ai->attribute_length > 0)
     {
       printf("Attribute Info: ");
@@ -355,12 +356,99 @@ void print_class_file(ClassFile *cf)
       {
         printf("%02x ", *i);
       }
-      printf("\n");
+      printf(" \n");
     }
-    printf("< --------------------- >\n");
+    printf("< --------------------- > \n");
   }
 }
 
 void free_class_file(ClassFile *cf)
 {
+  // constant_pool -> cp_info
+  for (cp_info *cp = cf->constant_pool; cp < cf->constant_pool + cf->constant_pool_count - 1; cp++)
+  {
+    switch (cp->tag)
+    {
+    case CONSTANT_Class:
+      break;
+    case CONSTANT_Fieldref:
+      break;
+    case CONSTANT_Methodref:
+      break;
+    case CONSTANT_InterfaceMethodref:
+      break;
+    case CONSTANT_String:
+      break;
+    case CONSTANT_Integer:
+      break;
+    case CONSTANT_Float:
+      break;
+    case CONSTANT_Long:
+      break;
+    case CONSTANT_Double:
+      break;
+    case CONSTANT_NameAndType:
+      break;
+    case CONSTANT_Utf8:
+      // cp->Utf8.bytes = (u1 *)malloc(sizeof(u1) * cp->Utf8.length);
+      free(cp->Utf8.bytes);
+      break;
+    case CONSTANT_MethodHandle:
+      break;
+    case CONSTANT_MethodType:
+      break;
+    case CONSTANT_InvokeDynamic:
+      break;
+    default:
+      break;
+    }
+  }
+
+  // cf->constant_pool = (cp_info *)malloc(sizeof(cp_info) * (cf->constant_pool_count - 1));
+  free(cf->constant_pool);
+
+  // interface -> u2
+  // cf->interfaces = (u2 *)malloc(sizeof(u2) * cf->interfaces_count);
+  free(cf->interfaces);
+
+  for (field_info *field = cf->fields; field < cf->fields + cf->fields_count; field++)
+  {
+
+    for (attribute_info *attr = field->attributes; attr < field->attributes + field->attributes_count; attr++)
+    {
+
+      // attr->info = (u1 *)malloc(sizeof(u1 *) * attr->attribute_length);
+      free(attr->info);
+    }
+
+    // field->attributes = (attribute_info *)malloc(sizeof(attribute_info) * field->attributes_count);
+    free(field->attributes);
+  }
+
+  // fields -> field_info
+  // cf->fields = (field_info *)malloc(sizeof(field_info) * cf->fields_count);
+  free(cf->fields);
+
+  // methods -> method_info
+  for (method_info *method = cf->methods; method < cf->methods + cf->methods_count; method++)
+  {
+    for (attribute_info *attr = method->attributes; attr < method->attributes + method->attributes_count; attr++)
+    {
+      // attr->info = (u1 *)malloc(sizeof(u1 *) * attr->attribute_length);
+      free(attr->info);
+    }
+    // method->attributes = (attribute_info *)malloc(sizeof(attribute_info) * method->attributes_count);
+    free(method->attributes);
+  }
+  // cf->methods = (method_info *)malloc(sizeof(method_info) * cf->methods_count);
+  free(cf->methods);
+
+  // attributes -> attributes_info
+  for (attribute_info *attr = cf->attributes; attr < cf->attributes + cf->attributes_count; attr++)
+  {
+    // attr->info = (u1 *)malloc(sizeof(u1 *) * attr->attribute_length);
+    free(attr->info);
+  }
+  // cf->attributes = (attribute_info *)malloc(sizeof(attribute_info) * cf->attributes_count);
+  free(cf->attributes);
 }
