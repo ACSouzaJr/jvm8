@@ -8,12 +8,13 @@ Alunos: Nicholas Marques - 15/0019343
 				Antônio Júnior - 16/0112745
 				Yan Galli - 16/0149207
 				Vinícius Costa e Silva - 15/0052138
-				João Gabriel - XX/XXXXXXX
+				João Gabriel - 15/0131992
 */
 
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "structures.h"
 
 u1 u1Read(FILE *);
@@ -23,6 +24,7 @@ u4 u4Read(FILE *);
 void read_class_file(ClassFile *, FILE *);
 void print_class_file(ClassFile *cf);
 void free_class_file(ClassFile *cf);
+char *lerUtf8(void);
 
 int main(int argc, char const *argv[])
 {
@@ -32,10 +34,10 @@ int main(int argc, char const *argv[])
   // printf("%x", readUnsignedShort(pFile));
   // printf("%x", u4Read(pFile));
   read_class_file(cf, pFile);
-  // print_class_file(cf);
+  fclose(pFile);
+  print_class_file(cf);
   free_class_file(cf);
   free(cf);
-  fclose(pFile);
   return 0;
 }
 
@@ -68,6 +70,10 @@ u4 u4Read(FILE *file)
   toReturn = (toReturn << 8) | (getc(file));
   toReturn = (toReturn << 8) | (getc(file));
   return toReturn;
+}
+
+char *lerUtf8(void)
+{
 }
 
 void read_class_file(ClassFile *cf, FILE *fp)
@@ -177,10 +183,50 @@ void read_class_file(ClassFile *cf, FILE *fp)
       attr->attribute_name_index = u2Read(fp);
       attr->attribute_length = u4Read(fp);
       attr->info = (u1 *)malloc(sizeof(u1 *) * attr->attribute_length);
-      for (
-          u1 *i = attr->info; i < i + attr->attribute_length; i++)
+      // for (
+      //     u1 *i = attr->info; i < i + attr->attribute_length; i++)
+      // {
+      //   *i = u1Read(fp);
+      // }
+
+      char *attribute_name;
+
+      if (strcmp(attribute_name, "Code") == 0)
       {
-        *i = u1Read(fp);
+        attr->info->Code_attribute.max_stack = u2Read(fp);
+        attr->info->Code_attribute.max_locals = u2Read(fp);
+        attr->info->Code_attribute.code_length = u4Read(fp);
+        attr->info->Code_attribute.code = (u1 *)malloc(sizeof(u1) * attr->info->Code_attribute.code_length);
+        for (u1 *i = attr->info->Code_attribute.code; i < attr->info->Code_attribute.code + attr->info->Code_attribute.code_length; i++)
+        {
+          /* code */
+        }
+
+        attr->info->Code_attribute.exception_table_length = u2Read(fp);
+      }
+      else if (strcmp(attribute_name, "Exceptions") == 0)
+      {
+        /* code */
+      }
+      else if (strcmp(attribute_name, "Deprecated") == 0)
+      {
+        /* code */
+      }
+      else if (strcmp(attribute_name, "SourceFile") == 0)
+      {
+        /* code */
+      }
+      else if (strcmp(attribute_name, "LineNumberTable") == 0)
+      {
+        /* code */
+      }
+      else if (strcmp(attribute_name, "ConstantValue") == 0)
+      {
+        /* code */
+      }
+      else
+      {
+        /* code */
       }
     }
   }
