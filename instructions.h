@@ -1,3 +1,14 @@
+#include "structures.h"
+
+typedef struct {
+  u1 key;
+  char * value;
+  int arguments;
+  int references;
+} op_code;
+
+extern op_code op_codes_array[300];
+
 enum
 {
   newarray = 188,
