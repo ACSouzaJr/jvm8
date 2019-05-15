@@ -292,7 +292,6 @@ void read_class_file(ClassFile *cf, FILE *fp)
       cp->Utf8.bytes = (u1 *)malloc(sizeof(u1) * cp->Utf8.length);
       for (u1 *aux = cp->Utf8.bytes; aux < cp->Utf8.length + cp->Utf8.bytes; aux++)
       {
-        // printf("%d", cp);
         *aux = u1Read(fp);
       }
       break;
@@ -378,6 +377,78 @@ void read_class_file(ClassFile *cf, FILE *fp)
   // }
 }
 
+void recursive_print(cp_info *cp, u2 index)
+{
+  switch (cp[index - 1].tag)
+  {
+  case CONSTANT_Class:
+    // printf("Class Name Index: %02d \n", cp->Class.name_index);
+    recursive_print(cp, cp[index - 1].Class.name_index);
+    break;
+  case CONSTANT_Fieldref:
+    // printf("Fieldref Class Index: %02d \n", cp->Fieldref.class_index);
+    recursive_print(cp, cp[index - 1].Fieldref.class_index);
+    // printf("Fieldref Name and Type Index: %02d \n", cp->Fieldref.name_and_type_index);
+    recursive_print(cp, cp[index - 1].Fieldref.name_and_type_index);
+    break;
+  case CONSTANT_Methodref:
+    // printf("Methodref Class Index: %02d \n", cp->Methodref.class_index);
+    // printf("Methodref Name and Type Index: %02d \n", cp->Methodref.name_and_type_index);
+    break;
+  case CONSTANT_InterfaceMethodref:
+    // printf("InterfaceMethodref Class Index: %02d \n", cp->InterfaceMethodref.class_index);
+    // printf("InterfaceMethodref Name and Type Index: %02d \n", cp->InterfaceMethodref.name_and_type_index);
+    break;
+  case CONSTANT_String:
+    // printf("String Index: %02d \n", cp->String.string_index);
+    break;
+  case CONSTANT_Integer:
+    // printf("Integer Bytes: %02d \n", cp->Integer.bytes);
+    break;
+  case CONSTANT_Float:
+    // printf("Float Bytes: %02d \n", cp->Float.bytes);
+    break;
+  case CONSTANT_Long:
+    // printf("Long High Bytes: %02d \n", cp->Long.high_bytes);
+    // printf("Long Low Bytes: %02d \n", cp->Long.low_bytes);
+    break;
+  case CONSTANT_Double:
+    // printf("Double High Bytes: %02d \n", cp->Double.high_bytes);
+    // printf("Double Low Bytes: %02d \n", cp->Double.low_bytes);
+    break;
+  case CONSTANT_NameAndType:
+    // printf("Name and Type - Name Index: %02d \n", cp->NameAndType.name_index);
+    recursive_print(cp, cp[index - 1].NameAndType.name_index);
+    // printf("Name and Type - Descriptor Index: %02d \n", cp->NameAndType.descriptor_index);
+    recursive_print(cp, cp[index - 1].NameAndType.descriptor_index);
+    break;
+  case CONSTANT_Utf8:
+    // printf("UTF8 Length: %02d \n", cp->Utf8.length);
+    // printf("Bytes: ");
+    // for (u1 *i = cp->Utf8.bytes; i < cp->Utf8.bytes + cp->Utf8.length; i++)
+    // {
+    //   printf("%c", *i);
+    // }
+    // printf(" \n");
+    printf("%s\n", cp[index - 1].Utf8.bytes);
+    break;
+  case CONSTANT_MethodHandle:
+    // printf("MethodHandle Reference Kind: %02d \n", cp->MethodHandle.reference_kind);
+    // printf("MethodHandle Reference Index: %02d \n", cp->MethodHandle.reference_index);
+    break;
+  case CONSTANT_MethodType:
+    // printf("MethodType Descriptor Index: %02d \n", cp->MethodType.descriptor_index);
+    break;
+  case CONSTANT_InvokeDynamic:
+    // printf("InvokeDynamic - Bootstrap Method Attr Index: %02d \n", cp->InvokeDynamic.bootstrap_method_attr_index);
+    // printf("InvokeDynamic - Name and Type Index: %02d \n", cp->InvokeDynamic.name_and_type_index);
+    break;
+  default:
+    printf("No Ecxiste \n");
+    break;
+  }
+}
+
 void print_class_file(ClassFile *cf)
 {
   printf("General Info \n");
@@ -409,11 +480,15 @@ void print_class_file(ClassFile *cf)
       break;
     case CONSTANT_Fieldref:
       printf("Fieldref Class Index: %02d \n", cp->Fieldref.class_index);
+      recursive_print(cp, cp->Fieldref.class_index);
       printf("Fieldref Name and Type Index: %02d \n", cp->Fieldref.name_and_type_index);
+      recursive_print(cp, cp->Fieldref.name_and_type_index);
       break;
     case CONSTANT_Methodref:
       printf("Methodref Class Index: %02d \n", cp->Methodref.class_index);
+      recursive_print(cp, cp->Methodref.class_index);
       printf("Methodref Name and Type Index: %02d \n", cp->Methodref.name_and_type_index);
+      recursive_print(cp, cp->Methodref.name_and_type_index);
       break;
     case CONSTANT_InterfaceMethodref:
       printf("InterfaceMethodref Class Index: %02d \n", cp->InterfaceMethodref.class_index);
@@ -438,7 +513,9 @@ void print_class_file(ClassFile *cf)
       break;
     case CONSTANT_NameAndType:
       printf("Name and Type - Name Index: %02d \n", cp->NameAndType.name_index);
+      recursive_print(cp, cp->NameAndType.name_index);
       printf("Name and Type - Descriptor Index: %02d \n", cp->NameAndType.descriptor_index);
+      recursive_print(cp, cp->NameAndType.descriptor_index);
       break;
     case CONSTANT_Utf8:
       printf("UTF8 Length: %02d \n", cp->Utf8.length);
