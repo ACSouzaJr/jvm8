@@ -380,56 +380,58 @@ void read_class_file(ClassFile *cf, FILE *fp)
 }
 
 void recursive_function(u2 index, cp_info *constant_pool){
+  // printf("Tag: %d\n", constant_pool[index].tag);
+  int aux_index = index;
   switch(constant_pool[index].tag){
 		case CONSTANT_Class:
-			recursive_function(constant_pool[index].Class.name_index, constant_pool);
+			recursive_function(constant_pool[aux_index].Class.name_index, constant_pool);
 			break;
 		case CONSTANT_Fieldref:
-			recursive_function(constant_pool[index].Fieldref.class_index, constant_pool);
-      recursive_function(constant_pool[index].Fieldref.name_and_type_index, constant_pool);
+			recursive_function(constant_pool[aux_index].Fieldref.class_index, constant_pool);
+      recursive_function(constant_pool[aux_index].Fieldref.name_and_type_index, constant_pool);
 			break;
 		case CONSTANT_Methodref:
-			recursive_function(constant_pool[index].Methodref.class_index, constant_pool);
-      recursive_function(constant_pool[index].Methodref.name_and_type_index, constant_pool);
+			recursive_function(constant_pool[aux_index].Methodref.class_index, constant_pool);
+      recursive_function(constant_pool[aux_index].Methodref.name_and_type_index, constant_pool);
 			break;
 		case CONSTANT_InterfaceMethodref:
-			recursive_function(constant_pool[index].InterfaceMethodref.class_index, constant_pool);
-      recursive_function(constant_pool[index].InterfaceMethodref.name_and_type_index, constant_pool);
+			recursive_function(constant_pool[aux_index].InterfaceMethodref.class_index, constant_pool);
+      recursive_function(constant_pool[aux_index].InterfaceMethodref.name_and_type_index, constant_pool);
 			break;
 		case CONSTANT_String:
-			recursive_function(constant_pool[index].String.string_index, constant_pool);
+			recursive_function(constant_pool[aux_index].String.string_index, constant_pool);
 			break;
 		case CONSTANT_Integer:
-			printf("%d\n", constant_pool[index].Integer.bytes);
+			printf("%d\n", constant_pool[aux_index].Integer.bytes);
 			break;
 		case CONSTANT_Float:
-			printf("%u\n", constant_pool[index].Float.bytes);
+			printf("%u\n", constant_pool[aux_index].Float.bytes);
 			break;
 		case CONSTANT_Long:
-			printf("0x%.8X\n", constant_pool[index].Long.high_bytes);
-			printf("%.8X\n", constant_pool[index].Long.low_bytes);
+			printf("0x%.8X\n", constant_pool[aux_index].Long.high_bytes);
+			printf("%.8X\n", constant_pool[aux_index].Long.low_bytes);
 			break;
 		case CONSTANT_Double:
-			printf("0x%.8X\n", constant_pool[index].Double.high_bytes);
-			printf("%.8X\n", constant_pool[index].Double.low_bytes);
+			printf("0x%.8X\n", constant_pool[aux_index].Double.high_bytes);
+			printf("%.8X\n", constant_pool[aux_index].Double.low_bytes);
 			break;
 		case CONSTANT_NameAndType:
-			recursive_function(constant_pool[index].NameAndType.name_index, constant_pool);
-			recursive_function(constant_pool[index].NameAndType.descriptor_index, constant_pool);
+			recursive_function(constant_pool[aux_index].NameAndType.name_index, constant_pool);
+			recursive_function(constant_pool[aux_index].NameAndType.descriptor_index, constant_pool);
 			break;
 		case CONSTANT_Utf8:
-			printf("%s\n", constant_pool[index].Utf8.bytes);
+			printf("%s\n", constant_pool[aux_index].Utf8.bytes);
 			break;
 		case CONSTANT_MethodHandle:
-			recursive_function(constant_pool[index].MethodHandle.reference_kind, constant_pool);
-      recursive_function(constant_pool[index].MethodHandle.reference_index, constant_pool);
+			recursive_function(constant_pool[aux_index].MethodHandle.reference_kind, constant_pool);
+      recursive_function(constant_pool[aux_index].MethodHandle.reference_index, constant_pool);
 			break;
 		case CONSTANT_MethodType:
-			recursive_function(constant_pool[index].MethodType.descriptor_index, constant_pool);
+			recursive_function(constant_pool[aux_index].MethodType.descriptor_index, constant_pool);
 			break;
 		case CONSTANT_InvokeDynamic:
-			recursive_function(constant_pool[index].InvokeDynamic.bootstrap_method_attr_index, constant_pool);
-      recursive_function(constant_pool[index].InvokeDynamic.name_and_type_index, constant_pool);
+			recursive_function(constant_pool[aux_index].InvokeDynamic.bootstrap_method_attr_index, constant_pool);
+      recursive_function(constant_pool[aux_index].InvokeDynamic.name_and_type_index, constant_pool);
 			break;
 		default:
 			printf("essa constant pool inválida\n");
@@ -466,13 +468,16 @@ void print_class_file(ClassFile *cf)
     {
     case CONSTANT_Class:
       // printf("Class Name Index: %02d \n", recursive_function(cp->Class.name_index, cp));
+      printf("Class Name Index: ");
       recursive_function(cp->Class.name_index, cp);
       break;
     case CONSTANT_Fieldref:
-      printf("Fieldref Class Index: %02d \n", cp->Fieldref.class_index);
-      // recursive_function(cp->Fieldref.class_index, cp);
-      printf("Fieldref Name and Type Index: %02d \n", cp->Fieldref.name_and_type_index);
-      // recursive_function(cp->Fieldref.name_and_type_index, cp);
+      // printf("Fieldref Class Index: %02d \n", cp->Fieldref.class_index);
+      printf("Fieldref Class Index: ");
+      recursive_function(cp->Fieldref.class_index, cp);
+      // printf("Fieldref Name and Type Index: %02d \n", cp->Fieldref.name_and_type_index);
+      printf("Fieldref Name and Type Index: ");
+      recursive_function(cp->Fieldref.name_and_type_index, cp);
       break;
     case CONSTANT_Methodref:
       printf("Methodref Class Index: %02d \n", cp->Methodref.class_index);
