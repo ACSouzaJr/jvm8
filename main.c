@@ -27,6 +27,7 @@ void free_class_file(ClassFile *cf);
 char *readUtf8(cp_info *cp, u2 index);
 attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp);
 void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count);
+void recursive_function(u2 index, cp_info *constant_pool);
 
 int main(int argc, char const *argv[])
 {
@@ -378,6 +379,64 @@ void read_class_file(ClassFile *cf, FILE *fp)
   // }
 }
 
+void recursive_function(u2 index, cp_info *constant_pool){
+  switch(constant_pool[index].tag){
+		case CONSTANT_Class:
+			recursive_function(constant_pool[index].Class.name_index, constant_pool);
+			break;
+		case CONSTANT_Fieldref:
+			recursive_function(constant_pool[index].Fieldref.class_index, constant_pool);
+      recursive_function(constant_pool[index].Fieldref.name_and_type_index, constant_pool);
+			break;
+		case CONSTANT_Methodref:
+			recursive_function(constant_pool[index].Methodref.class_index, constant_pool);
+      recursive_function(constant_pool[index].Methodref.name_and_type_index, constant_pool);
+			break;
+		case CONSTANT_InterfaceMethodref:
+			recursive_function(constant_pool[index].InterfaceMethodref.class_index, constant_pool);
+      recursive_function(constant_pool[index].InterfaceMethodref.name_and_type_index, constant_pool);
+			break;
+		case CONSTANT_String:
+			recursive_function(constant_pool[index].String.string_index, constant_pool);
+			break;
+		case CONSTANT_Integer:
+			printf("%d\n", constant_pool[index].Integer.bytes);
+			break;
+		case CONSTANT_Float:
+			printf("%u\n", constant_pool[index].Float.bytes);
+			break;
+		case CONSTANT_Long:
+			printf("0x%.8X\n", constant_pool[index].Long.high_bytes);
+			printf("%.8X\n", constant_pool[index].Long.low_bytes);
+			break;
+		case CONSTANT_Double:
+			printf("0x%.8X\n", constant_pool[index].Double.high_bytes);
+			printf("%.8X\n", constant_pool[index].Double.low_bytes);
+			break;
+		case CONSTANT_NameAndType:
+			recursive_function(constant_pool[index].NameAndType.name_index, constant_pool);
+			recursive_function(constant_pool[index].NameAndType.descriptor_index, constant_pool);
+			break;
+		case CONSTANT_Utf8:
+			printf("%s\n", constant_pool[index].Utf8.bytes);
+			break;
+		case CONSTANT_MethodHandle:
+			recursive_function(constant_pool[index].MethodHandle.reference_kind, constant_pool);
+      recursive_function(constant_pool[index].MethodHandle.reference_index, constant_pool);
+			break;
+		case CONSTANT_MethodType:
+			recursive_function(constant_pool[index].MethodType.descriptor_index, constant_pool);
+			break;
+		case CONSTANT_InvokeDynamic:
+			recursive_function(constant_pool[index].InvokeDynamic.bootstrap_method_attr_index, constant_pool);
+      recursive_function(constant_pool[index].InvokeDynamic.name_and_type_index, constant_pool);
+			break;
+		default:
+			printf("essa constant pool inválida\n");
+	}
+}
+
+
 void print_class_file(ClassFile *cf)
 {
   printf("General Info \n");
@@ -401,47 +460,65 @@ void print_class_file(ClassFile *cf)
 
   for (cp_info *cp = cf->constant_pool; cp < cf->constant_pool + cf->constant_pool_count - 1; cp++)
   {
+    // AKI
     printf("TAG: %02d \n", cp->tag);
     switch (cp->tag)
     {
     case CONSTANT_Class:
-      printf("Class Name Index: %02d \n", cp->Class.name_index);
+      // printf("Class Name Index: %02d \n", recursive_function(cp->Class.name_index, cp));
+      recursive_function(cp->Class.name_index, cp);
       break;
     case CONSTANT_Fieldref:
       printf("Fieldref Class Index: %02d \n", cp->Fieldref.class_index);
+      // recursive_function(cp->Fieldref.class_index, cp);
       printf("Fieldref Name and Type Index: %02d \n", cp->Fieldref.name_and_type_index);
+      // recursive_function(cp->Fieldref.name_and_type_index, cp);
       break;
     case CONSTANT_Methodref:
       printf("Methodref Class Index: %02d \n", cp->Methodref.class_index);
+      // recursive_function(cp->Methodref.class_index, cp);
       printf("Methodref Name and Type Index: %02d \n", cp->Methodref.name_and_type_index);
+      // recursive_function(cp->Methodref.name_and_type_index, cp);
       break;
     case CONSTANT_InterfaceMethodref:
       printf("InterfaceMethodref Class Index: %02d \n", cp->InterfaceMethodref.class_index);
+      // recursive_function(cp->InterfaceMethodref.class_index, cp);
       printf("InterfaceMethodref Name and Type Index: %02d \n", cp->InterfaceMethodref.name_and_type_index);
+      // recursive_function(cp->InterfaceMethodref.name_and_type_index, cp);
       break;
     case CONSTANT_String:
       printf("String Index: %02d \n", cp->String.string_index);
+      // recursive_function(cp->String.string_index, cp);
       break;
     case CONSTANT_Integer:
       printf("Integer Bytes: %02d \n", cp->Integer.bytes);
+      // recursive_function(cp->Integer.bytes, cp);
       break;
     case CONSTANT_Float:
       printf("Float Bytes: %02d \n", cp->Float.bytes);
+      // recursive_function(cp->Float.bytes, cp);
       break;
     case CONSTANT_Long:
       printf("Long High Bytes: %02d \n", cp->Long.high_bytes);
+      // recursive_function(cp->Long.high_bytes, cp);
       printf("Long Low Bytes: %02d \n", cp->Long.low_bytes);
+      // recursive_function(cp->Long.low_bytes, cp);
       break;
     case CONSTANT_Double:
       printf("Double High Bytes: %02d \n", cp->Double.high_bytes);
+      // recursive_function(cp->Double.high_bytes, cp);
       printf("Double Low Bytes: %02d \n", cp->Double.low_bytes);
+      // recursive_function(cp->Double.low_bytes, cp);
       break;
     case CONSTANT_NameAndType:
       printf("Name and Type - Name Index: %02d \n", cp->NameAndType.name_index);
+      // recursive_function(cp->NameAndType.name_index, cp);
       printf("Name and Type - Descriptor Index: %02d \n", cp->NameAndType.descriptor_index);
+      // recursive_function(cp->NameAndType.descriptor_index, cp);
       break;
     case CONSTANT_Utf8:
       printf("UTF8 Length: %02d \n", cp->Utf8.length);
+      // recursive_function(cp->Utf8.length, cp);
       printf("Bytes: ");
       for (u1 *i = cp->Utf8.bytes; i < cp->Utf8.bytes + cp->Utf8.length; i++)
       {
