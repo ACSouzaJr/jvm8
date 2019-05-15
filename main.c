@@ -158,7 +158,7 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
   // attribute_info *field = (attribute_info *)malloc(sizeof(attribute_info) * attr_count);
   for (attribute_info *attr = field; attr < field + attr_count; attr++)
   {
-    printf("Attribute Name Index: %02d\n", attr->attribute_name_index);
+    printf("Attribute Name Index: cp info #%d <%s>\n", attr->attribute_name_index, readUtf8(cp, attr->attribute_name_index));
     printf("Attribute Length: %02d \n", attr->attribute_length);
     // printf("Attribute Name: %s \n", attr->constant_pool[ai->attribute_name_index - 1].Utf8.bytes);
 
@@ -181,12 +181,16 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
 
       printf("Exception length: %d\n", attr->info->Code_attribute.exception_table_length);
       // attr->info->Code_attribute.exception_table = (exception_table_type *)malloc(sizeof(exception_table_type) * attr->info->Code_attribute.exception_table_length);
+      printf("< --------------------- >\n");
+      printf("\tCode Exception \n");
+      printf("< --------------------- >\n");
       for (exception_table_type *i = attr->info->Code_attribute.exception_table; i < attr->info->Code_attribute.exception_table + attr->info->Code_attribute.exception_table_length; i++)
       {
         printf("Start pc: %d\n", i->start_pc);
         printf("End pc: %d\n", i->end_pc);
         printf("handler Pc: %d\n", i->handler_pc);
         printf("Catch type: %d\n", i->catch_type);
+        printf("< --------------------- >\n");
       }
       printf("Attributr Count: %d\n", attr->info->Code_attribute.attributes_count);
 
@@ -208,11 +212,11 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
     }
     else if (strcmp(attribute_name, "SourceFile") == 0)
     {
-      printf("Source file index: %d\n", attr->info->SourceFile_attribute.sourcefile_index);
+      printf("Source file Name index: cp info #%d <%s>\n", attr->info->SourceFile_attribute.sourcefile_index, readUtf8(cp, attr->info->SourceFile_attribute.sourcefile_index));
     }
     else if (strcmp(attribute_name, "LineNumberTable") == 0)
     {
-      printf("Line number table name: %d\n", attr->info->LineNumberTable_attribute.line_number_table_length);
+      printf("Line number table length: %d\n", attr->info->LineNumberTable_attribute.line_number_table_length);
       // attr->info->LineNumberTable_attribute.line_number_table = (line_number_table_type *)malloc(sizeof(line_number_table_type) * attr->info->LineNumberTable_attribute.line_number_table_length);
       for (line_number_table_type *i = attr->info->LineNumberTable_attribute.line_number_table; i < attr->info->LineNumberTable_attribute.line_number_table + attr->info->LineNumberTable_attribute.line_number_table_length; i++)
       {
@@ -566,11 +570,14 @@ void print_class_file(ClassFile *cf)
 
   for (method_info *mi = cf->methods; mi < cf->methods + cf->methods_count; mi++)
   {
-    printf("Methods Access Flags: %02d\n", mi->access_flags);
-    printf("Methods Name index: %02d\n", mi->name_index);
-    printf("Methods Descriptor Index: %02d\n", mi->descriptor_index);
-    printf("Methods Attributes Count: %02d\n", mi->attributes_count);
+    printf("Name: cp info #%d <%s>\n", mi->name_index, readUtf8(cf->constant_pool, mi->name_index));
+    printf("Descriptor: cp info #%d <%s>\n", mi->descriptor_index, readUtf8(cf->constant_pool, mi->descriptor_index));
+    printf("Access Flags: %#04x\n", mi->access_flags);
+    printf("Attributes Count: %02d\n", mi->attributes_count);
 
+    printf("< --------------------- >\n");
+    printf("\tMethods Attributes \n");
+    printf("< --------------------- >\n");
     printAttributes(mi->attributes, cf->constant_pool, mi->attributes_count);
 
     // for (attribute_info *ai = mi->attributes; ai < mi->attributes + mi->attributes_count; ai++)
