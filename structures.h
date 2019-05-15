@@ -117,59 +117,70 @@ typedef struct
 
 } cp_info;
 
+typedef struct attribute_info attribute_info;
+
 typedef struct
+{
+  u2 start_pc;
+  u2 line_number;
+} line_number_table_type;
+
+typedef struct
+{
+  u2 start_pc;
+  u2 end_pc;
+  u2 handler_pc;
+  u2 catch_type;
+} exception_table_type;
+
+typedef union {
+  struct
+  {
+    u2 constantvalue_index;
+  } ConstantValue_attribute;
+
+  struct
+  {
+    u2 line_number_table_length;
+    line_number_table_type *line_number_table;
+    //[line_number_table_length];
+  } LineNumberTable_attribute;
+
+  struct
+  {
+    u2 sourcefile_index;
+  } SourceFile_attribute;
+
+  struct
+  {
+  } Deprecated_attribute;
+
+  struct
+  {
+    u2 number_of_exceptions;
+    u2 *exception_index_table; //[number_of_exceptions];
+  } Exceptions_attribute;
+  struct
+  {
+    u2 max_stack;
+    u2 max_locals;
+    u4 code_length;
+    u1 *code; //[code_length];
+    u2 exception_table_length;
+    //[exception_table_length];
+    exception_table_type *exception_table;
+    u2 attributes_count;
+    attribute_info *attributes; //[attributes_count];
+  } Code_attribute;
+} attribute_types;
+
+struct attribute_info
 {
   u2 attribute_name_index;
   u4 attribute_length;
-  union {
-    struct
-    {
-      u2 constantvalue_index;
-    } ConstantValue_attribute;
-
-    struct
-    {
-      u2 line_number_table_length;
-      struct
-      {
-        u2 start_pc;
-        u2 line_number;
-      } * line_number_table; //[line_number_table_length];
-    } LineNumberTable_attribute;
-
-    struct
-    {
-      u2 sourcefile_index;
-    } SourceFile_attribute;
-
-    struct
-    {
-    } Deprecated_attribute;
-
-    struct
-    {
-      u2 number_of_exceptions;
-      u2 *exception_index_table; //[number_of_exceptions];
-    } Exceptions_attribute;
-    struct
-    {
-      u2 max_stack;
-      u2 max_locals;
-      u4 code_length;
-      u1 *code; //[code_length];
-      u2 exception_table_length;
-      struct
-      {
-        u2 start_pc;
-        u2 end_pc;
-        u2 handler_pc;
-        u2 catch_type;
-      } * exception_table; //[exception_table_length];
-      u2 attributes_count;
-      attribute_info *attributes; //[attributes_count];
-    } Code_attribute;
-  } * info; //[attribute_length];
-} attribute_info;
+  attribute_types *info;
+  //[attribute_length];
+};
 
 typedef struct
 {

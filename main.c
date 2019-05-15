@@ -24,7 +24,8 @@ u4 u4Read(FILE *);
 void read_class_file(ClassFile *, FILE *);
 void print_class_file(ClassFile *cf);
 void free_class_file(ClassFile *cf);
-char *lerUtf8(void);
+char *readUtf8(cp_info *cp, u2 index);
+attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp);
 
 int main(int argc, char const *argv[])
 {
@@ -35,8 +36,8 @@ int main(int argc, char const *argv[])
   // printf("%x", u4Read(pFile));
   read_class_file(cf, pFile);
   fclose(pFile);
-  print_class_file(cf);
-  free_class_file(cf);
+  // print_class_file(cf);
+  // free_class_file(cf);
   free(cf);
   return 0;
 }
@@ -72,8 +73,83 @@ u4 u4Read(FILE *file)
   return toReturn;
 }
 
-char *lerUtf8(void)
+char *readUtf8(cp_info *cp, u2 index)
 {
+  return (char *)(cp[index - 1]).Utf8.bytes;
+}
+
+attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
+{
+  attribute_info *field = (attribute_info *)malloc(sizeof(attribute_info) * attr_count);
+  for (attribute_info *attr = field; attr < field + attr_count; attr++)
+  {
+    attr->attribute_name_index = u2Read(fp);
+    attr->attribute_length = u4Read(fp);
+    attr->info = (attribute_types *)malloc(sizeof(attribute_types) * attr->attribute_length);
+
+    char *attribute_name = readUtf8(cp, attr->attribute_name_index);
+
+    if (strcmp(attribute_name, "Code") == 0)
+    {
+      attr->info->Code_attribute.max_stack = u2Read(fp);
+      attr->info->Code_attribute.max_locals = u2Read(fp);
+      attr->info->Code_attribute.code_length = u4Read(fp);
+      attr->info->Code_attribute.code = (u1 *)malloc(sizeof(u1) * attr->info->Code_attribute.code_length);
+      for (u1 *i = attr->info->Code_attribute.code; i < attr->info->Code_attribute.code + attr->info->Code_attribute.code_length; i++)
+      {
+        *i = u1Read(fp);
+      }
+
+      attr->info->Code_attribute.exception_table_length = u2Read(fp);
+      attr->info->Code_attribute.exception_table = (exception_table_type *)malloc(sizeof(exception_table_type) * attr->info->Code_attribute.exception_table_length);
+      for (exception_table_type *i = attr->info->Code_attribute.exception_table; i < attr->info->Code_attribute.exception_table + attr->info->Code_attribute.exception_table_length; i++)
+      {
+        i->start_pc = u2Read(fp);
+        i->end_pc = u2Read(fp);
+        i->handler_pc = u2Read(fp);
+        i->catch_type = u2Read(fp);
+      }
+      attr->info->Code_attribute.attributes_count = u2Read(fp);
+
+      attr->info->Code_attribute.attributes = readAttributes(cp, attr->info->Code_attribute.attributes_count, fp);
+    }
+    else if (strcmp(attribute_name, "Exceptions") == 0)
+    {
+      attr->info->Exceptions_attribute.number_of_exceptions = u2Read(fp);
+      attr->info->Exceptions_attribute.exception_index_table = (u2 *)malloc(sizeof(u2) * attr->info->Exceptions_attribute.number_of_exceptions);
+      for (u2 *i = 0; i < attr->info->Exceptions_attribute.exception_index_table + attr->info->Exceptions_attribute.number_of_exceptions; i++)
+      {
+        *i = u2Read(fp);
+      }
+    }
+    else if (strcmp(attribute_name, "Deprecated") == 0)
+    {
+      /* code */
+    }
+    else if (strcmp(attribute_name, "SourceFile") == 0)
+    {
+      attr->info->SourceFile_attribute.sourcefile_index = u2Read(fp);
+    }
+    else if (strcmp(attribute_name, "LineNumberTable") == 0)
+    {
+      attr->info->LineNumberTable_attribute.line_number_table_length = u2Read(fp);
+      attr->info->LineNumberTable_attribute.line_number_table = (line_number_table_type *)malloc(sizeof(line_number_table_type) * attr->info->LineNumberTable_attribute.line_number_table_length);
+      for (line_number_table_type *i = attr->info->LineNumberTable_attribute.line_number_table; i < attr->info->LineNumberTable_attribute.line_number_table + attr->info->LineNumberTable_attribute.line_number_table_length; i++)
+      {
+        i->start_pc = u2Read(fp);
+        i->line_number = u2Read(fp);
+      }
+    }
+    else if (strcmp(attribute_name, "ConstantValue") == 0)
+    {
+      attr->info->ConstantValue_attribute.constantvalue_index = u2Read(fp);
+    }
+    else
+    {
+      /* code */
+    }
+  }
+  return field;
 }
 
 void read_class_file(ClassFile *cf, FILE *fp)
@@ -177,58 +253,8 @@ void read_class_file(ClassFile *cf, FILE *fp)
     field->name_index = u2Read(fp);
     field->descriptor_index = u2Read(fp);
     field->attributes_count = u2Read(fp);
-    field->attributes = (attribute_info *)malloc(sizeof(attribute_info) * field->attributes_count);
-    for (attribute_info *attr = field->attributes; attr < field->attributes + field->attributes_count; attr++)
-    {
-      attr->attribute_name_index = u2Read(fp);
-      attr->attribute_length = u4Read(fp);
-      attr->info = (u1 *)malloc(sizeof(u1 *) * attr->attribute_length);
-      // for (
-      //     u1 *i = attr->info; i < i + attr->attribute_length; i++)
-      // {
-      //   *i = u1Read(fp);
-      // }
 
-      char *attribute_name;
-
-      if (strcmp(attribute_name, "Code") == 0)
-      {
-        attr->info->Code_attribute.max_stack = u2Read(fp);
-        attr->info->Code_attribute.max_locals = u2Read(fp);
-        attr->info->Code_attribute.code_length = u4Read(fp);
-        attr->info->Code_attribute.code = (u1 *)malloc(sizeof(u1) * attr->info->Code_attribute.code_length);
-        for (u1 *i = attr->info->Code_attribute.code; i < attr->info->Code_attribute.code + attr->info->Code_attribute.code_length; i++)
-        {
-          /* code */
-        }
-
-        attr->info->Code_attribute.exception_table_length = u2Read(fp);
-      }
-      else if (strcmp(attribute_name, "Exceptions") == 0)
-      {
-        /* code */
-      }
-      else if (strcmp(attribute_name, "Deprecated") == 0)
-      {
-        /* code */
-      }
-      else if (strcmp(attribute_name, "SourceFile") == 0)
-      {
-        /* code */
-      }
-      else if (strcmp(attribute_name, "LineNumberTable") == 0)
-      {
-        /* code */
-      }
-      else if (strcmp(attribute_name, "ConstantValue") == 0)
-      {
-        /* code */
-      }
-      else
-      {
-        /* code */
-      }
-    }
+    field->attributes = readAttributes(cf->constant_pool, field->attributes_count, fp);
   }
 
   cf->methods_count = u2Read(fp);
@@ -240,34 +266,37 @@ void read_class_file(ClassFile *cf, FILE *fp)
     method->name_index = u2Read(fp);
     method->descriptor_index = u2Read(fp);
     method->attributes_count = u2Read(fp);
-    method->attributes = (attribute_info *)malloc(sizeof(attribute_info) * method->attributes_count);
-    for (attribute_info *attr = method->attributes; attr < method->attributes + method->attributes_count; attr++)
-    {
-      attr->attribute_name_index = u2Read(fp);
-      attr->attribute_length = u4Read(fp);
-      attr->info = (u1 *)malloc(sizeof(u1 *) * attr->attribute_length);
-      for (
-          u1 *i = attr->info; i < attr->info + attr->attribute_length; i++)
-      {
-        *i = u1Read(fp);
-      }
-    }
+    method->attributes = readAttributes(cf->constant_pool, method->attributes_count, fp);
+    // method->attributes = (attribute_info *)malloc(sizeof(attribute_info) * method->attributes_count);
+    // for (attribute_info *attr = method->attributes; attr < method->attributes + method->attributes_count; attr++)
+    // {
+    //   attr->attribute_name_index = u2Read(fp);
+    //   attr->attribute_length = u4Read(fp);
+    //   attr->info = (u1 *)malloc(sizeof(u1 *) * attr->attribute_length);
+    //   for (
+    //       u1 *i = attr->info; i < attr->info + attr->attribute_length; i++)
+    //   {
+    //     *i = u1Read(fp);
+    //   }
+    // }
   }
 
   cf->attributes_count = u2Read(fp);
   // attributes -> attributes_info
-  cf->attributes = (attribute_info *)malloc(sizeof(attribute_info) * cf->attributes_count);
-  for (attribute_info *attr = cf->attributes; attr < cf->attributes + cf->attributes_count; attr++)
-  {
-    attr->attribute_name_index = u2Read(fp);
-    attr->attribute_length = u4Read(fp);
-    attr->info = (u1 *)malloc(sizeof(u1 *) * attr->attribute_length);
-    for (
-        u1 *i = attr->info; i < attr->info + attr->attribute_length; i++)
-    {
-      *i = u1Read(fp);
-    }
-  }
+  cf->attributes = readAttributes(cf->constant_pool, cf->attributes_count, fp);
+
+  // cf->attributes = (attribute_info *)malloc(sizeof(attribute_info) * cf->attributes_count);
+  // for (attribute_info *attr = cf->attributes; attr < cf->attributes + cf->attributes_count; attr++)
+  // {
+  //   attr->attribute_name_index = u2Read(fp);
+  //   attr->attribute_length = u4Read(fp);
+  //   attr->info = (u1 *)malloc(sizeof(u1 *) * attr->attribute_length);
+  //   for (
+  //       u1 *i = attr->info; i < attr->info + attr->attribute_length; i++)
+  //   {
+  //     *i = u1Read(fp);
+  //   }
+  // }
 }
 
 void print_class_file(ClassFile *cf)
