@@ -405,6 +405,7 @@ void recursive_print(cp_info *cp, u2 index)
     break;
   case CONSTANT_String:
     // printf("String Index: %02d \n", cp->String.string_index);
+    recursive_print(cp, cp[index - 1].String.string_index);
     break;
   case CONSTANT_Integer:
     // printf("Integer Bytes: %02d \n", cp->Integer.bytes);
