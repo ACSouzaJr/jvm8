@@ -16,6 +16,7 @@ Alunos: Nicholas Marques - 15/0019343
 #include <stdio.h>
 #include <string.h>
 #include "structures.h"
+#include "instructions.h"
 
 u1 u1Read(FILE *);
 u2 u2Read(FILE *);
@@ -38,6 +39,8 @@ int main(int argc, char const *argv[])
   read_class_file(cf, pFile);
   fclose(pFile);
   print_class_file(cf);
+  initialize_op_codes();
+  printf("%s\n", op_codes_array[0].value);
   // free_class_file(cf);
   free(cf);
   return 0;

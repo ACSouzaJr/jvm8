@@ -1,13 +1,15 @@
-#include "structures.h"
+#include <stdint.h>
 
-typedef struct {
-  u1 key;
-  char * value;
-  int arguments;
-  int references;
+typedef struct
+{
+  uint8_t key;
+  char value[30];
+  uint8_t arguments;
+  uint16_t references;
 } op_code;
 
 extern op_code op_codes_array[300];
+void initialize_op_codes();
 
 enum
 {

@@ -3,12 +3,10 @@
 #include <string.h>
 #include "instructions.h"
 
-const char *INSTR_TABLESWITCH = "tableswitch";
-const char *INSTR_LOOKUPSWITCH = "lookupswitch";
-
 op_code op_codes_array[300];
 
-void initialize_op_codes(){
+void initialize_op_codes()
+{
   strcpy(op_codes_array[0].value, "nop");
   op_codes_array[0].arguments = 0;
 
@@ -688,12 +686,12 @@ void initialize_op_codes(){
   op_codes_array[169].arguments = 1;
   op_codes_array[169].references = 0;
 
-  strcpy(op_codes_array[170].value, INSTR_TABLESWITCH);
+  strcpy(op_codes_array[170].value, "tableswitch");
   // instrução tem tamanho variável
   op_codes_array[170].arguments = 34;
   op_codes_array[170].references = 0;
 
-  strcpy(op_codes_array[171].value, INSTR_LOOKUPSWITCH);
+  strcpy(op_codes_array[171].value, "lookupswitch");
   // instrução tem tamanho variável
   op_codes_array[171].arguments = 26;
   op_codes_array[171].references = 0;
@@ -818,7 +816,6 @@ void initialize_op_codes(){
   op_codes_array[201].arguments = 4;
   op_codes_array[201].references = 0;
 
-
   // reservados
   strcpy(op_codes_array[202].value, "breakpoint");
   op_codes_array[200].arguments = 0;
@@ -827,5 +824,5 @@ void initialize_op_codes(){
   op_codes_array[254].arguments = 0;
 
   strcpy(op_codes_array[255].value, "impdep2");
-  op_codes_array[255].arguments = 0;  
+  op_codes_array[255].arguments = 0;
 };
