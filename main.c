@@ -176,7 +176,6 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
       printf("Code: ");
       for (u1 *i = attr->info->Code_attribute.code; i < attr->info->Code_attribute.code + attr->info->Code_attribute.code_length; i++)
       {
-        // *i = u1Read(fp);
         printf("%02x ", *i);
       }
 
@@ -251,7 +250,6 @@ void read_class_file(ClassFile *cf, FILE *fp)
   for (cp_info *cp = cf->constant_pool; cp < cf->constant_pool + cf->constant_pool_count - 1; cp++)
   {
     cp->tag = u1Read(fp);
-    // printf("Aqui!:::::%x", cp->tag);
     switch (cp->tag)
     {
     case CONSTANT_Class:
