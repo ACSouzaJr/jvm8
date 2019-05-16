@@ -28,6 +28,7 @@ void free_class_file(ClassFile *cf);
 char *readUtf8(cp_info *cp, u2 index);
 attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp);
 void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count);
+void recursive_print(cp_info *cp, u2 index);
 
 int main(int argc, char const *argv[])
 {
@@ -38,9 +39,10 @@ int main(int argc, char const *argv[])
   // printf("%x", u4Read(pFile));
   read_class_file(cf, pFile);
   fclose(pFile);
-  print_class_file(cf);
   initialize_op_codes();
   printf("%s\n", op_codes_array[0].value);
+  printf("%s\n", op_codes_array[42].value);
+  print_class_file(cf);
   // free_class_file(cf);
   free(cf);
   return 0;
@@ -173,10 +175,29 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
       printf("Max locals: %d\n", attr->info->Code_attribute.max_locals);
       printf("Code length: %d\n", attr->info->Code_attribute.code_length);
 
-      printf("Code: ");
+      printf("Code: \n");
       for (u1 *i = attr->info->Code_attribute.code; i < attr->info->Code_attribute.code + attr->info->Code_attribute.code_length; i++)
       {
-        printf("%02x ", *i);
+        // printf("%02x ", *i);
+        u1 index;
+        printf("%s ", op_codes_array[*i].value);
+        if (op_codes_array[*i].arguments)
+        {
+          // args_num = op_codes_array[*i].arguments;
+          index = *i;
+          for (size_t j = 0; j < op_codes_array[index].arguments; j++)
+          {
+            i++;
+            printf("%02x ", *i);
+            if (*i && op_codes_array[index].references)
+            {
+              // printf("%s", readUtf8(cp, ));
+              // printf("Aqui!! %02x %s", *i, );
+              recursive_print(cp, *i);
+            }
+          }
+        }
+        printf("\n");
       }
 
       printf("\n");
