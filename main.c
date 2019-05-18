@@ -32,7 +32,7 @@ void recursive_print(cp_info *cp, u2 index);
 
 int main(int argc, char const *argv[])
 {
-  FILE *pFile = fopen("HelloWorld.class", "rb");
+  FILE *pFile = fopen("Fibonacci.class", "rb");
   ClassFile *cf = (ClassFile *)malloc(sizeof(ClassFile));
   // printf("%x", u1Read(pFile));
   // printf("%x", readUnsignedShort(pFile));
