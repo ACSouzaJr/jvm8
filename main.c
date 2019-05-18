@@ -29,6 +29,8 @@ char *readUtf8(cp_info *cp, u2 index);
 attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp);
 void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count);
 void recursive_print(cp_info *cp, u2 index);
+verification_type_info *fillVerificationTypeInfo(FILE *fp, u2 verification_type_length);
+stack_map_frame *fillStackMapTable(attribute_info *attr, FILE *fp);
 void freeAttributes(attribute_info *field, cp_info *cp, u2 attr_count);
 
 int main(int argc, char const *argv[])
@@ -165,6 +167,27 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
   return field;
 }
 
+verification_type_info *fillVerificationTypeInfo(FILE *fp, u2 verification_type_length)
+{
+  verification_type_info *ver_type = (verification_type_info *)malloc(sizeof(verification_type_info));
+
+  for (verification_type_info *vp = ver_type; vp < ver_type + verification_type_length; vp++)
+  {
+    vp->tag = u1Read(fp);
+
+    if (vp->tag == 7) //Object_variable_info
+    {
+      vp->object_variable_info.cpool_index = u2Read(fp);
+    }
+    else if (vp->tag == 8) //Uninitialized_variable_info
+    {
+      vp->uninitialized_variable_info.offset = u2Read(fp);
+    }
+  }
+
+  return ver_type;
+}
+
 stack_map_frame *fillStackMapTable(attribute_info *attr, FILE *fp)
 {
   stack_map_frame *stack_map = (stack_map_frame *)malloc(sizeof(stack_map_frame) * attr->info->StackMapTable_attribute.number_of_entries);
@@ -172,34 +195,48 @@ stack_map_frame *fillStackMapTable(attribute_info *attr, FILE *fp)
   for (stack_map_frame *smp = stack_map; smp < stack_map + attr->info->StackMapTable_attribute.number_of_entries; smp++)
   {
     smp->frame_type = u1Read(fp);
-    if (smp->frame_type < 64)
+    if (smp->frame_type < 64) // 0 a 63
     {
       //continue
     }
-    else if (smp->frame_type < 128)
+    else if (smp->frame_type < 128) // 64 a 127
     {
-      // smp->verification_type_info
+      stack_map->same_locals_1_stack_item_frame.stack = fillVerificationTypeInfo(fp, 2);
     }
-    else if (smp->frame_type < 247)
+    else if (smp->frame_type < 247) // 128 a 246
     {
+      // for future use
     }
-    else if (smp->frame_type < 248)
+    else if (smp->frame_type < 248) // = 247
     {
+      stack_map->same_locals_1_stack_item_frame_extended.offset_delta = u2Read(fp);
+      stack_map->same_locals_1_stack_item_frame_extended.stack = fillVerificationTypeInfo(fp, 2);
     }
-    else if (smp->frame_type < 251)
+    else if (smp->frame_type < 251) // 248 a 250
     {
+      stack_map->chop_frame.offset_delta = u2Read(fp);
     }
-    else if (smp->frame_type < 252)
+    else if (smp->frame_type < 252) // = 251
     {
+      stack_map->same_frame_extended.offset_delta = u2Read(fp);
     }
-    else if (smp->frame_type < 255)
+    else if (smp->frame_type < 255) // 252 a 254
     {
+      stack_map->append_frame.offset_delta = u2Read(fp);
+      stack_map->append_frame.locals = fillVerificationTypeInfo(fp, smp->frame_type - 251);
     }
     else
-    {
+    { // = 255
+      stack_map->full_frame.offset_delta = u2Read(fp);
+      stack_map->full_frame.number_of_locals = u2Read(fp);
+      stack_map->full_frame.locals = fillVerificationTypeInfo(fp, stack_map->full_frame.number_of_locals);
+      stack_map->full_frame.number_of_stack_items = u2Read(fp);
+      stack_map->full_frame.stack = fillVerificationTypeInfo(fp, stack_map->full_frame.number_of_stack_items);
     }
   }
+  return stack_map;
 }
+
 void freeAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
 {
   // attribute_info *field = (attribute_info *)malloc(sizeof(attribute_info) * attr_count);
@@ -625,12 +662,10 @@ void print_class_file(ClassFile *cf)
 
   for (cp_info *cp = cf->constant_pool; cp < cf->constant_pool + cf->constant_pool_count - 1; cp++)
   {
-    // AKI
     printf("TAG: %02d \n", cp->tag);
     switch (cp->tag)
     {
     case CONSTANT_Class:
-      // printf("Class Name Index: %02d \n", recursive_function(cp->Class.name_index, cp));
       recursive_print(cf->constant_pool, cp->Class.name_index);
       break;
     case CONSTANT_Fieldref:
@@ -653,27 +688,20 @@ void print_class_file(ClassFile *cf)
       break;
     case CONSTANT_String:
       printf("String Index: %02d \n", cp->String.string_index);
-      // recursive_function(cp->String.string_index, cp);
       break;
     case CONSTANT_Integer:
       printf("Integer Bytes: %02d \n", cp->Integer.bytes);
-      // recursive_function(cp->Integer.bytes, cp);
       break;
     case CONSTANT_Float:
       printf("Float Bytes: %02d \n", cp->Float.bytes);
-      // recursive_function(cp->Float.bytes, cp);
       break;
     case CONSTANT_Long:
       printf("Long High Bytes: %02d \n", cp->Long.high_bytes);
-      // recursive_function(cp->Long.high_bytes, cp);
       printf("Long Low Bytes: %02d \n", cp->Long.low_bytes);
-      // recursive_function(cp->Long.low_bytes, cp);
       break;
     case CONSTANT_Double:
       printf("Double High Bytes: %02d \n", cp->Double.high_bytes);
-      // recursive_function(cp->Double.high_bytes, cp);
       printf("Double Low Bytes: %02d \n", cp->Double.low_bytes);
-      // recursive_function(cp->Double.low_bytes, cp);
       break;
     case CONSTANT_NameAndType:
       printf("Name and Type - Name Index: %02d \n", cp->NameAndType.name_index);
@@ -683,7 +711,6 @@ void print_class_file(ClassFile *cf)
       break;
     case CONSTANT_Utf8:
       printf("UTF8 Length: %02d \n", cp->Utf8.length);
-      // recursive_function(cp->Utf8.length, cp);
       printf("Bytes: ");
       for (u1 *i = cp->Utf8.bytes; i < cp->Utf8.bytes + cp->Utf8.length; i++)
       {

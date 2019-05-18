@@ -180,54 +180,58 @@ typedef struct
   // u1 tag = ITEM_Double; /* 3 */
 } Double_variable_info;
 
-typedef union {
-  Top_variable_info;
-  Integer_variable_info;
-  Float_variable_info;
-  Long_variable_info;
-  Double_variable_info;
-  Null_variable_info;
-  UninitializedThis_variable_info;
-  Object_variable_info;
-  Uninitialized_variable_info;
+typedef struct
+{
+  u1 tag;
+  union {
+    Top_variable_info top_variable_info;
+    Integer_variable_info integer_variable_info;
+    Float_variable_info float_variable_info;
+    Long_variable_info long_variable_info;
+    Double_variable_info double_variable_info;
+    Null_variable_info null_variable_info;
+    UninitializedThis_variable_info uninitializedThis_variable_info;
+    Object_variable_info object_variable_info;
+    Uninitialized_variable_info uninitialized_variable_info;
+  };
 } verification_type_info;
 
 typedef struct
 {
   //u1 frame_type; /* = SAME 0-63 */
-} same_frame;
+} Same_frame;
 
 typedef struct
 {
   //u1 frame_type;// = SAME_LOCALS_1_STACK_ITEM; /* 64-127 */
-  verification_type_info stack[1];
-} same_locals_1_stack_item_frame;
+  verification_type_info *stack; //[1];
+} Same_locals_1_stack_item_frame;
 
 typedef struct
 {
   //u1 frame_type;// = SAME_LOCALS_1_STACK_ITEM_EXTENDED; /* 247 */
   u2 offset_delta;
-  verification_type_info stack[1];
-} same_locals_1_stack_item_frame_extended;
+  verification_type_info *stack; //[1];
+} Same_locals_1_stack_item_frame_extended;
 
 typedef struct
 {
   //u1 frame_type; // = CHOP; /* 248-250 */
   u2 offset_delta;
-} chop_frame;
+} Chop_frame;
 
 typedef struct
 {
   //u1 frame_type; // = SAME_FRAME_EXTENDED; /* 251 */
   u2 offset_delta;
-} same_frame_extended;
+} Same_frame_extended;
 
 typedef struct
 {
   //u1 frame_type; // = APPEND; /* 252-254 */
   u2 offset_delta;
   verification_type_info *locals; //[frame_type - 251];
-} append_frame;
+} Append_frame;
 
 typedef struct
 {
@@ -237,19 +241,19 @@ typedef struct
   verification_type_info *locals; //[number_of_locals];
   u2 number_of_stack_items;
   verification_type_info *stack; //[number_of_stack_items];
-} full_frame;
+} Full_frame;
 
 typedef struct
 {
   u1 frame_type;
   union {
-    same_frame;
-    same_locals_1_stack_item_frame;
-    same_locals_1_stack_item_frame_extended;
-    chop_frame;
-    same_frame_extended;
-    append_frame;
-    full_frame;
+    Same_frame same_frame;
+    Same_locals_1_stack_item_frame same_locals_1_stack_item_frame;
+    Same_locals_1_stack_item_frame_extended same_locals_1_stack_item_frame_extended;
+    Chop_frame chop_frame;
+    Same_frame_extended same_frame_extended;
+    Append_frame append_frame;
+    Full_frame full_frame;
   };
 } stack_map_frame;
 
