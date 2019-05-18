@@ -146,10 +146,11 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
         i->line_number = u2Read(fp);
       }
     }
-    else if(strcmp(attribute_name, "StackMapTable") == 0)
+    else if (strcmp(attribute_name, "StackMapTable") == 0)
     {
-      attr->info->StackMapTable_attribute.number_of_entries = u2Read(fp);
-      attr->info->StackMapTable_attribute.entries = fillStackMapTable(attr, fp);
+      // attr->info->StackMapTable_attribute.number_of_entries = u2Read(fp);
+      // attr->info->StackMapTable_attribute.entries = fillStackMapTable(attr, fp);
+      fseek(fp, attr->attribute_length, SEEK_CUR);
     }
     else if (strcmp(attribute_name, "ConstantValue") == 0)
     {
@@ -163,43 +164,38 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
   return field;
 }
 
-stack_map_frame * fillStackMapTable(attribute_info * attr, FILE *fp)
+stack_map_frame *fillStackMapTable(attribute_info *attr, FILE *fp)
 {
-  stack_map_frame * stack_map = (stack_map_frame *)malloc(sizeof(stack_map_frame)*attr->info->StackMapTable_attribute.number_of_entries);
-  
-  for(stack_map_frame* smp = stack_map; smp < stack_map + attr->info->StackMapTable_attribute.number_of_entries; smp++)
+  stack_map_frame *stack_map = (stack_map_frame *)malloc(sizeof(stack_map_frame) * attr->info->StackMapTable_attribute.number_of_entries);
+
+  for (stack_map_frame *smp = stack_map; smp < stack_map + attr->info->StackMapTable_attribute.number_of_entries; smp++)
   {
     smp->frame_type = u1Read(fp);
-    if(smp->frame_type < 64)
+    if (smp->frame_type < 64)
     {
       //continue
     }
-    else if(smp->frame_type < 128)
+    else if (smp->frame_type < 128)
     {
-      smp->verification_type_info
+      // smp->verification_type_info
     }
-    else if(smp->frame_type < 247)
+    else if (smp->frame_type < 247)
     {
-
     }
-    else if(smp->frame_type < 248)
+    else if (smp->frame_type < 248)
     {
-
     }
-    else if(smp->frame_type < 251)
+    else if (smp->frame_type < 251)
     {
-
     }
-    else if(smp->frame_type < 252)
+    else if (smp->frame_type < 252)
     {
-
     }
-    else if(smp->frame_type < 255)
+    else if (smp->frame_type < 255)
     {
-
     }
-    else {
-
+    else
+    {
     }
   }
 }
