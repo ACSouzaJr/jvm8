@@ -546,11 +546,13 @@ void print_class_file(ClassFile *cf)
 
   for (cp_info *cp = cf->constant_pool; cp < cf->constant_pool + cf->constant_pool_count - 1; cp++)
   {
+    // AKI
     printf("TAG: %02d \n", cp->tag);
     switch (cp->tag)
     {
     case CONSTANT_Class:
-      printf("Class Name Index: %02d \n", cp->Class.name_index);
+      // printf("Class Name Index: %02d \n", recursive_function(cp->Class.name_index, cp));
+      recursive_print(cf->constant_pool, cp->Class.name_index);
       break;
     case CONSTANT_Fieldref:
       printf("Fieldref Class Index: %02d \n", cp->Fieldref.class_index);
@@ -572,20 +574,27 @@ void print_class_file(ClassFile *cf)
       break;
     case CONSTANT_String:
       printf("String Index: %02d \n", cp->String.string_index);
+      // recursive_function(cp->String.string_index, cp);
       break;
     case CONSTANT_Integer:
       printf("Integer Bytes: %02d \n", cp->Integer.bytes);
+      // recursive_function(cp->Integer.bytes, cp);
       break;
     case CONSTANT_Float:
       printf("Float Bytes: %02d \n", cp->Float.bytes);
+      // recursive_function(cp->Float.bytes, cp);
       break;
     case CONSTANT_Long:
       printf("Long High Bytes: %02d \n", cp->Long.high_bytes);
+      // recursive_function(cp->Long.high_bytes, cp);
       printf("Long Low Bytes: %02d \n", cp->Long.low_bytes);
+      // recursive_function(cp->Long.low_bytes, cp);
       break;
     case CONSTANT_Double:
       printf("Double High Bytes: %02d \n", cp->Double.high_bytes);
+      // recursive_function(cp->Double.high_bytes, cp);
       printf("Double Low Bytes: %02d \n", cp->Double.low_bytes);
+      // recursive_function(cp->Double.low_bytes, cp);
       break;
     case CONSTANT_NameAndType:
       printf("Name and Type - Name Index: %02d \n", cp->NameAndType.name_index);
@@ -595,6 +604,7 @@ void print_class_file(ClassFile *cf)
       break;
     case CONSTANT_Utf8:
       printf("UTF8 Length: %02d \n", cp->Utf8.length);
+      // recursive_function(cp->Utf8.length, cp);
       printf("Bytes: ");
       for (u1 *i = cp->Utf8.bytes; i < cp->Utf8.bytes + cp->Utf8.length; i++)
       {
