@@ -16,6 +16,7 @@ Alunos: Nicholas Marques - 15/0019343
 #include <stdio.h>
 #include <string.h>
 #include "structures.h"
+#include "instructions.h"
 
 u1 u1Read(FILE *);
 u2 u2Read(FILE *);
@@ -27,6 +28,7 @@ void free_class_file(ClassFile *cf);
 char *readUtf8(cp_info *cp, u2 index);
 attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp);
 void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count);
+void recursive_print(cp_info *cp, u2 index);
 
 int main(int argc, char const *argv[])
 {
@@ -37,6 +39,9 @@ int main(int argc, char const *argv[])
   // printf("%x", u4Read(pFile));
   read_class_file(cf, pFile);
   fclose(pFile);
+  initialize_op_codes();
+  printf("%s\n", op_codes_array[0].value);
+  printf("%s\n", op_codes_array[42].value);
   print_class_file(cf);
   // free_class_file(cf);
   free(cf);
@@ -158,7 +163,7 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
   // attribute_info *field = (attribute_info *)malloc(sizeof(attribute_info) * attr_count);
   for (attribute_info *attr = field; attr < field + attr_count; attr++)
   {
-    printf("Attribute Name Index: cp info #%d <%s>\n", attr->attribute_name_index, readUtf8(cp, attr->attribute_name_index));
+    printf("Attribute Name Index: %02d\n", attr->attribute_name_index);
     printf("Attribute Length: %02d \n", attr->attribute_length);
     // printf("Attribute Name: %s \n", attr->constant_pool[ai->attribute_name_index - 1].Utf8.bytes);
 
@@ -170,27 +175,41 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
       printf("Max locals: %d\n", attr->info->Code_attribute.max_locals);
       printf("Code length: %d\n", attr->info->Code_attribute.code_length);
 
-      printf("Code: ");
+      printf("Code: \n");
       for (u1 *i = attr->info->Code_attribute.code; i < attr->info->Code_attribute.code + attr->info->Code_attribute.code_length; i++)
       {
-        // *i = u1Read(fp);
-        printf("%02x ", *i);
+        // printf("%02x ", *i);
+        u1 index;
+        printf("%s ", op_codes_array[*i].value);
+        if (op_codes_array[*i].arguments)
+        {
+          // args_num = op_codes_array[*i].arguments;
+          index = *i;
+          for (size_t j = 0; j < op_codes_array[index].arguments; j++)
+          {
+            i++;
+            printf("%02x ", *i);
+            if (*i && op_codes_array[index].references)
+            {
+              // printf("%s", readUtf8(cp, ));
+              // printf("Aqui!! %02x %s", *i, );
+              recursive_print(cp, *i);
+            }
+          }
+        }
+        printf("\n");
       }
 
       printf("\n");
 
       printf("Exception length: %d\n", attr->info->Code_attribute.exception_table_length);
       // attr->info->Code_attribute.exception_table = (exception_table_type *)malloc(sizeof(exception_table_type) * attr->info->Code_attribute.exception_table_length);
-      printf("< --------------------- >\n");
-      printf("\tCode Exception \n");
-      printf("< --------------------- >\n");
       for (exception_table_type *i = attr->info->Code_attribute.exception_table; i < attr->info->Code_attribute.exception_table + attr->info->Code_attribute.exception_table_length; i++)
       {
         printf("Start pc: %d\n", i->start_pc);
         printf("End pc: %d\n", i->end_pc);
         printf("handler Pc: %d\n", i->handler_pc);
         printf("Catch type: %d\n", i->catch_type);
-        printf("< --------------------- >\n");
       }
       printf("Attributr Count: %d\n", attr->info->Code_attribute.attributes_count);
 
@@ -212,11 +231,11 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
     }
     else if (strcmp(attribute_name, "SourceFile") == 0)
     {
-      printf("Source file Name index: cp info #%d <%s>\n", attr->info->SourceFile_attribute.sourcefile_index, readUtf8(cp, attr->info->SourceFile_attribute.sourcefile_index));
+      printf("Source file index: %d\n", attr->info->SourceFile_attribute.sourcefile_index);
     }
     else if (strcmp(attribute_name, "LineNumberTable") == 0)
     {
-      printf("Line number table length: %d\n", attr->info->LineNumberTable_attribute.line_number_table_length);
+      printf("Line number table name: %d\n", attr->info->LineNumberTable_attribute.line_number_table_length);
       // attr->info->LineNumberTable_attribute.line_number_table = (line_number_table_type *)malloc(sizeof(line_number_table_type) * attr->info->LineNumberTable_attribute.line_number_table_length);
       for (line_number_table_type *i = attr->info->LineNumberTable_attribute.line_number_table; i < attr->info->LineNumberTable_attribute.line_number_table + attr->info->LineNumberTable_attribute.line_number_table_length; i++)
       {
@@ -252,7 +271,6 @@ void read_class_file(ClassFile *cf, FILE *fp)
   for (cp_info *cp = cf->constant_pool; cp < cf->constant_pool + cf->constant_pool_count - 1; cp++)
   {
     cp->tag = u1Read(fp);
-    // printf("Aqui!:::::%x", cp->tag);
     switch (cp->tag)
     {
     case CONSTANT_Class:
@@ -570,14 +588,11 @@ void print_class_file(ClassFile *cf)
 
   for (method_info *mi = cf->methods; mi < cf->methods + cf->methods_count; mi++)
   {
-    printf("Name: cp info #%d <%s>\n", mi->name_index, readUtf8(cf->constant_pool, mi->name_index));
-    printf("Descriptor: cp info #%d <%s>\n", mi->descriptor_index, readUtf8(cf->constant_pool, mi->descriptor_index));
-    printf("Access Flags: %#04x\n", mi->access_flags);
-    printf("Attributes Count: %02d\n", mi->attributes_count);
+    printf("Methods Access Flags: %02d\n", mi->access_flags);
+    printf("Methods Name index: %02d\n", mi->name_index);
+    printf("Methods Descriptor Index: %02d\n", mi->descriptor_index);
+    printf("Methods Attributes Count: %02d\n", mi->attributes_count);
 
-    printf("< --------------------- >\n");
-    printf("\tMethods Attributes \n");
-    printf("< --------------------- >\n");
     printAttributes(mi->attributes, cf->constant_pool, mi->attributes_count);
 
     // for (attribute_info *ai = mi->attributes; ai < mi->attributes + mi->attributes_count; ai++)
