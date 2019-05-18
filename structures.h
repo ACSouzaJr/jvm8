@@ -180,18 +180,20 @@ typedef struct
   // u1 tag = ITEM_Double; /* 3 */
 } Double_variable_info;
 
-
-union verification_type_info {
-    Top_variable_info;
-    Integer_variable_info;
-    Float_variable_info;
-    Long_variable_info;
-    Double_variable_info;
-    Null_variable_info;
-    UninitializedThis_variable_info;
-    Object_variable_info;
-    Uninitialized_variable_info;
-}
+typedef struct verification_type_info {
+  u1 tag;
+  union {
+      Top_variable_info;
+      Integer_variable_info;
+      Float_variable_info;
+      Long_variable_info;
+      Double_variable_info;
+      Null_variable_info;
+      UninitializedThis_variable_info;
+      Object_variable_info;
+      Uninitialized_variable_info;
+  };
+}verification_type_info;
 
 typedef struct {
     //u1 frame_type; /* = SAME 0-63 */
@@ -199,13 +201,13 @@ typedef struct {
 
 typedef struct {
     //u1 frame_type;// = SAME_LOCALS_1_STACK_ITEM; /* 64-127 */
-    verification_type_info stack[1];
+    verification_type_info *stack;//[1];
 }same_locals_1_stack_item_frame;
 
 typedef struct {
     //u1 frame_type;// = SAME_LOCALS_1_STACK_ITEM_EXTENDED; /* 247 */
     u2 offset_delta;
-    verification_type_info stack[1];
+    verification_type_info *stack;//[1];
 }same_locals_1_stack_item_frame_extended;
 
 typedef struct {
@@ -228,7 +230,7 @@ typedef struct {
     //u1 frame_type; // = FULL_FRAME; /* 255 */
     u2 offset_delta;
     u2 number_of_locals;
-    verification_type_info locals[number_of_locals];
+    verification_type_info *locals;//[number_of_locals];
     u2 number_of_stack_items;
     verification_type_info *stack;//[number_of_stack_items];
 }full_frame;

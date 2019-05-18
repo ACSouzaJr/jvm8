@@ -163,6 +163,27 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
   return field;
 }
 
+verification_type_info * fillVerificationTypeInfo(FILE *fp, u2 verification_type_length)
+{
+  verification_type_info* ver_type = (verification_type_info *)malloc(sizeof(verification_type_info));
+  
+  for(verification_type_info* vp = ver_type; vp < ver_type + verification_type_length; vp++)
+  {
+    ver_type->tag = u1Read(fp);
+
+    if(ver_type->tag == 7)
+    {
+      ver_type->Object_variable_info = u2Read(fp);
+    }
+    else if(ver_type->tag == 8)
+    {
+      ver_type->Uninitialized_variable_info = u2Read(fp);
+    }
+  }
+
+  return ver_type;
+} 
+
 stack_map_frame * fillStackMapTable(attribute_info * attr, FILE *fp)
 {
   stack_map_frame * stack_map = (stack_map_frame *)malloc(sizeof(stack_map_frame)*attr->info->StackMapTable_attribute.number_of_entries);
@@ -170,36 +191,42 @@ stack_map_frame * fillStackMapTable(attribute_info * attr, FILE *fp)
   for(stack_map_frame* smp = stack_map; smp < stack_map + attr->info->StackMapTable_attribute.number_of_entries; smp++)
   {
     smp->frame_type = u1Read(fp);
-    if(smp->frame_type < 64)
+    if(smp->frame_type < 64) // 0 a 63
     {
       //continue
     }
-    else if(smp->frame_type < 128)
+    else if(smp->frame_type < 128) // 64 a 127
     {
-      smp->verification_type_info
+      stack_map->same_locals_1_stack_item_frame.stack = fillVerificationTypeInfo(fp, 2);    
     }
-    else if(smp->frame_type < 247)
+    else if(smp->frame_type < 247) // 128 a 246
     {
-
+      // for future use
     }
-    else if(smp->frame_type < 248)
+    else if(smp->frame_type < 248) // = 247
     {
-
+      stack_map->same_locals_1_stack_item_frame_extended->offset_delta = u2Read(fp);
+      stack_map->same_locals_1_stack_item_frame_extended.stack = fillVerificationTypeInfo(fp, 2);
     }
-    else if(smp->frame_type < 251)
+    else if(smp->frame_type < 251) // 248 a 250
     {
-
+      stack_map->chop_frame->offset_delta = u2Read(fp);
     }
-    else if(smp->frame_type < 252)
+    else if(smp->frame_type < 252) // = 251
     {
-
+      stack_map->same_frame_extended->offset_delta = u2Read(fp);
     }
-    else if(smp->frame_type < 255)
+    else if(smp->frame_type < 255) // 252 a 254
     {
-
+      stack_map->append_frame->offset_delta = u2Read(fp);
+      stack_map->append_frame->locals = fillVerificationTypeInfo(fp, smp->frame_type - 251);
     }
-    else {
-
+    else { // = 255
+      stack_map->full_frame->offset_delta = u2Read(fp);
+      stack_map->full_frame->number_of_locals = u2Read(fp);
+      stack_map->full_frame->locals = fillVerificationTypeInfo(fp, stack_map->full_frame->number_of_locals);
+      stack_map->full_frame->number_of_stack_items = u2Read(fp);
+      stack_map->full_frame->stack = fillVerificationTypeInfo(fp, stack_map->full_frame->number_of_stack_items);
     }
   }
 }
