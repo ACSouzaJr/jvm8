@@ -16,6 +16,7 @@ Alunos: Nicholas Marques - 15/0019343
 #include <stdio.h>
 #include <string.h>
 #include "structures.h"
+#include "instructions.h"
 
 u1 u1Read(FILE *);
 u2 u2Read(FILE *);
@@ -27,19 +28,23 @@ void free_class_file(ClassFile *cf);
 char *readUtf8(cp_info *cp, u2 index);
 attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp);
 void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count);
-void recursive_function(u2 index, cp_info *constant_pool);
+void recursive_print(cp_info *cp, u2 index);
+void freeAttributes(attribute_info *field, cp_info *cp, u2 attr_count);
 
 int main(int argc, char const *argv[])
 {
-  FILE *pFile = fopen("HelloWorld.class", "rb");
+  FILE *pFile = fopen("Fibonacci.class", "rb");
   ClassFile *cf = (ClassFile *)malloc(sizeof(ClassFile));
   // printf("%x", u1Read(pFile));
   // printf("%x", readUnsignedShort(pFile));
   // printf("%x", u4Read(pFile));
   read_class_file(cf, pFile);
   fclose(pFile);
+  initialize_op_codes();
+  // printf("%s\n", op_codes_array[0].value);
+  // printf("%s\n", op_codes_array[42].value);
   print_class_file(cf);
-  // free_class_file(cf);
+  free_class_file(cf);
   free(cf);
   return 0;
 }
@@ -142,6 +147,12 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
         i->line_number = u2Read(fp);
       }
     }
+    else if (strcmp(attribute_name, "StackMapTable") == 0)
+    {
+      // attr->info->StackMapTable_attribute.number_of_entries = u2Read(fp);
+      // attr->info->StackMapTable_attribute.entries = fillStackMapTable(attr, fp);
+      fseek(fp, attr->attribute_length, SEEK_CUR);
+    }
     else if (strcmp(attribute_name, "ConstantValue") == 0)
     {
       attr->info->ConstantValue_attribute.constantvalue_index = u2Read(fp);
@@ -152,6 +163,119 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
     }
   }
   return field;
+}
+
+stack_map_frame *fillStackMapTable(attribute_info *attr, FILE *fp)
+{
+  stack_map_frame *stack_map = (stack_map_frame *)malloc(sizeof(stack_map_frame) * attr->info->StackMapTable_attribute.number_of_entries);
+
+  for (stack_map_frame *smp = stack_map; smp < stack_map + attr->info->StackMapTable_attribute.number_of_entries; smp++)
+  {
+    smp->frame_type = u1Read(fp);
+    if (smp->frame_type < 64)
+    {
+      //continue
+    }
+    else if (smp->frame_type < 128)
+    {
+      // smp->verification_type_info
+    }
+    else if (smp->frame_type < 247)
+    {
+    }
+    else if (smp->frame_type < 248)
+    {
+    }
+    else if (smp->frame_type < 251)
+    {
+    }
+    else if (smp->frame_type < 252)
+    {
+    }
+    else if (smp->frame_type < 255)
+    {
+    }
+    else
+    {
+    }
+  }
+}
+void freeAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
+{
+  // attribute_info *field = (attribute_info *)malloc(sizeof(attribute_info) * attr_count);
+  for (attribute_info *attr = field; attr < field + attr_count; attr++)
+  {
+    // attr->info = (attribute_types *)malloc(sizeof(attribute_types) * attr->attribute_length);
+
+    char *attribute_name = readUtf8(cp, attr->attribute_name_index);
+
+    if (strcmp(attribute_name, "Code") == 0)
+    {
+      // attr->info->Code_attribute.code = (u1 *)malloc(sizeof(u1) * attr->info->Code_attribute.code_length);
+      free(attr->info->Code_attribute.code);
+
+      // for (u1 *i = attr->info->Code_attribute.code; i < attr->info->Code_attribute.code + attr->info->Code_attribute.code_length; i++)
+      // {
+      //   *i = u1Read(fp);
+      // }
+
+      // attr->info->Code_attribute.exception_table_length = u2Read(fp);
+      // attr->info->Code_attribute.exception_table = (exception_table_type *)malloc(sizeof(exception_table_type) * attr->info->Code_attribute.exception_table_length);
+      free(attr->info->Code_attribute.exception_table);
+
+      // for (exception_table_type *i = attr->info->Code_attribute.exception_table; i < attr->info->Code_attribute.exception_table + attr->info->Code_attribute.exception_table_length; i++)
+      // {
+      //   i->start_pc = u2Read(fp);
+      //   i->end_pc = u2Read(fp);
+      //   i->handler_pc = u2Read(fp);
+      //   i->catch_type = u2Read(fp);
+      // }
+      // attr->info->Code_attribute.attributes_count = u2Read(fp);
+
+      freeAttributes(attr->info->Code_attribute.attributes, cp, attr->info->Code_attribute.attributes_count);
+    }
+    else if (strcmp(attribute_name, "Exceptions") == 0)
+    {
+      // attr->info->Exceptions_attribute.number_of_exceptions = u2Read(fp);
+      // attr->info->Exceptions_attribute.exception_index_table = (u2 *)malloc(sizeof(u2) * attr->info->Exceptions_attribute.number_of_exceptions);
+      free(attr->info->Exceptions_attribute.exception_index_table);
+
+      // for (u2 *i = 0; i < attr->info->Exceptions_attribute.exception_index_table + attr->info->Exceptions_attribute.number_of_exceptions; i++)
+      // {
+      //   *i = u2Read(fp);
+      // }
+    }
+    else if (strcmp(attribute_name, "Deprecated") == 0)
+    {
+      /* code */
+    }
+    else if (strcmp(attribute_name, "SourceFile") == 0)
+    {
+      // attr->info->SourceFile_attribute.sourcefile_index = u2Read(fp);
+    }
+    else if (strcmp(attribute_name, "LineNumberTable") == 0)
+    {
+      // attr->info->LineNumberTable_attribute.line_number_table_length = u2Read(fp);
+      // attr->info->LineNumberTable_attribute.line_number_table = (line_number_table_type *)malloc(sizeof(line_number_table_type) * attr->info->LineNumberTable_attribute.line_number_table_length);
+      free(attr->info->LineNumberTable_attribute.line_number_table);
+
+      // for (line_number_table_type *i = attr->info->LineNumberTable_attribute.line_number_table; i < attr->info->LineNumberTable_attribute.line_number_table + attr->info->LineNumberTable_attribute.line_number_table_length; i++)
+      // {
+      //   i->start_pc = u2Read(fp);
+      //   i->line_number = u2Read(fp);
+      // }
+    }
+    else if (strcmp(attribute_name, "ConstantValue") == 0)
+    {
+      // attr->info->ConstantValue_attribute.constantvalue_index = u2Read(fp);
+    }
+    else
+    {
+      /* code */
+    }
+    free(attr->info);
+  }
+  free(field);
 }
 
 void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
@@ -171,11 +295,29 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
       printf("Max locals: %d\n", attr->info->Code_attribute.max_locals);
       printf("Code length: %d\n", attr->info->Code_attribute.code_length);
 
-      printf("Code: ");
+      printf("Code: \n");
       for (u1 *i = attr->info->Code_attribute.code; i < attr->info->Code_attribute.code + attr->info->Code_attribute.code_length; i++)
       {
-        // *i = u1Read(fp);
-        printf("%02x ", *i);
+        // printf("%02x ", *i);
+        u1 index;
+        printf("%s ", op_codes_array[*i].value);
+        if (op_codes_array[*i].arguments)
+        {
+          // args_num = op_codes_array[*i].arguments;
+          index = *i;
+          for (size_t j = 0; j < op_codes_array[index].arguments; j++)
+          {
+            i++;
+            printf("%02x ", *i);
+            if (*i && op_codes_array[index].references)
+            {
+              // printf("%s", readUtf8(cp, ));
+              // printf("Aqui!! %02x %s", *i, );
+              recursive_print(cp, *i);
+            }
+          }
+        }
+        printf("\n");
       }
 
       printf("\n");
@@ -249,7 +391,6 @@ void read_class_file(ClassFile *cf, FILE *fp)
   for (cp_info *cp = cf->constant_pool; cp < cf->constant_pool + cf->constant_pool_count - 1; cp++)
   {
     cp->tag = u1Read(fp);
-    // printf("Aqui!:::::%x", cp->tag);
     switch (cp->tag)
     {
     case CONSTANT_Class:
@@ -290,12 +431,12 @@ void read_class_file(ClassFile *cf, FILE *fp)
       break;
     case CONSTANT_Utf8:
       cp->Utf8.length = u2Read(fp);
-      cp->Utf8.bytes = (u1 *)malloc(sizeof(u1) * cp->Utf8.length);
+      cp->Utf8.bytes = (u1 *)malloc(sizeof(u1) * (cp->Utf8.length + 1));
       for (u1 *aux = cp->Utf8.bytes; aux < cp->Utf8.length + cp->Utf8.bytes; aux++)
       {
-        // printf("%d", cp);
         *aux = u1Read(fp);
       }
+      cp->Utf8.bytes[cp->Utf8.length] = '\0';
       break;
     case CONSTANT_MethodHandle:
       cp->MethodHandle.reference_kind = u1Read(fp);
@@ -379,65 +520,87 @@ void read_class_file(ClassFile *cf, FILE *fp)
   // }
 }
 
-void recursive_function(u2 index, cp_info *constant_pool){
-  // printf("Tag: %d\n", constant_pool[index].tag);
-  int aux_index = index;
-  switch(constant_pool[index].tag){
-		case CONSTANT_Class:
-			recursive_function(constant_pool[aux_index].Class.name_index, constant_pool);
-			break;
-		case CONSTANT_Fieldref:
-			recursive_function(constant_pool[aux_index].Fieldref.class_index, constant_pool);
-      recursive_function(constant_pool[aux_index].Fieldref.name_and_type_index, constant_pool);
-			break;
-		case CONSTANT_Methodref:
-			recursive_function(constant_pool[aux_index].Methodref.class_index, constant_pool);
-      recursive_function(constant_pool[aux_index].Methodref.name_and_type_index, constant_pool);
-			break;
-		case CONSTANT_InterfaceMethodref:
-			recursive_function(constant_pool[aux_index].InterfaceMethodref.class_index, constant_pool);
-      recursive_function(constant_pool[aux_index].InterfaceMethodref.name_and_type_index, constant_pool);
-			break;
-		case CONSTANT_String:
-			recursive_function(constant_pool[aux_index].String.string_index, constant_pool);
-			break;
-		case CONSTANT_Integer:
-			printf("%d\n", constant_pool[aux_index].Integer.bytes);
-			break;
-		case CONSTANT_Float:
-			printf("%u\n", constant_pool[aux_index].Float.bytes);
-			break;
-		case CONSTANT_Long:
-			printf("0x%.8X\n", constant_pool[aux_index].Long.high_bytes);
-			printf("%.8X\n", constant_pool[aux_index].Long.low_bytes);
-			break;
-		case CONSTANT_Double:
-			printf("0x%.8X\n", constant_pool[aux_index].Double.high_bytes);
-			printf("%.8X\n", constant_pool[aux_index].Double.low_bytes);
-			break;
-		case CONSTANT_NameAndType:
-			recursive_function(constant_pool[aux_index].NameAndType.name_index, constant_pool);
-			recursive_function(constant_pool[aux_index].NameAndType.descriptor_index, constant_pool);
-			break;
-		case CONSTANT_Utf8:
-			printf("%s\n", constant_pool[aux_index].Utf8.bytes);
-			break;
-		case CONSTANT_MethodHandle:
-			recursive_function(constant_pool[aux_index].MethodHandle.reference_kind, constant_pool);
-      recursive_function(constant_pool[aux_index].MethodHandle.reference_index, constant_pool);
-			break;
-		case CONSTANT_MethodType:
-			recursive_function(constant_pool[aux_index].MethodType.descriptor_index, constant_pool);
-			break;
-		case CONSTANT_InvokeDynamic:
-			recursive_function(constant_pool[aux_index].InvokeDynamic.bootstrap_method_attr_index, constant_pool);
-      recursive_function(constant_pool[aux_index].InvokeDynamic.name_and_type_index, constant_pool);
-			break;
-		default:
-			printf("essa constant pool inválida\n");
-	}
+void recursive_print(cp_info *cp, u2 index)
+{
+  switch (cp[index - 1].tag)
+  {
+  case CONSTANT_Class:
+    // printf("Class Name Index: %02d \n", cp->Class.name_index);
+    recursive_print(cp, cp[index - 1].Class.name_index);
+    break;
+  case CONSTANT_Fieldref:
+    // printf("Fieldref Class Index: %02d \n", cp->Fieldref.class_index);
+    recursive_print(cp, cp[index - 1].Fieldref.class_index);
+    // printf("Fieldref Name and Type Index: %02d \n", cp->Fieldref.name_and_type_index);
+    recursive_print(cp, cp[index - 1].Fieldref.name_and_type_index);
+    break;
+  case CONSTANT_Methodref:
+    // printf("Methodref Class Index: %02d \n", cp->Methodref.class_index);
+    recursive_print(cp, cp[index - 1].Methodref.class_index);
+    // printf("Methodref Name and Type Index: %02d \n", cp->Methodref.name_and_type_index);
+    recursive_print(cp, cp[index - 1].Methodref.name_and_type_index);
+    break;
+  case CONSTANT_InterfaceMethodref:
+    // printf("InterfaceMethodref Class Index: %02d \n", cp->InterfaceMethodref.class_index);
+    recursive_print(cp, cp[index - 1].InterfaceMethodref.class_index);
+    // printf("InterfaceMethodref Name and Type Index: %02d \n", cp->InterfaceMethodref.name_and_type_index);
+    recursive_print(cp, cp[index - 1].InterfaceMethodref.name_and_type_index);
+    break;
+  case CONSTANT_String:
+    // printf("String Index: %02d \n", cp->String.string_index);
+    recursive_print(cp, cp[index - 1].String.string_index);
+    break;
+  case CONSTANT_Integer:
+    // printf("Integer Bytes: %02d \n", cp->Integer.bytes);
+    break;
+  case CONSTANT_Float:
+    // printf("Float Bytes: %02d \n", cp->Float.bytes);
+    break;
+  case CONSTANT_Long:
+    // printf("Long High Bytes: %02d \n", cp->Long.high_bytes);
+    // printf("Long Low Bytes: %02d \n", cp->Long.low_bytes);
+    break;
+  case CONSTANT_Double:
+    // printf("Double High Bytes: %02d \n", cp->Double.high_bytes);
+    // printf("Double Low Bytes: %02d \n", cp->Double.low_bytes);
+    break;
+  case CONSTANT_NameAndType:
+    // printf("Name and Type - Name Index: %02d \n", cp->NameAndType.name_index);
+    recursive_print(cp, cp[index - 1].NameAndType.name_index);
+    // printf("Name and Type - Descriptor Index: %02d \n", cp->NameAndType.descriptor_index);
+    recursive_print(cp, cp[index - 1].NameAndType.descriptor_index);
+    break;
+  case CONSTANT_Utf8:
+    // printf("UTF8 Length: %02d \n", cp->Utf8.length);
+    // printf("Bytes: ");
+    // for (u1 *i = cp->Utf8.bytes; i < cp->Utf8.bytes + cp->Utf8.length; i++)
+    // {
+    //   printf("%c", *i);
+    // }
+    // printf(" \n");
+    printf("%s\n", cp[index - 1].Utf8.bytes);
+    break;
+  case CONSTANT_MethodHandle:
+    // printf("MethodHandle Reference Kind: %02d \n", cp->MethodHandle.reference_kind);
+    recursive_print(cp, cp[index - 1].MethodHandle.reference_kind);
+    // printf("MethodHandle Reference Index: %02d \n", cp->MethodHandle.reference_index);
+    recursive_print(cp, cp[index - 1].MethodHandle.reference_index);
+    break;
+  case CONSTANT_MethodType:
+    // printf("MethodType Descriptor Index: %02d \n", cp->MethodType.descriptor_index);
+    recursive_print(cp, cp[index - 1].MethodType.descriptor_index);
+    break;
+  case CONSTANT_InvokeDynamic:
+    // printf("InvokeDynamic - Bootstrap Method Attr Index: %02d \n", cp->InvokeDynamic.bootstrap_method_attr_index);
+    recursive_print(cp, cp[index - 1].InvokeDynamic.bootstrap_method_attr_index);
+    // printf("InvokeDynamic - Name and Type Index: %02d \n", cp->InvokeDynamic.name_and_type_index);
+    recursive_print(cp, cp[index - 1].InvokeDynamic.name_and_type_index);
+    break;
+  default:
+    printf("No Ecxiste ese datapoole \n");
+    break;
+  }
 }
-
 
 void print_class_file(ClassFile *cf)
 {
@@ -468,28 +631,25 @@ void print_class_file(ClassFile *cf)
     {
     case CONSTANT_Class:
       // printf("Class Name Index: %02d \n", recursive_function(cp->Class.name_index, cp));
-      printf("Class Name Index: ");
-      recursive_function(cp->Class.name_index, cp);
+      recursive_print(cf->constant_pool, cp->Class.name_index);
       break;
     case CONSTANT_Fieldref:
-      // printf("Fieldref Class Index: %02d \n", cp->Fieldref.class_index);
-      printf("Fieldref Class Index: ");
-      recursive_function(cp->Fieldref.class_index, cp);
-      // printf("Fieldref Name and Type Index: %02d \n", cp->Fieldref.name_and_type_index);
-      printf("Fieldref Name and Type Index: ");
-      recursive_function(cp->Fieldref.name_and_type_index, cp);
+      printf("Fieldref Class Index: %02d \n", cp->Fieldref.class_index);
+      recursive_print(cf->constant_pool, cp->Fieldref.class_index);
+      printf("Fieldref Name and Type Index: %02d \n", cp->Fieldref.name_and_type_index);
+      recursive_print(cf->constant_pool, cp->Fieldref.name_and_type_index);
       break;
     case CONSTANT_Methodref:
       printf("Methodref Class Index: %02d \n", cp->Methodref.class_index);
-      // recursive_function(cp->Methodref.class_index, cp);
+      recursive_print(cf->constant_pool, cp->Methodref.class_index);
       printf("Methodref Name and Type Index: %02d \n", cp->Methodref.name_and_type_index);
-      // recursive_function(cp->Methodref.name_and_type_index, cp);
+      recursive_print(cf->constant_pool, cp->Methodref.name_and_type_index);
       break;
     case CONSTANT_InterfaceMethodref:
       printf("InterfaceMethodref Class Index: %02d \n", cp->InterfaceMethodref.class_index);
-      // recursive_function(cp->InterfaceMethodref.class_index, cp);
+      recursive_print(cf->constant_pool, cp->InterfaceMethodref.class_index);
       printf("InterfaceMethodref Name and Type Index: %02d \n", cp->InterfaceMethodref.name_and_type_index);
-      // recursive_function(cp->InterfaceMethodref.name_and_type_index, cp);
+      recursive_print(cf->constant_pool, cp->InterfaceMethodref.name_and_type_index);
       break;
     case CONSTANT_String:
       printf("String Index: %02d \n", cp->String.string_index);
@@ -517,9 +677,9 @@ void print_class_file(ClassFile *cf)
       break;
     case CONSTANT_NameAndType:
       printf("Name and Type - Name Index: %02d \n", cp->NameAndType.name_index);
-      // recursive_function(cp->NameAndType.name_index, cp);
+      recursive_print(cf->constant_pool, cp->NameAndType.name_index);
       printf("Name and Type - Descriptor Index: %02d \n", cp->NameAndType.descriptor_index);
-      // recursive_function(cp->NameAndType.descriptor_index, cp);
+      recursive_print(cf->constant_pool, cp->NameAndType.descriptor_index);
       break;
     case CONSTANT_Utf8:
       printf("UTF8 Length: %02d \n", cp->Utf8.length);
@@ -533,14 +693,19 @@ void print_class_file(ClassFile *cf)
       break;
     case CONSTANT_MethodHandle:
       printf("MethodHandle Reference Kind: %02d \n", cp->MethodHandle.reference_kind);
+      recursive_print(cf->constant_pool, cp->MethodHandle.reference_kind);
       printf("MethodHandle Reference Index: %02d \n", cp->MethodHandle.reference_index);
+      recursive_print(cf->constant_pool, cp->MethodHandle.reference_index);
       break;
     case CONSTANT_MethodType:
       printf("MethodType Descriptor Index: %02d \n", cp->MethodType.descriptor_index);
+      recursive_print(cf->constant_pool, cp->MethodType.descriptor_index);
       break;
     case CONSTANT_InvokeDynamic:
       printf("InvokeDynamic - Bootstrap Method Attr Index: %02d \n", cp->InvokeDynamic.bootstrap_method_attr_index);
+      recursive_print(cf->constant_pool, cp->InvokeDynamic.bootstrap_method_attr_index);
       printf("InvokeDynamic - Name and Type Index: %02d \n", cp->InvokeDynamic.name_and_type_index);
+      recursive_print(cf->constant_pool, cp->InvokeDynamic.name_and_type_index);
       break;
     default:
       printf("Ignored \n");
@@ -604,6 +769,55 @@ void print_class_file(ClassFile *cf)
 
 void free_class_file(ClassFile *cf)
 {
+  // interface -> u2
+  // cf->interfaces = (u2 *)malloc(sizeof(u2) * cf->interfaces_count);
+  free(cf->interfaces);
+
+  for (field_info *field = cf->fields; field < cf->fields + cf->fields_count; field++)
+  {
+
+    // for (attribute_info *attr = field->attributes; attr < field->attributes + field->attributes_count; attr++)
+    // {
+
+    //   // attr->info = (u1 *)malloc(sizeof(u1 *) * attr->attribute_length);
+    //   free(attr->info);
+    // }
+
+    // field->attributes = (attribute_info *)malloc(sizeof(attribute_info) * field->attributes_count);
+    // free(field->attributes);
+    freeAttributes(field->attributes, cf->constant_pool, field->attributes_count);
+  }
+
+  // fields -> field_info
+  // cf->fields = (field_info *)malloc(sizeof(field_info) * cf->fields_count);
+  free(cf->fields);
+
+  // methods -> method_info
+  for (method_info *method = cf->methods; method < cf->methods + cf->methods_count; method++)
+  {
+    // for (attribute_info *attr = method->attributes; attr < method->attributes + method->attributes_count; attr++)
+    // {
+    //   // attr->info = (u1 *)malloc(sizeof(u1 *) * attr->attribute_length);
+    //   free(attr->info);
+    // }
+    freeAttributes(method->attributes, cf->constant_pool, method->attributes_count);
+
+    // method->attributes = (attribute_info *)malloc(sizeof(attribute_info) * method->attributes_count);
+    // free(method->attributes);
+  }
+  // cf->methods = (method_info *)malloc(sizeof(method_info) * cf->methods_count);
+  free(cf->methods);
+
+  // attributes -> attributes_info
+  // for (attribute_info *attr = cf->attributes; attr < cf->attributes + cf->attributes_count; attr++)
+  // {
+  //   // attr->info = (u1 *)malloc(sizeof(u1 *) * attr->attribute_length);
+  //   free(attr->info);
+  // }
+  // cf->attributes = (attribute_info *)malloc(sizeof(attribute_info) * cf->attributes_count);
+  // free(cf->attributes);
+  freeAttributes(cf->attributes, cf->constant_pool, cf->attributes_count);
+
   // constant_pool -> cp_info
   for (cp_info *cp = cf->constant_pool; cp < cf->constant_pool + cf->constant_pool_count - 1; cp++)
   {
@@ -646,49 +860,4 @@ void free_class_file(ClassFile *cf)
 
   // cf->constant_pool = (cp_info *)malloc(sizeof(cp_info) * (cf->constant_pool_count - 1));
   free(cf->constant_pool);
-
-  // interface -> u2
-  // cf->interfaces = (u2 *)malloc(sizeof(u2) * cf->interfaces_count);
-  free(cf->interfaces);
-
-  for (field_info *field = cf->fields; field < cf->fields + cf->fields_count; field++)
-  {
-
-    for (attribute_info *attr = field->attributes; attr < field->attributes + field->attributes_count; attr++)
-    {
-
-      // attr->info = (u1 *)malloc(sizeof(u1 *) * attr->attribute_length);
-      free(attr->info);
-    }
-
-    // field->attributes = (attribute_info *)malloc(sizeof(attribute_info) * field->attributes_count);
-    free(field->attributes);
-  }
-
-  // fields -> field_info
-  // cf->fields = (field_info *)malloc(sizeof(field_info) * cf->fields_count);
-  free(cf->fields);
-
-  // methods -> method_info
-  for (method_info *method = cf->methods; method < cf->methods + cf->methods_count; method++)
-  {
-    for (attribute_info *attr = method->attributes; attr < method->attributes + method->attributes_count; attr++)
-    {
-      // attr->info = (u1 *)malloc(sizeof(u1 *) * attr->attribute_length);
-      free(attr->info);
-    }
-    // method->attributes = (attribute_info *)malloc(sizeof(attribute_info) * method->attributes_count);
-    free(method->attributes);
-  }
-  // cf->methods = (method_info *)malloc(sizeof(method_info) * cf->methods_count);
-  free(cf->methods);
-
-  // attributes -> attributes_info
-  for (attribute_info *attr = cf->attributes; attr < cf->attributes + cf->attributes_count; attr++)
-  {
-    // attr->info = (u1 *)malloc(sizeof(u1 *) * attr->attribute_length);
-    free(attr->info);
-  }
-  // cf->attributes = (attribute_info *)malloc(sizeof(attribute_info) * cf->attributes_count);
-  free(cf->attributes);
 }
