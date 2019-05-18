@@ -173,11 +173,11 @@ verification_type_info *fillVerificationTypeInfo(FILE *fp, u2 verification_type_
   {
     vp->tag = u1Read(fp);
 
-    if (vp->tag == 7) //
+    if (vp->tag == 7) //Object_variable_info
     {
       vp->object_variable_info.cpool_index = u2Read(fp);
     }
-    else if (vp->tag == 8)
+    else if (vp->tag == 8) //Uninitialized_variable_info
     {
       vp->uninitialized_variable_info.offset = u2Read(fp);
     }
