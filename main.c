@@ -232,6 +232,7 @@ void freeAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
     {
       /* code */
     }
+    free(attr->info);
   }
   free(field);
 }
