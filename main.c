@@ -389,11 +389,12 @@ void read_class_file(ClassFile *cf, FILE *fp)
       break;
     case CONSTANT_Utf8:
       cp->Utf8.length = u2Read(fp);
-      cp->Utf8.bytes = (u1 *)malloc(sizeof(u1) * cp->Utf8.length);
+      cp->Utf8.bytes = (u1 *)malloc(sizeof(u1) * (cp->Utf8.length + 1));
       for (u1 *aux = cp->Utf8.bytes; aux < cp->Utf8.length + cp->Utf8.bytes; aux++)
       {
         *aux = u1Read(fp);
       }
+      cp->Utf8.bytes[cp->Utf8.length] = '\0';
       break;
     case CONSTANT_MethodHandle:
       cp->MethodHandle.reference_kind = u1Read(fp);
