@@ -133,6 +133,56 @@ typedef struct
   u2 catch_type;
 } exception_table_type;
 
+typedef struct {
+    u1 frame_type; /* = SAME 0-63 */
+}same_frame;
+
+typedef struct {
+    u1 frame_type;// = SAME_LOCALS_1_STACK_ITEM; /* 64-127 */
+    verification_type_info stack[1];
+}same_locals_1_stack_item_frame;
+
+typedef struct {
+    u1 frame_type;// = SAME_LOCALS_1_STACK_ITEM_EXTENDED; /* 247 */
+    u2 offset_delta;
+    verification_type_info stack[1];
+}same_locals_1_stack_item_frame_extended;
+
+typedef struct {
+    u1 frame_type; // = CHOP; /* 248-250 */
+    u2 offset_delta;
+}chop_frame;
+
+typedef struct {
+    u1 frame_type; // = SAME_FRAME_EXTENDED; /* 251 */
+    u2 offset_delta;
+}same_frame_extended;
+
+typedef struct {
+    u1 frame_type; // = APPEND; /* 252-254 */
+    u2 offset_delta;
+    verification_type_info locals[frame_type - 251];
+}append_frame;
+
+typedef struct {
+    u1 frame_type; // = FULL_FRAME; /* 255 */
+    u2 offset_delta;
+    u2 number_of_locals;
+    verification_type_info locals[number_of_locals];
+    u2 number_of_stack_items;
+    verification_type_info stack[number_of_stack_items];
+}full_frame;
+
+union stack_map_frame {
+    same_frame;
+    same_locals_1_stack_item_frame;
+    same_locals_1_stack_item_frame_extended;
+    chop_frame;
+    same_frame_extended;
+    append_frame;
+    full_frame;
+}
+
 typedef union {
   struct
   {
@@ -145,6 +195,14 @@ typedef union {
     line_number_table_type *line_number_table;
     //[line_number_table_length];
   } LineNumberTable_attribute;
+
+  struct
+  {
+    u2              attribute_name_index;
+    u4              attribute_length;
+    u2              number_of_entries;
+    stack_map_frame *entries;//[number_of_entries];
+  } StackMapTable_attribute;
 
   struct
   {
