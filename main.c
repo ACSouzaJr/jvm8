@@ -29,6 +29,8 @@ char *readUtf8(cp_info *cp, u2 index);
 attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp);
 void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count);
 void recursive_print(cp_info *cp, u2 index);
+verification_type_info *fillVerificationTypeInfo(FILE *fp, u2 verification_type_length);
+stack_map_frame *fillStackMapTable(attribute_info *attr, FILE *fp);
 
 int main(int argc, char const *argv[])
 {
@@ -146,7 +148,7 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
         i->line_number = u2Read(fp);
       }
     }
-    else if(strcmp(attribute_name, "StackMapTable") == 0)
+    else if (strcmp(attribute_name, "StackMapTable") == 0)
     {
       attr->info->StackMapTable_attribute.number_of_entries = u2Read(fp);
       attr->info->StackMapTable_attribute.entries = fillStackMapTable(attr, fp);
@@ -163,72 +165,74 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
   return field;
 }
 
-verification_type_info * fillVerificationTypeInfo(FILE *fp, u2 verification_type_length)
+verification_type_info *fillVerificationTypeInfo(FILE *fp, u2 verification_type_length)
 {
-  verification_type_info* ver_type = (verification_type_info *)malloc(sizeof(verification_type_info));
-  
-  for(verification_type_info* vp = ver_type; vp < ver_type + verification_type_length; vp++)
-  {
-    ver_type->tag = u1Read(fp);
+  verification_type_info *ver_type = (verification_type_info *)malloc(sizeof(verification_type_info));
 
-    if(ver_type->tag == 7)
+  for (verification_type_info *vp = ver_type; vp < ver_type + verification_type_length; vp++)
+  {
+    vp->tag = u1Read(fp);
+
+    if (vp->tag == 7) //
     {
-      ver_type->Object_variable_info = u2Read(fp);
+      vp->object_variable_info.cpool_index = u2Read(fp);
     }
-    else if(ver_type->tag == 8)
+    else if (vp->tag == 8)
     {
-      ver_type->Uninitialized_variable_info = u2Read(fp);
+      vp->uninitialized_variable_info.offset = u2Read(fp);
     }
   }
 
   return ver_type;
-} 
+}
 
-stack_map_frame * fillStackMapTable(attribute_info * attr, FILE *fp)
+stack_map_frame *fillStackMapTable(attribute_info *attr, FILE *fp)
 {
-  stack_map_frame * stack_map = (stack_map_frame *)malloc(sizeof(stack_map_frame)*attr->info->StackMapTable_attribute.number_of_entries);
-  
-  for(stack_map_frame* smp = stack_map; smp < stack_map + attr->info->StackMapTable_attribute.number_of_entries; smp++)
+  stack_map_frame *stack_map = (stack_map_frame *)malloc(sizeof(stack_map_frame) * attr->info->StackMapTable_attribute.number_of_entries);
+
+  for (stack_map_frame *smp = stack_map; smp < stack_map + attr->info->StackMapTable_attribute.number_of_entries; smp++)
   {
     smp->frame_type = u1Read(fp);
-    if(smp->frame_type < 64) // 0 a 63
+    if (smp->frame_type < 64) // 0 a 63
     {
       //continue
     }
-    else if(smp->frame_type < 128) // 64 a 127
+    else if (smp->frame_type < 128) // 64 a 127
     {
-      stack_map->same_locals_1_stack_item_frame.stack = fillVerificationTypeInfo(fp, 2);    
+      stack_map->same_locals_1_stack_item_frame.stack = fillVerificationTypeInfo(fp, 2);
     }
-    else if(smp->frame_type < 247) // 128 a 246
+    else if (smp->frame_type < 247) // 128 a 246
     {
       // for future use
     }
-    else if(smp->frame_type < 248) // = 247
+    else if (smp->frame_type < 248) // = 247
     {
-      stack_map->same_locals_1_stack_item_frame_extended->offset_delta = u2Read(fp);
+      stack_map->same_locals_1_stack_item_frame_extended.offset_delta = u2Read(fp);
       stack_map->same_locals_1_stack_item_frame_extended.stack = fillVerificationTypeInfo(fp, 2);
     }
-    else if(smp->frame_type < 251) // 248 a 250
+    else if (smp->frame_type < 251) // 248 a 250
     {
-      stack_map->chop_frame->offset_delta = u2Read(fp);
+      stack_map->chop_frame.offset_delta = u2Read(fp);
     }
-    else if(smp->frame_type < 252) // = 251
+    else if (smp->frame_type < 252) // = 251
     {
-      stack_map->same_frame_extended->offset_delta = u2Read(fp);
+      stack_map->same_frame_extended.offset_delta = u2Read(fp);
     }
-    else if(smp->frame_type < 255) // 252 a 254
+    else if (smp->frame_type < 255) // 252 a 254
     {
-      stack_map->append_frame->offset_delta = u2Read(fp);
-      stack_map->append_frame->locals = fillVerificationTypeInfo(fp, smp->frame_type - 251);
+      stack_map->append_frame.offset_delta = u2Read(fp);
+      stack_map->append_frame.locals = fillVerificationTypeInfo(fp, smp->frame_type - 251);
     }
-    else { // = 255
-      stack_map->full_frame->offset_delta = u2Read(fp);
-      stack_map->full_frame->number_of_locals = u2Read(fp);
-      stack_map->full_frame->locals = fillVerificationTypeInfo(fp, stack_map->full_frame->number_of_locals);
-      stack_map->full_frame->number_of_stack_items = u2Read(fp);
-      stack_map->full_frame->stack = fillVerificationTypeInfo(fp, stack_map->full_frame->number_of_stack_items);
+    else
+    { // = 255
+      stack_map->full_frame.offset_delta = u2Read(fp);
+      stack_map->full_frame.number_of_locals = u2Read(fp);
+      stack_map->full_frame.locals = fillVerificationTypeInfo(fp, stack_map->full_frame.number_of_locals);
+      stack_map->full_frame.number_of_stack_items = u2Read(fp);
+      stack_map->full_frame.stack = fillVerificationTypeInfo(fp, stack_map->full_frame.number_of_stack_items);
     }
   }
+  return stack_map;
 }
 
 void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
