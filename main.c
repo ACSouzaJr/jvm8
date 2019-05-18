@@ -31,6 +31,7 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count);
 void recursive_print(cp_info *cp, u2 index);
 verification_type_info *fillVerificationTypeInfo(FILE *fp, u2 verification_type_length);
 stack_map_frame *fillStackMapTable(attribute_info *attr, FILE *fp);
+void freeAttributes(attribute_info *field, cp_info *cp, u2 attr_count);
 
 int main(int argc, char const *argv[])
 {
@@ -42,10 +43,10 @@ int main(int argc, char const *argv[])
   read_class_file(cf, pFile);
   fclose(pFile);
   initialize_op_codes();
-  printf("%s\n", op_codes_array[0].value);
-  printf("%s\n", op_codes_array[42].value);
+  // printf("%s\n", op_codes_array[0].value);
+  // printf("%s\n", op_codes_array[42].value);
   print_class_file(cf);
-  // free_class_file(cf);
+  free_class_file(cf);
   free(cf);
   return 0;
 }
@@ -150,8 +151,9 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
     }
     else if (strcmp(attribute_name, "StackMapTable") == 0)
     {
-      attr->info->StackMapTable_attribute.number_of_entries = u2Read(fp);
-      attr->info->StackMapTable_attribute.entries = fillStackMapTable(attr, fp);
+      // attr->info->StackMapTable_attribute.number_of_entries = u2Read(fp);
+      // attr->info->StackMapTable_attribute.entries = fillStackMapTable(attr, fp);
+      fseek(fp, attr->attribute_length, SEEK_CUR);
     }
     else if (strcmp(attribute_name, "ConstantValue") == 0)
     {
@@ -233,6 +235,84 @@ stack_map_frame *fillStackMapTable(attribute_info *attr, FILE *fp)
     }
   }
   return stack_map;
+}
+
+void freeAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
+{
+  // attribute_info *field = (attribute_info *)malloc(sizeof(attribute_info) * attr_count);
+  for (attribute_info *attr = field; attr < field + attr_count; attr++)
+  {
+    // attr->info = (attribute_types *)malloc(sizeof(attribute_types) * attr->attribute_length);
+
+    char *attribute_name = readUtf8(cp, attr->attribute_name_index);
+
+    if (strcmp(attribute_name, "Code") == 0)
+    {
+      // attr->info->Code_attribute.code = (u1 *)malloc(sizeof(u1) * attr->info->Code_attribute.code_length);
+      free(attr->info->Code_attribute.code);
+
+      // for (u1 *i = attr->info->Code_attribute.code; i < attr->info->Code_attribute.code + attr->info->Code_attribute.code_length; i++)
+      // {
+      //   *i = u1Read(fp);
+      // }
+
+      // attr->info->Code_attribute.exception_table_length = u2Read(fp);
+      // attr->info->Code_attribute.exception_table = (exception_table_type *)malloc(sizeof(exception_table_type) * attr->info->Code_attribute.exception_table_length);
+      free(attr->info->Code_attribute.exception_table);
+
+      // for (exception_table_type *i = attr->info->Code_attribute.exception_table; i < attr->info->Code_attribute.exception_table + attr->info->Code_attribute.exception_table_length; i++)
+      // {
+      //   i->start_pc = u2Read(fp);
+      //   i->end_pc = u2Read(fp);
+      //   i->handler_pc = u2Read(fp);
+      //   i->catch_type = u2Read(fp);
+      // }
+      // attr->info->Code_attribute.attributes_count = u2Read(fp);
+
+      freeAttributes(attr->info->Code_attribute.attributes, cp, attr->info->Code_attribute.attributes_count);
+    }
+    else if (strcmp(attribute_name, "Exceptions") == 0)
+    {
+      // attr->info->Exceptions_attribute.number_of_exceptions = u2Read(fp);
+      // attr->info->Exceptions_attribute.exception_index_table = (u2 *)malloc(sizeof(u2) * attr->info->Exceptions_attribute.number_of_exceptions);
+      free(attr->info->Exceptions_attribute.exception_index_table);
+
+      // for (u2 *i = 0; i < attr->info->Exceptions_attribute.exception_index_table + attr->info->Exceptions_attribute.number_of_exceptions; i++)
+      // {
+      //   *i = u2Read(fp);
+      // }
+    }
+    else if (strcmp(attribute_name, "Deprecated") == 0)
+    {
+      /* code */
+    }
+    else if (strcmp(attribute_name, "SourceFile") == 0)
+    {
+      // attr->info->SourceFile_attribute.sourcefile_index = u2Read(fp);
+    }
+    else if (strcmp(attribute_name, "LineNumberTable") == 0)
+    {
+      // attr->info->LineNumberTable_attribute.line_number_table_length = u2Read(fp);
+      // attr->info->LineNumberTable_attribute.line_number_table = (line_number_table_type *)malloc(sizeof(line_number_table_type) * attr->info->LineNumberTable_attribute.line_number_table_length);
+      free(attr->info->LineNumberTable_attribute.line_number_table);
+
+      // for (line_number_table_type *i = attr->info->LineNumberTable_attribute.line_number_table; i < attr->info->LineNumberTable_attribute.line_number_table + attr->info->LineNumberTable_attribute.line_number_table_length; i++)
+      // {
+      //   i->start_pc = u2Read(fp);
+      //   i->line_number = u2Read(fp);
+      // }
+    }
+    else if (strcmp(attribute_name, "ConstantValue") == 0)
+    {
+      // attr->info->ConstantValue_attribute.constantvalue_index = u2Read(fp);
+    }
+    else
+    {
+      /* code */
+    }
+    free(attr->info);
+  }
+  free(field);
 }
 
 void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
@@ -388,11 +468,12 @@ void read_class_file(ClassFile *cf, FILE *fp)
       break;
     case CONSTANT_Utf8:
       cp->Utf8.length = u2Read(fp);
-      cp->Utf8.bytes = (u1 *)malloc(sizeof(u1) * cp->Utf8.length);
+      cp->Utf8.bytes = (u1 *)malloc(sizeof(u1) * (cp->Utf8.length + 1));
       for (u1 *aux = cp->Utf8.bytes; aux < cp->Utf8.length + cp->Utf8.bytes; aux++)
       {
         *aux = u1Read(fp);
       }
+      cp->Utf8.bytes[cp->Utf8.length] = '\0';
       break;
     case CONSTANT_MethodHandle:
       cp->MethodHandle.reference_kind = u1Read(fp);
@@ -585,7 +666,7 @@ void print_class_file(ClassFile *cf)
     switch (cp->tag)
     {
     case CONSTANT_Class:
-      printf("Class Name Index: %02d \n", cp->Class.name_index);
+      recursive_print(cf->constant_pool, cp->Class.name_index);
       break;
     case CONSTANT_Fieldref:
       printf("Fieldref Class Index: %02d \n", cp->Fieldref.class_index);
@@ -715,6 +796,55 @@ void print_class_file(ClassFile *cf)
 
 void free_class_file(ClassFile *cf)
 {
+  // interface -> u2
+  // cf->interfaces = (u2 *)malloc(sizeof(u2) * cf->interfaces_count);
+  free(cf->interfaces);
+
+  for (field_info *field = cf->fields; field < cf->fields + cf->fields_count; field++)
+  {
+
+    // for (attribute_info *attr = field->attributes; attr < field->attributes + field->attributes_count; attr++)
+    // {
+
+    //   // attr->info = (u1 *)malloc(sizeof(u1 *) * attr->attribute_length);
+    //   free(attr->info);
+    // }
+
+    // field->attributes = (attribute_info *)malloc(sizeof(attribute_info) * field->attributes_count);
+    // free(field->attributes);
+    freeAttributes(field->attributes, cf->constant_pool, field->attributes_count);
+  }
+
+  // fields -> field_info
+  // cf->fields = (field_info *)malloc(sizeof(field_info) * cf->fields_count);
+  free(cf->fields);
+
+  // methods -> method_info
+  for (method_info *method = cf->methods; method < cf->methods + cf->methods_count; method++)
+  {
+    // for (attribute_info *attr = method->attributes; attr < method->attributes + method->attributes_count; attr++)
+    // {
+    //   // attr->info = (u1 *)malloc(sizeof(u1 *) * attr->attribute_length);
+    //   free(attr->info);
+    // }
+    freeAttributes(method->attributes, cf->constant_pool, method->attributes_count);
+
+    // method->attributes = (attribute_info *)malloc(sizeof(attribute_info) * method->attributes_count);
+    // free(method->attributes);
+  }
+  // cf->methods = (method_info *)malloc(sizeof(method_info) * cf->methods_count);
+  free(cf->methods);
+
+  // attributes -> attributes_info
+  // for (attribute_info *attr = cf->attributes; attr < cf->attributes + cf->attributes_count; attr++)
+  // {
+  //   // attr->info = (u1 *)malloc(sizeof(u1 *) * attr->attribute_length);
+  //   free(attr->info);
+  // }
+  // cf->attributes = (attribute_info *)malloc(sizeof(attribute_info) * cf->attributes_count);
+  // free(cf->attributes);
+  freeAttributes(cf->attributes, cf->constant_pool, cf->attributes_count);
+
   // constant_pool -> cp_info
   for (cp_info *cp = cf->constant_pool; cp < cf->constant_pool + cf->constant_pool_count - 1; cp++)
   {
@@ -757,49 +887,4 @@ void free_class_file(ClassFile *cf)
 
   // cf->constant_pool = (cp_info *)malloc(sizeof(cp_info) * (cf->constant_pool_count - 1));
   free(cf->constant_pool);
-
-  // interface -> u2
-  // cf->interfaces = (u2 *)malloc(sizeof(u2) * cf->interfaces_count);
-  free(cf->interfaces);
-
-  for (field_info *field = cf->fields; field < cf->fields + cf->fields_count; field++)
-  {
-
-    for (attribute_info *attr = field->attributes; attr < field->attributes + field->attributes_count; attr++)
-    {
-
-      // attr->info = (u1 *)malloc(sizeof(u1 *) * attr->attribute_length);
-      free(attr->info);
-    }
-
-    // field->attributes = (attribute_info *)malloc(sizeof(attribute_info) * field->attributes_count);
-    free(field->attributes);
-  }
-
-  // fields -> field_info
-  // cf->fields = (field_info *)malloc(sizeof(field_info) * cf->fields_count);
-  free(cf->fields);
-
-  // methods -> method_info
-  for (method_info *method = cf->methods; method < cf->methods + cf->methods_count; method++)
-  {
-    for (attribute_info *attr = method->attributes; attr < method->attributes + method->attributes_count; attr++)
-    {
-      // attr->info = (u1 *)malloc(sizeof(u1 *) * attr->attribute_length);
-      free(attr->info);
-    }
-    // method->attributes = (attribute_info *)malloc(sizeof(attribute_info) * method->attributes_count);
-    free(method->attributes);
-  }
-  // cf->methods = (method_info *)malloc(sizeof(method_info) * cf->methods_count);
-  free(cf->methods);
-
-  // attributes -> attributes_info
-  for (attribute_info *attr = cf->attributes; attr < cf->attributes + cf->attributes_count; attr++)
-  {
-    // attr->info = (u1 *)malloc(sizeof(u1 *) * attr->attribute_length);
-    free(attr->info);
-  }
-  // cf->attributes = (attribute_info *)malloc(sizeof(attribute_info) * cf->attributes_count);
-  free(cf->attributes);
 }
