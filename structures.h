@@ -257,6 +257,13 @@ typedef struct
   };
 } stack_map_frame;
 
+typedef struct
+{
+  u2 bootstrap_method_ref;
+  u2 num_bootstrap_arguments;
+  u2 *bootstrap_arguments; //[num_bootstrap_arguments];
+} Bootstrap_method;
+
 typedef union {
   struct
   {
@@ -290,6 +297,12 @@ typedef union {
     u2 number_of_exceptions;
     u2 *exception_index_table; //[number_of_exceptions];
   } Exceptions_attribute;
+
+  struct
+  {
+    u2 num_bootstrap_methods;
+    Bootstrap_method *bootstrap_methods; //[num_bootstrap_methods];
+  } BootstrapMethods_attribute;
   struct
   {
     u2 max_stack;

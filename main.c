@@ -155,6 +155,21 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
       attr->info->StackMapTable_attribute.entries = fillStackMapTable(attr, fp);
       // fseek(fp, attr->attribute_length, SEEK_CUR);
     }
+    else if (strcmp(attribute_name, "BootstrapMethods") == 0)
+    {
+      attr->info->BootstrapMethods_attribute.num_bootstrap_methods = u2Read(fp);
+      attr->info->BootstrapMethods_attribute.bootstrap_methods = (Bootstrap_method *)malloc(sizeof(Bootstrap_method) * attr->info->BootstrapMethods_attribute.num_bootstrap_methods);
+      for (Bootstrap_method *bm = attr->info->BootstrapMethods_attribute.bootstrap_methods; bm < attr->info->BootstrapMethods_attribute.bootstrap_methods + attr->info->BootstrapMethods_attribute.num_bootstrap_methods; bm++)
+      {
+        bm->bootstrap_method_ref = u2Read(fp);
+        bm->num_bootstrap_arguments = u2Read(fp);
+        bm->bootstrap_arguments = (u2 *)malloc(sizeof(u2) * bm->num_bootstrap_arguments);
+        for (u2 *i = bm->bootstrap_arguments; i < bm->bootstrap_arguments + bm->num_bootstrap_arguments; i++)
+        {
+          *i = u2Read(fp);
+        }
+      }
+    }
     else if (strcmp(attribute_name, "ConstantValue") == 0)
     {
       attr->info->ConstantValue_attribute.constantvalue_index = u2Read(fp);
