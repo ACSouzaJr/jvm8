@@ -441,22 +441,40 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
       printf("Code: \n");
       for (u1 *i = attr->info->Code_attribute.code; i < attr->info->Code_attribute.code + attr->info->Code_attribute.code_length; i++)
       {
-        // printf("%02x ", *i);
-        u1 index;
+        printf("%02ld ", i - attr->info->Code_attribute.code);
+        u1 *index;
         printf("%s ", op_codes_array[*i].value);
         if (op_codes_array[*i].arguments)
         {
           // args_num = op_codes_array[*i].arguments;
-          index = *i;
-          for (size_t j = 0; j < op_codes_array[index].arguments; j++)
+          index = i;
+          for (size_t j = 0; j < op_codes_array[*index].arguments; j++)
           {
             i++;
-            printf("%02x ", *i);
-            if (*i && op_codes_array[index].references)
+
+            if (op_codes_array[*index].references && op_codes_array[*index].arguments == 2)
             {
               // printf("%s", readUtf8(cp, ));
               // printf("Aqui!! %02x %s", *i, );
-              printf("%s \n", print_reference(cp, *i));
+              u2 arg = *i << 8 | *(++i);
+              printf("#%d <%s> ", arg, print_reference(cp, arg));
+              j++;
+            }
+            else if (*index == ldc)
+            {
+              u2 arg = 0x0 << 8 | *i;
+              printf("#%d <%s> ", arg, print_reference(cp, arg));
+              j++;
+            }
+            else if ((*index >= ifeq && *index <= jsr) || *index == ifnonnull || *index == ifnull)
+            {
+              int16_t addr = *i << 8 | *(++i);
+              printf("%ld (%d) ", (index - attr->info->Code_attribute.code) + addr, addr);
+              j++;
+            }
+            else
+            {
+              printf("%02d ", *i);
             }
           }
         }
