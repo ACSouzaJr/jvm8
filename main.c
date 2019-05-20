@@ -150,7 +150,6 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
     {
       attr->info->StackMapTable_attribute.number_of_entries = u2Read(fp);
       attr->info->StackMapTable_attribute.entries = fillStackMapTable(attr, fp);
-      // fseek(fp, attr->attribute_length, SEEK_CUR);
     }
     else if (strcmp(attribute_name, "BootstrapMethods") == 0)
     {
@@ -171,9 +170,9 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
     {
       attr->info->ConstantValue_attribute.constantvalue_index = u2Read(fp);
     }
-    else
+    else // caso o atributo não esteja implementado ele é ignorado.
     {
-      /* code */
+      fseek(fp, attr->attribute_length, SEEK_CUR);
     }
   }
   return field;
