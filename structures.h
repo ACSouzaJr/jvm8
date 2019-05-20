@@ -133,6 +133,19 @@ typedef struct
   u2 catch_type;
 } exception_table_type;
 
+enum
+{
+  ITEM_Top,
+  ITEM_Integer,
+  ITEM_Float,
+  ITEM_Double,
+  ITEM_Long,
+  ITEM_Null,
+  ITEM_UninitializedThis,
+  ITEM_Object,
+  ITEM_Uninitialized
+};
+
 typedef struct
 {
   // u1 tag = ITEM_Top; /* 0 */
