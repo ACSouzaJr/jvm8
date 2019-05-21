@@ -36,7 +36,7 @@ void freeAttributes(attribute_info *field, cp_info *cp, u2 attr_count);
 void printVerificationTypeInfo(verification_type_info *ver_type, u2 verification_type_length);
 void printStackMapTable(stack_map_frame *stack_map, attribute_info *attr);
 void freeStackMapTable(stack_map_frame *stack_map, attribute_info *attr);
-char *printDouble(u4 high_bytes, u4 low_bytes);
+char *printConstType(u4 high_bytes, u4 low_bytes, u1 type);
 
 int main(int argc, char const *argv[])
 {
@@ -87,13 +87,33 @@ char *readUtf8(cp_info *cp, u2 index)
   return (char *)(cp[index - 1]).Utf8.bytes;
 }
 
-char *printDouble(u4 high_bytes, u4 low_bytes)
+char *printConstType(u4 high_bytes, u4 low_bytes, u1 type)
 {
   char *str = (char *)malloc(sizeof(char) * 100);
-  int64_t num = (int64_t)high_bytes << 32 | (int64_t)low_bytes;
-  double d_num;
-  memcpy(&d_num, &num, sizeof(double));
-  sprintf(str, "%.2lf", d_num);
+  int64_t num;
+  switch (type)
+  {
+  case CONSTANT_Integer:
+    // printf("Integer Bytes: %02d \n", cp->Integer.bytes, str);
+    snprintf(str, 100, "%d", low_bytes);
+    break;
+  case CONSTANT_Float:
+    // printf("Float Bytes: %02d \n", cp->Float.bytes, str);
+    snprintf(str, 100, "%.2f", *(float *)&low_bytes);
+    break;
+  case CONSTANT_Long:
+    // printf("Long High Bytes: %02d \n", cp->Long.high_bytes, str);
+    // printf("Long Low Bytes: %02d \n", cp->Long.low_bytes, str);
+    num = (int64_t)high_bytes << 32 | (int64_t)low_bytes;
+    snprintf(str, 100, "%.2ld", *(long *)&num);
+    break;
+  case CONSTANT_Double:
+    num = (int64_t)high_bytes << 32 | (int64_t)low_bytes;
+    snprintf(str, 100, "%.2lf", *(double *)&num);
+    break;
+  default:
+    break;
+  }
   return str;
 }
 
@@ -793,19 +813,22 @@ void recursive_print(cp_info *cp, u2 index, char *str)
     break;
   case CONSTANT_Integer:
     // printf("Integer Bytes: %02d \n", cp->Integer.bytes, str);
+    strcat(str, printConstType(0, cp[index - 1].Integer.bytes, CONSTANT_Integer));
     break;
   case CONSTANT_Float:
     // printf("Float Bytes: %02d \n", cp->Float.bytes, str);
+    strcat(str, printConstType(0, cp[index - 1].Float.bytes, CONSTANT_Float));
     break;
   case CONSTANT_Long:
     // printf("Long High Bytes: %02d \n", cp->Long.high_bytes, str);
     // printf("Long Low Bytes: %02d \n", cp->Long.low_bytes, str);
+    strcat(str, printConstType(cp[index - 1].Long.high_bytes, cp[index - 1].Long.low_bytes, CONSTANT_Long));
     break;
   case CONSTANT_Double:
     // printf("Double High Bytes: %02d \n", cp->Double.high_bytes, str);
     // printf("Double Low Bytes: %02d \n", cp->Double.low_bytes, str);
 
-    strcat(str, printDouble(cp[index - 1].Double.high_bytes, cp[index - 1].Double.low_bytes));
+    strcat(str, printConstType(cp[index - 1].Double.high_bytes, cp[index - 1].Double.low_bytes, CONSTANT_Double));
     break;
   case CONSTANT_NameAndType:
     // printf("Name and Type - Name Index: %02d \n", cp->NameAndType.name_index, str);
@@ -916,25 +939,21 @@ void print_class_file(ClassFile *cf)
       break;
     case CONSTANT_Float:
       printf("  [%ld] CONSTANT_Float_info \n", cp - cf->constant_pool);
-      printf("Float Bytes: %02d \n", cp->Float.bytes);
+      printf("Float Bytes: %#x \n", cp->Float.bytes);
+      // printf("Float: %f \n", (float)cp->Float.bytes);
       break;
     case CONSTANT_Long:
       printf("  [%ld] CONSTANT_Long_info \n", cp - cf->constant_pool);
       printf("Long High Bytes: %#x \n", cp->Long.high_bytes);
       printf("Long Low Bytes: %#x \n", cp->Long.low_bytes);
-      // int64_t num = (int64_t)cp->Long.high_bytes << 32 | (int64_t)cp->Long.low_bytes;
-      // long l_num;
-      // memcpy(&l_num, &num, sizeof(long));
-      printf("Long: %s \n", printDouble(cp->Long.high_bytes, cp->Long.low_bytes));
+      // printf("Long: %s \n", printDouble(cp->Long.high_bytes, cp->Long.low_bytes));
       break;
     case CONSTANT_Double:
       printf("  [%ld] CONSTANT_Double_info \n", cp - cf->constant_pool);
       printf("Double High Bytes: %#x \n", cp->Double.high_bytes);
       printf("Double Low Bytes: %#x \n", cp->Double.low_bytes);
       int64_t num = (int64_t)cp->Long.high_bytes << 32 | (int64_t)cp->Long.low_bytes;
-      double d_num;
-      memcpy(&d_num, &num, sizeof(double));
-      printf("Double: %.2lf \n", d_num);
+      printf("Double: %.2f \n", *(double *)&num);
       break;
     case CONSTANT_NameAndType:
       printf("  [%ld] CONSTANT_NameAndType_info \n", cp - cf->constant_pool);
