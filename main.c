@@ -35,10 +35,12 @@ stack_map_frame *fillStackMapTable(attribute_info *attr, FILE *fp);
 void freeAttributes(attribute_info *field, cp_info *cp, u2 attr_count);
 void printVerificationTypeInfo(verification_type_info *ver_type, u2 verification_type_length);
 void printStackMapTable(stack_map_frame *stack_map, attribute_info *attr);
+void freeStackMapTable(stack_map_frame *stack_map, attribute_info *attr);
+char *printDouble(u4 high_bytes, u4 low_bytes);
 
 int main(int argc, char const *argv[])
 {
-  FILE *pFile = fopen("Fibonacci.class", "rb");
+  FILE *pFile = fopen("Teste/float_aritmetica.class", "rb");
   ClassFile *cf = (ClassFile *)malloc(sizeof(ClassFile));
   read_class_file(cf, pFile);
   fclose(pFile);
@@ -85,6 +87,16 @@ char *readUtf8(cp_info *cp, u2 index)
   return (char *)(cp[index - 1]).Utf8.bytes;
 }
 
+char *printDouble(u4 high_bytes, u4 low_bytes)
+{
+  char *str = (char *)malloc(sizeof(char) * 100);
+  int64_t num = (int64_t)high_bytes << 32 | (int64_t)low_bytes;
+  double d_num;
+  memcpy(&d_num, &num, sizeof(double));
+  sprintf(str, "%.2lf", d_num);
+  return str;
+}
+
 attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
 {
   attribute_info *field = (attribute_info *)malloc(sizeof(attribute_info) * attr_count);
@@ -95,6 +107,7 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
     attr->info = (attribute_types *)malloc(sizeof(attribute_types) * attr->attribute_length);
 
     char *attribute_name = readUtf8(cp, attr->attribute_name_index);
+    printf("%s\n", attribute_name);
 
     if (strcmp(attribute_name, "Code") == 0)
     {
@@ -173,6 +186,7 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
     }
     else // caso o atributo não esteja implementado ele é ignorado.
     {
+      printf("Attributo Ignorado! \n");
       fseek(fp, attr->attribute_length, SEEK_CUR);
     }
   }
@@ -344,6 +358,53 @@ stack_map_frame *fillStackMapTable(attribute_info *attr, FILE *fp)
   return stack_map;
 }
 
+void freeStackMapTable(stack_map_frame *stack_map, attribute_info *attr)
+{
+
+  for (stack_map_frame *smp = stack_map; smp < stack_map + attr->info->StackMapTable_attribute.number_of_entries; smp++)
+  {
+    if (smp->frame_type < 64) // 0 a 63
+    {
+      //continue
+    }
+    else if (smp->frame_type < 128) // 64 a 127
+    {
+      free(stack_map->same_locals_1_stack_item_frame.stack);
+    }
+    else if (smp->frame_type < 247) // 128 a 246
+    {
+      // for future use
+    }
+    else if (smp->frame_type < 248) // = 247
+    {
+      // stack_map->same_locals_1_stack_item_frame_extended.offset_delta = u2Read(fp);
+      free(stack_map->same_locals_1_stack_item_frame_extended.stack);
+    }
+    else if (smp->frame_type < 251) // 248 a 250
+    {
+      // stack_map->chop_frame.offset_delta = u2Read(fp);
+    }
+    else if (smp->frame_type < 252) // = 251
+    {
+      // stack_map->same_frame_extended.offset_delta = u2Read(fp);
+    }
+    else if (smp->frame_type < 255) // 252 a 254
+    {
+      // stack_map->append_frame.offset_delta = u2Read(fp);
+      free(stack_map->append_frame.locals);
+    }
+    else // = 255
+    {
+      // stack_map->full_frame.offset_delta = u2Read(fp);
+      // stack_map->full_frame.number_of_locals = u2Read(fp);
+      free(stack_map->full_frame.locals);
+      // stack_map->full_frame.number_of_stack_items = u2Read(fp);
+      free(stack_map->full_frame.stack);
+    }
+  }
+  free(stack_map);
+}
+
 void freeAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
 {
   // attribute_info *field = (attribute_info *)malloc(sizeof(attribute_info) * attr_count);
@@ -412,6 +473,11 @@ void freeAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
     else if (strcmp(attribute_name, "ConstantValue") == 0)
     {
       // attr->info->ConstantValue_attribute.constantvalue_index = u2Read(fp);
+    }
+    else if (strcmp(attribute_name, "StackMapTable") == 0)
+    {
+      // attr->info->StackMapTable_attribute.number_of_entries = u2Read(fp);
+      freeStackMapTable(attr->info->StackMapTable_attribute.entries, attr);
     }
     else
     {
@@ -562,6 +628,7 @@ void read_class_file(ClassFile *cf, FILE *fp)
   for (cp_info *cp = cf->constant_pool; cp < cf->constant_pool + cf->constant_pool_count - 1; cp++)
   {
     cp->tag = u1Read(fp);
+    // printf(" %d \n", cp->tag);
     switch (cp->tag)
     {
     case CONSTANT_Class:
@@ -591,10 +658,12 @@ void read_class_file(ClassFile *cf, FILE *fp)
     case CONSTANT_Long:
       cp->Long.high_bytes = u4Read(fp);
       cp->Long.low_bytes = u4Read(fp);
+      cp++;
       break;
     case CONSTANT_Double:
       cp->Double.high_bytes = u4Read(fp);
       cp->Double.low_bytes = u4Read(fp);
+      cp++;
       break;
     case CONSTANT_NameAndType:
       cp->NameAndType.name_index = u2Read(fp);
@@ -621,6 +690,7 @@ void read_class_file(ClassFile *cf, FILE *fp)
       cp->InvokeDynamic.name_and_type_index = u2Read(fp);
       break;
     default:
+      printf("Constant Pool nao encontrada \n");
       break;
     }
   }
@@ -734,6 +804,8 @@ void recursive_print(cp_info *cp, u2 index, char *str)
   case CONSTANT_Double:
     // printf("Double High Bytes: %02d \n", cp->Double.high_bytes, str);
     // printf("Double Low Bytes: %02d \n", cp->Double.low_bytes, str);
+
+    strcat(str, printDouble(cp[index - 1].Double.high_bytes, cp[index - 1].Double.low_bytes));
     break;
   case CONSTANT_NameAndType:
     // printf("Name and Type - Name Index: %02d \n", cp->NameAndType.name_index, str);
@@ -848,13 +920,21 @@ void print_class_file(ClassFile *cf)
       break;
     case CONSTANT_Long:
       printf("  [%ld] CONSTANT_Long_info \n", cp - cf->constant_pool);
-      printf("Long High Bytes: %02d \n", cp->Long.high_bytes);
-      printf("Long Low Bytes: %02d \n", cp->Long.low_bytes);
+      printf("Long High Bytes: %#x \n", cp->Long.high_bytes);
+      printf("Long Low Bytes: %#x \n", cp->Long.low_bytes);
+      // int64_t num = (int64_t)cp->Long.high_bytes << 32 | (int64_t)cp->Long.low_bytes;
+      // long l_num;
+      // memcpy(&l_num, &num, sizeof(long));
+      printf("Long: %s \n", printDouble(cp->Long.high_bytes, cp->Long.low_bytes));
       break;
     case CONSTANT_Double:
       printf("  [%ld] CONSTANT_Double_info \n", cp - cf->constant_pool);
-      printf("Double High Bytes: %02d \n", cp->Double.high_bytes);
-      printf("Double Low Bytes: %02d \n", cp->Double.low_bytes);
+      printf("Double High Bytes: %#x \n", cp->Double.high_bytes);
+      printf("Double Low Bytes: %#x \n", cp->Double.low_bytes);
+      int64_t num = (int64_t)cp->Long.high_bytes << 32 | (int64_t)cp->Long.low_bytes;
+      double d_num;
+      memcpy(&d_num, &num, sizeof(double));
+      printf("Double: %.2lf \n", d_num);
       break;
     case CONSTANT_NameAndType:
       printf("  [%ld] CONSTANT_NameAndType_info \n", cp - cf->constant_pool);
