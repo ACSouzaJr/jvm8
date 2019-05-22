@@ -304,11 +304,11 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
         i->line_number = u2Read(fp);
       }
     }
-    else if (strcmp(attribute_name, "StackMapTable") == 0)
-    {
-      attr->info->StackMapTable_attribute.number_of_entries = u2Read(fp);
-      attr->info->StackMapTable_attribute.entries = fillStackMapTable(attr, fp);
-    }
+    // else if (strcmp(attribute_name, "StackMapTable") == 0)
+    // {
+    //   attr->info->StackMapTable_attribute.number_of_entries = u2Read(fp);
+    //   attr->info->StackMapTable_attribute.entries = fillStackMapTable(attr, fp);
+    // }
     else if (strcmp(attribute_name, "BootstrapMethods") == 0)
     {
       attr->info->BootstrapMethods_attribute.num_bootstrap_methods = u2Read(fp);
