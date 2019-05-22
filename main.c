@@ -42,7 +42,7 @@ void printConstType(u4 high_bytes, u4 low_bytes, u1 type);
 
 int main(int argc, char const *argv[])
 {
-  FILE *pFile = fopen("Teste/Fibonacci.class", "rb");
+  FILE *pFile = fopen("Teste/double_cast.class", "rb");
   ClassFile *cf = (ClassFile *)malloc(sizeof(ClassFile));
   read_class_file(cf, pFile);
   fclose(pFile);
@@ -962,7 +962,7 @@ void print_class_file(ClassFile *cf)
       printf("Double High Bytes: %#x \n", cp->Double.high_bytes);
       printf("Double Low Bytes: %#x \n", cp->Double.low_bytes);
       // int64_t num = (int64_t)cp->Long.high_bytes << 32 | (int64_t)cp->Long.low_bytes;
-      printConstType(0, cp->Float.bytes, CONSTANT_Double);
+      printConstType(cp->Double.high_bytes, cp->Double.low_bytes, CONSTANT_Double);
       printf("Double: %s \n", GLOBAL_ptr);
       break;
     case CONSTANT_NameAndType:
