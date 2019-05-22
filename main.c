@@ -42,7 +42,7 @@ void printConstType(u4 high_bytes, u4 low_bytes, u1 type);
 
 int main(int argc, char const *argv[])
 {
-  FILE *pFile = fopen("Teste/float_aritmetica.class", "rb");
+  FILE *pFile = fopen("Teste/Carta.class", "rb");
   ClassFile *cf = (ClassFile *)malloc(sizeof(ClassFile));
   read_class_file(cf, pFile);
   fclose(pFile);
@@ -1002,6 +1002,33 @@ void print_class_file(ClassFile *cf)
       break;
     }
     printf("< --------------------- > \n");
+  }
+
+  // interface -> u2
+  printf("Interface  \n");
+  printf("< --------------------- > \n");
+  for (u2 *interface = cf->interfaces; interface < cf->interfaces + cf->interfaces_count; interface++)
+  {
+    // *interface = u2Read(fp);
+    printf("%d \n", *interface);
+  }
+
+  printf("< --------------------- > \n");
+  printf("Fields  \n");
+  printf("< --------------------- > \n");
+
+  // cf->fields_count = u2Read(fp);
+  // fields -> field_info
+
+  for (field_info *field = cf->fields; field < cf->fields + cf->fields_count; field++)
+  {
+    printf("  [%ld] %s \n", field - cf->fields, print_reference(cf->constant_pool, field->name_index));
+    printf("Field Name: cp_info #%d <%s> \n", field->name_index, print_reference(cf->constant_pool, field->name_index));
+    printf("Field Descriptor: cp_info #%d <%s> \n", field->descriptor_index, print_reference(cf->constant_pool, field->descriptor_index));
+    printf("Access Flags: %#04x \n", field->access_flags);
+    // printf("%d \n", field->attributes_count);
+
+    printAttributes(field->attributes, cf->constant_pool, field->attributes_count);
   }
 
   printf("Methods \n");
