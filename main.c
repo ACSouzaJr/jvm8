@@ -39,10 +39,11 @@ void printVerificationTypeInfo(verification_type_info *ver_type, cp_info *cp, u2
 void printStackMapTable(stack_map_frame *stack_map, cp_info *cp, attribute_info *attr);
 void freeStackMapTable(stack_map_frame *stack_map, attribute_info *attr);
 void printConstType(u4 high_bytes, u4 low_bytes, u1 type);
+char *printFlag(u2 type, u1 flag);
 
 int main(int argc, char const *argv[])
 {
-  FILE *pFile = fopen("Teste/double_cast.class", "rb");
+  FILE *pFile = fopen("Teste/testeMultArray.class", "rb");
   ClassFile *cf = (ClassFile *)malloc(sizeof(ClassFile));
   read_class_file(cf, pFile);
   fclose(pFile);
@@ -110,7 +111,7 @@ void printConstType(u4 high_bytes, u4 low_bytes, u1 type)
     // printf("Long High Bytes: %02d \n", cp->Long.high_bytes, str);
     // printf("Long Low Bytes: %02d \n", cp->Long.low_bytes, str);
     num = (int64_t)high_bytes << 32 | (int64_t)low_bytes;
-    snprintf(GLOBAL_ptr, 100, "%.2ld", *(long *)&num);
+    snprintf(GLOBAL_ptr, 100, "%ld", *(long *)&num);
     break;
   case CONSTANT_Double:
     num = (int64_t)high_bytes << 32 | (int64_t)low_bytes;
@@ -120,6 +121,125 @@ void printConstType(u4 high_bytes, u4 low_bytes, u1 type)
     break;
   }
   // return str;
+}
+
+char *printType(u2 type)
+{
+  switch (type)
+  {
+  case T_BOOLEAN:
+    return "(boolean)";
+    break;
+  case T_CHAR:
+    return "(char)";
+    break;
+  case T_FLOAT:
+    return "(float)";
+    break;
+  case T_DOUBLE:
+    return "(double)";
+    break;
+  case T_BYTE:
+    return "(byte)";
+    break;
+  case T_SHORT:
+    return "(short)";
+    break;
+  case T_INT:
+    return "(int)";
+    break;
+  case T_LONG:
+    return "(long)";
+    break;
+  default:
+    return "";
+    break;
+  }
+}
+
+char *printFlag(u2 type, u1 flag)
+{
+  switch (type)
+  {
+  case 0x0001: //  ACC_PUBLIC:
+    return "[public]";
+    break;
+
+  case 9:
+    return "[public static]";
+    break;
+
+  case 0x0010: //  ACC_FINAL:
+    return "[final]";
+    break;
+    // = SYNCRONIZED :
+  case 0x0020:
+    if (flag) //  ACC_SUPER:
+      return "[super]";
+    else //  ACC_SYNCHRONIZED:
+      return "[synchronized]";
+
+    break;
+  case 0x0200: //  ACC_INTERFACE:
+    return "[interface]";
+    break;
+  case 0x0400: //  ACC_ABSTRACT:
+    return "[abstract]";
+    break;
+  // case 0x0001 : //  ACC_PUBLIC:
+  //   return "[]";
+  //   break;
+  case 0x0002: //  ACC_PRIVATE:
+    return "[private]";
+    break;
+  case 0x0004: //  ACC_PROTECTED:
+    return "[protect]";
+    break;
+  case 0x0008: //  ACC_STATIC:
+    return "[static]";
+    break;
+  // case 0x0010 : //  ACC_FINAL:
+  //   return "[]";
+  //   break;
+  case 0x0040: //  ACC_VOLATILE:
+    return "[volatile]";
+    break;
+  case 0x0080: //  ACC_TRANSIENT:
+    return "[transient]";
+    break;
+  // case 0x0001 : //  ACC_PUBLIC:
+  //   return "[]";
+  //   break;
+  // case 0x0002 : //  ACC_PRIVATE:
+  //   return "[]";
+  //   break;
+  // case 0x0004 : //  ACC_PROTECTED:
+  //   return "[]";
+  //   break;
+  // case 0x0008 : //  ACC_STATIC:
+  //   return "[]";
+  //   break;
+  // case 0x0010 : //  ACC_FINAL:
+  //   return "[]";
+  //   break;
+
+  // = SUPER
+  // case 0x0020 : //  ACC_SYNCHRONIZED:
+  //   return "[]";
+  //   break;
+  case 0x0100: //  ACC_NATIVE:
+    return "[native]";
+    break;
+  // case 0x0400 : //  ACC_ABSTRACT:
+  //   return "[]";
+  //   break;
+  case 0x0800: //  ACC_STRICT:
+    return "[strict]";
+    break;
+  default:
+    return "[]";
+    break;
+  }
 }
 
 attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
@@ -560,6 +680,12 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
               printf("#%d <%s> ", arg, print_reference(cp, arg));
               j++;
             }
+            else if (*index == multianewarray)
+            {
+              u2 arg = *i << 8 | *(++i);
+              printf("#%d <%s> dim %d ", arg, print_reference(cp, arg), *(++i));
+              j += 2;
+            }
             else if ((*index >= ifeq && *index <= jsr) || *index == ifnonnull || *index == ifnull)
             {
               int16_t addr = *i << 8 | *(++i);
@@ -569,6 +695,10 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
             else
             {
               printf("%02d ", *i);
+            }
+            if (*index == newarray)
+            {
+              printf("%s ", printType(*i));
             }
           }
         }
@@ -895,7 +1025,7 @@ void print_class_file(ClassFile *cf)
   printf("Minor Version: %02d \n", cf->minor_version);
   printf("Major Version: %02d \n", cf->major_version);
   printf("Constant Pool Count: %02d \n", cf->constant_pool_count);
-  printf("Access Flags: %#04x \n", cf->access_flags);
+  printf("Access Flags: %#04x %s \n", cf->access_flags, printFlag(cf->access_flags, 1));
   printf("This Class: cp_info #%d <%s> \n", cf->this_class, cf->constant_pool[cf->constant_pool[cf->this_class - 1].Class.name_index - 1].Utf8.bytes);
   printf("Super Class: cp_info #%d <%s> \n", cf->super_class, cf->constant_pool[cf->constant_pool[cf->super_class - 1].Class.name_index - 1].Utf8.bytes);
   printf("Interfaces Count: %02d \n", cf->interfaces_count);
@@ -1027,7 +1157,7 @@ void print_class_file(ClassFile *cf)
     printf("  [%ld] %s \n", field - cf->fields, print_reference(cf->constant_pool, field->name_index));
     printf("Field Name: cp_info #%d <%s> \n", field->name_index, print_reference(cf->constant_pool, field->name_index));
     printf("Field Descriptor: cp_info #%d <%s> \n", field->descriptor_index, print_reference(cf->constant_pool, field->descriptor_index));
-    printf("Access Flags: %#04x \n", field->access_flags);
+    printf("Access Flags: %#04x %s \n", field->access_flags, printFlag(field->access_flags, 1));
     // printf("%d \n", field->attributes_count);
 
     printAttributes(field->attributes, cf->constant_pool, field->attributes_count);
@@ -1041,7 +1171,7 @@ void print_class_file(ClassFile *cf)
     printf("  [%ld] %s \n", mi - cf->methods, print_reference(cf->constant_pool, mi->name_index));
     printf("Methods Name: cp_info #%d <%s> \n", mi->name_index, print_reference(cf->constant_pool, mi->name_index));
     printf("Methods Descriptor: cp_info #%d <%s> \n", mi->descriptor_index, print_reference(cf->constant_pool, mi->descriptor_index));
-    printf("Methods Access Flags: %#04x\n", mi->access_flags);
+    printf("Methods Access Flags: %#04x %s \n", mi->access_flags, printFlag(mi->access_flags, 1));
     // printf("Methods Attributes Count: %02d\n", mi->attributes_count);
 
     printAttributes(mi->attributes, cf->constant_pool, mi->attributes_count);
