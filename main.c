@@ -35,14 +35,14 @@ char *print_reference(cp_info *cp, u2 index);
 verification_type_info *fillVerificationTypeInfo(FILE *fp, u2 verification_type_length);
 stack_map_frame *fillStackMapTable(attribute_info *attr, FILE *fp);
 void freeAttributes(attribute_info *field, cp_info *cp, u2 attr_count);
-void printVerificationTypeInfo(verification_type_info *ver_type, u2 verification_type_length);
-void printStackMapTable(stack_map_frame *stack_map, attribute_info *attr);
+void printVerificationTypeInfo(verification_type_info *ver_type, cp_info *cp, u2 verification_type_length);
+void printStackMapTable(stack_map_frame *stack_map, cp_info *cp, attribute_info *attr);
 void freeStackMapTable(stack_map_frame *stack_map, attribute_info *attr);
 void printConstType(u4 high_bytes, u4 low_bytes, u1 type);
 
 int main(int argc, char const *argv[])
 {
-  FILE *pFile = fopen("Teste/Carta.class", "rb");
+  FILE *pFile = fopen("Teste/Fibonacci.class", "rb");
   ClassFile *cf = (ClassFile *)malloc(sizeof(ClassFile));
   read_class_file(cf, pFile);
   fclose(pFile);
@@ -217,7 +217,7 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
   return field;
 }
 
-void printVerificationTypeInfo(verification_type_info *ver_type, u2 verification_type_length)
+void printVerificationTypeInfo(verification_type_info *ver_type, cp_info *cp, u2 verification_type_length)
 {
 
   for (verification_type_info *vp = ver_type; vp < ver_type + verification_type_length; vp++)
@@ -248,7 +248,7 @@ void printVerificationTypeInfo(verification_type_info *ver_type, u2 verification
       printf("UNINITIALIZED THIS \n");
       break;
     case ITEM_Object:
-      printf("OBJECT cp info #%d <> \n", vp->object_variable_info.cpool_index);
+      printf("OBJECT cp_info #%d <%s> \n", vp->object_variable_info.cpool_index, print_reference(cp, vp->object_variable_info.cpool_index));
       break;
     case ITEM_Uninitialized:
       printf("UNINITIALIZED offset %02x \n", vp->uninitialized_variable_info.offset);
@@ -281,19 +281,22 @@ verification_type_info *fillVerificationTypeInfo(FILE *fp, u2 verification_type_
   return ver_type;
 }
 
-void printStackMapTable(stack_map_frame *stack_map, attribute_info *attr)
+void printStackMapTable(stack_map_frame *stack_map, cp_info *cp, attribute_info *attr)
 {
 
+  u2 pc = 0;
   for (stack_map_frame *smp = stack_map; smp < stack_map + attr->info->StackMapTable_attribute.number_of_entries; smp++)
   {
+    u2 index = smp - stack_map;
     // printf("%02x \n", smp->frame_type);
     if (smp->frame_type < 64) // 0 a 63
     {
       //continue
+      printf("%d | SAME(%d), Offset: %d (%d) \n", index, smp->frame_type, (pc += smp->frame_type) + index, smp->frame_type);
     }
     else if (smp->frame_type < 128) // 64 a 127
     {
-      printVerificationTypeInfo(stack_map->same_locals_1_stack_item_frame.stack, 2);
+      printVerificationTypeInfo(stack_map->same_locals_1_stack_item_frame.stack, cp, 2);
     }
     else if (smp->frame_type < 247) // 128 a 246
     {
@@ -303,11 +306,11 @@ void printStackMapTable(stack_map_frame *stack_map, attribute_info *attr)
     {
       printf("%02x", stack_map->same_locals_1_stack_item_frame_extended.offset_delta);
       // printf("%02x", );
-      printVerificationTypeInfo(stack_map->same_locals_1_stack_item_frame_extended.stack, 2);
+      printVerificationTypeInfo(stack_map->same_locals_1_stack_item_frame_extended.stack, cp, 2);
     }
     else if (smp->frame_type < 251) // 248 a 250
     {
-      printf("%ld | CHOP(%d), Offset: %d \n", smp - stack_map, smp->frame_type, stack_map->chop_frame.offset_delta);
+      printf("%ld | CHOP(%d), Offset: %d (%d) \n", smp - stack_map, smp->frame_type, (pc += stack_map->chop_frame.offset_delta) + index, stack_map->chop_frame.offset_delta);
     }
     else if (smp->frame_type < 252) // = 251
     {
@@ -315,20 +318,21 @@ void printStackMapTable(stack_map_frame *stack_map, attribute_info *attr)
     }
     else if (smp->frame_type < 255) // 252 a 254
     {
-
-      printf("%02x \n", stack_map->append_frame.offset_delta);
-      printVerificationTypeInfo(stack_map->append_frame.locals, smp->frame_type - 251);
+      printf("%ld | APPEND(%d), Offset: %d (%d) \n", smp - stack_map, smp->frame_type, (pc += stack_map->append_frame.offset_delta) + index, stack_map->append_frame.offset_delta);
+      // printf("%02x \n", stack_map->append_frame.offset_delta);
+      printf("  Local verifications: \n");
+      printVerificationTypeInfo(stack_map->append_frame.locals, cp, smp->frame_type - 251);
     }
     else
     { // = 255
 
-      printf("%ld | FULL (%d), Offset: %d \n", smp - stack_map, smp->frame_type, stack_map->full_frame.offset_delta);
+      printf("%ld | FULL (%d), Offset: %d (%d) \n", smp - stack_map, smp->frame_type, (pc += stack_map->full_frame.offset_delta) + index, stack_map->full_frame.offset_delta);
       // printf("%02x \n", stack_map->full_frame.number_of_locals);
       printf("  Local verifications: \n");
-      printVerificationTypeInfo(stack_map->full_frame.locals, stack_map->full_frame.number_of_locals);
+      printVerificationTypeInfo(stack_map->full_frame.locals, cp, stack_map->full_frame.number_of_locals);
       // printf("%02x \n", stack_map->full_frame.number_of_stack_items);
       printf("  Stack verifications: \n");
-      printVerificationTypeInfo(stack_map->full_frame.stack, stack_map->full_frame.number_of_stack_items);
+      printVerificationTypeInfo(stack_map->full_frame.stack, cp, stack_map->full_frame.number_of_stack_items);
     }
   }
 }
@@ -616,7 +620,7 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
     }
     else if (strcmp(attribute_name, "StackMapTable") == 0)
     {
-      printStackMapTable(attr->info->StackMapTable_attribute.entries, attr);
+      printStackMapTable(attr->info->StackMapTable_attribute.entries, cp, attr);
     }
     else if (strcmp(attribute_name, "ConstantValue") == 0)
     {
@@ -1009,7 +1013,6 @@ void print_class_file(ClassFile *cf)
   printf("< --------------------- > \n");
   for (u2 *interface = cf->interfaces; interface < cf->interfaces + cf->interfaces_count; interface++)
   {
-    // *interface = u2Read(fp);
     printf("%d \n", *interface);
   }
 
@@ -1017,7 +1020,6 @@ void print_class_file(ClassFile *cf)
   printf("Fields  \n");
   printf("< --------------------- > \n");
 
-  // cf->fields_count = u2Read(fp);
   // fields -> field_info
 
   for (field_info *field = cf->fields; field < cf->fields + cf->fields_count; field++)
