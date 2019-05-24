@@ -43,7 +43,7 @@ char *printFlag(u2 type, u1 flag);
 
 int main(int argc, char const *argv[])
 {
-  FILE *pFile = fopen("Teste/tableswitch.class", "rb");
+  FILE *pFile = fopen("Teste/TesteLookupswitch.class", "rb");
   ClassFile *cf = (ClassFile *)malloc(sizeof(ClassFile));
   read_class_file(cf, pFile);
   fclose(pFile);
@@ -740,6 +740,36 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
               }
               printf("  default: %d  (%d) ", pc + default_v, default_v);
               // printf(" Aqui> %d %d %d \n", default_v, low_v, high_v);
+            }
+            else if (*index == lookupswitch)
+            {
+              u1 padding = pc % 4;
+              i += padding + 1;
+              int32_t default_v, n_pairs, bytes, offset;
+
+              for (size_t k = 0; k < 4; k++)
+              {
+                default_v = default_v << 8 | *i++;
+              }
+              // printf(" %d ", default_v);
+              for (size_t k = 0; k < 4; k++)
+              {
+                n_pairs = n_pairs << 8 | *i++;
+              }
+              printf(" %d \n", n_pairs);
+              for (u2 w = 0; w < n_pairs; w++)
+              {
+                for (size_t v = 0; v < 4; v++)
+                {
+                  bytes = bytes << 8 | *i++;
+                }
+                for (size_t v = 0; v < 4; v++)
+                {
+                  offset = offset << 8 | *i++;
+                }
+                printf("  %d: %d  (%d) \n", bytes, pc + offset, offset);
+              }
+              printf("  default: %d  (%d) ", pc + default_v, default_v);
             }
             else if (*index == multianewarray)
             {
