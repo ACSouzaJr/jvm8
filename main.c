@@ -328,6 +328,35 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
     {
       attr->info->ConstantValue_attribute.constantvalue_index = u2Read(fp);
     }
+    else if (strcmp(attribute_name, "LocalVariableTable") == 0)
+    {
+      attr->info->LocalVariableTable_attribute.local_variable_table_length = u2Read(fp);
+      attr->info->LocalVariableTable_attribute.local_variable_table = (Local_variable_table *)malloc(sizeof(Local_variable_table) * attr->info->LocalVariableTable_attribute.local_variable_table_length);
+      for (Local_variable_table *i = attr->info->LocalVariableTable_attribute.local_variable_table; i < attr->info->LocalVariableTable_attribute.local_variable_table + attr->info->LocalVariableTable_attribute.local_variable_table_length; i++)
+      {
+        i->start_pc = u2Read(fp);
+        i->length = u2Read(fp);
+        i->name_index = u2Read(fp);
+        i->descriptor_index = u2Read(fp);
+        i->index = u2Read(fp);
+      }
+    }
+    else if (strcmp(attribute_name, "Synthetic") == 0)
+    {
+      /* code */
+    }
+    else if (strcmp(attribute_name, "InnerClasses") == 0)
+    {
+      attr->info->InnerClasses_attribute.number_of_classes = u2Read(fp);
+      attr->info->InnerClasses_attribute.classes = (Classes *)malloc(sizeof(Classes) * attr->info->InnerClasses_attribute.number_of_classes);
+      for (Classes *i = attr->info->InnerClasses_attribute.classes; i < attr->info->InnerClasses_attribute.number_of_classes + attr->info->InnerClasses_attribute.classes; i++)
+      {
+        i->inner_class_info_index = u2Read(fp);
+        i->outer_class_info_index = u2Read(fp);
+        i->inner_name_index = u2Read(fp);
+        i->inner_class_access_flags = u2Read(fp);
+      }
+    }
     else // caso o atributo não esteja implementado ele é ignorado.
     {
       printf("Attributo Ignorado! \n");

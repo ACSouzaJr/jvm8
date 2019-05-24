@@ -289,6 +289,23 @@ typedef struct
   u2 *bootstrap_arguments; //[num_bootstrap_arguments];
 } Bootstrap_method;
 
+typedef struct
+{
+  u2 inner_class_info_index;
+  u2 outer_class_info_index;
+  u2 inner_name_index;
+  u2 inner_class_access_flags;
+} Classes;
+
+typedef struct
+{
+  u2 start_pc;
+  u2 length;
+  u2 name_index;
+  u2 descriptor_index;
+  u2 index;
+} Local_variable_table;
+
 typedef union {
   struct
   {
@@ -323,6 +340,21 @@ typedef union {
     u2 *exception_index_table; //[number_of_exceptions];
   } Exceptions_attribute;
 
+  struct
+  {
+    u2 number_of_classes;
+    Classes *classes; //[number_of_classes];
+  } InnerClasses_attribute;
+
+  struct
+  {
+  } Synthetic_attribute;
+
+  struct
+  {
+    u2 local_variable_table_length;
+    Local_variable_table *local_variable_table; // [local_variable_table_length];
+  } LocalVariableTable_attribute;
   struct
   {
     u2 num_bootstrap_methods;
