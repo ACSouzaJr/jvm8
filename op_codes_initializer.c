@@ -688,12 +688,12 @@ void initialize_op_codes()
 
   strcpy(op_codes_array[170].value, "tableswitch");
   // instrução tem tamanho variável
-  op_codes_array[170].arguments = 34;
+  op_codes_array[170].arguments = 1;
   op_codes_array[170].references = 0;
 
   strcpy(op_codes_array[171].value, "lookupswitch");
   // instrução tem tamanho variável
-  op_codes_array[171].arguments = 26;
+  op_codes_array[171].arguments = 1;
   op_codes_array[171].references = 0;
 
   strcpy(op_codes_array[172].value, "ireturn");

@@ -43,7 +43,7 @@ char *printFlag(u2 type, u1 flag);
 
 int main(int argc, char const *argv[])
 {
-  FILE *pFile = fopen("Teste/testeMultArray.class", "rb");
+  FILE *pFile = fopen("Teste/tableswitch.class", "rb");
   ClassFile *cf = (ClassFile *)malloc(sizeof(ClassFile));
   read_class_file(cf, pFile);
   fclose(pFile);
@@ -684,7 +684,8 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
       printf("Code: \n");
       for (u1 *i = attr->info->Code_attribute.code; i < attr->info->Code_attribute.code + attr->info->Code_attribute.code_length; i++)
       {
-        printf("%02ld ", i - attr->info->Code_attribute.code);
+        u2 pc = i - attr->info->Code_attribute.code;
+        printf("%02d ", pc);
         u1 *index;
         printf("%s ", op_codes_array[*i].value);
         if (op_codes_array[*i].arguments)
@@ -708,6 +709,37 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
               u2 arg = 0x0 << 8 | *i;
               printf("#%d <%s> ", arg, print_reference(cp, arg));
               j++;
+            }
+            else if (*index == tableswitch)
+            {
+              u1 padding = pc % 4;
+              i += padding + 1;
+              int32_t default_v, low_v, high_v, bytes;
+              for (size_t k = 0; k < 4; k++)
+              {
+                default_v = default_v << 8 | *i++;
+              }
+              for (size_t k = 0; k < 4; k++)
+              {
+                low_v = low_v << 8 | *i++;
+              }
+              for (size_t k = 0; k < 4; k++)
+              {
+                high_v = high_v << 8 | *i++;
+              }
+
+              printf("%d to %d \n", low_v, high_v);
+
+              for (u2 w = 0; w < high_v - low_v + 1; w++)
+              {
+                for (size_t v = 0; v < 4; v++)
+                {
+                  bytes = bytes << 8 | *i++;
+                }
+                printf("  %d: %d  (%d) \n", w, pc + bytes, bytes);
+              }
+              printf("  default: %d  (%d) ", pc + default_v, default_v);
+              // printf(" Aqui> %d %d %d \n", default_v, low_v, high_v);
             }
             else if (*index == multianewarray)
             {
@@ -1186,7 +1218,7 @@ void print_class_file(ClassFile *cf)
     printf("  [%ld] %s \n", field - cf->fields, print_reference(cf->constant_pool, field->name_index));
     printf("Field Name: cp_info #%d <%s> \n", field->name_index, print_reference(cf->constant_pool, field->name_index));
     printf("Field Descriptor: cp_info #%d <%s> \n", field->descriptor_index, print_reference(cf->constant_pool, field->descriptor_index));
-    printf("Access Flags: %#04x %s \n", field->access_flags, printFlag(field->access_flags, 1));
+    printf("Access Flags: %#04x %s \n", field->access_flags, printFlag(field->access_flags, 0));
     // printf("%d \n", field->attributes_count);
 
     printAttributes(field->attributes, cf->constant_pool, field->attributes_count);
@@ -1200,7 +1232,7 @@ void print_class_file(ClassFile *cf)
     printf("  [%ld] %s \n", mi - cf->methods, print_reference(cf->constant_pool, mi->name_index));
     printf("Methods Name: cp_info #%d <%s> \n", mi->name_index, print_reference(cf->constant_pool, mi->name_index));
     printf("Methods Descriptor: cp_info #%d <%s> \n", mi->descriptor_index, print_reference(cf->constant_pool, mi->descriptor_index));
-    printf("Methods Access Flags: %#04x %s \n", mi->access_flags, printFlag(mi->access_flags, 1));
+    printf("Methods Access Flags: %#04x %s \n", mi->access_flags, printFlag(mi->access_flags, 0));
     // printf("Methods Attributes Count: %02d\n", mi->attributes_count);
 
     printAttributes(mi->attributes, cf->constant_pool, mi->attributes_count);

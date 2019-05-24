@@ -55,5 +55,6 @@ enum
   aload_2 = 44,
   aload_3 = 45,
   areturn = 176,
-  return_original = 177
+  return_original = 177,
+  tableswitch = 170
 } instructions;
