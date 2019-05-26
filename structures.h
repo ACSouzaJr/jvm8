@@ -133,6 +133,179 @@ typedef struct
   u2 catch_type;
 } exception_table_type;
 
+enum
+{
+  ITEM_Top,
+  ITEM_Integer,
+  ITEM_Float,
+  ITEM_Double,
+  ITEM_Long,
+  ITEM_Null,
+  ITEM_UninitializedThis,
+  ITEM_Object,
+  ITEM_Uninitialized
+};
+
+enum
+{
+  T_BOOLEAN = 4,
+  T_CHAR = 5,
+  T_FLOAT = 6,
+  T_DOUBLE = 7,
+  T_BYTE = 8,
+  T_SHORT = 9,
+  T_INT = 10,
+  T_LONG = 11
+};
+
+typedef struct
+{
+  // u1 tag = ITEM_Top; /* 0 */
+} Top_variable_info;
+
+typedef struct
+{
+  // u1 tag = ITEM_Integer; /* 1 */
+} Integer_variable_info;
+
+typedef struct
+{
+  // u1 tag = ITEM_Float; /* 2 */
+} Float_variable_info;
+
+typedef struct
+{
+  // u1 tag = ITEM_Null; /* 5 */
+} Null_variable_info;
+
+typedef struct
+{
+  // u1 tag = ITEM_UninitializedThis; /* 6 */
+} UninitializedThis_variable_info;
+
+typedef struct
+{
+  // u1 tag = ITEM_Object; /* 7 */
+  u2 cpool_index;
+} Object_variable_info;
+
+typedef struct
+{
+  // u1 tag = ITEM_Uninitialized; /* 8 */
+  u2 offset;
+} Uninitialized_variable_info;
+
+typedef struct
+{
+  // u1 tag = ITEM_Long; /* 4 */
+} Long_variable_info;
+
+typedef struct
+{
+  // u1 tag = ITEM_Double; /* 3 */
+} Double_variable_info;
+
+typedef struct
+{
+  u1 tag;
+  union {
+    Top_variable_info top_variable_info;
+    Integer_variable_info integer_variable_info;
+    Float_variable_info float_variable_info;
+    Long_variable_info long_variable_info;
+    Double_variable_info double_variable_info;
+    Null_variable_info null_variable_info;
+    UninitializedThis_variable_info uninitializedThis_variable_info;
+    Object_variable_info object_variable_info;
+    Uninitialized_variable_info uninitialized_variable_info;
+  };
+} verification_type_info;
+
+typedef struct
+{
+  //u1 frame_type; /* = SAME 0-63 */
+} Same_frame;
+
+typedef struct
+{
+  //u1 frame_type;// = SAME_LOCALS_1_STACK_ITEM; /* 64-127 */
+  verification_type_info *stack; //[1];
+} Same_locals_1_stack_item_frame;
+
+typedef struct
+{
+  //u1 frame_type;// = SAME_LOCALS_1_STACK_ITEM_EXTENDED; /* 247 */
+  u2 offset_delta;
+  verification_type_info *stack; //[1];
+} Same_locals_1_stack_item_frame_extended;
+
+typedef struct
+{
+  //u1 frame_type; // = CHOP; /* 248-250 */
+  u2 offset_delta;
+} Chop_frame;
+
+typedef struct
+{
+  //u1 frame_type; // = SAME_FRAME_EXTENDED; /* 251 */
+  u2 offset_delta;
+} Same_frame_extended;
+
+typedef struct
+{
+  //u1 frame_type; // = APPEND; /* 252-254 */
+  u2 offset_delta;
+  verification_type_info *locals; //[frame_type - 251];
+} Append_frame;
+
+typedef struct
+{
+  //u1 frame_type; // = FULL_FRAME; /* 255 */
+  u2 offset_delta;
+  u2 number_of_locals;
+  verification_type_info *locals; //[number_of_locals];
+  u2 number_of_stack_items;
+  verification_type_info *stack; //[number_of_stack_items];
+} Full_frame;
+
+typedef struct
+{
+  u1 frame_type;
+  union {
+    Same_frame same_frame;
+    Same_locals_1_stack_item_frame same_locals_1_stack_item_frame;
+    Same_locals_1_stack_item_frame_extended same_locals_1_stack_item_frame_extended;
+    Chop_frame chop_frame;
+    Same_frame_extended same_frame_extended;
+    Append_frame append_frame;
+    Full_frame full_frame;
+  };
+} stack_map_frame;
+
+typedef struct
+{
+  u2 bootstrap_method_ref;
+  u2 num_bootstrap_arguments;
+  u2 *bootstrap_arguments; //[num_bootstrap_arguments];
+} Bootstrap_method;
+
+typedef struct
+{
+  u2 inner_class_info_index;
+  u2 outer_class_info_index;
+  u2 inner_name_index;
+  u2 inner_class_access_flags;
+} Classes;
+
+typedef struct
+{
+  u2 start_pc;
+  u2 length;
+  u2 name_index;
+  u2 descriptor_index;
+  u2 index;
+} Local_variable_table;
+
 typedef union {
   struct
   {
@@ -148,6 +321,12 @@ typedef union {
 
   struct
   {
+    u2 number_of_entries;
+    stack_map_frame *entries; //[number_of_entries];
+  } StackMapTable_attribute;
+
+  struct
+  {
     u2 sourcefile_index;
   } SourceFile_attribute;
 
@@ -160,6 +339,27 @@ typedef union {
     u2 number_of_exceptions;
     u2 *exception_index_table; //[number_of_exceptions];
   } Exceptions_attribute;
+
+  struct
+  {
+    u2 number_of_classes;
+    Classes *classes; //[number_of_classes];
+  } InnerClasses_attribute;
+
+  struct
+  {
+  } Synthetic_attribute;
+
+  struct
+  {
+    u2 local_variable_table_length;
+    Local_variable_table *local_variable_table; // [local_variable_table_length];
+  } LocalVariableTable_attribute;
+  struct
+  {
+    u2 num_bootstrap_methods;
+    Bootstrap_method *bootstrap_methods; //[num_bootstrap_methods];
+  } BootstrapMethods_attribute;
   struct
   {
     u2 max_stack;

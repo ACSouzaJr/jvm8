@@ -18,6 +18,9 @@ Alunos: Nicholas Marques - 15/0019343
 #include "structures.h"
 #include "instructions.h"
 
+char *GLOBAL_ptr;
+u1 code_sep;
+
 u1 u1Read(FILE *);
 u2 u2Read(FILE *);
 u4 u4Read(FILE *);
@@ -28,22 +31,38 @@ void free_class_file(ClassFile *cf);
 char *readUtf8(cp_info *cp, u2 index);
 attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp);
 void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count);
-void recursive_print(cp_info *cp, u2 index);
+void recursive_print(cp_info *cp, u2 index, char *str);
+char *print_reference(cp_info *cp, u2 index);
+verification_type_info *fillVerificationTypeInfo(FILE *fp, u2 verification_type_length);
+stack_map_frame *fillStackMapTable(attribute_info *attr, FILE *fp);
 void freeAttributes(attribute_info *field, cp_info *cp, u2 attr_count);
+void printVerificationTypeInfo(verification_type_info *ver_type, cp_info *cp, u2 verification_type_length);
+void printStackMapTable(stack_map_frame *stack_map, cp_info *cp, attribute_info *attr);
+void freeStackMapTable(stack_map_frame *stack_map, attribute_info *attr);
+void printConstType(u4 high_bytes, u4 low_bytes, u1 type);
+char *printFlag(u2 type, u1 flag);
 
 int main(int argc, char const *argv[])
 {
-  FILE *pFile = fopen("HelloWorld.class", "rb");
+  FILE *pFile;
+
+  if (argc != 2)
+  {
+    printf("Warning: Caminho do arquivo nao fornecido.");
+    pFile = fopen("Teste/multi.class", "rb");
+  }
+  else
+  {
+    pFile = fopen(argv[1], "rb");
+  }
+
   ClassFile *cf = (ClassFile *)malloc(sizeof(ClassFile));
-  // printf("%x", u1Read(pFile));
-  // printf("%x", readUnsignedShort(pFile));
-  // printf("%x", u4Read(pFile));
   read_class_file(cf, pFile);
   fclose(pFile);
   initialize_op_codes();
-  // printf("%s\n", op_codes_array[0].value);
-  // printf("%s\n", op_codes_array[42].value);
-  // print_class_file(cf);
+  GLOBAL_ptr = (char *)malloc(sizeof(char) * 100);
+  print_class_file(cf);
+  free(GLOBAL_ptr);
   free_class_file(cf);
   free(cf);
   return 0;
@@ -83,6 +102,156 @@ u4 u4Read(FILE *file)
 char *readUtf8(cp_info *cp, u2 index)
 {
   return (char *)(cp[index - 1]).Utf8.bytes;
+}
+
+void printConstType(u4 high_bytes, u4 low_bytes, u1 type)
+{
+  // char *str = (char *)malloc(sizeof(char) * 100);
+  strcpy(GLOBAL_ptr, "");
+  int64_t num;
+  switch (type)
+  {
+  case CONSTANT_Integer:
+    // printf("Integer Bytes: %02d \n", cp->Integer.bytes, str);
+    snprintf(GLOBAL_ptr, 100, "%d", low_bytes);
+    break;
+  case CONSTANT_Float:
+    // printf("Float Bytes: %02d \n", cp->Float.bytes, str);
+    snprintf(GLOBAL_ptr, 100, "%.2f", *(float *)&low_bytes);
+    break;
+  case CONSTANT_Long:
+    // printf("Long High Bytes: %02d \n", cp->Long.high_bytes, str);
+    // printf("Long Low Bytes: %02d \n", cp->Long.low_bytes, str);
+    num = (int64_t)high_bytes << 32 | (int64_t)low_bytes;
+    snprintf(GLOBAL_ptr, 100, "%ld", *(long *)&num);
+    break;
+  case CONSTANT_Double:
+    num = (int64_t)high_bytes << 32 | (int64_t)low_bytes;
+    snprintf(GLOBAL_ptr, 100, "%.2lf", *(double *)&num);
+    break;
+  default:
+    break;
+  }
+  // return str;
+}
+
+char *printType(u2 type)
+{
+  switch (type)
+  {
+  case T_BOOLEAN:
+    return "(boolean)";
+    break;
+  case T_CHAR:
+    return "(char)";
+    break;
+  case T_FLOAT:
+    return "(float)";
+    break;
+  case T_DOUBLE:
+    return "(double)";
+    break;
+  case T_BYTE:
+    return "(byte)";
+    break;
+  case T_SHORT:
+    return "(short)";
+    break;
+  case T_INT:
+    return "(int)";
+    break;
+  case T_LONG:
+    return "(long)";
+    break;
+  default:
+    return "";
+    break;
+  }
+}
+
+char *printFlag(u2 type, u1 flag)
+{
+  switch (type)
+  {
+  case 0x0001: //  ACC_PUBLIC:
+    return "[public]";
+    break;
+
+  case 9:
+    return "[public static]";
+    break;
+
+  case 0x0010: //  ACC_FINAL:
+    return "[final]";
+    break;
+    // = SYNCRONIZED :
+  case 0x0020:
+    if (flag) //  ACC_SUPER:
+      return "[super]";
+    else //  ACC_SYNCHRONIZED:
+      return "[synchronized]";
+
+    break;
+  case 0x0200: //  ACC_INTERFACE:
+    return "[interface]";
+    break;
+  case 0x0400: //  ACC_ABSTRACT:
+    return "[abstract]";
+    break;
+  // case 0x0001 : //  ACC_PUBLIC:
+  //   return "[]";
+  //   break;
+  case 0x0002: //  ACC_PRIVATE:
+    return "[private]";
+    break;
+  case 0x0004: //  ACC_PROTECTED:
+    return "[protect]";
+    break;
+  case 0x0008: //  ACC_STATIC:
+    return "[static]";
+    break;
+  // case 0x0010 : //  ACC_FINAL:
+  //   return "[]";
+  //   break;
+  case 0x0040: //  ACC_VOLATILE:
+    return "[volatile]";
+    break;
+  case 0x0080: //  ACC_TRANSIENT:
+    return "[transient]";
+    break;
+  // case 0x0001 : //  ACC_PUBLIC:
+  //   return "[]";
+  //   break;
+  // case 0x0002 : //  ACC_PRIVATE:
+  //   return "[]";
+  //   break;
+  // case 0x0004 : //  ACC_PROTECTED:
+  //   return "[]";
+  //   break;
+  // case 0x0008 : //  ACC_STATIC:
+  //   return "[]";
+  //   break;
+  // case 0x0010 : //  ACC_FINAL:
+  //   return "[]";
+  //   break;
+
+  // = SUPER
+  // case 0x0020 : //  ACC_SYNCHRONIZED:
+  //   return "[]";
+  //   break;
+  case 0x0100: //  ACC_NATIVE:
+    return "[native]";
+    break;
+  // case 0x0400 : //  ACC_ABSTRACT:
+  //   return "[]";
+  //   break;
+  case 0x0800: //  ACC_STRICT:
+    return "[strict]";
+    break;
+  default:
+    return "[]";
+    break;
+  }
 }
 
 attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
@@ -147,16 +316,282 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
         i->line_number = u2Read(fp);
       }
     }
+    // else if (strcmp(attribute_name, "StackMapTable") == 0)
+    // {
+    //   attr->info->StackMapTable_attribute.number_of_entries = u2Read(fp);
+    //   attr->info->StackMapTable_attribute.entries = fillStackMapTable(attr, fp);
+    // }
+    else if (strcmp(attribute_name, "BootstrapMethods") == 0)
+    {
+      attr->info->BootstrapMethods_attribute.num_bootstrap_methods = u2Read(fp);
+      attr->info->BootstrapMethods_attribute.bootstrap_methods = (Bootstrap_method *)malloc(sizeof(Bootstrap_method) * attr->info->BootstrapMethods_attribute.num_bootstrap_methods);
+      for (Bootstrap_method *bm = attr->info->BootstrapMethods_attribute.bootstrap_methods; bm < attr->info->BootstrapMethods_attribute.bootstrap_methods + attr->info->BootstrapMethods_attribute.num_bootstrap_methods; bm++)
+      {
+        bm->bootstrap_method_ref = u2Read(fp);
+        bm->num_bootstrap_arguments = u2Read(fp);
+        bm->bootstrap_arguments = (u2 *)malloc(sizeof(u2) * bm->num_bootstrap_arguments);
+        for (u2 *i = bm->bootstrap_arguments; i < bm->bootstrap_arguments + bm->num_bootstrap_arguments; i++)
+        {
+          *i = u2Read(fp);
+        }
+      }
+    }
     else if (strcmp(attribute_name, "ConstantValue") == 0)
     {
       attr->info->ConstantValue_attribute.constantvalue_index = u2Read(fp);
     }
-    else
+    else if (strcmp(attribute_name, "LocalVariableTable") == 0)
+    {
+      attr->info->LocalVariableTable_attribute.local_variable_table_length = u2Read(fp);
+      attr->info->LocalVariableTable_attribute.local_variable_table = (Local_variable_table *)malloc(sizeof(Local_variable_table) * attr->info->LocalVariableTable_attribute.local_variable_table_length);
+      for (Local_variable_table *i = attr->info->LocalVariableTable_attribute.local_variable_table; i < attr->info->LocalVariableTable_attribute.local_variable_table + attr->info->LocalVariableTable_attribute.local_variable_table_length; i++)
+      {
+        i->start_pc = u2Read(fp);
+        i->length = u2Read(fp);
+        i->name_index = u2Read(fp);
+        i->descriptor_index = u2Read(fp);
+        i->index = u2Read(fp);
+      }
+    }
+    else if (strcmp(attribute_name, "Synthetic") == 0)
     {
       /* code */
     }
+    else if (strcmp(attribute_name, "InnerClasses") == 0)
+    {
+      attr->info->InnerClasses_attribute.number_of_classes = u2Read(fp);
+      attr->info->InnerClasses_attribute.classes = (Classes *)malloc(sizeof(Classes) * attr->info->InnerClasses_attribute.number_of_classes);
+      for (Classes *i = attr->info->InnerClasses_attribute.classes; i < attr->info->InnerClasses_attribute.number_of_classes + attr->info->InnerClasses_attribute.classes; i++)
+      {
+        i->inner_class_info_index = u2Read(fp);
+        i->outer_class_info_index = u2Read(fp);
+        i->inner_name_index = u2Read(fp);
+        i->inner_class_access_flags = u2Read(fp);
+      }
+    }
+    else // caso o atributo não esteja implementado ele é ignorado.
+    {
+      printf("Attributo Ignorado! \n");
+      fseek(fp, attr->attribute_length, SEEK_CUR);
+    }
   }
   return field;
+}
+
+void printVerificationTypeInfo(verification_type_info *ver_type, cp_info *cp, u2 verification_type_length)
+{
+
+  for (verification_type_info *vp = ver_type; vp < ver_type + verification_type_length; vp++)
+  {
+
+    switch (vp->tag)
+    {
+
+    case ITEM_Top:
+      printf("TOP \n");
+      break;
+    case ITEM_Integer:
+      printf("INTEGER \n");
+      break;
+    case ITEM_Float:
+      printf("FLOAT \n");
+      break;
+    case ITEM_Double:
+      printf("FLOAT \n");
+      break;
+    case ITEM_Long:
+      printf("LONG \n");
+      break;
+    case ITEM_Null:
+      printf("NULL \n");
+      break;
+    case ITEM_UninitializedThis:
+      printf("UNINITIALIZED THIS \n");
+      break;
+    case ITEM_Object:
+      printf("OBJECT cp_info #%d <%s> \n", vp->object_variable_info.cpool_index, print_reference(cp, vp->object_variable_info.cpool_index));
+      break;
+    case ITEM_Uninitialized:
+      printf("UNINITIALIZED offset %02x \n", vp->uninitialized_variable_info.offset);
+      break;
+
+    default:
+      break;
+    }
+  }
+}
+
+verification_type_info *fillVerificationTypeInfo(FILE *fp, u2 verification_type_length)
+{
+  verification_type_info *ver_type = (verification_type_info *)malloc(sizeof(verification_type_info));
+
+  for (verification_type_info *vp = ver_type; vp < ver_type + verification_type_length; vp++)
+  {
+    vp->tag = u1Read(fp);
+
+    if (vp->tag == 7) //Object_variable_info
+    {
+      vp->object_variable_info.cpool_index = u2Read(fp);
+    }
+    else if (vp->tag == 8) //Uninitialized_variable_info
+    {
+      vp->uninitialized_variable_info.offset = u2Read(fp);
+    }
+  }
+
+  return ver_type;
+}
+
+void printStackMapTable(stack_map_frame *stack_map, cp_info *cp, attribute_info *attr)
+{
+
+  u2 pc = 0;
+  for (stack_map_frame *smp = stack_map; smp < stack_map + attr->info->StackMapTable_attribute.number_of_entries; smp++)
+  {
+    u2 index = smp - stack_map;
+    // printf("%02x \n", smp->frame_type);
+    if (smp->frame_type < 64) // 0 a 63
+    {
+      //continue
+      printf("%d | SAME(%d), Offset: %d (%d) \n", index, smp->frame_type, (pc += smp->frame_type) + index, smp->frame_type);
+    }
+    else if (smp->frame_type < 128) // 64 a 127
+    {
+      printVerificationTypeInfo(stack_map->same_locals_1_stack_item_frame.stack, cp, 2);
+    }
+    else if (smp->frame_type < 247) // 128 a 246
+    {
+      // for future use
+    }
+    else if (smp->frame_type < 248) // = 247
+    {
+      printf("%02x", stack_map->same_locals_1_stack_item_frame_extended.offset_delta);
+      // printf("%02x", );
+      printVerificationTypeInfo(stack_map->same_locals_1_stack_item_frame_extended.stack, cp, 2);
+    }
+    else if (smp->frame_type < 251) // 248 a 250
+    {
+      printf("%d | CHOP(%d), Offset: %d (%d) \n", (u2)(smp - stack_map), smp->frame_type, (pc += stack_map->chop_frame.offset_delta) + index, stack_map->chop_frame.offset_delta);
+    }
+    else if (smp->frame_type < 252) // = 251
+    {
+      printf("%02x \n", stack_map->same_frame_extended.offset_delta);
+    }
+    else if (smp->frame_type < 255) // 252 a 254
+    {
+      printf("%d | APPEND(%d), Offset: %d (%d) \n", (u2)(smp - stack_map), smp->frame_type, (pc += stack_map->append_frame.offset_delta) + index, stack_map->append_frame.offset_delta);
+      // printf("%02x \n", stack_map->append_frame.offset_delta);
+      printf("  Local verifications: \n");
+      printVerificationTypeInfo(stack_map->append_frame.locals, cp, smp->frame_type - 251);
+    }
+    else
+    { // = 255
+
+      printf("%d | FULL (%d), Offset: %d (%d) \n", (u2)(smp - stack_map), smp->frame_type, (pc += stack_map->full_frame.offset_delta) + index, stack_map->full_frame.offset_delta);
+      // printf("%02x \n", stack_map->full_frame.number_of_locals);
+      printf("  Local verifications: \n");
+      printVerificationTypeInfo(stack_map->full_frame.locals, cp, stack_map->full_frame.number_of_locals);
+      // printf("%02x \n", stack_map->full_frame.number_of_stack_items);
+      printf("  Stack verifications: \n");
+      printVerificationTypeInfo(stack_map->full_frame.stack, cp, stack_map->full_frame.number_of_stack_items);
+    }
+  }
+}
+
+stack_map_frame *fillStackMapTable(attribute_info *attr, FILE *fp)
+{
+  stack_map_frame *stack_map = (stack_map_frame *)malloc(sizeof(stack_map_frame) * attr->info->StackMapTable_attribute.number_of_entries);
+
+  for (stack_map_frame *smp = stack_map; smp < stack_map + attr->info->StackMapTable_attribute.number_of_entries; smp++)
+  {
+    smp->frame_type = u1Read(fp);
+    if (smp->frame_type < 64) // 0 a 63
+    {
+      //continue
+    }
+    else if (smp->frame_type < 128) // 64 a 127
+    {
+      stack_map->same_locals_1_stack_item_frame.stack = fillVerificationTypeInfo(fp, 2);
+    }
+    else if (smp->frame_type < 247) // 128 a 246
+    {
+      // for future use
+    }
+    else if (smp->frame_type < 248) // = 247
+    {
+      stack_map->same_locals_1_stack_item_frame_extended.offset_delta = u2Read(fp);
+      stack_map->same_locals_1_stack_item_frame_extended.stack = fillVerificationTypeInfo(fp, 2);
+    }
+    else if (smp->frame_type < 251) // 248 a 250
+    {
+      stack_map->chop_frame.offset_delta = u2Read(fp);
+    }
+    else if (smp->frame_type < 252) // = 251
+    {
+      stack_map->same_frame_extended.offset_delta = u2Read(fp);
+    }
+    else if (smp->frame_type < 255) // 252 a 254
+    {
+      stack_map->append_frame.offset_delta = u2Read(fp);
+      stack_map->append_frame.locals = fillVerificationTypeInfo(fp, smp->frame_type - 251);
+    }
+    else
+    { // = 255
+      stack_map->full_frame.offset_delta = u2Read(fp);
+      stack_map->full_frame.number_of_locals = u2Read(fp);
+      stack_map->full_frame.locals = fillVerificationTypeInfo(fp, stack_map->full_frame.number_of_locals);
+      stack_map->full_frame.number_of_stack_items = u2Read(fp);
+      stack_map->full_frame.stack = fillVerificationTypeInfo(fp, stack_map->full_frame.number_of_stack_items);
+    }
+  }
+  return stack_map;
+}
+
+void freeStackMapTable(stack_map_frame *stack_map, attribute_info *attr)
+{
+
+  for (stack_map_frame *smp = stack_map; smp < stack_map + attr->info->StackMapTable_attribute.number_of_entries; smp++)
+  {
+    if (smp->frame_type < 64) // 0 a 63
+    {
+      //continue
+    }
+    else if (smp->frame_type < 128) // 64 a 127
+    {
+      free(stack_map->same_locals_1_stack_item_frame.stack);
+    }
+    else if (smp->frame_type < 247) // 128 a 246
+    {
+      // for future use
+    }
+    else if (smp->frame_type < 248) // = 247
+    {
+      // stack_map->same_locals_1_stack_item_frame_extended.offset_delta = u2Read(fp);
+      free(stack_map->same_locals_1_stack_item_frame_extended.stack);
+    }
+    else if (smp->frame_type < 251) // 248 a 250
+    {
+      // stack_map->chop_frame.offset_delta = u2Read(fp);
+    }
+    else if (smp->frame_type < 252) // = 251
+    {
+      // stack_map->same_frame_extended.offset_delta = u2Read(fp);
+    }
+    else if (smp->frame_type < 255) // 252 a 254
+    {
+      // stack_map->append_frame.offset_delta = u2Read(fp);
+      free(stack_map->append_frame.locals);
+    }
+    else // = 255
+    {
+      // stack_map->full_frame.offset_delta = u2Read(fp);
+      // stack_map->full_frame.number_of_locals = u2Read(fp);
+      free(stack_map->full_frame.locals);
+      // stack_map->full_frame.number_of_stack_items = u2Read(fp);
+      free(stack_map->full_frame.stack);
+    }
+  }
+  free(stack_map);
 }
 
 void freeAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
@@ -228,6 +663,11 @@ void freeAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
     {
       // attr->info->ConstantValue_attribute.constantvalue_index = u2Read(fp);
     }
+    else if (strcmp(attribute_name, "StackMapTable") == 0)
+    {
+      // attr->info->StackMapTable_attribute.number_of_entries = u2Read(fp);
+      freeStackMapTable(attr->info->StackMapTable_attribute.entries, attr);
+    }
     else
     {
       /* code */
@@ -239,68 +679,195 @@ void freeAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
 
 void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
 {
-  // attribute_info *field = (attribute_info *)malloc(sizeof(attribute_info) * attr_count);
   for (attribute_info *attr = field; attr < field + attr_count; attr++)
   {
-    printf("Attribute Name Index: %02d\n", attr->attribute_name_index);
-    printf("Attribute Length: %02d \n", attr->attribute_length);
-    // printf("Attribute Name: %s \n", attr->constant_pool[ai->attribute_name_index - 1].Utf8.bytes);
-
     char *attribute_name = readUtf8(cp, attr->attribute_name_index);
+
+    printf("  [%ld] %s \n", attr - field, attribute_name);
+    printf("Attribute Name: cp_info #%d <%s> \n", attr->attribute_name_index, attribute_name);
+    printf("Attribute Length: %d \n", attr->attribute_length);
 
     if (strcmp(attribute_name, "Code") == 0)
     {
       printf("Max stack: %d\n", attr->info->Code_attribute.max_stack);
       printf("Max locals: %d\n", attr->info->Code_attribute.max_locals);
       printf("Code length: %d\n", attr->info->Code_attribute.code_length);
-
+      code_sep = 1;
       printf("Code: \n");
       for (u1 *i = attr->info->Code_attribute.code; i < attr->info->Code_attribute.code + attr->info->Code_attribute.code_length; i++)
       {
-        // printf("%02x ", *i);
-        u1 index;
+        u2 pc = i - attr->info->Code_attribute.code;
+        printf("%02d ", pc);
+        u1 *index;
         printf("%s ", op_codes_array[*i].value);
         if (op_codes_array[*i].arguments)
         {
           // args_num = op_codes_array[*i].arguments;
-          index = *i;
-          for (size_t j = 0; j < op_codes_array[index].arguments; j++)
+          index = i;
+          for (size_t j = 0; j < op_codes_array[*index].arguments; j++)
           {
             i++;
-            printf("%02x ", *i);
-            if (*i && op_codes_array[index].references)
+
+            if (op_codes_array[*index].references && op_codes_array[*index].arguments == 2)
             {
               // printf("%s", readUtf8(cp, ));
               // printf("Aqui!! %02x %s", *i, );
-              recursive_print(cp, *i);
+              u2 arg = *i << 8 | *(++i);
+              printf("#%d <%s> ", arg, print_reference(cp, arg));
+              j++;
+            }
+            else if (*index == wide)
+            {
+              uint8_t opcode = *i++;
+              uint16_t indexbyte1 = *i++;
+              uint16_t indexbyte2 = *i++;
+              uint16_t result = (indexbyte1 << 8) | indexbyte2;
+              printf("%s ", op_codes_array[opcode].value);
+              printf("%d ", result);
+              if (opcode == iinc)
+              {
+                uint16_t constbyte1 = *i++;
+                uint16_t constbyte2 = *i++;
+                result = (constbyte1 << 8) | constbyte2;
+                printf(" by %d ", (int16_t)result);
+              }
+            }
+            else if (op_codes_array[*index].arguments == 4)
+            {
+
+              u4 arg = 0; // = *i << 8 | *(++i);
+              for (size_t k = 0; k < 4; k++)
+              {
+                arg = arg << 8 | *i++;
+              }
+              printf("#%d ", arg);
+              if (op_codes_array[*index].references)
+              {
+                printf("<%s> ", print_reference(cp, arg));
+              }
+            }
+            else if (*index == ldc)
+            {
+              u2 arg = 0x0 << 8 | *i;
+              printf("#%d <%s> ", arg, print_reference(cp, arg));
+              j++;
+            }
+            else if (*index == tableswitch)
+            {
+              u1 padding = pc % 4;
+              i += padding + 1;
+              int32_t default_v = 0, low_v = 0, high_v = 0, bytes = 0;
+              for (size_t k = 0; k < 4; k++)
+              {
+                default_v = default_v << 8 | *i++;
+              }
+              for (size_t k = 0; k < 4; k++)
+              {
+                low_v = low_v << 8 | *i++;
+              }
+              for (size_t k = 0; k < 4; k++)
+              {
+                high_v = high_v << 8 | *i++;
+              }
+
+              printf("%d to %d \n", low_v, high_v);
+
+              for (u2 w = 0; w < high_v - low_v + 1; w++)
+              {
+                for (size_t v = 0; v < 4; v++)
+                {
+                  bytes = bytes << 8 | *i++;
+                }
+                printf("  %d: %d  (%d) \n", w, pc + bytes, bytes);
+              }
+              printf("  default: %d  (%d) ", pc + default_v, default_v);
+              // printf(" Aqui> %d %d %d \n", default_v, low_v, high_v);
+            }
+            else if (*index == lookupswitch)
+            {
+              u1 padding = pc % 4;
+              i += padding + 1;
+              int32_t default_v = 0, n_pairs = 0, bytes = 0, offset = 0;
+
+              for (size_t k = 0; k < 4; k++)
+              {
+                default_v = default_v << 8 | *i++;
+              }
+              // printf(" %d ", default_v);
+              for (size_t k = 0; k < 4; k++)
+              {
+                n_pairs = n_pairs << 8 | *i++;
+              }
+              printf(" %d \n", n_pairs);
+              for (u2 w = 0; w < n_pairs; w++)
+              {
+                for (size_t v = 0; v < 4; v++)
+                {
+                  bytes = bytes << 8 | *i++;
+                }
+                for (size_t v = 0; v < 4; v++)
+                {
+                  offset = offset << 8 | *i++;
+                }
+                printf("  %d: %d  (%d) \n", bytes, pc + offset, offset);
+              }
+              printf("  default: %d  (%d) ", pc + default_v, default_v);
+            }
+            else if (*index == multianewarray)
+            {
+              u2 arg = *i << 8 | *(++i);
+              printf("#%d <%s> dim %d ", arg, print_reference(cp, arg), *(++i));
+              j += 2;
+            }
+            else if ((*index >= ifeq && *index <= jsr) || *index == ifnonnull || *index == ifnull)
+            {
+              int16_t addr = *i << 8 | *(++i);
+              printf("%d (%d) ", (u2)(index - attr->info->Code_attribute.code) + addr, addr);
+              j++;
+            }
+            else
+            {
+              if (*index == bipush)
+              {
+                printf("%02d ", (int8_t)*i);
+              }
+              else
+              {
+
+                printf("%02d ", *i);
+              }
+            }
+            if (*index == newarray)
+            {
+              printf("%s ", printType(*i));
             }
           }
         }
         printf("\n");
       }
+      code_sep = 0;
 
       printf("\n");
 
-      printf("Exception length: %d\n", attr->info->Code_attribute.exception_table_length);
-      // attr->info->Code_attribute.exception_table = (exception_table_type *)malloc(sizeof(exception_table_type) * attr->info->Code_attribute.exception_table_length);
+      // printf("Exception length: %d\n", attr->info->Code_attribute.exception_table_length);
+
       for (exception_table_type *i = attr->info->Code_attribute.exception_table; i < attr->info->Code_attribute.exception_table + attr->info->Code_attribute.exception_table_length; i++)
       {
-        printf("Start pc: %d\n", i->start_pc);
-        printf("End pc: %d\n", i->end_pc);
-        printf("handler Pc: %d\n", i->handler_pc);
-        printf("Catch type: %d\n", i->catch_type);
+        printf("Start pc: %d \n", i->start_pc);
+        printf("End pc: %d \n", i->end_pc);
+        printf("handler Pc: %d \n", i->handler_pc);
+        printf("Catch type: %d \n", i->catch_type);
       }
-      printf("Attributr Count: %d\n", attr->info->Code_attribute.attributes_count);
+      // printf("Attribute Count: %d\n", attr->info->Code_attribute.attributes_count);
 
       printAttributes(attr->info->Code_attribute.attributes, cp, attr->info->Code_attribute.attributes_count);
     }
     else if (strcmp(attribute_name, "Exceptions") == 0)
     {
       printf("Number of exceptions: %d\n", attr->info->Exceptions_attribute.number_of_exceptions);
-      // attr->info->Exceptions_attribute.exception_index_table = (u2 *)malloc(sizeof(u2) * attr->info->Exceptions_attribute.number_of_exceptions);
+
       for (u2 *i = 0; i < attr->info->Exceptions_attribute.exception_index_table + attr->info->Exceptions_attribute.number_of_exceptions; i++)
       {
-        // *i = u2Read(fp);
         printf("Exception index table: %d\n", *i);
       }
     }
@@ -310,21 +877,26 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
     }
     else if (strcmp(attribute_name, "SourceFile") == 0)
     {
-      printf("Source file index: %d\n", attr->info->SourceFile_attribute.sourcefile_index);
+      printf("Source file: cp_info #%d <%s> \n", attr->info->SourceFile_attribute.sourcefile_index, print_reference(cp, attr->info->SourceFile_attribute.sourcefile_index));
     }
     else if (strcmp(attribute_name, "LineNumberTable") == 0)
     {
-      printf("Line number table name: %d\n", attr->info->LineNumberTable_attribute.line_number_table_length);
-      // attr->info->LineNumberTable_attribute.line_number_table = (line_number_table_type *)malloc(sizeof(line_number_table_type) * attr->info->LineNumberTable_attribute.line_number_table_length);
+      // printf("Line number table length: %d\n", attr->info->LineNumberTable_attribute.line_number_table_length);
+
       for (line_number_table_type *i = attr->info->LineNumberTable_attribute.line_number_table; i < attr->info->LineNumberTable_attribute.line_number_table + attr->info->LineNumberTable_attribute.line_number_table_length; i++)
       {
-        printf("Start pc: %d\n", i->start_pc);
-        printf("Line number: %d\n", i->line_number);
+        printf("Nr. %d\t", (u2)(i - attr->info->LineNumberTable_attribute.line_number_table));
+        printf("Start pc: %d\t", i->start_pc);
+        printf("Line number: %d\t\n", i->line_number);
       }
+    }
+    else if (strcmp(attribute_name, "StackMapTable") == 0)
+    {
+      printStackMapTable(attr->info->StackMapTable_attribute.entries, cp, attr);
     }
     else if (strcmp(attribute_name, "ConstantValue") == 0)
     {
-      printf("Constant value index: %d\n", attr->info->ConstantValue_attribute.constantvalue_index);
+      printf("Constant value: cp_info #%d <%s> \n", attr->info->ConstantValue_attribute.constantvalue_index, print_reference(cp, attr->info->ConstantValue_attribute.constantvalue_index));
     }
     else
     {
@@ -338,11 +910,21 @@ void read_class_file(ClassFile *cf, FILE *fp)
   cf->magic = u4Read(fp);
   if (cf->magic != 0xCAFEBABE)
   {
-    printf("Esse arquivo nao é .class");
-    return;
+    printf("Esse arquivo nao é .class \n");
+    free(cf);
+    fclose(fp);
+    exit(0);
   }
   cf->minor_version = u2Read(fp);
   cf->major_version = u2Read(fp);
+  if (cf->major_version > 52)
+  {
+    printf("Versão do Java superior a 8 \n");
+    free(cf);
+    fclose(fp);
+    exit(1);
+  }
+
   cf->constant_pool_count = u2Read(fp);
   // constant_pool -> cp_info
   cf->constant_pool = (cp_info *)malloc(sizeof(cp_info) * (cf->constant_pool_count - 1));
@@ -350,6 +932,7 @@ void read_class_file(ClassFile *cf, FILE *fp)
   for (cp_info *cp = cf->constant_pool; cp < cf->constant_pool + cf->constant_pool_count - 1; cp++)
   {
     cp->tag = u1Read(fp);
+    // printf(" %d \n", cp->tag);
     switch (cp->tag)
     {
     case CONSTANT_Class:
@@ -379,10 +962,12 @@ void read_class_file(ClassFile *cf, FILE *fp)
     case CONSTANT_Long:
       cp->Long.high_bytes = u4Read(fp);
       cp->Long.low_bytes = u4Read(fp);
+      cp++;
       break;
     case CONSTANT_Double:
       cp->Double.high_bytes = u4Read(fp);
       cp->Double.low_bytes = u4Read(fp);
+      cp++;
       break;
     case CONSTANT_NameAndType:
       cp->NameAndType.name_index = u2Read(fp);
@@ -409,6 +994,7 @@ void read_class_file(ClassFile *cf, FILE *fp)
       cp->InvokeDynamic.name_and_type_index = u2Read(fp);
       break;
     default:
+      printf("Constant Pool nao encontrada \n");
       break;
     }
   }
@@ -479,86 +1065,103 @@ void read_class_file(ClassFile *cf, FILE *fp)
   // }
 }
 
-void recursive_print(cp_info *cp, u2 index)
+void recursive_print(cp_info *cp, u2 index, char *str)
 {
   switch (cp[index - 1].tag)
   {
   case CONSTANT_Class:
     // printf("Class Name Index: %02d \n", cp->Class.name_index);
-    recursive_print(cp, cp[index - 1].Class.name_index);
+    recursive_print(cp, cp[index - 1].Class.name_index, str);
+    if (code_sep)
+      strcat(str, ".");
     break;
   case CONSTANT_Fieldref:
     // printf("Fieldref Class Index: %02d \n", cp->Fieldref.class_index);
-    recursive_print(cp, cp[index - 1].Fieldref.class_index);
-    // printf("Fieldref Name and Type Index: %02d \n", cp->Fieldref.name_and_type_index);
-    recursive_print(cp, cp[index - 1].Fieldref.name_and_type_index);
+    recursive_print(cp, cp[index - 1].Fieldref.class_index, str);
+    // printf("Fieldref Name and Type Index: %02d \n", cp->Fieldref.name_and_type_index, str);
+    recursive_print(cp, cp[index - 1].Fieldref.name_and_type_index, str);
     break;
   case CONSTANT_Methodref:
-    // printf("Methodref Class Index: %02d \n", cp->Methodref.class_index);
-    recursive_print(cp, cp[index - 1].Methodref.class_index);
-    // printf("Methodref Name and Type Index: %02d \n", cp->Methodref.name_and_type_index);
-    recursive_print(cp, cp[index - 1].Methodref.name_and_type_index);
+    // printf("Methodref Class Index: %02d \n", cp->Methodref.class_index, str);
+    recursive_print(cp, cp[index - 1].Methodref.class_index, str);
+    // printf("Methodref Name and Type Index: %02d \n", cp->Methodref.name_and_type_inde, strx);
+    recursive_print(cp, cp[index - 1].Methodref.name_and_type_index, str);
     break;
   case CONSTANT_InterfaceMethodref:
-    // printf("InterfaceMethodref Class Index: %02d \n", cp->InterfaceMethodref.class_index);
-    recursive_print(cp, cp[index - 1].InterfaceMethodref.class_index);
-    // printf("InterfaceMethodref Name and Type Index: %02d \n", cp->InterfaceMethodref.name_and_type_index);
-    recursive_print(cp, cp[index - 1].InterfaceMethodref.name_and_type_index);
+    // printf("InterfaceMethodref Class Index: %02d \n", cp->InterfaceMethodref.class_index, str);
+    recursive_print(cp, cp[index - 1].InterfaceMethodref.class_index, str);
+    // printf("InterfaceMethodref Name and Type Index: %02d \n", cp->InterfaceMethodref.name_and_type_index, str);
+    recursive_print(cp, cp[index - 1].InterfaceMethodref.name_and_type_index, str);
     break;
   case CONSTANT_String:
-    // printf("String Index: %02d \n", cp->String.string_index);
-    recursive_print(cp, cp[index - 1].String.string_index);
+    // printf("String Index: %02d \n", cp->String.string_index, str);
+    recursive_print(cp, cp[index - 1].String.string_index, str);
     break;
   case CONSTANT_Integer:
-    // printf("Integer Bytes: %02d \n", cp->Integer.bytes);
+    // printf("Integer Bytes: %02d \n", cp->Integer.bytes, str);
+    printConstType(0, cp[index - 1].Integer.bytes, CONSTANT_Integer);
     break;
   case CONSTANT_Float:
-    // printf("Float Bytes: %02d \n", cp->Float.bytes);
+    // printf("Float Bytes: %02d \n", cp->Float.bytes, str);
+    printConstType(0, cp[index - 1].Float.bytes, CONSTANT_Float);
     break;
   case CONSTANT_Long:
-    // printf("Long High Bytes: %02d \n", cp->Long.high_bytes);
-    // printf("Long Low Bytes: %02d \n", cp->Long.low_bytes);
+    // printf("Long High Bytes: %02d \n", cp->Long.high_bytes, str);
+    // printf("Long Low Bytes: %02d \n", cp->Long.low_bytes, str);
+    printConstType(cp[index - 1].Long.high_bytes, cp[index - 1].Long.low_bytes, CONSTANT_Long);
     break;
   case CONSTANT_Double:
-    // printf("Double High Bytes: %02d \n", cp->Double.high_bytes);
-    // printf("Double Low Bytes: %02d \n", cp->Double.low_bytes);
+    // printf("Double High Bytes: %02d \n", cp->Double.high_bytes, str);
+    // printf("Double Low Bytes: %02d \n", cp->Double.low_bytes, str);
+
+    printConstType(cp[index - 1].Double.high_bytes, cp[index - 1].Double.low_bytes, CONSTANT_Double);
     break;
   case CONSTANT_NameAndType:
-    // printf("Name and Type - Name Index: %02d \n", cp->NameAndType.name_index);
-    recursive_print(cp, cp[index - 1].NameAndType.name_index);
-    // printf("Name and Type - Descriptor Index: %02d \n", cp->NameAndType.descriptor_index);
-    recursive_print(cp, cp[index - 1].NameAndType.descriptor_index);
+    // printf("Name and Type - Name Index: %02d \n", cp->NameAndType.name_index, str);
+    recursive_print(cp, cp[index - 1].NameAndType.name_index, str);
+    // printf("Name and Type - Descriptor Index: %02d \n", cp->NameAndType.descriptor_index, str);
+    strcat(str, " : ");
+    recursive_print(cp, cp[index - 1].NameAndType.descriptor_index, str);
     break;
   case CONSTANT_Utf8:
-    // printf("UTF8 Length: %02d \n", cp->Utf8.length);
-    // printf("Bytes: ");
+    // printf("UTF8 Length: %02d \n", cp->Utf8.length, str);
+    // printf("Bytes: ", str);
     // for (u1 *i = cp->Utf8.bytes; i < cp->Utf8.bytes + cp->Utf8.length; i++)
     // {
-    //   printf("%c", *i);
+    //   printf("%c", *i, str);
     // }
-    // printf(" \n");
-    printf("%s\n", cp[index - 1].Utf8.bytes);
+    // printf(" \n", str);
+    // printf("%s ", cp[index - 1].Utf8.bytes, str);
+    strcat(str, (char *)cp[index - 1].Utf8.bytes);
     break;
   case CONSTANT_MethodHandle:
-    // printf("MethodHandle Reference Kind: %02d \n", cp->MethodHandle.reference_kind);
-    recursive_print(cp, cp[index - 1].MethodHandle.reference_kind);
-    // printf("MethodHandle Reference Index: %02d \n", cp->MethodHandle.reference_index);
-    recursive_print(cp, cp[index - 1].MethodHandle.reference_index);
+    // printf("MethodHandle Reference Kind: %02d \n", cp->MethodHandle.reference_kind, str);
+    recursive_print(cp, cp[index - 1].MethodHandle.reference_kind, str);
+    // printf("MethodHandle Reference Index: %02d \n", cp->MethodHandle.reference_index, str);
+    recursive_print(cp, cp[index - 1].MethodHandle.reference_index, str);
     break;
   case CONSTANT_MethodType:
-    // printf("MethodType Descriptor Index: %02d \n", cp->MethodType.descriptor_index);
-    recursive_print(cp, cp[index - 1].MethodType.descriptor_index);
+    // printf("MethodType Descriptor Index: %02d \n", cp->MethodType.descriptor_index, str);
+    recursive_print(cp, cp[index - 1].MethodType.descriptor_index, str);
     break;
   case CONSTANT_InvokeDynamic:
-    // printf("InvokeDynamic - Bootstrap Method Attr Index: %02d \n", cp->InvokeDynamic.bootstrap_method_attr_index);
-    recursive_print(cp, cp[index - 1].InvokeDynamic.bootstrap_method_attr_index);
-    // printf("InvokeDynamic - Name and Type Index: %02d \n", cp->InvokeDynamic.name_and_type_index);
-    recursive_print(cp, cp[index - 1].InvokeDynamic.name_and_type_index);
+    // printf("InvokeDynamic - Bootstrap Method Attr Index: %02d \n", cp->InvokeDynamic.bootstrap_method_attr_index, str);
+    recursive_print(cp, cp[index - 1].InvokeDynamic.bootstrap_method_attr_index, str);
+    // printf("InvokeDynamic - Name and Type Index: %02d \n", cp->InvokeDynamic.name_and_type_index, str);
+    recursive_print(cp, cp[index - 1].InvokeDynamic.name_and_type_index, str);
     break;
   default:
     printf("No Ecxiste ese datapoole \n");
     break;
   }
+}
+
+char *print_reference(cp_info *cp, u2 index)
+{
+  // char *str = (char *)malloc(sizeof(char *) * 200);
+  strcpy(GLOBAL_ptr, "");
+  recursive_print(cp, index, GLOBAL_ptr);
+  return GLOBAL_ptr;
 }
 
 void print_class_file(ClassFile *cf)
@@ -570,7 +1173,7 @@ void print_class_file(ClassFile *cf)
   printf("Minor Version: %02d \n", cf->minor_version);
   printf("Major Version: %02d \n", cf->major_version);
   printf("Constant Pool Count: %02d \n", cf->constant_pool_count);
-  printf("Access Flags: %#04x \n", cf->access_flags);
+  printf("Access Flags: %#04x %s \n", cf->access_flags, printFlag(cf->access_flags, 1));
   printf("This Class: cp_info #%d <%s> \n", cf->this_class, cf->constant_pool[cf->constant_pool[cf->this_class - 1].Class.name_index - 1].Utf8.bytes);
   printf("Super Class: cp_info #%d <%s> \n", cf->super_class, cf->constant_pool[cf->constant_pool[cf->super_class - 1].Class.name_index - 1].Utf8.bytes);
   printf("Interfaces Count: %02d \n", cf->interfaces_count);
@@ -584,77 +1187,97 @@ void print_class_file(ClassFile *cf)
 
   for (cp_info *cp = cf->constant_pool; cp < cf->constant_pool + cf->constant_pool_count - 1; cp++)
   {
-    printf("TAG: %02d \n", cp->tag);
     switch (cp->tag)
     {
     case CONSTANT_Class:
-      printf("Class Name Index: %02d \n", cp->Class.name_index);
+      printf("  [%d] CONSTANT_Class_info \n", (u2)(cp - cf->constant_pool));
+      printf("Class Name: cp_info #%d <%s> \n", cp->Class.name_index, print_reference(cf->constant_pool, cp->Class.name_index));
       break;
     case CONSTANT_Fieldref:
-      printf("Fieldref Class Index: %02d \n", cp->Fieldref.class_index);
-      recursive_print(cf->constant_pool, cp->Fieldref.class_index);
-      printf("Fieldref Name and Type Index: %02d \n", cp->Fieldref.name_and_type_index);
-      recursive_print(cf->constant_pool, cp->Fieldref.name_and_type_index);
+      printf("  [%d] CONSTANT_Fieldref_info \n", (u2)(cp - cf->constant_pool));
+      printf("Fieldref Class Name: cp_info #%d <%s> \n", cp->Fieldref.class_index, print_reference(cf->constant_pool, cp->Fieldref.class_index));
+
+      printf("Fieldref Name and Type: cp_info #%d <%s> \n", cp->Fieldref.name_and_type_index, print_reference(cf->constant_pool, cp->Fieldref.name_and_type_index));
+
       break;
     case CONSTANT_Methodref:
-      printf("Methodref Class Index: %02d \n", cp->Methodref.class_index);
-      recursive_print(cf->constant_pool, cp->Methodref.class_index);
-      printf("Methodref Name and Type Index: %02d \n", cp->Methodref.name_and_type_index);
-      recursive_print(cf->constant_pool, cp->Methodref.name_and_type_index);
+      printf("  [%d] CONSTANT_Methodref_info \n", (u2)(cp - cf->constant_pool));
+      printf("Methodref Class Name: cp_info #%d <%s> \n", cp->Methodref.class_index, print_reference(cf->constant_pool, cp->Methodref.class_index));
+
+      printf("Methodref Name and Type: cp_info #%d <%s> \n", cp->Methodref.name_and_type_index, print_reference(cf->constant_pool, cp->Methodref.name_and_type_index));
+
       break;
     case CONSTANT_InterfaceMethodref:
-      printf("InterfaceMethodref Class Index: %02d \n", cp->InterfaceMethodref.class_index);
-      recursive_print(cf->constant_pool, cp->InterfaceMethodref.class_index);
-      printf("InterfaceMethodref Name and Type Index: %02d \n", cp->InterfaceMethodref.name_and_type_index);
-      recursive_print(cf->constant_pool, cp->InterfaceMethodref.name_and_type_index);
+      printf("  [%d] CONSTANT_InterfaceMethodref_info \n", (u2)(cp - cf->constant_pool));
+      printf("InterfaceMethodref Class Name: cp_info #%d <%s> \n", cp->InterfaceMethodref.class_index, print_reference(cf->constant_pool, cp->InterfaceMethodref.class_index));
+
+      printf("InterfaceMethodref Name and Type: cp_info #%d <%s> \n", cp->InterfaceMethodref.name_and_type_index, print_reference(cf->constant_pool, cp->InterfaceMethodref.name_and_type_index));
+
       break;
     case CONSTANT_String:
-      printf("String Index: %02d \n", cp->String.string_index);
+      printf("  [%d] CONSTANT_String_info \n", (u2)(cp - cf->constant_pool));
+      printf("String Name: cp_info #%d <%s> \n", cp->String.string_index, print_reference(cf->constant_pool, cp->String.string_index));
       break;
     case CONSTANT_Integer:
+      printf("  [%d] CONSTANT_Integer_info \n", (u2)(cp - cf->constant_pool));
       printf("Integer Bytes: %02d \n", cp->Integer.bytes);
       break;
     case CONSTANT_Float:
-      printf("Float Bytes: %02d \n", cp->Float.bytes);
+      printf("  [%d] CONSTANT_Float_info \n", (u2)(cp - cf->constant_pool));
+      printf("Float Bytes: %#x \n", cp->Float.bytes);
+      printConstType(0, cp->Float.bytes, CONSTANT_Float);
+      printf("Float: %s \n", GLOBAL_ptr);
       break;
     case CONSTANT_Long:
-      printf("Long High Bytes: %02d \n", cp->Long.high_bytes);
-      printf("Long Low Bytes: %02d \n", cp->Long.low_bytes);
+      printf("  [%d] CONSTANT_Long_info \n", (u2)(cp - cf->constant_pool));
+      printf("Long High Bytes: %#x \n", cp->Long.high_bytes);
+      printf("Long Low Bytes: %#x \n", cp->Long.low_bytes);
+      printConstType(cp->Long.high_bytes, cp->Long.low_bytes, CONSTANT_Long);
+      printf("Long: %s \n", GLOBAL_ptr);
       break;
     case CONSTANT_Double:
-      printf("Double High Bytes: %02d \n", cp->Double.high_bytes);
-      printf("Double Low Bytes: %02d \n", cp->Double.low_bytes);
+      printf("  [%d] CONSTANT_Double_info \n", (u2)(cp - cf->constant_pool));
+      printf("Double High Bytes: %#x \n", cp->Double.high_bytes);
+      printf("Double Low Bytes: %#x \n", cp->Double.low_bytes);
+      // int64_t num = (int64_t)cp->Long.high_bytes << 32 | (int64_t)cp->Long.low_bytes;
+      printConstType(cp->Double.high_bytes, cp->Double.low_bytes, CONSTANT_Double);
+      printf("Double: %s \n", GLOBAL_ptr);
       break;
     case CONSTANT_NameAndType:
-      printf("Name and Type - Name Index: %02d \n", cp->NameAndType.name_index);
-      recursive_print(cf->constant_pool, cp->NameAndType.name_index);
-      printf("Name and Type - Descriptor Index: %02d \n", cp->NameAndType.descriptor_index);
-      recursive_print(cf->constant_pool, cp->NameAndType.descriptor_index);
+      printf("  [%d] CONSTANT_NameAndType_info \n", (u2)(cp - cf->constant_pool));
+      printf("Name: cp_info #%d <%s> \n", cp->NameAndType.name_index, print_reference(cf->constant_pool, cp->NameAndType.name_index));
+
+      printf("Descriptor: cp_info #%d <%s> \n", cp->NameAndType.descriptor_index, print_reference(cf->constant_pool, cp->NameAndType.descriptor_index));
+
       break;
     case CONSTANT_Utf8:
+      printf("  [%d] CONSTANT_Utf8_info \n", (u2)(cp - cf->constant_pool));
       printf("UTF8 Length: %02d \n", cp->Utf8.length);
-      printf("Bytes: ");
-      for (u1 *i = cp->Utf8.bytes; i < cp->Utf8.bytes + cp->Utf8.length; i++)
-      {
-        printf("%c", *i);
-      }
-      printf(" \n");
+      printf("Bytes: %s \n", cp->Utf8.bytes);
+      // for (u1 *i = cp->Utf8.bytes; i < cp->Utf8.bytes + cp->Utf8.length; i++)
+      // {
+      //   printf("%c", *i);
+      // }
+      // printf(" \n");
       break;
     case CONSTANT_MethodHandle:
-      printf("MethodHandle Reference Kind: %02d \n", cp->MethodHandle.reference_kind);
-      recursive_print(cf->constant_pool, cp->MethodHandle.reference_kind);
-      printf("MethodHandle Reference Index: %02d \n", cp->MethodHandle.reference_index);
-      recursive_print(cf->constant_pool, cp->MethodHandle.reference_index);
+      printf("  [%d] CONSTANT_MethodHandle_info \n", (u2)(cp - cf->constant_pool));
+      printf("MethodHandle Reference Kind: cp_info #%d <%s> \n", cp->MethodHandle.reference_kind, print_reference(cf->constant_pool, cp->MethodHandle.reference_kind));
+
+      printf("MethodHandle Reference Name: cp_info #%d <%s> \n", cp->MethodHandle.reference_index, print_reference(cf->constant_pool, cp->MethodHandle.reference_index));
+
       break;
     case CONSTANT_MethodType:
-      printf("MethodType Descriptor Index: %02d \n", cp->MethodType.descriptor_index);
-      recursive_print(cf->constant_pool, cp->MethodType.descriptor_index);
+      printf("  [%d] CONSTANT_MethodType_info \n", (u2)(cp - cf->constant_pool));
+      printf("MethodType Descriptor: cp_info #%d <%s> \n", cp->MethodType.descriptor_index, print_reference(cf->constant_pool, cp->MethodType.descriptor_index));
+
       break;
     case CONSTANT_InvokeDynamic:
-      printf("InvokeDynamic - Bootstrap Method Attr Index: %02d \n", cp->InvokeDynamic.bootstrap_method_attr_index);
-      recursive_print(cf->constant_pool, cp->InvokeDynamic.bootstrap_method_attr_index);
-      printf("InvokeDynamic - Name and Type Index: %02d \n", cp->InvokeDynamic.name_and_type_index);
-      recursive_print(cf->constant_pool, cp->InvokeDynamic.name_and_type_index);
+      printf("  [%d] CONSTANT_InvokeDynamic_info \n", (u2)(cp - cf->constant_pool));
+      printf("InvokeDynamic - Bootstrap Method Attr Index: cp_info #%d <%s> \n", cp->InvokeDynamic.bootstrap_method_attr_index, print_reference(cf->constant_pool, cp->InvokeDynamic.bootstrap_method_attr_index));
+
+      printf("InvokeDynamic - Name and Type Index: cp_info #%d <%s> \n", cp->InvokeDynamic.name_and_type_index, print_reference(cf->constant_pool, cp->InvokeDynamic.name_and_type_index));
+
       break;
     default:
       printf("Ignored \n");
@@ -663,15 +1286,41 @@ void print_class_file(ClassFile *cf)
     printf("< --------------------- > \n");
   }
 
+  // interface -> u2
+  printf("Interface  \n");
+  printf("< --------------------- > \n");
+  for (u2 *interface = cf->interfaces; interface < cf->interfaces + cf->interfaces_count; interface++)
+  {
+    printf("%d \n", *interface);
+  }
+
+  printf("< --------------------- > \n");
+  printf("Fields  \n");
+  printf("< --------------------- > \n");
+
+  // fields -> field_info
+
+  for (field_info *field = cf->fields; field < cf->fields + cf->fields_count; field++)
+  {
+    printf("  [%d] %s \n", (u2)(field - cf->fields), print_reference(cf->constant_pool, field->name_index));
+    printf("Field Name: cp_info #%d <%s> \n", field->name_index, print_reference(cf->constant_pool, field->name_index));
+    printf("Field Descriptor: cp_info #%d <%s> \n", field->descriptor_index, print_reference(cf->constant_pool, field->descriptor_index));
+    printf("Access Flags: %#04x %s \n", field->access_flags, printFlag(field->access_flags, 0));
+    // printf("%d \n", field->attributes_count);
+
+    printAttributes(field->attributes, cf->constant_pool, field->attributes_count);
+  }
+
   printf("Methods \n");
   printf("< --------------------- >\n");
 
   for (method_info *mi = cf->methods; mi < cf->methods + cf->methods_count; mi++)
   {
-    printf("Methods Access Flags: %02d\n", mi->access_flags);
-    printf("Methods Name index: %02d\n", mi->name_index);
-    printf("Methods Descriptor Index: %02d\n", mi->descriptor_index);
-    printf("Methods Attributes Count: %02d\n", mi->attributes_count);
+    printf("  [%d] %s \n", (u2)(mi - cf->methods), print_reference(cf->constant_pool, mi->name_index));
+    printf("Methods Name: cp_info #%d <%s> \n", mi->name_index, print_reference(cf->constant_pool, mi->name_index));
+    printf("Methods Descriptor: cp_info #%d <%s> \n", mi->descriptor_index, print_reference(cf->constant_pool, mi->descriptor_index));
+    printf("Methods Access Flags: %#04x %s \n", mi->access_flags, printFlag(mi->access_flags, 0));
+    // printf("Methods Attributes Count: %02d\n", mi->attributes_count);
 
     printAttributes(mi->attributes, cf->constant_pool, mi->attributes_count);
 
