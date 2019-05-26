@@ -19,6 +19,7 @@ Alunos: Nicholas Marques - 15/0019343
 #include "instructions.h"
 
 char *GLOBAL_ptr;
+u1 code_sep;
 
 u1 u1Read(FILE *);
 u2 u2Read(FILE *);
@@ -43,7 +44,18 @@ char *printFlag(u2 type, u1 flag);
 
 int main(int argc, char const *argv[])
 {
-  FILE *pFile = fopen("Teste/Belote.class", "rb");
+  FILE *pFile;
+
+  if (argc != 2)
+  {
+    printf("Warning: Caminho do arquivo nao fornecido.");
+    pFile = fopen("Teste/multi.class", "rb");
+  }
+  else
+  {
+    pFile = fopen(argv[1], "rb");
+  }
+
   ClassFile *cf = (ClassFile *)malloc(sizeof(ClassFile));
   read_class_file(cf, pFile);
   fclose(pFile);
@@ -459,7 +471,7 @@ void printStackMapTable(stack_map_frame *stack_map, cp_info *cp, attribute_info 
     }
     else if (smp->frame_type < 251) // 248 a 250
     {
-      printf("%ld | CHOP(%d), Offset: %d (%d) \n", smp - stack_map, smp->frame_type, (pc += stack_map->chop_frame.offset_delta) + index, stack_map->chop_frame.offset_delta);
+      printf("%d | CHOP(%d), Offset: %d (%d) \n", (u2)(smp - stack_map), smp->frame_type, (pc += stack_map->chop_frame.offset_delta) + index, stack_map->chop_frame.offset_delta);
     }
     else if (smp->frame_type < 252) // = 251
     {
@@ -467,7 +479,7 @@ void printStackMapTable(stack_map_frame *stack_map, cp_info *cp, attribute_info 
     }
     else if (smp->frame_type < 255) // 252 a 254
     {
-      printf("%ld | APPEND(%d), Offset: %d (%d) \n", smp - stack_map, smp->frame_type, (pc += stack_map->append_frame.offset_delta) + index, stack_map->append_frame.offset_delta);
+      printf("%d | APPEND(%d), Offset: %d (%d) \n", (u2)(smp - stack_map), smp->frame_type, (pc += stack_map->append_frame.offset_delta) + index, stack_map->append_frame.offset_delta);
       // printf("%02x \n", stack_map->append_frame.offset_delta);
       printf("  Local verifications: \n");
       printVerificationTypeInfo(stack_map->append_frame.locals, cp, smp->frame_type - 251);
@@ -475,7 +487,7 @@ void printStackMapTable(stack_map_frame *stack_map, cp_info *cp, attribute_info 
     else
     { // = 255
 
-      printf("%ld | FULL (%d), Offset: %d (%d) \n", smp - stack_map, smp->frame_type, (pc += stack_map->full_frame.offset_delta) + index, stack_map->full_frame.offset_delta);
+      printf("%d | FULL (%d), Offset: %d (%d) \n", (u2)(smp - stack_map), smp->frame_type, (pc += stack_map->full_frame.offset_delta) + index, stack_map->full_frame.offset_delta);
       // printf("%02x \n", stack_map->full_frame.number_of_locals);
       printf("  Local verifications: \n");
       printVerificationTypeInfo(stack_map->full_frame.locals, cp, stack_map->full_frame.number_of_locals);
@@ -680,7 +692,7 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
       printf("Max stack: %d\n", attr->info->Code_attribute.max_stack);
       printf("Max locals: %d\n", attr->info->Code_attribute.max_locals);
       printf("Code length: %d\n", attr->info->Code_attribute.code_length);
-
+      code_sep = 1;
       printf("Code: \n");
       for (u1 *i = attr->info->Code_attribute.code; i < attr->info->Code_attribute.code + attr->info->Code_attribute.code_length; i++)
       {
@@ -707,7 +719,7 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
             else if (op_codes_array[*index].arguments == 4)
             {
 
-              u4 arg; // = *i << 8 | *(++i);
+              u4 arg = 0; // = *i << 8 | *(++i);
               for (size_t k = 0; k < 4; k++)
               {
                 arg = arg << 8 | *i++;
@@ -728,7 +740,7 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
             {
               u1 padding = pc % 4;
               i += padding + 1;
-              int32_t default_v, low_v, high_v, bytes;
+              int32_t default_v = 0, low_v = 0, high_v = 0, bytes = 0;
               for (size_t k = 0; k < 4; k++)
               {
                 default_v = default_v << 8 | *i++;
@@ -759,7 +771,7 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
             {
               u1 padding = pc % 4;
               i += padding + 1;
-              int32_t default_v, n_pairs, bytes, offset;
+              int32_t default_v = 0, n_pairs = 0, bytes = 0, offset = 0;
 
               for (size_t k = 0; k < 4; k++)
               {
@@ -794,7 +806,7 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
             else if ((*index >= ifeq && *index <= jsr) || *index == ifnonnull || *index == ifnull)
             {
               int16_t addr = *i << 8 | *(++i);
-              printf("%ld (%d) ", (index - attr->info->Code_attribute.code) + addr, addr);
+              printf("%d (%d) ", (u2)(index - attr->info->Code_attribute.code) + addr, addr);
               j++;
             }
             else
@@ -809,6 +821,7 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
         }
         printf("\n");
       }
+      code_sep = 0;
 
       printf("\n");
 
@@ -848,7 +861,7 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
 
       for (line_number_table_type *i = attr->info->LineNumberTable_attribute.line_number_table; i < attr->info->LineNumberTable_attribute.line_number_table + attr->info->LineNumberTable_attribute.line_number_table_length; i++)
       {
-        printf("Nr. %ld\t", i - attr->info->LineNumberTable_attribute.line_number_table);
+        printf("Nr. %d\t", (u2)(i - attr->info->LineNumberTable_attribute.line_number_table));
         printf("Start pc: %d\t", i->start_pc);
         printf("Line number: %d\t\n", i->line_number);
       }
@@ -873,14 +886,18 @@ void read_class_file(ClassFile *cf, FILE *fp)
   cf->magic = u4Read(fp);
   if (cf->magic != 0xCAFEBABE)
   {
-    printf("Esse arquivo nao é .class");
+    printf("Esse arquivo nao é .class \n");
+    free(cf);
+    fclose(fp);
     exit(0);
   }
   cf->minor_version = u2Read(fp);
   cf->major_version = u2Read(fp);
   if (cf->major_version > 52)
   {
-    printf("Versão do Java superior a 8");
+    printf("Versão do Java superior a 8 \n");
+    free(cf);
+    fclose(fp);
     exit(1);
   }
 
@@ -1031,6 +1048,7 @@ void recursive_print(cp_info *cp, u2 index, char *str)
   case CONSTANT_Class:
     // printf("Class Name Index: %02d \n", cp->Class.name_index);
     recursive_print(cp, cp[index - 1].Class.name_index, str);
+    if(code_sep) strcat(str, ".");
     break;
   case CONSTANT_Fieldref:
     // printf("Fieldref Class Index: %02d \n", cp->Fieldref.class_index);
@@ -1147,53 +1165,53 @@ void print_class_file(ClassFile *cf)
     switch (cp->tag)
     {
     case CONSTANT_Class:
-      printf("  [%ld] CONSTANT_Class_info \n", cp - cf->constant_pool);
+      printf("  [%d] CONSTANT_Class_info \n", (u2)(cp - cf->constant_pool));
       printf("Class Name: cp_info #%d <%s> \n", cp->Class.name_index, print_reference(cf->constant_pool, cp->Class.name_index));
       break;
     case CONSTANT_Fieldref:
-      printf("  [%ld] CONSTANT_Fieldref_info \n", cp - cf->constant_pool);
+      printf("  [%d] CONSTANT_Fieldref_info \n", (u2)(cp - cf->constant_pool));
       printf("Fieldref Class Name: cp_info #%d <%s> \n", cp->Fieldref.class_index, print_reference(cf->constant_pool, cp->Fieldref.class_index));
 
       printf("Fieldref Name and Type: cp_info #%d <%s> \n", cp->Fieldref.name_and_type_index, print_reference(cf->constant_pool, cp->Fieldref.name_and_type_index));
 
       break;
     case CONSTANT_Methodref:
-      printf("  [%ld] CONSTANT_Methodref_info \n", cp - cf->constant_pool);
+      printf("  [%d] CONSTANT_Methodref_info \n", (u2)(cp - cf->constant_pool));
       printf("Methodref Class Name: cp_info #%d <%s> \n", cp->Methodref.class_index, print_reference(cf->constant_pool, cp->Methodref.class_index));
 
       printf("Methodref Name and Type: cp_info #%d <%s> \n", cp->Methodref.name_and_type_index, print_reference(cf->constant_pool, cp->Methodref.name_and_type_index));
 
       break;
     case CONSTANT_InterfaceMethodref:
-      printf("  [%ld] CONSTANT_InterfaceMethodref_info \n", cp - cf->constant_pool);
+      printf("  [%d] CONSTANT_InterfaceMethodref_info \n", (u2)(cp - cf->constant_pool));
       printf("InterfaceMethodref Class Name: cp_info #%d <%s> \n", cp->InterfaceMethodref.class_index, print_reference(cf->constant_pool, cp->InterfaceMethodref.class_index));
 
       printf("InterfaceMethodref Name and Type: cp_info #%d <%s> \n", cp->InterfaceMethodref.name_and_type_index, print_reference(cf->constant_pool, cp->InterfaceMethodref.name_and_type_index));
 
       break;
     case CONSTANT_String:
-      printf("  [%ld] CONSTANT_String_info \n", cp - cf->constant_pool);
+      printf("  [%d] CONSTANT_String_info \n", (u2)(cp - cf->constant_pool));
       printf("String Name: cp_info #%d <%s> \n", cp->String.string_index, print_reference(cf->constant_pool, cp->String.string_index));
       break;
     case CONSTANT_Integer:
-      printf("  [%ld] CONSTANT_Integer_info \n", cp - cf->constant_pool);
+      printf("  [%d] CONSTANT_Integer_info \n", (u2)(cp - cf->constant_pool));
       printf("Integer Bytes: %02d \n", cp->Integer.bytes);
       break;
     case CONSTANT_Float:
-      printf("  [%ld] CONSTANT_Float_info \n", cp - cf->constant_pool);
+      printf("  [%d] CONSTANT_Float_info \n", (u2)(cp - cf->constant_pool));
       printf("Float Bytes: %#x \n", cp->Float.bytes);
       printConstType(0, cp->Float.bytes, CONSTANT_Float);
       printf("Float: %s \n", GLOBAL_ptr);
       break;
     case CONSTANT_Long:
-      printf("  [%ld] CONSTANT_Long_info \n", cp - cf->constant_pool);
+      printf("  [%d] CONSTANT_Long_info \n", (u2)(cp - cf->constant_pool));
       printf("Long High Bytes: %#x \n", cp->Long.high_bytes);
       printf("Long Low Bytes: %#x \n", cp->Long.low_bytes);
       printConstType(cp->Long.high_bytes, cp->Long.low_bytes, CONSTANT_Long);
       printf("Long: %s \n", GLOBAL_ptr);
       break;
     case CONSTANT_Double:
-      printf("  [%ld] CONSTANT_Double_info \n", cp - cf->constant_pool);
+      printf("  [%d] CONSTANT_Double_info \n", (u2)(cp - cf->constant_pool));
       printf("Double High Bytes: %#x \n", cp->Double.high_bytes);
       printf("Double Low Bytes: %#x \n", cp->Double.low_bytes);
       // int64_t num = (int64_t)cp->Long.high_bytes << 32 | (int64_t)cp->Long.low_bytes;
@@ -1201,14 +1219,14 @@ void print_class_file(ClassFile *cf)
       printf("Double: %s \n", GLOBAL_ptr);
       break;
     case CONSTANT_NameAndType:
-      printf("  [%ld] CONSTANT_NameAndType_info \n", cp - cf->constant_pool);
+      printf("  [%d] CONSTANT_NameAndType_info \n", (u2)(cp - cf->constant_pool));
       printf("Name: cp_info #%d <%s> \n", cp->NameAndType.name_index, print_reference(cf->constant_pool, cp->NameAndType.name_index));
 
       printf("Descriptor: cp_info #%d <%s> \n", cp->NameAndType.descriptor_index, print_reference(cf->constant_pool, cp->NameAndType.descriptor_index));
 
       break;
     case CONSTANT_Utf8:
-      printf("  [%ld] CONSTANT_Utf8_info \n", cp - cf->constant_pool);
+      printf("  [%d] CONSTANT_Utf8_info \n", (u2)(cp - cf->constant_pool));
       printf("UTF8 Length: %02d \n", cp->Utf8.length);
       printf("Bytes: %s \n", cp->Utf8.bytes);
       // for (u1 *i = cp->Utf8.bytes; i < cp->Utf8.bytes + cp->Utf8.length; i++)
@@ -1218,19 +1236,19 @@ void print_class_file(ClassFile *cf)
       // printf(" \n");
       break;
     case CONSTANT_MethodHandle:
-      printf("  [%ld] CONSTANT_MethodHandle_info \n", cp - cf->constant_pool);
+      printf("  [%d] CONSTANT_MethodHandle_info \n", (u2)(cp - cf->constant_pool));
       printf("MethodHandle Reference Kind: cp_info #%d <%s> \n", cp->MethodHandle.reference_kind, print_reference(cf->constant_pool, cp->MethodHandle.reference_kind));
 
       printf("MethodHandle Reference Name: cp_info #%d <%s> \n", cp->MethodHandle.reference_index, print_reference(cf->constant_pool, cp->MethodHandle.reference_index));
 
       break;
     case CONSTANT_MethodType:
-      printf("  [%ld] CONSTANT_MethodType_info \n", cp - cf->constant_pool);
+      printf("  [%d] CONSTANT_MethodType_info \n", (u2)(cp - cf->constant_pool));
       printf("MethodType Descriptor: cp_info #%d <%s> \n", cp->MethodType.descriptor_index, print_reference(cf->constant_pool, cp->MethodType.descriptor_index));
 
       break;
     case CONSTANT_InvokeDynamic:
-      printf("  [%ld] CONSTANT_InvokeDynamic_info \n", cp - cf->constant_pool);
+      printf("  [%d] CONSTANT_InvokeDynamic_info \n", (u2)(cp - cf->constant_pool));
       printf("InvokeDynamic - Bootstrap Method Attr Index: cp_info #%d <%s> \n", cp->InvokeDynamic.bootstrap_method_attr_index, print_reference(cf->constant_pool, cp->InvokeDynamic.bootstrap_method_attr_index));
 
       printf("InvokeDynamic - Name and Type Index: cp_info #%d <%s> \n", cp->InvokeDynamic.name_and_type_index, print_reference(cf->constant_pool, cp->InvokeDynamic.name_and_type_index));
@@ -1259,7 +1277,7 @@ void print_class_file(ClassFile *cf)
 
   for (field_info *field = cf->fields; field < cf->fields + cf->fields_count; field++)
   {
-    printf("  [%ld] %s \n", field - cf->fields, print_reference(cf->constant_pool, field->name_index));
+    printf("  [%d] %s \n", (u2)(field - cf->fields), print_reference(cf->constant_pool, field->name_index));
     printf("Field Name: cp_info #%d <%s> \n", field->name_index, print_reference(cf->constant_pool, field->name_index));
     printf("Field Descriptor: cp_info #%d <%s> \n", field->descriptor_index, print_reference(cf->constant_pool, field->descriptor_index));
     printf("Access Flags: %#04x %s \n", field->access_flags, printFlag(field->access_flags, 0));
@@ -1273,7 +1291,7 @@ void print_class_file(ClassFile *cf)
 
   for (method_info *mi = cf->methods; mi < cf->methods + cf->methods_count; mi++)
   {
-    printf("  [%ld] %s \n", mi - cf->methods, print_reference(cf->constant_pool, mi->name_index));
+    printf("  [%d] %s \n", (u2)(mi - cf->methods), print_reference(cf->constant_pool, mi->name_index));
     printf("Methods Name: cp_info #%d <%s> \n", mi->name_index, print_reference(cf->constant_pool, mi->name_index));
     printf("Methods Descriptor: cp_info #%d <%s> \n", mi->descriptor_index, print_reference(cf->constant_pool, mi->descriptor_index));
     printf("Methods Access Flags: %#04x %s \n", mi->access_flags, printFlag(mi->access_flags, 0));
