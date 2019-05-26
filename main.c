@@ -716,6 +716,19 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
               printf("#%d <%s> ", arg, print_reference(cp, arg));
               j++;
             }
+            else if (*index == wide) {
+              uint8_t opcode = *i++;
+              uint16_t indexbyte1 = *i++;
+              uint16_t indexbyte2 = *i++;
+              uint16_t result = (indexbyte1 << 8) | indexbyte2;
+              printf("%s ", op_codes_array[opcode].value);
+              printf("%d ", result);
+              if (opcode == iinc) {
+                uint16_t constbyte1 = *i++;
+                uint16_t constbyte2 = *i++;
+                result = (constbyte1 << 8) | constbyte2;
+                printf(" by %d ", (int16_t)result);
+              }
             else if (op_codes_array[*index].arguments == 4)
             {
 

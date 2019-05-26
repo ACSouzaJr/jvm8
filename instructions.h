@@ -57,5 +57,7 @@ enum
   areturn = 176,
   return_original = 177,
   tableswitch = 170,
-  lookupswitch = 171
+  lookupswitch = 171,
+  wide = 196,
+  iinc = 132
 } instructions;
