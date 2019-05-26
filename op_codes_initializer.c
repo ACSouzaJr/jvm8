@@ -809,11 +809,11 @@ void initialize_op_codes()
   op_codes_array[199].references = 0;
 
   strcpy(op_codes_array[200].value, "goto_w");
-  op_codes_array[200].arguments = 4;
+  op_codes_array[200].arguments = 4; //4
   op_codes_array[200].references = 0;
 
   strcpy(op_codes_array[201].value, "jsr_w");
-  op_codes_array[201].arguments = 4;
+  op_codes_array[201].arguments = 4; //4
   op_codes_array[201].references = 0;
 
   // reservados

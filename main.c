@@ -43,7 +43,7 @@ char *printFlag(u2 type, u1 flag);
 
 int main(int argc, char const *argv[])
 {
-  FILE *pFile = fopen("Teste/TesteLookupswitch.class", "rb");
+  FILE *pFile = fopen("Teste/Belote.class", "rb");
   ClassFile *cf = (ClassFile *)malloc(sizeof(ClassFile));
   read_class_file(cf, pFile);
   fclose(pFile);
@@ -703,6 +703,20 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
               u2 arg = *i << 8 | *(++i);
               printf("#%d <%s> ", arg, print_reference(cp, arg));
               j++;
+            }
+            else if (op_codes_array[*index].arguments == 4)
+            {
+
+              u4 arg; // = *i << 8 | *(++i);
+              for (size_t k = 0; k < 4; k++)
+              {
+                arg = arg << 8 | *i++;
+              }
+              printf("#%d ", arg);
+              if (op_codes_array[*index].references)
+              {
+                printf("<%s> ", print_reference(cp, arg));
+              }
             }
             else if (*index == ldc)
             {
