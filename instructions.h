@@ -59,5 +59,6 @@ enum
   tableswitch = 170,
   lookupswitch = 171,
   wide = 196,
-  iinc = 132
+  iinc = 132,
+  bipush = 0x10
 } instructions;

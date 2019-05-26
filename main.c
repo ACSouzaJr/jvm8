@@ -716,19 +716,22 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
               printf("#%d <%s> ", arg, print_reference(cp, arg));
               j++;
             }
-            else if (*index == wide) {
+            else if (*index == wide)
+            {
               uint8_t opcode = *i++;
               uint16_t indexbyte1 = *i++;
               uint16_t indexbyte2 = *i++;
               uint16_t result = (indexbyte1 << 8) | indexbyte2;
               printf("%s ", op_codes_array[opcode].value);
               printf("%d ", result);
-              if (opcode == iinc) {
+              if (opcode == iinc)
+              {
                 uint16_t constbyte1 = *i++;
                 uint16_t constbyte2 = *i++;
                 result = (constbyte1 << 8) | constbyte2;
                 printf(" by %d ", (int16_t)result);
               }
+            }
             else if (op_codes_array[*index].arguments == 4)
             {
 
@@ -824,7 +827,15 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
             }
             else
             {
-              printf("%02d ", *i);
+              if (*index == bipush)
+              {
+                printf("%02d ", (int8_t)*i);
+              }
+              else
+              {
+
+                printf("%02d ", *i);
+              }
             }
             if (*index == newarray)
             {
@@ -1061,7 +1072,8 @@ void recursive_print(cp_info *cp, u2 index, char *str)
   case CONSTANT_Class:
     // printf("Class Name Index: %02d \n", cp->Class.name_index);
     recursive_print(cp, cp[index - 1].Class.name_index, str);
-    if(code_sep) strcat(str, ".");
+    if (code_sep)
+      strcat(str, ".");
     break;
   case CONSTANT_Fieldref:
     // printf("Fieldref Class Index: %02d \n", cp->Fieldref.class_index);
