@@ -41,6 +41,7 @@ void printStackMapTable(stack_map_frame *stack_map, cp_info *cp, attribute_info 
 void freeStackMapTable(stack_map_frame *stack_map, attribute_info *attr);
 void printConstType(u4 high_bytes, u4 low_bytes, u1 type);
 char *printFlag(u2 type, u1 flag);
+char *printVersion(u2 version);
 
 int main(int argc, char const *argv[])
 {
@@ -97,6 +98,41 @@ u4 u4Read(FILE *file)
   toReturn = (toReturn << 8) | (getc(file));
   toReturn = (toReturn << 8) | (getc(file));
   return toReturn;
+}
+
+char *printVersion(u2 version)
+{
+  switch (version)
+  {
+  case 45:
+    return "1.1";
+    break;
+  case 46:
+    return "1.2";
+    break;
+  case 47:
+    return "1.3";
+    break;
+  case 48:
+    return "1.4";
+    break;
+  case 49:
+    return "1.5";
+    break;
+  case 50:
+    return "1.6";
+    break;
+  case 51:
+    return "1.7";
+    break;
+  case 52:
+    return "1.8";
+    break;
+
+  default:
+    return "< 1.2 || > 1.8";
+    break;
+  }
 }
 
 char *readUtf8(cp_info *cp, u2 index)
@@ -1120,8 +1156,11 @@ void recursive_print(cp_info *cp, u2 index, char *str)
     // printf("Name and Type - Name Index: %02d \n", cp->NameAndType.name_index, str);
     recursive_print(cp, cp[index - 1].NameAndType.name_index, str);
     // printf("Name and Type - Descriptor Index: %02d \n", cp->NameAndType.descriptor_index, str);
-    strcat(str, " : ");
-    recursive_print(cp, cp[index - 1].NameAndType.descriptor_index, str);
+    if (!code_sep)
+    {
+      strcat(str, " : ");
+      recursive_print(cp, cp[index - 1].NameAndType.descriptor_index, str);
+    }
     break;
   case CONSTANT_Utf8:
     // printf("UTF8 Length: %02d \n", cp->Utf8.length, str);
@@ -1171,7 +1210,7 @@ void print_class_file(ClassFile *cf)
 
   printf("Magic: %08X \n", cf->magic);
   printf("Minor Version: %02d \n", cf->minor_version);
-  printf("Major Version: %02d \n", cf->major_version);
+  printf("Major Version: %02d [%s] \n", cf->major_version, printVersion(cf->major_version));
   printf("Constant Pool Count: %02d \n", cf->constant_pool_count);
   printf("Access Flags: %#04x %s \n", cf->access_flags, printFlag(cf->access_flags, 1));
   printf("This Class: cp_info #%d <%s> \n", cf->this_class, cf->constant_pool[cf->constant_pool[cf->this_class - 1].Class.name_index - 1].Utf8.bytes);
@@ -1280,7 +1319,8 @@ void print_class_file(ClassFile *cf)
 
       break;
     default:
-      printf("Ignored \n");
+      printf("  [%d] (large numeric continued) \n", (u2)(cp - cf->constant_pool));
+      // printf("Ignored \n");
       break;
     }
     printf("< --------------------- > \n");
@@ -1311,6 +1351,7 @@ void print_class_file(ClassFile *cf)
     printAttributes(field->attributes, cf->constant_pool, field->attributes_count);
   }
 
+  printf("< --------------------- >\n");
   printf("Methods \n");
   printf("< --------------------- >\n");
 
