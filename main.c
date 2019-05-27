@@ -15,11 +15,13 @@ Alunos: Nicholas Marques - 15/0019343
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <regex.h>
 #include "structures.h"
 #include "instructions.h"
 
 char *GLOBAL_ptr;
 u1 code_sep;
+char *FILE_NAME;
 
 u1 u1Read(FILE *);
 u2 u2Read(FILE *);
@@ -43,14 +45,17 @@ void printConstType(u4 high_bytes, u4 low_bytes, u1 type);
 char *printFlag(u2 type, u1 flag);
 char *printVersion(u2 version);
 
-int main(int argc, char const *argv[])
+int main(int argc, char *argv[])
 {
   FILE *pFile;
+  regex_t reg;
+  regcomp(&reg ,"(Test\/)?(.+?)(\.[^.]*$|$)", REG_EXTENDED|REG_NOSUB);
 
   if (argc != 2)
   {
     printf("Warning: Caminho do arquivo nao fornecido.");
-    pFile = fopen("Teste/multi.class", "rb");
+    // pFile = fopen("Teste/multi.class", "rb");
+    return 0;
   }
   else
   {
@@ -58,11 +63,16 @@ int main(int argc, char const *argv[])
   }
 
   ClassFile *cf = (ClassFile *)malloc(sizeof(ClassFile));
+  GLOBAL_ptr = (char *)malloc(sizeof(char) * 100);
+
   read_class_file(cf, pFile);
   fclose(pFile);
-  initialize_op_codes();
-  GLOBAL_ptr = (char *)malloc(sizeof(char) * 100);
-  print_class_file(cf);
+  
+  if ((regexec(&reg, print_reference(cf->constant_pool, cf->attributes->info->SourceFile_attribute.sourcefile_index), 0, (regmatch_t *)NULL, 0)) == 0)
+  {
+    initialize_op_codes();
+    print_class_file(cf);
+  }
   free(GLOBAL_ptr);
   free_class_file(cf);
   free(cf);
