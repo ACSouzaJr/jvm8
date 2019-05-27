@@ -15,7 +15,6 @@ Alunos: Nicholas Marques - 15/0019343
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <regex.h>
 #include "structures.h"
 #include "instructions.h"
 
@@ -48,8 +47,6 @@ char *printVersion(u2 version);
 int main(int argc, char *argv[])
 {
   FILE *pFile;
-  regex_t reg;
-  regcomp(&reg ,"(Test\/)?(.+?)(\.[^.]*$|$)", REG_EXTENDED|REG_NOSUB);
 
   if (argc != 2)
   {
@@ -67,12 +64,10 @@ int main(int argc, char *argv[])
 
   read_class_file(cf, pFile);
   fclose(pFile);
-  
-  if ((regexec(&reg, print_reference(cf->constant_pool, cf->attributes->info->SourceFile_attribute.sourcefile_index), 0, (regmatch_t *)NULL, 0)) == 0)
-  {
-    initialize_op_codes();
-    print_class_file(cf);
-  }
+
+  initialize_op_codes();
+  print_class_file(cf);
+
   free(GLOBAL_ptr);
   free_class_file(cf);
   free(cf);
