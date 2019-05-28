@@ -62,6 +62,11 @@ int main(int argc, char *argv[])
   else
   {
     pFile = fopen(argv[1], "rb");
+    if (!pFile)
+    {
+      printf("Error abrir file");
+    }
+    
   }
 
   ClassFile *cf = (ClassFile *)malloc(sizeof(ClassFile));
@@ -1529,7 +1534,7 @@ char *removeExtension(char* string){
 }
 
 char *findNameFile(char* string){
-  int i, j, k, count=0;
+  int i, j, k=0, count=0;
   char aux_string[100];
   for (i = 0; i < strlen(string); i++){
     if(string[i] == '/'){
@@ -1549,7 +1554,8 @@ char *findNameFile(char* string){
       }
     }
   }
-
-  aux_string[k] = '\0';
-  return aux_string;
+  if (!k)
+    aux_string[k] = '\0';
+  strcpy(GLOBAL_ptr,aux_string);
+  return GLOBAL_ptr;
 }
