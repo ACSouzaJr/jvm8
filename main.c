@@ -44,14 +44,12 @@ void freeStackMapTable(stack_map_frame *stack_map, attribute_info *attr);
 void printConstType(u4 high_bytes, u4 low_bytes, u1 type);
 char *printFlag(u2 type, u1 flag);
 char *printVersion(u2 version);
-char *removeExtension(char* string);
-char *findNameFile(char* string);
+char *removeExtension(char *string);
+char *findNameFile(char *string);
 
 int main(int argc, char *argv[])
 {
   FILE *pFile;
-  // regex_t reg;
-  // regcomp(&reg ,"(Teste\/)?(.+?)(\.[^.]*$|$)", REG_EXTENDED|REG_NOSUB);
 
   if (argc != 2)
   {
@@ -64,9 +62,8 @@ int main(int argc, char *argv[])
     pFile = fopen(argv[1], "rb");
     if (!pFile)
     {
-      printf("Error abrir file");
+      printf("Error ao abrir arquivo. \n");
     }
-    
   }
 
   ClassFile *cf = (ClassFile *)malloc(sizeof(ClassFile));
@@ -74,16 +71,17 @@ int main(int argc, char *argv[])
 
   read_class_file(cf, pFile);
   fclose(pFile);
-  
-  // printf("%s\n",removeExtension(print_reference(cf->constant_pool, cf->attributes->info->SourceFile_attribute.sourcefile_index)));
-  // printf("%s\n",findNameFile(removeExtension(argv[1])));
-  // if ((regexec(&reg, print_reference(cf->constant_pool, cf->attributes->info->SourceFile_attribute.sourcefile_index), 0, (regmatch_t *)NULL, 0)) == 0)
-  if(strcmp(removeExtension(print_reference(cf->constant_pool, cf->attributes->info->SourceFile_attribute.sourcefile_index)), findNameFile(removeExtension(argv[1]))) == 0)
+
+  if (strcmp(removeExtension(print_reference(cf->constant_pool, cf->attributes->info->SourceFile_attribute.sourcefile_index)), findNameFile(removeExtension(argv[1]))) == 0)
   {
-    printf("cafebabe\n");
     initialize_op_codes();
     print_class_file(cf);
   }
+  else
+  {
+    printf("Nome do arquivo e do SourceFile diferentes. \n");
+  }
+  
   free(GLOBAL_ptr);
   free_class_file(cf);
   free(cf);
@@ -1522,10 +1520,13 @@ void free_class_file(ClassFile *cf)
   free(cf->constant_pool);
 }
 
-char *removeExtension(char* string){
+char *removeExtension(char *string)
+{
   int i;
-  for (i = 0; i < strlen(string); i++){
-    if(string[i] == '.'){
+  for (i = 0; i < strlen(string); i++)
+  {
+    if (string[i] == '.')
+    {
       string[i] = '\0';
       return string;
     }
@@ -1533,29 +1534,43 @@ char *removeExtension(char* string){
   return string;
 }
 
-char *findNameFile(char* string){
-  int i, j, k=0, count=0;
+char *findNameFile(char *string)
+{
+  int i, j, k = 0, count = 0;
   char aux_string[100];
-  for (i = 0; i < strlen(string); i++){
-    if(string[i] == '/'){
+  for (i = 0; i < strlen(string); i++)
+  {
+    if (string[i] == '/')
+    {
       count++;
     }
   }
 
-  for (i = 0; i < strlen(string); i++){
-    if(string[i] == '/'){
+  for (i = 0; i < strlen(string); i++)
+  {
+    if (string[i] == '/')
+    {
       count--;
-      if(count == 0){
+      if (count == 0)
+      {
         k = 0;
-        for(j = i+1; j < strlen(string); j++){
+        for (j = i + 1; j < strlen(string); j++)
+        {
           aux_string[k] = string[j];
           k++;
         }
       }
     }
   }
-  if (!k)
+  if (k)
+  {
+
     aux_string[k] = '\0';
-  strcpy(GLOBAL_ptr,aux_string);
-  return GLOBAL_ptr;
+    strcpy(GLOBAL_ptr, aux_string);
+    return GLOBAL_ptr;
+  }
+  else
+  {
+    return string;
+  }
 }
