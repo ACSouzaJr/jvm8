@@ -44,12 +44,14 @@ void freeStackMapTable(stack_map_frame *stack_map, attribute_info *attr);
 void printConstType(u4 high_bytes, u4 low_bytes, u1 type);
 char *printFlag(u2 type, u1 flag);
 char *printVersion(u2 version);
+char *removeExtension(char* string);
+char *findNameFile(char* string);
 
 int main(int argc, char *argv[])
 {
   FILE *pFile;
-  regex_t reg;
-  regcomp(&reg ,"(Test\/)?(.+?)(\.[^.]*$|$)", REG_EXTENDED|REG_NOSUB);
+  // regex_t reg;
+  // regcomp(&reg ,"(Teste\/)?(.+?)(\.[^.]*$|$)", REG_EXTENDED|REG_NOSUB);
 
   if (argc != 2)
   {
@@ -68,8 +70,12 @@ int main(int argc, char *argv[])
   read_class_file(cf, pFile);
   fclose(pFile);
   
-  if ((regexec(&reg, print_reference(cf->constant_pool, cf->attributes->info->SourceFile_attribute.sourcefile_index), 0, (regmatch_t *)NULL, 0)) == 0)
+  // printf("%s\n",removeExtension(print_reference(cf->constant_pool, cf->attributes->info->SourceFile_attribute.sourcefile_index)));
+  // printf("%s\n",findNameFile(removeExtension(argv[1])));
+  // if ((regexec(&reg, print_reference(cf->constant_pool, cf->attributes->info->SourceFile_attribute.sourcefile_index), 0, (regmatch_t *)NULL, 0)) == 0)
+  if(strcmp(removeExtension(print_reference(cf->constant_pool, cf->attributes->info->SourceFile_attribute.sourcefile_index)), findNameFile(removeExtension(argv[1]))) == 0)
   {
+    printf("cafebabe\n");
     initialize_op_codes();
     print_class_file(cf);
   }
@@ -1509,4 +1515,41 @@ void free_class_file(ClassFile *cf)
 
   // cf->constant_pool = (cp_info *)malloc(sizeof(cp_info) * (cf->constant_pool_count - 1));
   free(cf->constant_pool);
+}
+
+char *removeExtension(char* string){
+  int i;
+  for (i = 0; i < strlen(string); i++){
+    if(string[i] == '.'){
+      string[i] = '\0';
+      return string;
+    }
+  }
+  return string;
+}
+
+char *findNameFile(char* string){
+  int i, j, k, count=0;
+  char aux_string[100];
+  for (i = 0; i < strlen(string); i++){
+    if(string[i] == '/'){
+      count++;
+    }
+  }
+
+  for (i = 0; i < strlen(string); i++){
+    if(string[i] == '/'){
+      count--;
+      if(count == 0){
+        k = 0;
+        for(j = i+1; j < strlen(string); j++){
+          aux_string[k] = string[j];
+          k++;
+        }
+      }
+    }
+  }
+
+  aux_string[k] = '\0';
+  return aux_string;
 }
