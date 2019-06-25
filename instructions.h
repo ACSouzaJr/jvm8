@@ -6,6 +6,7 @@ typedef struct
   char value[30];
   uint8_t arguments;
   uint16_t references;
+  void (* eval)();
 } op_code;
 
 extern op_code op_codes_array[300];
