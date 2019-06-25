@@ -17,6 +17,7 @@ Alunos: Nicholas Marques - 15/0019343
 #include <string.h>
 #include "structures.h"
 #include "instructions.h"
+#include "stack_frame.h"
 
 char *GLOBAL_ptr;
 u1 code_sep;

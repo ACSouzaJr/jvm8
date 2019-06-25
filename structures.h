@@ -3,7 +3,6 @@
 
 // Structures
 #include <stdint.h>
-#include "stack_frame.h"
 #define u1 uint8_t
 #define u2 uint16_t
 #define u4 uint32_t
