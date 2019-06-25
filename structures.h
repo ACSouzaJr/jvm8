@@ -1,3 +1,6 @@
+#ifndef STRUCTURES_H
+#define STRUCTURES_H
+
 // Structures
 #include <stdint.h>
 #define u1 uint8_t
@@ -422,3 +425,5 @@ typedef struct
   u2 attributes_count;
   attribute_info *attributes; //[attributes_count];
 } ClassFile;
+
+#endif

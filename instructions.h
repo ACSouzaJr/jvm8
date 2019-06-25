@@ -1,3 +1,6 @@
+#ifndef INSTRUCTIONS_H
+#define INSTRUCTIONS_H
+
 #include <stdint.h>
 
 typedef struct
@@ -62,3 +65,5 @@ enum
   iinc = 132,
   bipush = 0x10
 } instructions;
+
+#endif
