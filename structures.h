@@ -3,6 +3,7 @@
 
 // Structures
 #include <stdint.h>
+#include "stack_frame.h"
 #define u1 uint8_t
 #define u2 uint16_t
 #define u4 uint32_t
@@ -404,6 +405,12 @@ typedef struct
   // Cosntant value
   attribute_info *attributes; //[attributes_count];
 } field_info;
+
+typedef struct 
+{
+  u1 type;
+  u4 value;
+}LocalVariable;
 
 // class type
 typedef struct

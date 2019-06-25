@@ -1,13 +1,13 @@
-#include "stack_frame.h"
 #include <stdlib.h>
-StackFrame *JvmStack;
+#include "stack_frame.h"
+#include "frame.h"
 
-int pop(){
-    int item;
+Frame* pop(){
+    Frame* item;
     StackFrame *ptr;
     if (JvmStack == NULL)
     {
-        printf("not able to pop the element. No elements in stack\n");
+        // printf("not able to pop the element. No elements in stack\n");
     }
     else
     {
@@ -15,18 +15,18 @@ int pop(){
         ptr = JvmStack;
         JvmStack = JvmStack->pointer;
         free(ptr);
-        printf("Item popped (cafebabe)\n");
+        // printf("Item popped (cafebabe)\n");
     }
-    printf("Item poped with success! Congratulations!\n");
+    // printf("Item poped with success! Congratulations!\n");
     return item;
 }
 
-void push(int * frame)
+void push(Frame * frame)
 {
   StackFrame *ptr = (StackFrame *)malloc(sizeof(StackFrame));
   if (ptr == NULL)
   {
-    printf("not able to push the element");
+    // printf("not able to push the element");
   }
   else
   {
@@ -43,20 +43,20 @@ void push(int * frame)
       ptr->pointer = JvmStack;
       JvmStack = ptr;
     }
-    printf("Item pushed");
+    // printf("Item pushed");
   }
 }
 
-int top(){
+Frame* top(){
     return JvmStack->f;
 }
 
 void init(){
-    printf("Criando pilha...\n");
+    // printf("Criando pilha...\n");
     JvmStack = NULL;
-    printf("Pilha criada.\n");
+    // printf("Pilha criada.\n");
 }
 
 void print_stack(){
-    printf("Cafebabe\n");
+    // printf("Cafebabe\n");
 }

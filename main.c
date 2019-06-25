@@ -21,6 +21,7 @@ Alunos: Nicholas Marques - 15/0019343
 char *GLOBAL_ptr;
 u1 code_sep;
 char *FILE_NAME;
+StackFrame *JvmStack;
 
 u1 u1Read(FILE *);
 u2 u2Read(FILE *);

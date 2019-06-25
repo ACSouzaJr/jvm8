@@ -1,12 +1,7 @@
 #ifndef FRAME_H
 #define FRAME_H
 #include "structures.h"
-
-typedef struct 
-{
-  u1 type;
-  u4 value;
-}LocalVariable;
+#include "stack_operands.h"
 
 
 typedef struct 
@@ -15,7 +10,7 @@ typedef struct
   method_info *method;
   cp_info *cp;  
   LocalVariable *local_variables; //[]
-  StackOperands operands;
+  StackOperand operands;
 }Frame;
 
 

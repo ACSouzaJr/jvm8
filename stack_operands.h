@@ -2,15 +2,14 @@
 #define STACK_OPERAND_H
 #include "structures.h"
 
-typedef struct{
-    int * f;//Frame * f;
-    StackOperand * pointer;
-    u1 kind;
+typedef struct StackOperand{
+    LocalVariable * f;//Frame * f;
+    struct StackOperand * pointer;
 } StackOperand;
 
-int pop();
-void push(int * frame);
-int top();
+int pop_operand();
+void push_operand(LocalVariable * operand);
+int top_operand();
 void init();
 void print_stack();
 
@@ -25,6 +24,6 @@ enum {
     t_returnAddress = 8,
     t_long = 9,
     t_double = 10
-}
+};
 
 #endif

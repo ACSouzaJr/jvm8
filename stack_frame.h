@@ -1,14 +1,18 @@
 #ifndef STACK_FRAME_H
 #define STACK_FRAME_H
+#include "frame.h"
 
-typedef struct{
-    int * f;//Frame * f;
-    StackFrame * pointer;
+typedef struct StackFrame{
+    Frame *f;//Frame * f;
+    struct StackFrame * pointer;
 } StackFrame;
 
-int pop();
-void push(int * frame);
-int top();
+// Global
+extern StackFrame *JvmStack;
+
+Frame* pop();
+void push(Frame *frame);
+Frame* top();
 void init();
 void print_stack();
 
