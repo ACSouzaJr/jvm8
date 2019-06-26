@@ -1003,7 +1003,7 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
           break;
         case 1: //"aconst_null"
           printf("Evaluating aconst_null...");
-          aconst_null_eval(frame);
+          // aconst_null_eval(frame);
           break;
         case 2: //"iconst_m1"
           printf("Evaluating iconst_m1...");
@@ -1532,7 +1532,8 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
           printf("Evaluating x...");
           break;
         case 177: //"return"
-          printf("Evaluating x...");
+          printf("Evaluating return...");
+          return_eval();
           break;
         case 178: //"getstatic"
           printf("Evaluating x...");

@@ -3,6 +3,7 @@
 #include "stack_operands.h"
 #include <stdlib.h>
 #include "interpreter.h"
+#include "stack_frame.h"
 
 void aconst_null_eval(Frame *f) {
   push_operand(NULL, f->operands);
@@ -709,9 +710,10 @@ void aload_0_eval(Frame *f) {
 //   push_operand();
 // }
 
-// void return_eval(Frame *f) {
-//   push_operand();
-// }
+void return_eval() {
+  pop(JvmStack);
+  // printf("%02x", JvmStack->f->pc);
+}
 
 // void getstatic_eval(Frame *f) {
 //   push_operand();
