@@ -168,9 +168,9 @@ void aconst_null_eval(Frame *f) {
 //   push_operand();
 // }
 
-// void aload_0_eval(Frame *f) {
-//   push_operand();
-// }
+void aload_0_eval(Frame *f) {
+  push_operand(&(f->local_variables[0]), f->operands);
+}
 
 // void aload_1_eval(Frame *f) {
 //   push_operand();

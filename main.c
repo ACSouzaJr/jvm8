@@ -35,7 +35,7 @@ void free_class_file(ClassFile *cf);
 char *readUtf8(cp_info *cp, u2 index);
 attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp);
 void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count);
-void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count);
+void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile * cf);
 void recursive_print(cp_info *cp, u2 index, char *str);
 char *print_reference(cp_info *cp, u2 index);
 verification_type_info *fillVerificationTypeInfo(FILE *fp, u2 verification_type_length);
@@ -963,11 +963,14 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
   }
 }
 
-void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
+void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile * cf)
 {
   Frame *frame;
-  // frame->pc = 0;
-  // frame->cp = cp;
+  frame->pc = 0;
+  frame->method = cf->methods;//aki
+  frame->cp = cp;  
+  frame->local_variables; //[]
+  frame->operands;
   for (attribute_info *attr = field; attr < field + attr_count; attr++)
   {
     char *attribute_name = readUtf8(cp, attr->attribute_name_index);
@@ -1120,6 +1123,7 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
           break;
         case 42: //"aload_0"
           printf("Evaluating aload_0...");
+          aload_0_eval(frame);
           break;
         case 43: //"aload_1"
           printf("Evaluating aload_1...");
@@ -1620,44 +1624,44 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
       // printf("Exception length: %d\n", attr->info->Code_attribute.exception_table_length);
       // printf("Attribute Count: %d\n", attr->info->Code_attribute.attributes_count);
 
-      printAttributes(attr->info->Code_attribute.attributes, cp, attr->info->Code_attribute.attributes_count);
+      // printAttributes(attr->info->Code_attribute.attributes, cp, attr->info->Code_attribute.attributes_count);
     }
-    else if (strcmp(attribute_name, "Exceptions") == 0)
-    {
-      printf("Number of exceptions: %d\n", attr->info->Exceptions_attribute.number_of_exceptions);
+    // else if (strcmp(attribute_name, "Exceptions") == 0)
+    // {
+    //   printf("Number of exceptions: %d\n", attr->info->Exceptions_attribute.number_of_exceptions);
 
-      for (u2 *i = 0; i < attr->info->Exceptions_attribute.exception_index_table + attr->info->Exceptions_attribute.number_of_exceptions; i++)
-      {
-        printf("Exception index table: %d\n", *i);
-      }
-    }
-    else if (strcmp(attribute_name, "Deprecated") == 0)
-    {
-      /* code */
-    }
-    else if (strcmp(attribute_name, "SourceFile") == 0)
-    {
-      printf("Source file: cp_info #%d <%s> \n", attr->info->SourceFile_attribute.sourcefile_index, print_reference(cp, attr->info->SourceFile_attribute.sourcefile_index));
-    }
-    else if (strcmp(attribute_name, "LineNumberTable") == 0)
-    {
-      // printf("Line number table length: %d\n", attr->info->LineNumberTable_attribute.line_number_table_length);
+    //   for (u2 *i = 0; i < attr->info->Exceptions_attribute.exception_index_table + attr->info->Exceptions_attribute.number_of_exceptions; i++)
+    //   {
+    //     printf("Exception index table: %d\n", *i);
+    //   }
+    // }
+    // else if (strcmp(attribute_name, "Deprecated") == 0)
+    // {
+    //   /* code */
+    // }
+    // else if (strcmp(attribute_name, "SourceFile") == 0)
+    // {
+    //   printf("Source file: cp_info #%d <%s> \n", attr->info->SourceFile_attribute.sourcefile_index, print_reference(cp, attr->info->SourceFile_attribute.sourcefile_index));
+    // }
+    // else if (strcmp(attribute_name, "LineNumberTable") == 0)
+    // {
+    //   // printf("Line number table length: %d\n", attr->info->LineNumberTable_attribute.line_number_table_length);
 
-      for (line_number_table_type *i = attr->info->LineNumberTable_attribute.line_number_table; i < attr->info->LineNumberTable_attribute.line_number_table + attr->info->LineNumberTable_attribute.line_number_table_length; i++)
-      {
-        printf("Nr. %d\t", (u2)(i - attr->info->LineNumberTable_attribute.line_number_table));
-        printf("Start pc: %d\t", i->start_pc);
-        printf("Line number: %d\t\n", i->line_number);
-      }
-    }
-    else if (strcmp(attribute_name, "StackMapTable") == 0)
-    {
-      printStackMapTable(attr->info->StackMapTable_attribute.entries, cp, attr);
-    }
-    else if (strcmp(attribute_name, "ConstantValue") == 0)
-    {
-      printf("Constant value: cp_info #%d <%s> \n", attr->info->ConstantValue_attribute.constantvalue_index, print_reference(cp, attr->info->ConstantValue_attribute.constantvalue_index));
-    }
+    //   for (line_number_table_type *i = attr->info->LineNumberTable_attribute.line_number_table; i < attr->info->LineNumberTable_attribute.line_number_table + attr->info->LineNumberTable_attribute.line_number_table_length; i++)
+    //   {
+    //     printf("Nr. %d\t", (u2)(i - attr->info->LineNumberTable_attribute.line_number_table));
+    //     printf("Start pc: %d\t", i->start_pc);
+    //     printf("Line number: %d\t\n", i->line_number);
+    //   }
+    // }
+    // else if (strcmp(attribute_name, "StackMapTable") == 0)
+    // {
+    //   printStackMapTable(attr->info->StackMapTable_attribute.entries, cp, attr);
+    // }
+    // else if (strcmp(attribute_name, "ConstantValue") == 0)
+    // {
+    //   printf("Constant value: cp_info #%d <%s> \n", attr->info->ConstantValue_attribute.constantvalue_index, print_reference(cp, attr->info->ConstantValue_attribute.constantvalue_index));
+    // }
     else
     {
       /* code */
@@ -2089,7 +2093,7 @@ void print_class_file(ClassFile *cf)
 
     printAttributes(mi->attributes, cf->constant_pool, mi->attributes_count);
     printf("CAFEBABEEEEE!\n");
-    evalAttributes(mi->attributes, cf->constant_pool, mi->attributes_count);
+    evalAttributes(mi->attributes, cf->constant_pool, mi->attributes_count, cf);
 
     // for (attribute_info *ai = mi->attributes; ai < mi->attributes + mi->attributes_count; ai++)
     // {
