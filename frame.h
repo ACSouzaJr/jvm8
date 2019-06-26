@@ -9,7 +9,7 @@ typedef struct
   u4 pc;
   method_info *method;
   cp_info *cp;  
-  LocalVariable *local_variables; //[]
+  LocalVariable local_variables[300]; //[]
   StackOperand *operands;
 }Frame;
 

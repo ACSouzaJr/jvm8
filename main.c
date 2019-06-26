@@ -965,12 +965,17 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
 
 void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile * cf)
 {
-  Frame *frame;
-  frame->pc = 0;
+  Frame *frame = (Frame *)malloc(sizeof(Frame));
+  LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  lv->type = 0;
+  lv->value = 5; 
+  // frame->pc = 0;
   frame->method = cf->methods;//aki
   frame->cp = cp;  
-  frame->local_variables; //[]
-  frame->operands;
+  // frame->local_variables; //[]
+  frame->local_variables[0] = *lv;
+  frame->operands = (StackOperand *)malloc(sizeof(StackOperand));
+
   for (attribute_info *attr = field; attr < field + attr_count; attr++)
   {
     char *attribute_name = readUtf8(cp, attr->attribute_name_index);
@@ -1665,6 +1670,7 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
     else
     {
       /* code */
+      printf("caiu no else\n");
     }
   }
 }
