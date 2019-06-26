@@ -735,7 +735,7 @@ void return_eval() {
 //   push_operand();
 // }
 
-void invokespecial_eval(Frame *f, u1 index1byte, u1 index2byte) {
+void invokespecial_eval(Frame *f, u1 index1byte, u1 index2byte, cp_info *constant_pool) {
   printf("Invocando satanás...\n");
   u2 index = ((index1byte << 8) | index2byte);
 }

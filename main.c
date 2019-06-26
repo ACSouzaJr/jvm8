@@ -1561,7 +1561,7 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
           break;
         case 183: //"invokespecial"
           printf("Evaluating invokespecial...");
-          invokespecial_eval(frame, 1,1);
+          invokespecial_eval(frame, 1,1,cf->constant_pool);
           break;
         case 184: //"invokestatic"
           printf("Evaluating x...");
