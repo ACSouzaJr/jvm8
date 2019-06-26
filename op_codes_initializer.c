@@ -825,4 +825,9 @@ void initialize_op_codes()
 
   strcpy(op_codes_array[255].value, "impdep2");
   op_codes_array[255].arguments = 0;
+
+  int i;
+  for(i=0;i<256;i++){
+    op_codes_array[i].key = i;
+  }
 };

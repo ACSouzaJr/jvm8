@@ -34,6 +34,7 @@ void free_class_file(ClassFile *cf);
 char *readUtf8(cp_info *cp, u2 index);
 attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp);
 void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count);
+void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count);
 void recursive_print(cp_info *cp, u2 index, char *str);
 char *print_reference(cp_info *cp, u2 index);
 verification_type_info *fillVerificationTypeInfo(FILE *fp, u2 verification_type_length);
@@ -961,6 +962,98 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
   }
 }
 
+void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
+{
+  for (attribute_info *attr = field; attr < field + attr_count; attr++)
+  {
+    char *attribute_name = readUtf8(cp, attr->attribute_name_index);
+
+    // printf("  [%ld] %s \n", attr - field, attribute_name);
+    // printf("Attribute Name: cp_info #%d <%s> \n", attr->attribute_name_index, attribute_name);
+    // printf("Attribute Length: %d \n", attr->attribute_length);
+
+    if (strcmp(attribute_name, "Code") == 0)
+    {
+      // printf("Max stack: %d\n", attr->info->Code_attribute.max_stack);
+      // printf("Max locals: %d\n", attr->info->Code_attribute.max_locals);
+      // printf("Code length: %d\n", attr->info->Code_attribute.code_length);
+      code_sep = 1;
+      printf("Code: \n");
+      for (u1 *i = attr->info->Code_attribute.code; i < attr->info->Code_attribute.code + attr->info->Code_attribute.code_length; i++)
+      {
+        u2 pc = i - attr->info->Code_attribute.code;
+        printf("%02d ", pc);
+        u1 *index;
+        printf("Evalutaing %s\n", op_codes_array[*i].value);
+        switch (op_codes_array[*i].key)
+        {
+        case 0: //nop
+          printf("Evaluating nop...");
+          break;
+        case 1: //aconst_null
+          printf("Evaluating aconst_null...");
+          break;
+        case 42: //aload_0
+          printf("Evaluating aload_0...");
+          break;
+        default:
+          printf("Instrução inválida...");
+          break;
+        }
+        printf("\n");
+      }
+      code_sep = 0;
+
+      printf("\n");
+
+      // printf("Exception length: %d\n", attr->info->Code_attribute.exception_table_length);
+      // printf("Attribute Count: %d\n", attr->info->Code_attribute.attributes_count);
+
+      printAttributes(attr->info->Code_attribute.attributes, cp, attr->info->Code_attribute.attributes_count);
+    }
+    else if (strcmp(attribute_name, "Exceptions") == 0)
+    {
+      printf("Number of exceptions: %d\n", attr->info->Exceptions_attribute.number_of_exceptions);
+
+      for (u2 *i = 0; i < attr->info->Exceptions_attribute.exception_index_table + attr->info->Exceptions_attribute.number_of_exceptions; i++)
+      {
+        printf("Exception index table: %d\n", *i);
+      }
+    }
+    else if (strcmp(attribute_name, "Deprecated") == 0)
+    {
+      /* code */
+    }
+    else if (strcmp(attribute_name, "SourceFile") == 0)
+    {
+      printf("Source file: cp_info #%d <%s> \n", attr->info->SourceFile_attribute.sourcefile_index, print_reference(cp, attr->info->SourceFile_attribute.sourcefile_index));
+    }
+    else if (strcmp(attribute_name, "LineNumberTable") == 0)
+    {
+      // printf("Line number table length: %d\n", attr->info->LineNumberTable_attribute.line_number_table_length);
+
+      for (line_number_table_type *i = attr->info->LineNumberTable_attribute.line_number_table; i < attr->info->LineNumberTable_attribute.line_number_table + attr->info->LineNumberTable_attribute.line_number_table_length; i++)
+      {
+        printf("Nr. %d\t", (u2)(i - attr->info->LineNumberTable_attribute.line_number_table));
+        printf("Start pc: %d\t", i->start_pc);
+        printf("Line number: %d\t\n", i->line_number);
+      }
+    }
+    else if (strcmp(attribute_name, "StackMapTable") == 0)
+    {
+      printStackMapTable(attr->info->StackMapTable_attribute.entries, cp, attr);
+    }
+    else if (strcmp(attribute_name, "ConstantValue") == 0)
+    {
+      printf("Constant value: cp_info #%d <%s> \n", attr->info->ConstantValue_attribute.constantvalue_index, print_reference(cp, attr->info->ConstantValue_attribute.constantvalue_index));
+    }
+    else
+    {
+      /* code */
+    }
+  }
+}
+
 void read_class_file(ClassFile *cf, FILE *fp)
 {
   cf->magic = u4Read(fp);
@@ -1384,6 +1477,8 @@ void print_class_file(ClassFile *cf)
     // printf("Methods Attributes Count: %02d\n", mi->attributes_count);
 
     printAttributes(mi->attributes, cf->constant_pool, mi->attributes_count);
+    printf("CAFEBABEEEEE!\n");
+    evalAttributes(mi->attributes, cf->constant_pool, mi->attributes_count);
 
     // for (attribute_info *ai = mi->attributes; ai < mi->attributes + mi->attributes_count; ai++)
     // {
