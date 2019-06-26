@@ -966,8 +966,8 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
 void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
 {
   Frame *frame;
-  frame->pc = 0;
-  frame->cp = cp;
+  // frame->pc = 0;
+  // frame->cp = cp;
   for (attribute_info *attr = field; attr < field + attr_count; attr++)
   {
     char *attribute_name = readUtf8(cp, attr->attribute_name_index);
@@ -996,7 +996,7 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
           break;
         case 1: //"aconst_null"
           printf("Evaluating aconst_null...");
-          // aconst_null_eval(frame);
+          aconst_null_eval(frame);
           break;
         case 2: //"iconst_m1"
           printf("Evaluating iconst_m1...");
