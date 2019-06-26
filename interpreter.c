@@ -735,9 +735,9 @@ void return_eval() {
 //   push_operand();
 // }
 
-// void invokespecial_eval(Frame *f) {
-//   push_operand();
-// }
+void invokespecial_eval(Frame *f) {
+  
+}
 
 // void invokestatic_eval(Frame *f) {
 //   push_operand();
