@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 void aconst_null_eval(Frame *f) {
-  push_operand(NULL);
+  push_operand(NULL, f->operands);
 }
 
 // void iconst_m1_eval(Frame *f) {

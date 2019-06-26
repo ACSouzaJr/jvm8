@@ -10,7 +10,7 @@ typedef struct
   method_info *method;
   cp_info *cp;  
   LocalVariable *local_variables; //[]
-  StackOperand operands;
+  StackOperand *operands;
 }Frame;
 
 

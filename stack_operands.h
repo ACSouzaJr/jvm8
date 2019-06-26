@@ -8,7 +8,7 @@ typedef struct StackOperand{
 } StackOperand;
 
 int pop_operand();
-void push_operand(LocalVariable * operand);
+StackOperand* push_operand(LocalVariable * operand, StackOperand *operands);
 int top_operand();
 void init();
 void print_stack();
