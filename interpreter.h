@@ -186,7 +186,7 @@ void putstatic_eval(Frame *f);
 void getfield_eval(Frame *f);
 void putfield_eval(Frame *f);
 void invokevirtual_eval(Frame *f);
-void invokespecial_eval(Frame *f);
+void invokespecial_eval(Frame *f, u1 index1byte, u1 index2byte);
 void invokestatic_eval(Frame *f);
 void invokeinterface_eval(Frame *f);
 void invokedynamic_eval(Frame *f);

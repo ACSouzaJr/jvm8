@@ -174,17 +174,17 @@ void aload_0_eval(Frame *f) {
   push_operand(&(f->local_variables[0]), f->operands);
 }
 
-// void aload_1_eval(Frame *f) {
-//   push_operand();
-// }
+void aload_1_eval(Frame *f) {
+  push_operand(&(f->local_variables[1]), f->operands);
+}
 
-// void aload_2_eval(Frame *f) {
-//   push_operand();
-// }
+void aload_2_eval(Frame *f) {
+  push_operand(&(f->local_variables[2]), f->operands);
+}
 
-// void aload_3_eval(Frame *f) {
-//   push_operand();
-// }
+void aload_3_eval(Frame *f) {
+  push_operand(&(f->local_variables[3]), f->operands);
+}
 
 // void iaload_eval(Frame *f) {
 //   push_operand();
@@ -735,8 +735,9 @@ void return_eval() {
 //   push_operand();
 // }
 
-void invokespecial_eval(Frame *f) {
-  
+void invokespecial_eval(Frame *f, u1 index1byte, u1 index2byte) {
+  printf("Invocando satanás...\n");
+  u2 index = ((index1byte << 8) | index2byte);
 }
 
 // void invokestatic_eval(Frame *f) {

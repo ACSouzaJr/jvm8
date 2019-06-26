@@ -974,6 +974,12 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
   frame->cp = cp;  
   // frame->local_variables; //[]
   frame->local_variables[0] = *lv;
+  lv->value = 1;
+  frame->local_variables[1] = *lv;
+  lv->value = 2;
+  frame->local_variables[2] = *lv;
+  lv->value = 3;
+  frame->local_variables[3] = *lv;
 
   for (attribute_info *attr = field; attr < field + attr_count; attr++)
   {
@@ -1131,12 +1137,15 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
           break;
         case 43: //"aload_1"
           printf("Evaluating aload_1...");
+          aload_1_eval(frame);
           break;
         case 44: //"aload_2"
           printf("Evaluating aload_2...");
+          aload_2_eval(frame);
           break;
         case 45: //"aload_3"
           printf("Evaluating aload_3...");
+          aload_3_eval(frame);
           break;
         case 46: //"iaload"
           printf("Evaluating iaload...");
@@ -1552,7 +1561,7 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
           break;
         case 183: //"invokespecial"
           printf("Evaluating invokespecial...");
-          invokespecial_eval(frame);
+          invokespecial_eval(frame, 1,1);
           break;
         case 184: //"invokestatic"
           printf("Evaluating x...");
