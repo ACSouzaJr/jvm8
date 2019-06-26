@@ -738,6 +738,8 @@ void return_eval() {
 void invokespecial_eval(Frame *f, u1 index1byte, u1 index2byte, cp_info *constant_pool) {
   printf("Invocando satanás...\n");
   u2 index = ((index1byte << 8) | index2byte);
+  //algo
+  printf("length: %02x\n",constant_pool[index].Class.name_index);
 }
 
 // void invokestatic_eval(Frame *f) {
