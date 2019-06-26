@@ -974,7 +974,6 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
   frame->cp = cp;  
   // frame->local_variables; //[]
   frame->local_variables[0] = *lv;
-  frame->operands = (StackOperand *)malloc(sizeof(StackOperand));
 
   for (attribute_info *attr = field; attr < field + attr_count; attr++)
   {

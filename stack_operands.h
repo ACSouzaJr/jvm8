@@ -3,7 +3,7 @@
 #include "structures.h"
 
 typedef struct StackOperand{
-    LocalVariable * f;//Frame * f;
+    LocalVariable f;//Frame * f;
     struct StackOperand * pointer;
 } StackOperand;
 
