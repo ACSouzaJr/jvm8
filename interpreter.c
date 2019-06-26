@@ -2,6 +2,7 @@
 #include "frame.h"
 #include "stack_operands.h"
 #include <stdlib.h>
+#include "interpreter.h"
 
 void aconst_null_eval(Frame *f) {
   push_operand(NULL, f->operands);
