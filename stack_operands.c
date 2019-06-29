@@ -26,7 +26,7 @@ StackOperand* push_operand(LocalVariable * operand, StackOperand *stack_operand)
         // printf("Item pushed");
     }
 
-    printf("Ronaldo %02x", stack_operand->f.value);
+    printf("Acabou de ser empilhado: %04x\n", stack_operand->f.value);
     return stack_operand;
 } 
 
