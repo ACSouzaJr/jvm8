@@ -738,9 +738,33 @@ void return_eval() {
 void invokespecial_eval(Frame *f) {
   printf("Invocando satanás...\n");
   u1 index1byte, index2byte;
+  index1byte = f->pc++;
+  index2byte = f->pc++;
   u2 index = ((index1byte << 8) | index2byte);
   //algo
-  printf("length: %02x\n",f->cp[index].Class.name_index);
+  printf("index: %02x\n",f->cp[index].Class.name_index);
+  char *class_name = print_reference(f->cp, f->cp[index].Class.name_index);
+  printf("string_method: %s\n", class_name);
+
+	if(strcmp("java/lang/Object",class_name) == 0){
+
+		// carregaMemClasse(class_name);
+
+		// atualizaPc();
+		return;
+	}
+
+	if(strcmp("java/lang/StringBuffer",class_name) == 0){
+
+		// atualizaPc();
+		return;
+	}
+
+	if(strcmp("java/util/Scanner",class_name) == 0){
+
+		// atualizaPc();
+		return;
+	}
 }
 
 // void invokestatic_eval(Frame *f) {

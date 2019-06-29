@@ -969,7 +969,7 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = 0;
   lv->value = 5; 
-  // frame->pc = 0;
+  frame->pc = 0;
   frame->method = cf->methods;//aki
   frame->cp = cp;  
   // frame->local_variables; //[]
