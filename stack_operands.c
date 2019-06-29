@@ -31,7 +31,7 @@ StackOperand* push_operand(LocalVariable * operand, StackOperand *stack_operand)
 } 
 
 LocalVariable* pop_operand(StackOperand *stack_operand){
-    LocalVariable aux;
+    LocalVariable *aux;
     StackOperand *ptr;
     if (stack_operand == NULL)
     {
@@ -39,11 +39,11 @@ LocalVariable* pop_operand(StackOperand *stack_operand){
     }
     else
     {
-        aux = stack_operand->f;
+        aux = &(stack_operand->f);
         ptr = stack_operand;
         stack_operand = stack_operand->pointer;
         free(ptr);
         // printf("Item popped (cafebabe)\n");
     }
-    return &aux;
+    return aux;
 }

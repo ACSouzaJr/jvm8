@@ -1200,9 +1200,11 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
           break;
         case 59: //"istore_0"
           printf("Evaluating istore_0...");
+          istore_0_eval(frame);
           break;
         case 60: //"istore_1"
           printf("Evaluating istore_1...");
+          istore_1_eval(frame);
           break;
         case 61: //"istore_2"
           printf("Evaluating istore_2...");

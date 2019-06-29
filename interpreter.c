@@ -259,13 +259,19 @@ void aload_3_eval(Frame *f) {
 //   push_operand();
 // }
 
-// void istore_0_eval(Frame *f) {
-//   push_operand();
-// }
+void istore_0_eval(Frame *f) {
+  LocalVariable *aux;
+  aux = pop_operand(f->operands);
+  f->local_variables[0] = *aux;
+  printf("istore_0 val: %04x\n", f->local_variables[0].value);
+}
 
-// void istore_1_eval(Frame *f) {
-//   push_operand();
-// }
+void istore_1_eval(Frame *f) {
+  LocalVariable *aux;
+  //aux = pop_operand(f->operands);
+  //f->local_variables[1] = *aux;
+  //printf("istore_1 val: %04x\n", f->local_variables[1].value);
+}
 
 // void istore_2_eval(Frame *f) {
 //   push_operand();
