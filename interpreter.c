@@ -412,9 +412,19 @@ void iadd_eval(Frame *f) {
 //   push_operand();
 // }
 
-// void isub_eval(Frame *f) {
-//   push_operand();
-// }
+void isub_eval(Frame *f) {
+  int32_t v1, v2;
+  LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  v1 = 5; //pop_operand(f->operands);
+  v2 = 4; //pop_operand(f->operands);
+  result->type = CONSTANT_Integer;
+  result->value = v1 - v2;
+  printf("v1: %04x\n", v1);
+  printf("v2: %04x\n", v2);
+  printf("resultado: %04x\n", result->value);
+  push_operand(result, f->operands);
+}
 
 // void lsub_eval(Frame *f) {
 //   push_operand();

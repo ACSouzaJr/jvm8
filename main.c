@@ -1317,6 +1317,7 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
           break;
         case 100: //"isub"
           printf("Evaluating isub...");
+          isub_eval(frame);
           break;
         case 101: //"lsub"
           printf("Evaluating lsub...");
