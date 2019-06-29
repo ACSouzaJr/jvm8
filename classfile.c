@@ -265,7 +265,7 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
     {
       attr->info->Exceptions_attribute.number_of_exceptions = u2Read(fp);
       attr->info->Exceptions_attribute.exception_index_table = (u2 *)malloc(sizeof(u2) * attr->info->Exceptions_attribute.number_of_exceptions);
-      for (u2 *i = 0; i < attr->info->Exceptions_attribute.exception_index_table + attr->info->Exceptions_attribute.number_of_exceptions; i++)
+      for (u2 *i = attr->info->Exceptions_attribute.exception_index_table; i < attr->info->Exceptions_attribute.exception_index_table + attr->info->Exceptions_attribute.number_of_exceptions; i++)
       {
         *i = u2Read(fp);
       }
@@ -1599,9 +1599,16 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
   }
 }
 
-void read_class_file(ClassFile *cf, FILE *fp)
+void read_class_file(ClassFile *cf, char *file_name)
 {
-  cf = (ClassFile *)malloc(sizeof(ClassFile));
+  // cf = (ClassFile *)malloc(sizeof(ClassFile));
+  FILE *fp;
+  fp = fopen(file_name, "rb");
+  if (!fp)
+  {
+    printf("Error ao abrir arquivo. \n");
+    exit(2);
+  }
   cf->magic = u4Read(fp);
   if (cf->magic != 0xCAFEBABE)
   {
@@ -1758,6 +1765,7 @@ void read_class_file(ClassFile *cf, FILE *fp)
   //     *i = u1Read(fp);
   //   }
   // }
+  fclose(fp);
 }
 
 void recursive_print(cp_info *cp, u2 index, char *str)
@@ -2234,10 +2242,19 @@ char *findNameFile(char *string)
 
 u4 ClassLoader(char *class_name)
 {
-  read_class_file(Mem.classes_arr[Mem.num_classes++], class_name);
-  if(Mem.classes_arr[Mem.num_classes - 1] == NULL){
-		printf("Erro ao carregar classe!\n");
-		exit(0);
+  ClassFile *cf = (ClassFile *)malloc(sizeof(ClassFile));
+  if (strstr(class_name,".class") != NULL) {
+		sprintf(GLOBAL_ptr, "%s", class_name);
+	} else {
+		sprintf(GLOBAL_ptr, "./%s.class",class_name);
 	}
+  printf("%s", GLOBAL_ptr);
+  read_class_file(cf, GLOBAL_ptr);
+  Mem.classes_arr[Mem.num_classes++] = cf;
+  if (Mem.classes_arr[Mem.num_classes - 1] == NULL)
+  {
+    printf("Erro ao carregar classe!\n");
+    exit(0);
+  }
   return Mem.num_classes - 1;
 }

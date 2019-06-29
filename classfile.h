@@ -1,5 +1,5 @@
-#include "structures.h"
 #include <stdio.h>
+#include "structures.h"
 #include "stack_frame.h"
 
 extern char *GLOBAL_ptr;
@@ -13,7 +13,7 @@ u1 u1Read(FILE *);
 u2 u2Read(FILE *);
 u4 u4Read(FILE *);
 
-void read_class_file(ClassFile *, FILE *);
+void read_class_file(ClassFile *cf, char *file_name);
 void print_class_file(ClassFile *cf);
 void free_class_file(ClassFile *cf);
 char *readUtf8(cp_info *cp, u2 index);

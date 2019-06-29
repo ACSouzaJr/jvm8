@@ -1,7 +1,9 @@
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
 #include "structures.h"
 #include "frame.h"
 #include "stack_operands.h"
-#include <stdlib.h>
 #include "interpreter.h"
 #include "stack_frame.h"
 #include "classfile.h"
@@ -766,10 +768,10 @@ void invokespecial_eval(Frame *f) {
   //Pega posição da classe no array de classes
 
   //Pega referencia ao classFile pelo indice anterior.
-	ClassFile* cf = Mem.classes_arr[ClassLoader(class_name)];
+	// ClassFile* cf = Mem.classes_arr[ClassLoader(class_name)];
 
-  //Pega o nome e tipo dó método pelo indice da instrução.
-	uint16_t nomeTipoIndice = f->cp[index-1].Methodref.name_and_type_index;
+  // //Pega o nome e tipo dó método pelo indice da instrução.
+	// uint16_t nomeTipoIndice = f->cp[index-1].Methodref.name_and_type_index;
 
 }
 

@@ -30,7 +30,7 @@ Method Mem;
 
 int main(int argc, char *argv[])
 {
-  FILE *pFile;
+  // FILE *pFile;
   Mem.num_classes = 0;
 
   if (argc != 2)
@@ -39,20 +39,20 @@ int main(int argc, char *argv[])
     // pFile = fopen("Teste/multi.class", "rb");
     return 0;
   }
-  else
-  {
-    pFile = fopen(argv[1], "rb");
-    if (!pFile)
-    {
-      printf("Error ao abrir arquivo. \n");
-    }
-  }
+  // else
+  // {
+  //   pFile = fopen(argv[1], "rb");
+  //   if (!pFile)
+  //   {
+  //     printf("Error ao abrir arquivo. \n");
+  //   }
+  // }
 
-  ClassFile *cf;
+  ClassFile *cf = (ClassFile *)malloc(sizeof(ClassFile));
   GLOBAL_ptr = (char *)malloc(sizeof(char) * 100);
 
-  read_class_file(cf, pFile);
-  fclose(pFile);
+  read_class_file(cf, argv[1]);
+  // fclose(pFile);
 
   if (strcmp(removeExtension(print_reference(cf->constant_pool, cf->attributes->info->SourceFile_attribute.sourcefile_index)), findNameFile(removeExtension(argv[1]))) == 0)
   {
