@@ -21,7 +21,7 @@ Alunos: Nicholas Marques - 15/0019343
 #include "interpreter.h"
 
 char *GLOBAL_ptr;
-u1 code_sep;
+u1 code_sep = 0;
 char *FILE_NAME;
 StackFrame *JvmStack;
 

@@ -741,9 +741,10 @@ void invokespecial_eval(Frame *f) {
   index1byte = f->pc++;
   index2byte = f->pc++;
   u2 index = ((index1byte << 8) | index2byte);
+  // printf("%d", index);
   //algo
-  printf("index: %02x\n",f->cp[index].Class.name_index);
-  char *class_name = print_reference(f->cp, f->cp[index].Class.name_index);
+  // printf("index: %02x\n",f->cp[index].Class.name_index);
+  char *class_name = print_reference(f->cp, index);
   printf("string_method: %s\n", class_name);
 
 	if(strcmp("java/lang/Object",class_name) == 0){
