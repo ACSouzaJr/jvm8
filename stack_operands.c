@@ -29,3 +29,21 @@ StackOperand* push_operand(LocalVariable * operand, StackOperand *stack_operand)
     printf("Ronaldo %02x", stack_operand->f.value);
     return stack_operand;
 } 
+
+LocalVariable* pop_operand(StackOperand *stack_operand){
+    LocalVariable aux;
+    StackOperand *ptr;
+    if (stack_operand == NULL)
+    {
+        // printf("not able to pop the element. No elements in stack\n");
+    }
+    else
+    {
+        aux = stack_operand->f;
+        ptr = stack_operand;
+        stack_operand = stack_operand->pointer;
+        free(ptr);
+        // printf("Item popped (cafebabe)\n");
+    }
+    return &aux;
+}

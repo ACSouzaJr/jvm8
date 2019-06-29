@@ -386,9 +386,10 @@ void aload_3_eval(Frame *f) {
 //   push_operand();
 // }
 
-// void iadd_eval(Frame *f) {
-//   push_operand();
-// }
+void iadd_eval(Frame *f) {
+  push_operand();
+  pop_operand()
+}
 
 // void ladd_eval(Frame *f) {
 //   push_operand();

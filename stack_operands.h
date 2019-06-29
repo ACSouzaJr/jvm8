@@ -7,7 +7,7 @@ typedef struct StackOperand{
     struct StackOperand * pointer;
 } StackOperand;
 
-int pop_operand();
+LocalVariable* pop_operand();
 StackOperand* push_operand(LocalVariable * operand, StackOperand *operands);
 int top_operand();
 void init();
