@@ -969,11 +969,14 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
 {
   Frame *frame = (Frame *)malloc(sizeof(Frame));
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
-  lv->type = 0;
-  lv->value = 5; 
+  lv->type = CONSTANT_Integer;
+  lv->value = 7; 
   frame->pc = 0;
   frame->method = cf->methods;//aki
-  frame->cp = cp;  
+  frame->cp = cp;
+  push_operand(lv,frame->operands);
+  lv->value = 9;
+  push_operand(lv, frame->operands);
   // frame->local_variables; //[]
   frame->local_variables[0] = *lv;
   lv->value = 1;
@@ -1301,6 +1304,7 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
           break;
         case 96: //"iadd"
           printf("Evaluating iadd...");
+          iadd_eval(frame);
           break;
         case 97: //"ladd"
           printf("Evaluating ladd...");
