@@ -10,6 +10,7 @@ extern char *GLOBAL_ptr;
 /**
   Tabela contendo o valor para cada tag da constante (tipo id)
 */
+
 enum
 {
   CONSTANT_Class = 7,
@@ -405,11 +406,11 @@ typedef struct
   attribute_info *attributes; //[attributes_count];
 } field_info;
 
-typedef struct 
+typedef struct
 {
   u1 type;
   u4 value;
-}LocalVariable;
+} LocalVariable;
 
 // class type
 typedef struct
@@ -431,5 +432,13 @@ typedef struct
   u2 attributes_count;
   attribute_info *attributes; //[attributes_count];
 } ClassFile;
+
+typedef struct
+{
+  // array de classfiles, contem as classes ja carregadas
+  ClassFile *classes_arr[20];
+  // numero de classes carregadas em memoria
+  u2 num_classes;
+} Method;
 
 #endif

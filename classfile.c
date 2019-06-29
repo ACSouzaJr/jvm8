@@ -877,15 +877,15 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
   }
 }
 
-void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile * cf)
+void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile *cf)
 {
   Frame *frame = (Frame *)malloc(sizeof(Frame));
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = 0;
-  lv->value = 5; 
+  lv->value = 5;
   frame->pc = 0;
-  frame->method = cf->methods;//aki
-  frame->cp = cp;  
+  frame->method = cf->methods; //aki
+  frame->cp = cp;
   // frame->local_variables; //[]
   frame->local_variables[0] = *lv;
   lv->value = 1;
@@ -1601,6 +1601,7 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
 
 void read_class_file(ClassFile *cf, FILE *fp)
 {
+  cf = (ClassFile *)malloc(sizeof(ClassFile));
   cf->magic = u4Read(fp);
   if (cf->magic != 0xCAFEBABE)
   {
@@ -1776,10 +1777,25 @@ void recursive_print(cp_info *cp, u2 index, char *str)
     recursive_print(cp, cp[index - 1].Fieldref.name_and_type_index, str);
     break;
   case CONSTANT_Methodref:
-    // printf("Methodref Class Index: %02d \n", cp->Methodref.class_index, str);
-    recursive_print(cp, cp[index - 1].Methodref.class_index, str);
-    // printf("Methodref Name and Type Index: %02d \n", cp->Methodref.name_and_type_inde, strx);
-    recursive_print(cp, cp[index - 1].Methodref.name_and_type_index, str);
+    switch (name_or_type)
+    {
+    case 1: // name
+      // printf("Methodref Class Index: %02d \n", cp->Methodref.class_index, str);
+      recursive_print(cp, cp[index - 1].Methodref.class_index, str);
+      break;
+    case 2: // type
+      // printf("Methodref Name and Type Index: %02d \n", cp->Methodref.name_and_type_inde, strx);
+      recursive_print(cp, cp[index - 1].Methodref.name_and_type_index, str);
+      break;
+
+    default:
+      // printf("Methodref Class Index: %02d \n", cp->Methodref.class_index, str);
+      recursive_print(cp, cp[index - 1].Methodref.class_index, str);
+      // printf("Methodref Name and Type Index: %02d \n", cp->Methodref.name_and_type_inde, strx);
+      recursive_print(cp, cp[index - 1].Methodref.name_and_type_index, str);
+      break;
+    }
+
     break;
   case CONSTANT_InterfaceMethodref:
     // printf("InterfaceMethodref Class Index: %02d \n", cp->InterfaceMethodref.class_index, str);
@@ -2214,4 +2230,14 @@ char *findNameFile(char *string)
   {
     return string;
   }
+}
+
+u4 ClassLoader(char *class_name)
+{
+  read_class_file(Mem.classes_arr[Mem.num_classes++], class_name);
+  if(Mem.classes_arr[Mem.num_classes - 1] == NULL){
+		printf("Erro ao carregar classe!\n");
+		exit(0);
+	}
+  return Mem.num_classes - 1;
 }

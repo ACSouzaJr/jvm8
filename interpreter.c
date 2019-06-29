@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include "interpreter.h"
 #include "stack_frame.h"
+#include "classfile.h"
 
 void aconst_null_eval(Frame *f) {
   push_operand(NULL, f->operands);
@@ -740,32 +741,36 @@ void invokespecial_eval(Frame *f) {
   u1 index1byte, index2byte;
   index1byte = f->pc++;
   index2byte = f->pc++;
+
+  // recupera Utf8 da referencia do invokespecial
   u2 index = ((index1byte << 8) | index2byte);
-  // printf("%d", index);
-  //algo
-  // printf("index: %02x\n",f->cp[index].Class.name_index);
-  char *class_name = print_reference(f->cp, index);
-  printf("string_method: %s\n", class_name);
+  u2 class_index = (f->cp[index-1]).Methodref.class_index;
+  char *class_name = readUtf8(f->cp, (f->cp[class_index-1]).Class.name_index);
 
 	if(strcmp("java/lang/Object",class_name) == 0){
 
-		// carregaMemClasse(class_name);
-
-		// atualizaPc();
+		ClassLoader(class_name);
 		return;
 	}
 
 	if(strcmp("java/lang/StringBuffer",class_name) == 0){
 
-		// atualizaPc();
 		return;
 	}
 
 	if(strcmp("java/util/Scanner",class_name) == 0){
 
-		// atualizaPc();
 		return;
 	}
+
+  //Pega posição da classe no array de classes
+
+  //Pega referencia ao classFile pelo indice anterior.
+	ClassFile* cf = Mem.classes_arr[ClassLoader(class_name)];
+
+  //Pega o nome e tipo dó método pelo indice da instrução.
+	uint16_t nomeTipoIndice = f->cp[index-1].Methodref.name_and_type_index;
+
 }
 
 // void invokestatic_eval(Frame *f) {

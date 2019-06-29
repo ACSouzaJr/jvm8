@@ -23,12 +23,15 @@ Alunos: Nicholas Marques - 15/0019343
 
 char *GLOBAL_ptr;
 u1 code_sep = 0;
+u1 name_or_type;
 char *FILE_NAME;
 StackFrame *JvmStack;
+Method Mem;
 
 int main(int argc, char *argv[])
 {
   FILE *pFile;
+  Mem.num_classes = 0;
 
   if (argc != 2)
   {
@@ -45,7 +48,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  ClassFile *cf = (ClassFile *)malloc(sizeof(ClassFile));
+  ClassFile *cf;
   GLOBAL_ptr = (char *)malloc(sizeof(char) * 100);
 
   read_class_file(cf, pFile);

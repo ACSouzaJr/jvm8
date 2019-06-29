@@ -4,8 +4,10 @@
 
 extern char *GLOBAL_ptr;
 extern u1 code_sep;
+extern u1 name_or_type;
 extern char *FILE_NAME;
 extern StackFrame *JvmStack;
+extern Method Mem;
 
 u1 u1Read(FILE *);
 u2 u2Read(FILE *);
@@ -31,3 +33,4 @@ char *printFlag(u2 type, u1 flag);
 char *printVersion(u2 version);
 char *removeExtension(char *string);
 char *findNameFile(char *string);
+u4 ClassLoader(char *class_name);
