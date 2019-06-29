@@ -3,12 +3,12 @@
 #include "structures.h"
 
 typedef struct StackOperand{
-    LocalVariable f;//Frame * f;
-    struct StackOperand * pointer;
+    LocalVariable * f;//Frame * f;
+    struct StackOperand ** pointer;
 } StackOperand;
 
-LocalVariable* pop_operand();
-StackOperand* push_operand(LocalVariable * operand, StackOperand *operands);
+LocalVariable * pop_operand(StackOperand **stack_operand);
+StackOperand* push_operand(LocalVariable * operand, StackOperand **operands);
 int top_operand();
 void init();
 void print_stack();

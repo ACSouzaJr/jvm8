@@ -5,6 +5,45 @@
 #include "interpreter.h"
 #include "stack_frame.h"
 
+ClassFile* resolveClass(char* class_name){
+	// classesCarregadas *c = BuscarElemento_classes(jvm->classes,class_name);
+	// ClassFile *classe = NULL;
+
+	// if(c!=NULL){
+	// 	return c->arquivoClass;
+	// }
+	// else{
+	// 	char *nomearquivo = malloc((strlen(class_name)+7)*sizeof(char));
+	// 	strcpy(nomearquivo,class_name);
+	// 	strcat(nomearquivo,".class");
+	// 	classe = lerArquivo(nomearquivo);
+	// 	jvm->classes = InserirFim_classes(jvm->classes,classe);
+	// }
+
+	// return(classe);
+}
+
+
+int resolveMethod(cp_info *cp, u2 indice_cp, u1 interface){
+
+	// cp_info *methodref = cp-1+indice_cp;
+	// char *class_name = NULL;
+	// if(!interface){
+	// 	class_name = decodificaNIeNT(cp,methodref->UnionCP.Methodref.class_index,NAME_INDEX);;
+	// }
+	// else{
+	// 	class_name = decodificaNIeNT(cp,methodref->UnionCP.InterfaceMethodref.class_index,NAME_INDEX);
+	// }
+
+	// if(resolveClass(class_name)!=NULL){
+	// 	return 1;
+	// }
+	// else{
+	// 	return 0;
+	// }
+  return 0;
+}
+
 void aconst_null_eval(Frame *f) {
   push_operand(NULL, f->operands);
 }
@@ -268,23 +307,24 @@ void istore_0_eval(Frame *f) {
 
 void istore_1_eval(Frame *f) {
   LocalVariable *aux;
-  //aux = pop_operand(f->operands);
-  //f->local_variables[1] = *aux;
-  //printf("istore_1 val: %04x\n", f->local_variables[1].value);
+  aux = pop_operand(f->operands);
+  printf("aux: %04x\n", aux->value);
+  // f->local_variables[1] = *aux;
+  // printf("istore_1 val: %04x\n", f->local_variables[1].value);
 }
 
 void istore_2_eval(Frame *f) {
   LocalVariable *aux;
-  // aux = pop_operand(f->operands);
-  // f->local_variables[2] = *aux;
-  // printf("istore_2 val: %04x\n", f->local_variables[2].value);
+  aux = pop_operand(f->operands);
+  f->local_variables[2] = *aux;
+  printf("istore_2 val: %04x\n", f->local_variables[2].value);
 }
 
 void istore_3_eval(Frame *f) {
   LocalVariable *aux;
-  // aux = pop_operand(f->operands);
-  // f->local_variables[3] = *aux;
-  // printf("istore_3 val: %04x\n", f->local_variables[3].value);
+  aux = pop_operand(f->operands);
+  f->local_variables[3] = *aux;
+  printf("istore_3 val: %04x\n", f->local_variables[3].value);
 }
 
 // void lstore_0_eval(Frame *f) {
@@ -792,8 +832,22 @@ void getstatic_eval(Frame *f) {
   u1 index1byte, index2byte;
   index1byte = f->pc++;
   index2byte = f->pc++;
+
+  // recupera Utf8 da referencia do invokespecial
   u2 index = ((index1byte << 8) | index2byte);
-  f->cp[index];
+  u2 class_index = (f->cp[index-1]).Methodref.class_index;
+  char *class_name = readUtf8(f->cp, (f->cp[class_index-1]).Class.name_index);
+
+  // Name and type
+	uint16_t name_n_type = f->cp[index-1].Methodref.name_and_type_index;
+
+  printf("nome da classe: %s\n", class_name);
+  printf("local_variable_to_empilhar: %04x\n", f->local_variables[index].value);
+  if(strcmp(class_name,"java/lang/System")==0){
+    push_operand(&(f->local_variables[index]), f->operands);
+	} else {
+    //TODO
+  }
 }
 
 // void putstatic_eval(Frame *f) {

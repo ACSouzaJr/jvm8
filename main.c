@@ -1563,7 +1563,7 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
           return_eval();
           break;
         case 178: //"getstatic"
-          printf("Evaluating x...");
+          printf("Evaluating getstatic...");
           getstatic_eval(frame);
           break;
         case 179: //"putstatic"

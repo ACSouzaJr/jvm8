@@ -2,7 +2,7 @@
 #include "structures.h"
 #include "stack_operands.h"
 
-StackOperand* push_operand(LocalVariable * operand, StackOperand *stack_operand){
+StackOperand* push_operand(LocalVariable * operand, StackOperand **stack_operand){
     StackOperand *ptr = (StackOperand *)malloc(sizeof(StackOperand));
     if (ptr == NULL)
     {
@@ -13,24 +13,24 @@ StackOperand* push_operand(LocalVariable * operand, StackOperand *stack_operand)
     
         if (stack_operand == NULL)
         {
-            ptr->f = *operand;
+            ptr->f = operand;
             ptr->pointer = NULL;
-            stack_operand = ptr;
+            stack_operand = &ptr;
         }
         else
         {
-            ptr->f = *operand;
+            ptr->f = operand;
             ptr->pointer = stack_operand;
-            stack_operand = ptr;
+            stack_operand = &ptr;
         }
         // printf("Item pushed");
     }
 
-    printf("Acabou de ser empilhado: %04x\n", stack_operand->f.value);
-    return stack_operand;
+    printf("Acabou de ser empilhado: %04x\n", (*stack_operand)->f->value);
+    return *stack_operand;
 } 
 
-LocalVariable* pop_operand(StackOperand *stack_operand){
+LocalVariable* pop_operand(StackOperand **stack_operand){
     LocalVariable *aux;
     StackOperand *ptr;
     if (stack_operand == NULL)
@@ -39,9 +39,9 @@ LocalVariable* pop_operand(StackOperand *stack_operand){
     }
     else
     {
-        aux = &(stack_operand->f);
-        ptr = stack_operand;
-        stack_operand = stack_operand->pointer;
+        aux = (*stack_operand)->f;
+        ptr = *stack_operand;
+        *stack_operand = (*stack_operand)->pointer;
         free(ptr);
         // printf("Item popped (cafebabe)\n");
     }
