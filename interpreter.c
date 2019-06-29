@@ -273,13 +273,19 @@ void istore_1_eval(Frame *f) {
   //printf("istore_1 val: %04x\n", f->local_variables[1].value);
 }
 
-// void istore_2_eval(Frame *f) {
-//   push_operand();
-// }
+void istore_2_eval(Frame *f) {
+  LocalVariable *aux;
+  // aux = pop_operand(f->operands);
+  // f->local_variables[2] = *aux;
+  // printf("istore_2 val: %04x\n", f->local_variables[2].value);
+}
 
-// void istore_3_eval(Frame *f) {
-//   push_operand();
-// }
+void istore_3_eval(Frame *f) {
+  LocalVariable *aux;
+  // aux = pop_operand(f->operands);
+  // f->local_variables[3] = *aux;
+  // printf("istore_3 val: %04x\n", f->local_variables[3].value);
+}
 
 // void lstore_0_eval(Frame *f) {
 //   push_operand();
@@ -782,9 +788,13 @@ void return_eval() {
   // printf("%02x", JvmStack->f->pc);
 }
 
-// void getstatic_eval(Frame *f) {
-//   push_operand();
-// }
+void getstatic_eval(Frame *f) {
+  u1 index1byte, index2byte;
+  index1byte = f->pc++;
+  index2byte = f->pc++;
+  u2 index = ((index1byte << 8) | index2byte);
+  f->cp[index];
+}
 
 // void putstatic_eval(Frame *f) {
 //   push_operand();
