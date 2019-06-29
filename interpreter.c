@@ -9,33 +9,54 @@ void aconst_null_eval(Frame *f) {
   push_operand(NULL, f->operands);
 }
 
-// void iconst_m1_eval(Frame *f) {
-//   push_operand();
-// }
+void iconst_m1_eval(Frame *f) {
+  LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  lv->type = CONSTANT_Integer;
+  lv->value = -1;
+  push_operand(lv, f->operands);
+}
 
-// void iconst_0_eval(Frame *f) {
-//   push_operand();
-// }
+void iconst_0_eval(Frame *f) {
+  LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  lv->type = CONSTANT_Integer;
+  lv->value = 0;
+  push_operand(lv, f->operands);
+}
 
-// void iconst_1_eval(Frame *f) {
-//   push_operand();
-// }
+void iconst_1_eval(Frame *f) {
+  LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  lv->type = CONSTANT_Integer;
+  lv->value = 1;
+  push_operand(lv, f->operands);
+}
 
-// void iconst_2_eval(Frame *f) {
-//   push_operand();
-// }
+void iconst_2_eval(Frame *f) {
+  LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  lv->type = CONSTANT_Integer;
+  lv->value = 2;
+  push_operand(lv, f->operands);
+}
 
-// void iconst_3_eval(Frame *f) {
-//   push_operand();
-// }
+void iconst_3_eval(Frame *f) {
+  LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  lv->type = CONSTANT_Integer;
+  lv->value = 3;
+  push_operand(lv, f->operands);
+}
 
-// void iconst_4_eval(Frame *f) {
-//   push_operand();
-// }
+void iconst_4_eval(Frame *f) {
+  LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  lv->type = CONSTANT_Integer;
+  lv->value = 4;
+  push_operand(lv, f->operands);
+}
 
-// void iconst_5_eval(Frame *f) {
-//   push_operand();
-// }
+void iconst_5_eval(Frame *f) {
+  LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  lv->type = CONSTANT_Integer;
+  lv->value = 5;
+  push_operand(lv, f->operands);
+}
 
 // void lconst_0_eval(Frame *f) {
 //   push_operand();
@@ -438,9 +459,19 @@ void isub_eval(Frame *f) {
 //   push_operand();
 // }
 
-// void imul_eval(Frame *f) {
-//   push_operand();
-// }
+void imul_eval(Frame *f) {
+  int32_t v1, v2;
+  LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  v1 = 5; //pop_operand(f->operands);
+  v2 = 4; //pop_operand(f->operands);
+  result->type = CONSTANT_Integer;
+  result->value = v1 * v2;
+  printf("v1: %04x\n", v1);
+  printf("v2: %04x\n", v2);
+  printf("resultado: %04x\n", result->value);
+  push_operand(result, f->operands);
+}
 
 // void lmul_eval(Frame *f) {
 //   push_operand();
@@ -454,9 +485,19 @@ void isub_eval(Frame *f) {
 //   push_operand();
 // }
 
-// void idiv_eval(Frame *f) {
-//   push_operand();
-// }
+void idiv_eval(Frame *f) {
+  int32_t v1, v2;
+  LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  v1 = 10; //pop_operand(f->operands);
+  v2 = 4; //pop_operand(f->operands);
+  result->type = CONSTANT_Integer;
+  result->value = v1 / v2;
+  printf("v1: %04x\n", v1);
+  printf("v2: %04x\n", v2);
+  printf("resultado: %04x\n", result->value);
+  push_operand(result, f->operands);
+}
 
 // void ldiv_eval(Frame *f) {
 //   push_operand();

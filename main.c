@@ -1018,24 +1018,31 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
           break;
         case 2: //"iconst_m1"
           printf("Evaluating iconst_m1...");
+          iconst_m1_eval(frame);
           break;
         case 3: //"iconst_0"
           printf("Evaluating iconst_0...");
+          iconst_0_eval(frame);
           break;
         case 4: //"iconst_1"
           printf("Evaluating iconst_1...");
+          iconst_1_eval(frame);
           break;
         case 5: //"iconst_2"
           printf("Evaluating iconst_2...");
+          iconst_2_eval(frame);
           break;
         case 6: //"iconst_3"
           printf("Evaluating iconst_3...");
+          iconst_3_eval(frame);
           break;
         case 7: //"iconst_4"
           printf("Evaluating iconst_4...");
+          iconst_4_eval(frame);
           break;
         case 8: //"iconst_5"
           printf("Evaluating iconst_5...");
+          iconst_5_eval(frame);
           break;
         case 9: //"lconst_0"
           printf("Evaluating lconst_0...");
@@ -1330,6 +1337,7 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
           break;
         case 104: //"imul"
           printf("Evaluating imul...");
+          imul_eval(frame);
           break;
         case 105: //"lmul"
           printf("Evaluating lmul...");
@@ -1342,6 +1350,7 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
           break;
         case 108: //"idiv"
           printf("Evaluating idiv...");
+          idiv_eval(frame);
           break;
         case 109: //"ldiv"
           printf("Evaluating ldiv...");
