@@ -744,7 +744,7 @@ void invokespecial_eval(Frame *f) {
   // printf("%d", index);
   //algo
   // printf("index: %02x\n",f->cp[index].Class.name_index);
-  char *class_name = print_reference(f->cp, index);
+  char *class_name = ret_method_name(f->cp, index);
   printf("string_method: %s\n", class_name);
 
 	if(strcmp("java/lang/Object",class_name) == 0){
