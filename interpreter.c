@@ -734,9 +734,17 @@ void return_eval() {
 //   push_operand();
 // }
 
-// void invokevirtual_eval(Frame *f) {
-//   push_operand();
-// }
+void invokevirtual_eval(Frame *f) {
+  printf("Invocando virtual...\n");
+  u1 index1byte, index2byte;
+  index1byte = f->pc++;
+  index2byte = f->pc++;
+
+  // recupera Utf8 da referencia
+  u2 index = ((index1byte << 8) | index2byte);
+  u2 class_index = (f->cp[index-1]).Methodref.class_index;
+  char *class_name = readUtf8(f->cp, (f->cp[class_index-1]).Class.name_index);
+}
 
 void invokespecial_eval(Frame *f) {
   printf("Invocando satanás...\n");
@@ -748,6 +756,13 @@ void invokespecial_eval(Frame *f) {
   u2 index = ((index1byte << 8) | index2byte);
   u2 class_index = (f->cp[index-1]).Methodref.class_index;
   char *class_name = readUtf8(f->cp, (f->cp[class_index-1]).Class.name_index);
+
+  // Name and type
+	uint16_t name_n_type = f->cp[index-1].Methodref.name_and_type_index;
+
+  char* method_name = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.name_index);
+
+	char* method_desc = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.descriptor_index);
 
 	if(strcmp("java/lang/Object",class_name) == 0){
 
