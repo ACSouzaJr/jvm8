@@ -2453,7 +2453,7 @@ method_info* find_main(ClassFile *cf){
   {
     char *method_name = readUtf8(cf->constant_pool, i->name_index);
     char *method_desc = readUtf8(cf->constant_pool, i->descriptor_index);
-    if (strcmp(method_name, "main") == 0 && strcmp(method_desc, "([Ljava/lang/String;)V") == 0)
+    if (strcmp(method_name, "main") == 0)
     {
       return i;
     }  
