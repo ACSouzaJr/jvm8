@@ -85,3 +85,7 @@ int stack_destroy(){
    }
    free(JvmStack);
 }
+
+int empty(){
+  return JvmStack->top == NULL;
+}

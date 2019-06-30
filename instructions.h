@@ -2,6 +2,7 @@
 #define INSTRUCTIONS_H
 
 #include <stdint.h>
+#include "frame.h"
 
 typedef struct
 {
@@ -9,7 +10,7 @@ typedef struct
   char value[30];
   uint8_t arguments;
   uint16_t references;
-  void (* eval)();
+  void (* eval)(Frame *);
 } op_code;
 
 extern op_code op_codes_array[300];

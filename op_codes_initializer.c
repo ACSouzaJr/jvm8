@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "instructions.h"
+#include "interpreter.h"
 
 op_code op_codes_array[300];
 
@@ -9,6 +10,7 @@ void initialize_op_codes()
 {
   strcpy(op_codes_array[0].value, "nop");
   op_codes_array[0].arguments = 0;
+  // op_codes_array[0].eval = nop_eval();
 
   strcpy(op_codes_array[1].value, "aconst_null");
   op_codes_array[1].arguments = 0;
@@ -81,6 +83,7 @@ void initialize_op_codes()
   strcpy(op_codes_array[18].value, "ldc");
   op_codes_array[18].arguments = 1;
   op_codes_array[18].references = 1;
+  op_codes_array[18].eval = ldc_eval;
 
   strcpy(op_codes_array[19].value, "ldc_w");
   op_codes_array[19].arguments = 2;
@@ -719,10 +722,12 @@ void initialize_op_codes()
   strcpy(op_codes_array[177].value, "return");
   op_codes_array[177].arguments = 0;
   op_codes_array[177].references = 0;
+  op_codes_array[177].eval = return_eval;
 
   strcpy(op_codes_array[178].value, "getstatic");
   op_codes_array[178].arguments = 2;
   op_codes_array[178].references = 1;
+  op_codes_array[178].eval = getstatic_eval;
 
   strcpy(op_codes_array[179].value, "putstatic");
   op_codes_array[179].arguments = 2;
@@ -739,10 +744,12 @@ void initialize_op_codes()
   strcpy(op_codes_array[182].value, "invokevirtual");
   op_codes_array[182].arguments = 2;
   op_codes_array[182].references = 1;
+  // op_codes_array[182].eval = invokevirtual_eval;
 
   strcpy(op_codes_array[183].value, "invokespecial");
   op_codes_array[183].arguments = 2;
   op_codes_array[183].references = 1;
+  op_codes_array[183].eval = invokespecial_eval;
 
   strcpy(op_codes_array[184].value, "invokestatic");
   op_codes_array[184].arguments = 2;

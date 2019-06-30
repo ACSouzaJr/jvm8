@@ -144,9 +144,9 @@ void ldc_eval(Frame *f) {
   char *class_name = readUtf8(f->cp, (f->cp[class_index-1]).Class.name_index);
 
   cp_info *item = &(f->cp[index]);
-	void *valor=NULL;
-	u4 num=0;
-	void *classe=NULL;
+	// void *valor=NULL;
+	// u4 num=0;
+	// void *classe=NULL;
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
 
   printf("tag: %01x\n", item->tag);
@@ -873,7 +873,7 @@ void ireturn_eval(Frame *f) {
 //   push_operand();
 // }
 
-void return_eval() {
+void return_eval(Frame *f) {
   pop(JvmStack);
   // printf("%02x", JvmStack->f->pc);
 }

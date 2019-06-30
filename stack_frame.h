@@ -19,5 +19,6 @@ void push(Frame *frame);
 Frame* top();
 void init();
 void print_stack();
+int empty();
 
 #endif

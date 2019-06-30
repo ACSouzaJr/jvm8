@@ -52,6 +52,8 @@ char *printFlag(u2 type, u1 flag);
 char *printVersion(u2 version);
 char *removeExtension(char *string);
 char *findNameFile(char *string);
+void execute_gvm();
+method_info* find_main(ClassFile *cf);
 
 int main(int argc, char *argv[])
 {
@@ -82,6 +84,11 @@ int main(int argc, char *argv[])
   {
     initialize_op_codes();
     print_class_file(cf);
+    // Execute Gvm
+    method_info *main = find_main(cf);
+    Frame *frame = cria_frame(cf, main);
+    push(frame);
+    execute_gvm();
   }
   else
   {
@@ -1573,7 +1580,7 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
           break;
         case 177: //"return"
           printf("Evaluating return...\n");
-          return_eval();
+          return_eval(frame);
           break;
         case 178: //"getstatic"
           printf("Evaluating getstatic...\n");
@@ -2235,7 +2242,7 @@ void print_class_file(ClassFile *cf)
 
     printAttributes(mi->attributes, cf->constant_pool, mi->attributes_count);
     printf("CAFEBABEEEEE!\n");
-    evalAttributes(mi->attributes, cf->constant_pool, mi->attributes_count, cf);
+    // evalAttributes(mi->attributes, cf->constant_pool, mi->attributes_count, cf);
 
     // for (attribute_info *ai = mi->attributes; ai < mi->attributes + mi->attributes_count; ai++)
     // {
@@ -2426,4 +2433,31 @@ char *findNameFile(char *string)
   {
     return string;
   }
+}
+
+void execute_gvm(){
+  do
+  {
+    Frame *current_frame = JvmStack->top->f;
+    u1 *bytecode = current_frame->method->attributes->info->Code_attribute.code;
+    u2 opcode = bytecode[current_frame->pc++];
+
+    op_codes_array[opcode].eval(current_frame);
+  } while (!empty(JvmStack));
+  
+}
+
+method_info* find_main(ClassFile *cf){
+  // corrigir depois
+  for (method_info *i = cf->methods; i < cf->methods + cf->methods_count; i++)
+  {
+    char *method_name = readUtf8(cf->constant_pool, i->name_index);
+    char *method_desc = readUtf8(cf->constant_pool, i->descriptor_index);
+    if (strcmp(method_name, "main") == 0 && strcmp(method_desc, "([Ljava/lang/String;)V") == 0)
+    {
+      return i;
+    }  
+  }
+  printf("Nao achou a main! \n");
+  return NULL;
 }

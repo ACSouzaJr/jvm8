@@ -182,7 +182,7 @@ void lreturn_eval(Frame *f);
 void freturn_eval(Frame *f);
 void dreturn_eval(Frame *f);
 void areturn_eval(Frame *f);
-void return_eval();
+void return_eval(Frame *f);
 void getstatic_eval(Frame *f);
 void putstatic_eval(Frame *f);
 void getfield_eval(Frame *f);
