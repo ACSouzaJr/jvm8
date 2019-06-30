@@ -5,343 +5,401 @@
 #include "interpreter.h"
 #include "stack_frame.h"
 
-ClassFile* resolveClass(char* class_name){
-	// classesCarregadas *c = BuscarElemento_classes(jvm->classes,class_name);
-	// ClassFile *classe = NULL;
+ClassFile *resolveClass(char *class_name)
+{
+  // classesCarregadas *c = BuscarElemento_classes(jvm->classes,class_name);
+  // ClassFile *classe = NULL;
 
-	// if(c!=NULL){
-	// 	return c->arquivoClass;
-	// }
-	// else{
-	// 	char *nomearquivo = malloc((strlen(class_name)+7)*sizeof(char));
-	// 	strcpy(nomearquivo,class_name);
-	// 	strcat(nomearquivo,".class");
-	// 	classe = lerArquivo(nomearquivo);
-	// 	jvm->classes = InserirFim_classes(jvm->classes,classe);
-	// }
+  // if(c!=NULL){
+  // 	return c->arquivoClass;
+  // }
+  // else{
+  // 	char *nomearquivo = malloc((strlen(class_name)+7)*sizeof(char));
+  // 	strcpy(nomearquivo,class_name);
+  // 	strcat(nomearquivo,".class");
+  // 	classe = lerArquivo(nomearquivo);
+  // 	jvm->classes = InserirFim_classes(jvm->classes,classe);
+  // }
 
-	// return(classe);
+  // return(classe);
 }
 
+int resolveMethod(cp_info *cp, u2 indice_cp, u1 interface)
+{
 
-int resolveMethod(cp_info *cp, u2 indice_cp, u1 interface){
+  // cp_info *methodref = cp-1+indice_cp;
+  // char *class_name = NULL;
+  // if(!interface){
+  // 	class_name = decodificaNIeNT(cp,methodref->UnionCP.Methodref.class_index,NAME_INDEX);;
+  // }
+  // else{
+  // 	class_name = decodificaNIeNT(cp,methodref->UnionCP.InterfaceMethodref.class_index,NAME_INDEX);
+  // }
 
-	// cp_info *methodref = cp-1+indice_cp;
-	// char *class_name = NULL;
-	// if(!interface){
-	// 	class_name = decodificaNIeNT(cp,methodref->UnionCP.Methodref.class_index,NAME_INDEX);;
-	// }
-	// else{
-	// 	class_name = decodificaNIeNT(cp,methodref->UnionCP.InterfaceMethodref.class_index,NAME_INDEX);
-	// }
-
-	// if(resolveClass(class_name)!=NULL){
-	// 	return 1;
-	// }
-	// else{
-	// 	return 0;
-	// }
+  // if(resolveClass(class_name)!=NULL){
+  // 	return 1;
+  // }
+  // else{
+  // 	return 0;
+  // }
   return 0;
 }
 
-void aconst_null_eval(Frame *f) {
+void aconst_null_eval(Frame *f)
+{
   push_operand(NULL, f->operands);
 }
 
-void iconst_m1_eval(Frame *f) {
+void iconst_m1_eval(Frame *f)
+{
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Integer;
   lv->value = -1;
   push_operand(lv, f->operands);
 }
 
-void iconst_0_eval(Frame *f) {
+void iconst_0_eval(Frame *f)
+{
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Integer;
   lv->value = 0;
   push_operand(lv, f->operands);
 }
 
-void iconst_1_eval(Frame *f) {
+void iconst_1_eval(Frame *f)
+{
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Integer;
   lv->value = 1;
   push_operand(lv, f->operands);
 }
 
-void iconst_2_eval(Frame *f) {
+void iconst_2_eval(Frame *f)
+{
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Integer;
   lv->value = 2;
   push_operand(lv, f->operands);
 }
 
-void iconst_3_eval(Frame *f) {
+void iconst_3_eval(Frame *f)
+{
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Integer;
   lv->value = 3;
   push_operand(lv, f->operands);
 }
 
-void iconst_4_eval(Frame *f) {
+void iconst_4_eval(Frame *f)
+{
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Integer;
   lv->value = 4;
   push_operand(lv, f->operands);
 }
 
-void iconst_5_eval(Frame *f) {
+void iconst_5_eval(Frame *f)
+{
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Integer;
   lv->value = 5;
   push_operand(lv, f->operands);
 }
 
-void lconst_0_eval(Frame *f) {
-//   push_operand();
+void lconst_0_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void lconst_1_eval(Frame *f) {
-//   push_operand();
+void lconst_1_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void fconst_0_eval(Frame *f) {
-//   push_operand();
+void fconst_0_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void fconst_1_eval(Frame *f) {
-//   push_operand();
+void fconst_1_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void fconst_2_eval(Frame *f) {
-//   push_operand();
+void fconst_2_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void dconst_0_eval(Frame *f) {
-//   push_operand();
+void dconst_0_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void dconst_1_eval(Frame *f) {
-//   push_operand();
+void dconst_1_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void bipush_eval(Frame *f) {
-//   push_operand();
+void bipush_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void sipush_eval(Frame *f) {
-//   push_operand();
+void sipush_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void ldc_eval(Frame *f) {
-  u1 index1byte, index2byte;
-  index1byte = f->pc++;
-  index2byte = f->pc++;
+void ldc_eval(Frame *f)
+{
+  u1 index;
 
-  // recupera Utf8 da referencia do invokespecial
-  u2 index = ((index1byte << 8) | index2byte);
-  u2 class_index = (f->cp[index-1]).Methodref.class_index;
-  char *class_name = readUtf8(f->cp, (f->cp[class_index-1]).Class.name_index);
+  u1 *bytecode = f->method->attributes->info->Code_attribute.code;
+  index = bytecode[f->pc++];
 
-  cp_info *item = &(f->cp[index]);
+  cp_info *item = &(f->cp[index - 1]);
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
-printf("tag: %01x\n", item->tag);
+  printf("tag: %01x\n", item->tag);
   printf("RONALDINHOOOOOOOOOOOOOO: %01x\n", item->tag);
-	switch(item->tag){
-		case CONSTANT_String:
-			lv->type = CONSTANT_String;
-      lv->value = f->cp[index].String.string_index;
-      push_operand(lv, f->operands);
-		break;
-		case CONSTANT_Float:
-			lv->type = CONSTANT_Float;
-      lv->value = f->cp[index].Float.bytes;
-      push_operand(lv, f->operands);
-		break;
-		case CONSTANT_Integer:
-			lv->type = CONSTANT_Integer;
-      lv->value = f->cp[index].Integer.bytes;
-      push_operand(lv, f->operands);
-		break;
-		case CONSTANT_Class:
-      lv->type = CONSTANT_Class;
-      lv->value = 0;
-			push_operand(lv, f->operands);
+  switch (item->tag)
+  {
+  case CONSTANT_String:
+    lv->type = CONSTANT_String;
+    lv->value = item->String.string_index;
+    push_operand(lv, f->operands);
     break;
-		default:
+  case CONSTANT_Float:
+    lv->type = CONSTANT_Float;
+    lv->value = f->cp[index].Float.bytes;
+    push_operand(lv, f->operands);
     break;
-	}
+  case CONSTANT_Integer:
+    lv->type = CONSTANT_Integer;
+    lv->value = f->cp[index].Integer.bytes;
+    push_operand(lv, f->operands);
+    break;
+  case CONSTANT_Class:
+    lv->type = CONSTANT_Class;
+    lv->value = 0;
+    push_operand(lv, f->operands);
+    break;
+  default:
+    break;
+  }
 }
 
-void ldc_w_eval(Frame *f) {
-//   push_operand();
+void ldc_w_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void ldc2_w_eval(Frame *f) {
-//   push_operand();
+void ldc2_w_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void iload_eval(Frame *f) {
-//   push_operand();
+void iload_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void lload_eval(Frame *f) {
-//   push_operand();
+void lload_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void fload_eval(Frame *f) {
-//   push_operand();
+void fload_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void dload_eval(Frame *f) {
-//   push_operand();
+void dload_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void aload_eval(Frame *f) {
-//   push_operand();
+void aload_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void iload_0_eval(Frame *f) {
-  push_operand(&(f->local_variables[0]),f->operands);
+void iload_0_eval(Frame *f)
+{
+  push_operand(&(f->local_variables[0]), f->operands);
 }
 
-void iload_1_eval(Frame *f) {
-  push_operand(&(f->local_variables[1]),f->operands);
+void iload_1_eval(Frame *f)
+{
+  push_operand(&(f->local_variables[1]), f->operands);
 }
 
-void iload_2_eval(Frame *f) {
-  push_operand(&(f->local_variables[2]),f->operands);
+void iload_2_eval(Frame *f)
+{
+  push_operand(&(f->local_variables[2]), f->operands);
 }
 
-void iload_3_eval(Frame *f) {
-  push_operand(&(f->local_variables[3]),f->operands);
+void iload_3_eval(Frame *f)
+{
+  push_operand(&(f->local_variables[3]), f->operands);
 }
 
-void lload_0_eval(Frame *f) {
-//   push_operand();
+void lload_0_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void lload_1_eval(Frame *f) {
-//   push_operand();
+void lload_1_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void lload_2_eval(Frame *f) {
-//   push_operand();
+void lload_2_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void lload_3_eval(Frame *f) {
-//   push_operand();
+void lload_3_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void fload_0_eval(Frame *f) {
-//   push_operand();
+void fload_0_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void fload_1_eval(Frame *f) {
-//   push_operand();
+void fload_1_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void fload_2_eval(Frame *f) {
-//   push_operand();
+void fload_2_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void fload_3_eval(Frame *f) {
-//   push_operand();
+void fload_3_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void dload_0_eval(Frame *f) {
-//   push_operand();
+void dload_0_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void dload_1_eval(Frame *f) {
-//   push_operand();
+void dload_1_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void dload_2_eval(Frame *f) {
-//   push_operand();
+void dload_2_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void dload_3_eval(Frame *f) {
-//   push_operand();
+void dload_3_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void aload_0_eval(Frame *f) {
+void aload_0_eval(Frame *f)
+{
   // printf("lvv: %02x\n", f->local_variables[0].value);
   push_operand(&(f->local_variables[0]), f->operands);
 }
 
-void aload_1_eval(Frame *f) {
+void aload_1_eval(Frame *f)
+{
   push_operand(&(f->local_variables[1]), f->operands);
 }
 
-void aload_2_eval(Frame *f) {
+void aload_2_eval(Frame *f)
+{
   push_operand(&(f->local_variables[2]), f->operands);
 }
 
-void aload_3_eval(Frame *f) {
+void aload_3_eval(Frame *f)
+{
   push_operand(&(f->local_variables[3]), f->operands);
 }
 
-void iaload_eval(Frame *f) {
-//   push_operand();
+void iaload_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void laload_eval(Frame *f) {
-//   push_operand();
+void laload_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void faload_eval(Frame *f) {
-//   push_operand();
+void faload_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void daload_eval(Frame *f) {
-//   push_operand();
+void daload_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void aaload_eval(Frame *f) {
-//   push_operand();
+void aaload_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void baload_eval(Frame *f) {
-//   push_operand();
+void baload_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void caload_eval(Frame *f) {
-//   push_operand();
+void caload_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void saload_eval(Frame *f) {
-//   push_operand();
+void saload_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void istore_eval(Frame *f) {
-//   push_operand();
+void istore_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void lstore_eval(Frame *f) {
-//   push_operand();
+void lstore_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void fstore_eval(Frame *f) {
-//   push_operand();
+void fstore_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void dstore_eval(Frame *f) {
-//   push_operand();
+void dstore_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void astore_eval(Frame *f) {
-//   push_operand();
+void astore_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void istore_0_eval(Frame *f) {
+void istore_0_eval(Frame *f)
+{
   LocalVariable *aux;
   aux = pop_operand(f->operands);
   f->local_variables[0] = *aux;
   printf("istore_0 val: %04x\n", f->local_variables[0].value);
 }
 
-void istore_1_eval(Frame *f) {
+void istore_1_eval(Frame *f)
+{
   LocalVariable *aux;
   aux = pop_operand(f->operands);
   printf("aux: %04x\n", aux->value);
@@ -349,154 +407,190 @@ void istore_1_eval(Frame *f) {
   printf("istore_1 val: %04x\n", f->local_variables[1].value);
 }
 
-void istore_2_eval(Frame *f) {
+void istore_2_eval(Frame *f)
+{
   LocalVariable *aux;
   aux = pop_operand(f->operands);
   f->local_variables[2] = *aux;
   printf("istore_2 val: %04x\n", f->local_variables[2].value);
 }
 
-void istore_3_eval(Frame *f) {
+void istore_3_eval(Frame *f)
+{
   LocalVariable *aux;
   aux = pop_operand(f->operands);
   f->local_variables[3] = *aux;
   printf("istore_3 val: %04x\n", f->local_variables[3].value);
 }
 
-void lstore_0_eval(Frame *f) {
-//   push_operand();
+void lstore_0_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void lstore_1_eval(Frame *f) {
-//   push_operand();
+void lstore_1_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void lstore_2_eval(Frame *f) {
-//   push_operand();
+void lstore_2_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void lstore_3_eval(Frame *f) {
-//   push_operand();
+void lstore_3_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void fstore_0_eval(Frame *f) {
-//   push_operand();
+void fstore_0_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void fstore_1_eval(Frame *f) {
-//   push_operand();
+void fstore_1_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void fstore_2_eval(Frame *f) {
-//   push_operand();
+void fstore_2_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void fstore_3_eval(Frame *f) {
-//   push_operand();
+void fstore_3_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void dstore_0_eval(Frame *f) {
-//   push_operand();
+void dstore_0_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void dstore_1_eval(Frame *f) {
-//   push_operand();
+void dstore_1_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void dstore_2_eval(Frame *f) {
-//   push_operand();
+void dstore_2_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void dstore_3_eval(Frame *f) {
-//   push_operand();
+void dstore_3_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void astore_0_eval(Frame *f) {
-//   push_operand();
+void astore_0_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void astore_1_eval(Frame *f) {
-//   push_operand();
+void astore_1_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void astore_2_eval(Frame *f) {
-//   push_operand();
+void astore_2_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void astore_3_eval(Frame *f) {
-//   push_operand();
+void astore_3_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void iastore_eval(Frame *f) {
-//   push_operand();
+void iastore_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void lastore_eval(Frame *f) {
-//   push_operand();
+void lastore_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void fastore_eval(Frame *f) {
-//   push_operand();
+void fastore_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void dastore_eval(Frame *f) {
-//   push_operand();
+void dastore_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void aastore_eval(Frame *f) {
-//   push_operand();
+void aastore_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void bastore_eval(Frame *f) {
-//   push_operand();
+void bastore_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void castore_eval(Frame *f) {
-//   push_operand();
+void castore_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void sastore_eval(Frame *f) {
-//   push_operand();
+void sastore_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void pop_eval(Frame *f) {
-//   push_operand();
+void pop_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void pop2_eval(Frame *f) {
-//   push_operand();
+void pop2_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void dup_eval(Frame *f) {
-//   push_operand();
+void dup_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void dup_x1_eval(Frame *f) {
-//   push_operand();
+void dup_x1_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void dup_x2_eval(Frame *f) {
-//   push_operand();
+void dup_x2_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void dup2_eval(Frame *f) {
-//   push_operand();
+void dup2_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void dup2_x1_eval(Frame *f) {
-//   push_operand();
+void dup2_x1_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void dup2_x2_eval(Frame *f) {
-//   push_operand();
+void dup2_x2_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void swap_eval(Frame *f) {
-//   push_operand();
+void swap_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void iadd_eval(Frame *f) {
-  int32_t v1,v2;
+void iadd_eval(Frame *f)
+{
+  int32_t v1, v2;
   LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
 
   v1 = pop_operand(f->operands)->value;
@@ -509,12 +603,14 @@ void iadd_eval(Frame *f) {
   push_operand(result, f->operands);
 }
 
-void ladd_eval(Frame *f) {
-//   push_operand();
+void ladd_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void fadd_eval(Frame *f) {
-  float v1,v2;
+void fadd_eval(Frame *f)
+{
+  float v1, v2;
   LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
 
   v1 = pop_operand(f->operands)->value;
@@ -527,11 +623,13 @@ void fadd_eval(Frame *f) {
   push_operand(result, f->operands);
 }
 
-void dadd_eval(Frame *f) {
-//   push_operand();
+void dadd_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void isub_eval(Frame *f) {
+void isub_eval(Frame *f)
+{
   int32_t v1, v2;
   LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
 
@@ -545,19 +643,23 @@ void isub_eval(Frame *f) {
   push_operand(result, f->operands);
 }
 
-void lsub_eval(Frame *f) {
-//   push_operand();
+void lsub_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void fsub_eval(Frame *f) {
-//   push_operand();
+void fsub_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void dsub_eval(Frame *f) {
-//   push_operand();
+void dsub_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void imul_eval(Frame *f) {
+void imul_eval(Frame *f)
+{
   int32_t v1, v2;
   LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
 
@@ -571,19 +673,23 @@ void imul_eval(Frame *f) {
   push_operand(result, f->operands);
 }
 
-void lmul_eval(Frame *f) {
-//   push_operand();
+void lmul_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void fmul_eval(Frame *f) {
-//   push_operand();
+void fmul_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void dmul_eval(Frame *f) {
-//   push_operand();
+void dmul_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void idiv_eval(Frame *f) {
+void idiv_eval(Frame *f)
+{
   int32_t v1, v2;
   LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
 
@@ -597,329 +703,456 @@ void idiv_eval(Frame *f) {
   push_operand(result, f->operands);
 }
 
-void ldiv_eval(Frame *f) {
-//   push_operand();
+void ldiv_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void fdiv_eval(Frame *f) {
-//   push_operand();
+void fdiv_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void ddiv_eval(Frame *f) {
-//   push_operand();
+void ddiv_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void irem_eval(Frame *f) {
-//   push_operand();
+void irem_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void lrem_eval(Frame *f) {
-//   push_operand();
+void lrem_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void frem_eval(Frame *f) {
-//   push_operand();
+void frem_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void drem_eval(Frame *f) {
-//   push_operand();
+void drem_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void ineg_eval(Frame *f) {
-//   push_operand();
+void ineg_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void lneg_eval(Frame *f) {
-//   push_operand();
+void lneg_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void fneg_eval(Frame *f) {
-//   push_operand();
+void fneg_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void dneg_eval(Frame *f) {
-//   push_operand();
+void dneg_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void ishl_eval(Frame *f) {
-//   push_operand();
+void ishl_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void lshl_eval(Frame *f) {
-//   push_operand();
+void lshl_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void ishr_eval(Frame *f) {
-//   push_operand();
+void ishr_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void lshr_eval(Frame *f) {
-//   push_operand();
+void lshr_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void iushr_eval(Frame *f) {
-//   push_operand();
+void iushr_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void lushr_eval(Frame *f) {
-//   push_operand();
+void lushr_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void iand_eval(Frame *f) {
-//   push_operand();
+void iand_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void land_eval(Frame *f) {
-//   push_operand();
+void land_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void ior_eval(Frame *f) {
-//   push_operand();
+void ior_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void lor_eval(Frame *f) {
-//   push_operand();
+void lor_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void ixor_eval(Frame *f) {
-//   push_operand();
+void ixor_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void lxor_eval(Frame *f) {
-//   push_operand();
+void lxor_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void iinc_eval(Frame *f) {
-//   push_operand();
+void iinc_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void i2l_eval(Frame *f) {
-//   push_operand();
+void i2l_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void i2f_eval(Frame *f) {
-//   push_operand();
+void i2f_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void i2d_eval(Frame *f) {
-//   push_operand();
+void i2d_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void l2i_eval(Frame *f) {
-//   push_operand();
+void l2i_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void l2f_eval(Frame *f) {
-//   push_operand();
+void l2f_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void l2d_eval(Frame *f) {
-//   push_operand();
+void l2d_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void f2i_eval(Frame *f) {
-//   push_operand();
+void f2i_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void f2l_eval(Frame *f) {
-//   push_operand();
+void f2l_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void f2d_eval(Frame *f) {
-//   push_operand();
+void f2d_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void d2i_eval(Frame *f) {
-//   push_operand();
+void d2i_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void d2l_eval(Frame *f) {
-//   push_operand();
+void d2l_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void d2f_eval(Frame *f) {
-//   push_operand();
+void d2f_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void i2b_eval(Frame *f) {
-//   push_operand();
+void i2b_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void i2c_eval(Frame *f) {
-//   push_operand();
+void i2c_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void i2s_eval(Frame *f) {
-//   push_operand();
+void i2s_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void lcmp_eval(Frame *f) {
-//   push_operand();
+void lcmp_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void fcmpl_eval(Frame *f) {
-//   push_operand();
+void fcmpl_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void fcmpg_eval(Frame *f) {
-//   push_operand();
+void fcmpg_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void dcmpl_eval(Frame *f) {
-//   push_operand();
+void dcmpl_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void dcmpg_eval(Frame *f) {
-//   push_operand();
+void dcmpg_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void ifeq_eval(Frame *f) {
-//   push_operand();
+void ifeq_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void ifne_eval(Frame *f) {
-//   push_operand();
+void ifne_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void iflt_eval(Frame *f) {
-//   push_operand();
+void iflt_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void ifge_eval(Frame *f) {
-//   push_operand();
+void ifge_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void ifgt_eval(Frame *f) {
-//   push_operand();
+void ifgt_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void ifle_eval(Frame *f) {
-//   push_operand();
+void ifle_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void if_icmpeq_eval(Frame *f) {
-//   push_operand();
+void if_icmpeq_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void if_icmpne_eval(Frame *f) {
-//   push_operand();
+void if_icmpne_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void if_icmplt_eval(Frame *f) {
-//   push_operand();
+void if_icmplt_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void if_icmpg2_eval(Frame *f) {
-//   push_operand();
+void if_icmpg2_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void if_icmpgt_eval(Frame *f) {
-//   push_operand();
+void if_icmpgt_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void if_icmple_eval(Frame *f) {
-//   push_operand();
+void if_icmple_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void if_acmpeq_eval(Frame *f) {
-//   push_operand();
+void if_acmpeq_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void if_acmpne_eval(Frame *f) {
-//   push_operand();
+void if_acmpne_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void goto_eval(Frame *f) {
-//   push_operand();
+void goto_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void jsr_eval(Frame *f) {
-//   push_operand();
+void jsr_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void ret_eval(Frame *f) {
-//   push_operand();
+void ret_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void tableswitch_eval(Frame *f) {
-//   push_operand();
+void tableswitch_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void lookupswitch_eval(Frame *f) {
-//   push_operand();
+void lookupswitch_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void ireturn_eval(Frame *f) {
-  LocalVariable* lv = pop_operand(f->operands);
+void ireturn_eval(Frame *f)
+{
+  LocalVariable *lv = pop_operand(f->operands);
 
   pop(JvmStack);
   if (!empty(JvmStack))
   {
     push_operand(lv, JvmStack->top->f->operands);
   }
-
 }
 
-void lreturn_eval(Frame *f) {
-//   push_operand();
+void lreturn_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void freturn_eval(Frame *f) {
-//   push_operand();
+void freturn_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void dreturn_eval(Frame *f) {
-//   push_operand();
+void dreturn_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void areturn_eval(Frame *f) {
-//   push_operand();
+void areturn_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void return_eval(Frame *f) {
+void return_eval(Frame *f)
+{
   pop(JvmStack);
   // printf("%02x", JvmStack->f->pc);
 }
 
-void getstatic_eval(Frame *f) {
+void getstatic_eval(Frame *f)
+{
+  //  f->method->attributes->info->Code_attribute.code;
+  // u2 opcode = bytecode[current_frame->pc++];
   u1 index1byte, index2byte;
-  index1byte = f->pc++;
-  index2byte = f->pc++;
+  u1 *bytecode = f->method->attributes->info->Code_attribute.code;
+  index1byte = bytecode[f->pc++];
+  index2byte = bytecode[f->pc++];
 
   // recupera Utf8 da referencia do invokespecial
   u2 index = ((index1byte << 8) | index2byte);
-  u2 class_index = (f->cp[index-1]).Methodref.class_index;
-  char *class_name = readUtf8(f->cp, (f->cp[class_index-1]).Class.name_index);
+  char *class_name = ret_method_name(f->cp, index);
 
   // Name and type
-	uint16_t name_n_type = f->cp[index-1].Methodref.name_and_type_index;
+  // uint16_t name_n_type = f->cp[index-1].Methodref.name_and_type_index;
 
   printf("nome da classe: %s\n", class_name);
   printf("local_variable_to_empilhar: %04x\n", f->local_variables[index].value);
-  if(strcmp(class_name,"java/lang/System")==0){
-    push_operand(&(f->local_variables[index]), f->operands);
-	} else {
+  if (strcmp(class_name, "java/lang/System") == 0)
+  {
+    // push_operand(&(f->local_variables[index]), f->operands);
+    return;
+  }
+  else
+  {
     //TODO
   }
 }
 
-void putstatic_eval(Frame *f) {
-//   push_operand();
+void putstatic_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void getfield_eval(Frame *f) {
-//   push_operand();
+void getfield_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void putfield_eval(Frame *f) {
-//   push_operand();
+void putfield_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void invokevirtual_eval(Frame *f) {
-//   push_operand();
+void invokevirtual_eval(Frame *f)
+{
+  u1 index1byte, index2byte;
+  u1 *bytecode = f->method->attributes->info->Code_attribute.code;
+  index1byte = bytecode[f->pc++];
+  index2byte = bytecode[f->pc++];
+
+  // recupera Utf8 da referencia do invokespecial
+  u2 index = ((index1byte << 8) | index2byte);
+  char *class_name = ret_method_name(f->cp, index);
+
+  // Name and type
+  uint16_t name_n_type = f->cp[index - 1].Methodref.name_and_type_index;
+
+  char *method_name = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.name_index);
+
+  char *method_desc = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.descriptor_index);
+
+  // Para debug
+  // cout << className << " " << methodName << " " << descriptor << endl;
+
+  if (strcmp(class_name, "java/io/PrintStream") == 0)
+  {
+    if (strcmp(method_name, "println") == 0)
+    {
+      if (strcmp(method_desc, "(Ljava/lang/String;)V") == 0)
+      {
+        // string* stringReference = (string*)(frame->operandStack.top().type_reference);
+        // frame->operandStack.pop();
+        char *string = readUtf8(f->cp, f->operands->top->f->value);
+        pop(JvmStack);
+        printf("%s \n", string);
+      }
+      else
+      {
+        printf("invokevirtualFunction: falta implementar\n");
+        exit(0);
+      }
+    }
+    else
+    {
+      printf("invokevirtualFunction: falta implementar\n");
+      exit(0);
+    }
+  }
+  else
+  {
+    printf("invokevirtualFunction: falta implementar\n");
+    exit(0);
+  }
 }
 
-void invokespecial_eval(Frame *f) {
+void invokespecial_eval(Frame *f)
+{
   printf("Invocando satanás...\n");
   u1 index1byte, index2byte;
   index1byte = f->pc++;
@@ -931,107 +1164,131 @@ void invokespecial_eval(Frame *f) {
   char *class_name = ret_method_name(f->cp, index);
   printf("string_method: %s\n", class_name);
 
-	if(strcmp("java/lang/Object",class_name) == 0){
+  if (strcmp("java/lang/Object", class_name) == 0)
+  {
 
-		// carregaMemClasse(class_name);
+    // carregaMemClasse(class_name);
 
-		// atualizaPc();
-		return;
-	}
+    // atualizaPc();
+    return;
+  }
 
-	if(strcmp("java/lang/StringBuffer",class_name) == 0){
+  if (strcmp("java/lang/StringBuffer", class_name) == 0)
+  {
 
-		// atualizaPc();
-		return;
-	}
+    // atualizaPc();
+    return;
+  }
 
-	if(strcmp("java/util/Scanner",class_name) == 0){
+  if (strcmp("java/util/Scanner", class_name) == 0)
+  {
 
-		// atualizaPc();
-		return;
-	}
+    // atualizaPc();
+    return;
+  }
 }
 
-void invokestatic_eval(Frame *f) {
-//   push_operand();
+void invokestatic_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void invokeinterface_eval(Frame *f) {
-//   push_operand();
+void invokeinterface_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void invokedynamic_eval(Frame *f) {
-//   push_operand();
+void invokedynamic_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void new_eval(Frame *f) {
-//   push_operand();
+void new_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void newarray_eval(Frame *f) {
-//   push_operand();
+void newarray_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void anewarray_eval(Frame *f) {
-//   push_operand();
+void anewarray_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void arraylength_eval(Frame *f) {
-//   push_operand();
+void arraylength_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void athrow_eval(Frame *f) {
-//   push_operand();
+void athrow_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void checkcast_eval(Frame *f) {
-//   push_operand();
+void checkcast_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void instanceof_eval(Frame *f) {
-//   push_operand();
+void instanceof_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void monitorenter_eval(Frame *f) {
-//   push_operand();
+void monitorenter_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void monitorexit_eval(Frame *f) {
-//   push_operand();
+void monitorexit_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void wide_eval(Frame *f) {
-//   push_operand();
+void wide_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void multianewarray_eval(Frame *f) {
-//   push_operand();
+void multianewarray_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void ifnull_eval(Frame *f) {
-//   push_operand();
+void ifnull_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void ifnonnull_eval(Frame *f) {
-//   push_operand();
+void ifnonnull_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void goto_w_eval(Frame *f) {
-//   push_operand();
+void goto_w_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void jsr_w_eval(Frame *f) {
-//   push_operand();
+void jsr_w_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void breakpoint_eval(Frame *f) {
-//   push_operand();
+void breakpoint_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void impdep1_eval(Frame *f) {
-//   push_operand();
+void impdep1_eval(Frame *f)
+{
+  //   push_operand();
 }
 
-void impdep2_eval(Frame *f) {
-//   push_operand();
+void impdep2_eval(Frame *f)
+{
+  //   push_operand();
 }

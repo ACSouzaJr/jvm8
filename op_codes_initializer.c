@@ -1025,7 +1025,7 @@ void initialize_op_codes()
 
   // reservados
   strcpy(op_codes_array[202].value, "breakpoint");
-  op_codes_array[200].arguments = 0;
+  op_codes_array[202].arguments = 0;
 
   strcpy(op_codes_array[254].value, "impdep1");
   op_codes_array[254].arguments = 0;

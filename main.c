@@ -1990,7 +1990,7 @@ void rec_method_name(cp_info *cp, u2 index, char *str)
     // printf("Fieldref Class Index: %02d \n", cp->Fieldref.class_index);
     rec_method_name(cp, cp[index - 1].Fieldref.class_index, str);
     // printf("Fieldref Name and Type Index: %02d \n", cp->Fieldref.name_and_type_index, str);
-    rec_method_name(cp, cp[index - 1].Fieldref.name_and_type_index, str);
+    // rec_method_name(cp, cp[index - 1].Fieldref.name_and_type_index, str);
     break;
   case CONSTANT_Methodref:
     // printf("Methodref Class Index: %02d \n", cp->Methodref.class_index, str);
@@ -2001,7 +2001,7 @@ void rec_method_name(cp_info *cp, u2 index, char *str)
     // printf("InterfaceMethodref Class Index: %02d \n", cp->InterfaceMethodref.class_index, str);
     rec_method_name(cp, cp[index - 1].InterfaceMethodref.class_index, str);
     // printf("InterfaceMethodref Name and Type Index: %02d \n", cp->InterfaceMethodref.name_and_type_index, str);
-    rec_method_name(cp, cp[index - 1].InterfaceMethodref.name_and_type_index, str);
+    // rec_method_name(cp, cp[index - 1].InterfaceMethodref.name_and_type_index, str);
     break;
   case CONSTANT_String:
     // printf("String Index: %02d \n", cp->String.string_index, str);
