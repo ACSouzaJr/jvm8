@@ -309,8 +309,8 @@ void istore_1_eval(Frame *f) {
   LocalVariable *aux;
   aux = pop_operand(f->operands);
   printf("aux: %04x\n", aux->value);
-  // f->local_variables[1] = *aux;
-  // printf("istore_1 val: %04x\n", f->local_variables[1].value);
+  f->local_variables[1] = *aux;
+  printf("istore_1 val: %04x\n", f->local_variables[1].value);
 }
 
 void istore_2_eval(Frame *f) {
