@@ -1079,6 +1079,7 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
           break;
         case 18: //"ldc"
           printf("Evaluating ldc...\n");
+          ldc_eval(frame);
           break;
         case 19: //"ldc_w"
           printf("Evaluating ldc_w...\n");

@@ -133,9 +133,48 @@ void iconst_5_eval(Frame *f) {
 //   push_operand();
 // }
 
-// void ldc_eval(Frame *f) {
-//   push_operand();
-// }
+void ldc_eval(Frame *f) {
+  u1 index1byte, index2byte;
+  index1byte = f->pc++;
+  index2byte = f->pc++;
+
+  // recupera Utf8 da referencia do invokespecial
+  u2 index = ((index1byte << 8) | index2byte);
+  u2 class_index = (f->cp[index-1]).Methodref.class_index;
+  char *class_name = readUtf8(f->cp, (f->cp[class_index-1]).Class.name_index);
+
+  cp_info *item = &(f->cp[index]);
+	void *valor=NULL;
+	u4 num=0;
+	void *classe=NULL;
+  LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  printf("tag: %01x\n", item->tag);
+	switch(item->tag){
+		case CONSTANT_String:
+			lv->type = CONSTANT_String;
+      lv->value = 0;
+			push_operand(lv, f->operands);
+		break;
+		case CONSTANT_Float:
+			lv->type = CONSTANT_Float;
+      lv->value = f->cp[index].Float.bytes;
+      push_operand(lv, f->operands);
+		break;
+		case CONSTANT_Integer:
+			lv->type = CONSTANT_Integer;
+      lv->value = f->cp[index].Integer.bytes;
+      push_operand(lv, f->operands);
+		break;
+		case CONSTANT_Class:
+      lv->type = CONSTANT_Class;
+      lv->value = 0;
+			push_operand(lv, f->operands);
+		  break;
+		default:
+		  break;
+	}
+}
 
 // void ldc_w_eval(Frame *f) {
 //   push_operand();
