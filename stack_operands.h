@@ -2,18 +2,25 @@
 #define STACK_OPERAND_H
 #include "structures.h"
 
-typedef struct StackOperand{
-    LocalVariable * f;//Frame * f;
-    struct StackOperand ** pointer;
+typedef struct StackOperand
+{
+    LocalVariable *f; //Frame * f;
+    struct StackOperand *pointer;
+} Operand;
+
+typedef struct
+{
+   struct StackOperand *top;
 } StackOperand;
 
-LocalVariable * pop_operand(StackOperand **stack_operand);
-StackOperand* push_operand(LocalVariable * operand, StackOperand **operands);
-int top_operand();
+LocalVariable *pop_operand(StackOperand *stack_operand);
+void push_operand(LocalVariable *operand, StackOperand *operands);
+Operand* top_operand(StackOperand *stack_operand);
 void init();
 void print_stack();
 
-enum {
+enum
+{
     t_boolean = 1,
     t_byte = 2,
     t_char = 3,

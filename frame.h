@@ -9,9 +9,11 @@ typedef struct
   u4 pc;
   method_info *method;
   cp_info *cp;  
-  LocalVariable local_variables[300]; //[]
-  StackOperand **operands;
+  LocalVariable *local_variables;//[300]; //[]
+  StackOperand *operands;
 }Frame;
+
+Frame* cria_frame(ClassFile *cf, method_info *mi);
 
 
 #endif

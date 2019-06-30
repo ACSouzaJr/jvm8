@@ -21,7 +21,7 @@ Frame* pop(){
     return item;
 }
 
-void push(Frame * frame)
+void push(Frame *frame)
 {
   StackFrame *ptr = (StackFrame *)malloc(sizeof(StackFrame));
   if (ptr == NULL)

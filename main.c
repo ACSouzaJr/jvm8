@@ -19,6 +19,7 @@ Alunos: Nicholas Marques - 15/0019343
 #include "instructions.h"
 #include "stack_frame.h"
 #include "interpreter.h"
+#include "frame.h"
 
 char *GLOBAL_ptr;
 u1 code_sep = 0;
@@ -967,7 +968,7 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
 
 void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile * cf)
 {
-  Frame *frame = (Frame *)malloc(sizeof(Frame));
+  Frame *frame = cria_frame(cf, &cf->methods[1]);
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Integer;
   lv->value = 7; 
