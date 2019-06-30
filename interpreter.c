@@ -516,9 +516,19 @@ void iadd_eval(Frame *f) {
 //   push_operand();
 // }
 
-// void fadd_eval(Frame *f) {
-//   push_operand();
-// }
+void fadd_eval(Frame *f) {
+  float v1,v2;
+  LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  v1 = pop_operand(f->operands)->value;
+  v2 = pop_operand(f->operands)->value;
+  result->type = CONSTANT_Float;
+  result->value = v1 + v2;
+  printf("v1: %04x\n", v1);
+  printf("v2: %04x\n", v2);
+  printf("resultado: %04x\n", result->value);
+  push_operand(result, f->operands);
+}
 
 // void dadd_eval(Frame *f) {
 //   push_operand();
@@ -842,9 +852,9 @@ void idiv_eval(Frame *f) {
 //   push_operand();
 // }
 
-// void ireturn_eval(Frame *f) {
-//   push_operand();
-// }
+void ireturn_eval(Frame *f) {
+  
+}
 
 // void lreturn_eval(Frame *f) {
 //   push_operand();
