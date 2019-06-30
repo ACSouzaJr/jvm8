@@ -2,7 +2,7 @@
 #include "structures.h"
 #include "stack_operands.h"
 
-StackOperand* push_operand(LocalVariable * operand, StackOperand *stack_operand){
+StackOperand* push_operand(LocalVariable *operand, StackOperand **stack_operand){
     StackOperand *ptr = (StackOperand *)malloc(sizeof(StackOperand));
     if (ptr == NULL)
     {
@@ -13,19 +13,23 @@ StackOperand* push_operand(LocalVariable * operand, StackOperand *stack_operand)
     
         if (stack_operand == NULL)
         {
-            ptr->f = *operand;
+            ptr->operand = operand;
             ptr->pointer = NULL;
-            stack_operand = ptr;
+            *stack_operand = ptr;
         }
         else
         {
-            ptr->f = *operand;
+            ptr->operand = operand;
             ptr->pointer = stack_operand;
-            stack_operand = ptr;
+            *stack_operand = ptr;
         }
         // printf("Item pushed");
     }
 
-    printf("Ronaldo %02x", stack_operand->f.value);
+    printf("Ronaldo %02x", (*stack_operand)->operand->value);
     return stack_operand;
 } 
+
+StackOperand* top_operand(StackOperand *stack_operand){
+    return stack_operand;
+}

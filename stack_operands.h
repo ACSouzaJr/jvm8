@@ -2,14 +2,16 @@
 #define STACK_OPERAND_H
 #include "structures.h"
 
-typedef struct StackOperand{
-    LocalVariable f;//Frame * f;
+struct StackOperand{
+    LocalVariable *operand;
     struct StackOperand * pointer;
-} StackOperand;
+};
+
+typedef struct StackOperand *StackOperand;
 
 int pop_operand();
 StackOperand* push_operand(LocalVariable * operand, StackOperand *operands);
-int top_operand();
+StackOperand* top_operand();
 void init();
 void print_stack();
 

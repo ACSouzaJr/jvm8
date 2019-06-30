@@ -744,6 +744,36 @@ void invokevirtual_eval(Frame *f) {
   u2 index = ((index1byte << 8) | index2byte);
   u2 class_index = (f->cp[index-1]).Methodref.class_index;
   char *class_name = readUtf8(f->cp, (f->cp[class_index-1]).Class.name_index);
+
+  // Name and type
+	uint16_t name_n_type = f->cp[index-1].Methodref.name_and_type_index;
+
+  char* method_name = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.name_index);
+
+	char* method_desc = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.descriptor_index);
+
+  if (strcmp(class_name, "java/io/PrintStream") == 0) {
+        if (strcmp(method_name, "println") == 0) {
+            if (strcmp(method_desc, "(Ljava/lang/String;)V") == 0) {
+                char* string_ref = (char*) top_operand(f->operands)->operand.value;
+                printf("%s \n", string_ref);
+                pop_operand(f->operands);
+            }
+            else {
+                printf("invokevirtualFunction: falta implementar\n");
+                exit(0);
+            }
+        }
+        else {
+            printf("invokevirtualFunction: falta implementar\n");
+            exit(0);
+        }
+    }
+    else {
+        printf("invokevirtualFunction: falta implementar\n");
+        exit(0);
+    }
+
 }
 
 void invokespecial_eval(Frame *f) {
@@ -756,13 +786,6 @@ void invokespecial_eval(Frame *f) {
   u2 index = ((index1byte << 8) | index2byte);
   u2 class_index = (f->cp[index-1]).Methodref.class_index;
   char *class_name = readUtf8(f->cp, (f->cp[class_index-1]).Class.name_index);
-
-  // Name and type
-	uint16_t name_n_type = f->cp[index-1].Methodref.name_and_type_index;
-
-  char* method_name = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.name_index);
-
-	char* method_desc = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.descriptor_index);
 
 	if(strcmp("java/lang/Object",class_name) == 0){
 
