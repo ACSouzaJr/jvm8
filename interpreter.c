@@ -489,8 +489,8 @@ void isub_eval(Frame *f) {
   int32_t v1, v2;
   LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  v1 = 5; //pop_operand(f->operands);
-  v2 = 4; //pop_operand(f->operands);
+  v1 = pop_operand(f->operands)->value;
+  v2 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Integer;
   result->value = v1 - v2;
   printf("v1: %04x\n", v1);
@@ -515,8 +515,8 @@ void imul_eval(Frame *f) {
   int32_t v1, v2;
   LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  v1 = 5; //pop_operand(f->operands);
-  v2 = 4; //pop_operand(f->operands);
+  v1 = pop_operand(f->operands)->value;
+  v2 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Integer;
   result->value = v1 * v2;
   printf("v1: %04x\n", v1);
@@ -541,8 +541,8 @@ void idiv_eval(Frame *f) {
   int32_t v1, v2;
   LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  v1 = 10; //pop_operand(f->operands);
-  v2 = 4; //pop_operand(f->operands);
+  v1 = pop_operand(f->operands)->value;
+  v2 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Integer;
   result->value = v1 / v2;
   printf("v1: %04x\n", v1);
