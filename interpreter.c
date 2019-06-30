@@ -150,11 +150,12 @@ void ldc_eval(Frame *f) {
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
 
   printf("tag: %01x\n", item->tag);
+  printf("RONALDINHOOOOOOOOOOOOOO: %01x\n", item->tag);
 	switch(item->tag){
 		case CONSTANT_String:
 			lv->type = CONSTANT_String;
-      lv->value = 0;
-			push_operand(lv, f->operands);
+      lv->value = f->cp[index].String.string_index;
+      push_operand(lv, f->operands);
 		break;
 		case CONSTANT_Float:
 			lv->type = CONSTANT_Float;
@@ -170,9 +171,9 @@ void ldc_eval(Frame *f) {
       lv->type = CONSTANT_Class;
       lv->value = 0;
 			push_operand(lv, f->operands);
-		  break;
+    break;
 		default:
-		  break;
+    break;
 	}
 }
 
