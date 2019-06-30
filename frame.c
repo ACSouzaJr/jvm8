@@ -2,6 +2,7 @@
 #include "frame.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 Frame* cria_frame(ClassFile *cf, method_info *mi){
   Frame * frame = (Frame *) malloc(sizeof(Frame));

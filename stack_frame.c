@@ -73,18 +73,19 @@ void print_stack(){
     // printf("Cafebabe\n");
 }
 
-int stack_destroy(){
-   NodeFrame * e;
-   if(!JvmStack){
-      printf("Pilha_destroi: parametro nulo");
-      exit(1);
-   }
-   e = NULL;
-   while((e=pop(JvmStack))!=NULL){
-      free(e);
-   }
-   free(JvmStack);
-}
+// int stack_destroy(){
+//    NodeFrame * e;
+//    if(!JvmStack){
+//       printf("Pilha_destroi: parametro nulo");
+//       return 0;
+//    }
+//    e = NULL;
+//    while((e=pop(JvmStack))!=NULL){
+//       free(e);
+//    }
+//    free(JvmStack);
+//    return 1;
+// }
 
 int empty(){
   return JvmStack->top == NULL;

@@ -1018,7 +1018,7 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
       {
         u2 pc = i - attr->info->Code_attribute.code;
         printf("%02d ", pc);
-        u1 *index;
+        // u1 *index;
         printf("Evalutaing %s\n", op_codes_array[*i].value);
         switch (op_codes_array[*i].key)
         {
@@ -2452,7 +2452,7 @@ method_info* find_main(ClassFile *cf){
   for (method_info *i = cf->methods; i < cf->methods + cf->methods_count; i++)
   {
     char *method_name = readUtf8(cf->constant_pool, i->name_index);
-    char *method_desc = readUtf8(cf->constant_pool, i->descriptor_index);
+    // char *method_desc = readUtf8(cf->constant_pool, i->descriptor_index);
     if (strcmp(method_name, "main") == 0)
     {
       return i;

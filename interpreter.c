@@ -2,48 +2,50 @@
 #include "frame.h"
 #include "stack_operands.h"
 #include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
 #include "interpreter.h"
 #include "stack_frame.h"
 
-ClassFile *resolveClass(char *class_name)
-{
-  // classesCarregadas *c = BuscarElemento_classes(jvm->classes,class_name);
-  // ClassFile *classe = NULL;
+// ClassFile *resolveClass(char *class_name)
+// {
+//   // classesCarregadas *c = BuscarElemento_classes(jvm->classes,class_name);
+//   // ClassFile *classe = NULL;
 
-  // if(c!=NULL){
-  // 	return c->arquivoClass;
-  // }
-  // else{
-  // 	char *nomearquivo = malloc((strlen(class_name)+7)*sizeof(char));
-  // 	strcpy(nomearquivo,class_name);
-  // 	strcat(nomearquivo,".class");
-  // 	classe = lerArquivo(nomearquivo);
-  // 	jvm->classes = InserirFim_classes(jvm->classes,classe);
-  // }
+//   // if(c!=NULL){
+//   // 	return c->arquivoClass;
+//   // }
+//   // else{
+//   // 	char *nomearquivo = malloc((strlen(class_name)+7)*sizeof(char));
+//   // 	strcpy(nomearquivo,class_name);
+//   // 	strcat(nomearquivo,".class");
+//   // 	classe = lerArquivo(nomearquivo);
+//   // 	jvm->classes = InserirFim_classes(jvm->classes,classe);
+//   // }
 
-  // return(classe);
-}
+//   // return(classe);
+// }
 
-int resolveMethod(cp_info *cp, u2 indice_cp, u1 interface)
-{
+// int resolveMethod(cp_info *cp, u2 indice_cp, u1 interface)
+// {
 
-  // cp_info *methodref = cp-1+indice_cp;
-  // char *class_name = NULL;
-  // if(!interface){
-  // 	class_name = decodificaNIeNT(cp,methodref->UnionCP.Methodref.class_index,NAME_INDEX);;
-  // }
-  // else{
-  // 	class_name = decodificaNIeNT(cp,methodref->UnionCP.InterfaceMethodref.class_index,NAME_INDEX);
-  // }
+//   // cp_info *methodref = cp-1+indice_cp;
+//   // char *class_name = NULL;
+//   // if(!interface){
+//   // 	class_name = decodificaNIeNT(cp,methodref->UnionCP.Methodref.class_index,NAME_INDEX);;
+//   // }
+//   // else{
+//   // 	class_name = decodificaNIeNT(cp,methodref->UnionCP.InterfaceMethodref.class_index,NAME_INDEX);
+//   // }
 
-  // if(resolveClass(class_name)!=NULL){
-  // 	return 1;
-  // }
-  // else{
-  // 	return 0;
-  // }
-  return 0;
-}
+//   // if(resolveClass(class_name)!=NULL){
+//   // 	return 1;
+//   // }
+//   // else{
+//   // 	return 0;
+//   // }
+//   return 0;
+// }
 
 void aconst_null_eval(Frame *f)
 {
