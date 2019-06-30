@@ -15,7 +15,7 @@ typedef struct
 
 LocalVariable *pop_operand(StackOperand *stack_operand);
 void push_operand(LocalVariable *operand, StackOperand *operands);
-Operand* top_operand(StackOperand *stack_operand);
+LocalVariable* top_operand(StackOperand *stack_operand);
 void init();
 void print_stack();
 
@@ -31,6 +31,6 @@ enum
     t_returnAddress = 8,
     t_long = 9,
     t_double = 10
-};
+}operand_type;
 
 #endif

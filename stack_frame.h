@@ -5,7 +5,11 @@
 typedef struct StackFrame{
     Frame *f;//Frame * f;
     struct StackFrame * pointer;
-} StackFrame;
+} NodeFrame;
+
+typedef struct {
+    struct StackFrame *top;
+}StackFrame;
 
 // Global
 extern StackFrame *JvmStack;

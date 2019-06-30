@@ -30,12 +30,20 @@ void push_operand(LocalVariable * operand, StackOperand *stack_operand){
 LocalVariable* pop_operand(StackOperand *stack_operand){
     LocalVariable *aux;
     Operand *ptr;
+    
+    // Se o ponteiro for nulo faz nada
     if (stack_operand == NULL)
     {
-        // printf("not able to pop the element. No elements in stack\n");
     }
     else
     {
+        // Se a pilha estiver vazia
+        if (stack_operand->top == NULL)
+        {
+            // printf("not able to pop the element. No elements in stack\n");
+            // return stack_operand->top;
+            return NULL;
+        }
         ptr = stack_operand->top;
         aux = stack_operand->top->f;
         stack_operand->top = ptr->pointer;
@@ -45,6 +53,6 @@ LocalVariable* pop_operand(StackOperand *stack_operand){
     return aux;
 }
 
-Operand* top_operand(StackOperand *stack_operand){
-    return stack_operand->top;
+LocalVariable* top_operand(StackOperand *stack_operand){
+    return stack_operand->top->f;
 }

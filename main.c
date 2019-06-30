@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
       printf("Error ao abrir arquivo. \n");
     }
   }
-
+  init();
   ClassFile *cf = (ClassFile *)malloc(sizeof(ClassFile));
   GLOBAL_ptr = (char *)malloc(sizeof(char) * 100);
 
@@ -986,6 +986,11 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
   frame->local_variables[2] = *lv;
   lv->value = 3;
   frame->local_variables[3] = *lv;
+
+  // teste frame stack
+  push(frame);
+  Frame*f2 = pop(frame);
+  printf("operand pop frame hahaha: %x \n", top_operand(f2->operands)->value);
 
   for (attribute_info *attr = field; attr < field + attr_count; attr++)
   {

@@ -4,16 +4,25 @@
 
 Frame* pop(){
     Frame* item;
-    StackFrame *ptr;
-    if (JvmStack == NULL)
+    NodeFrame *ptr;
+
+    // Se o ponteiro for nulo faz nada
+    if (JvmStack ==  NULL)
     {
-        // printf("not able to pop the element. No elements in stack\n");
     }
     else
-    {
-        item = JvmStack->f;
-        ptr = JvmStack;
-        JvmStack = JvmStack->pointer;
+    { 
+        // Se a pilha estiver vazia
+        if (JvmStack->top == NULL)
+        {
+          // printf("not able to pop the element. No elements in stack\n");
+          // return JvmStack->top;
+          return NULL;
+        }
+        
+        ptr = JvmStack->top;
+        item = JvmStack->top->f;
+        JvmStack->top = ptr->pointer;
         free(ptr);
         // printf("Item popped (cafebabe)\n");
     }
@@ -23,7 +32,7 @@ Frame* pop(){
 
 void push(Frame *frame)
 {
-  StackFrame *ptr = (StackFrame *)malloc(sizeof(StackFrame));
+  NodeFrame *ptr = (NodeFrame *)malloc(sizeof(NodeFrame));
   if (ptr == NULL)
   {
     // printf("not able to push the element");
@@ -33,30 +42,46 @@ void push(Frame *frame)
    
     if (JvmStack == NULL)
     {
-      ptr->f = frame;
-      ptr->pointer = NULL;
-      JvmStack = ptr;
     }
     else
     {
+      /* Cria um novo elemento e coloca ele no topo da pilha */
       ptr->f = frame;
-      ptr->pointer = JvmStack;
-      JvmStack = ptr;
+      ptr->pointer = JvmStack->top;
+      JvmStack->top = ptr;
     }
     // printf("Item pushed");
   }
 }
 
 Frame* top(){
-    return JvmStack->f;
+    return JvmStack->top->f;
 }
 
 void init(){
     // printf("Criando pilha...\n");
-    JvmStack = NULL;
+    JvmStack = (StackFrame *) malloc(sizeof(StackFrame));
+    if (!JvmStack)
+    {
+      JvmStack = NULL;
+    }
+    
     // printf("Pilha criada.\n");
 }
 
 void print_stack(){
     // printf("Cafebabe\n");
+}
+
+int stack_destroy(){
+   NodeFrame * e;
+   if(!JvmStack){
+      printf("Pilha_destroi: parametro nulo");
+      exit(1);
+   }
+   e = NULL;
+   while((e=pop(JvmStack))!=NULL){
+      free(e);
+   }
+   free(JvmStack);
 }
