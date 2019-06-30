@@ -1016,642 +1016,646 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
         switch (op_codes_array[*i].key)
         {
         case 0: //"nop"
-          printf("Evaluating nop...");
+          printf("Evaluating nop...\n");
           break;
         case 1: //"aconst_null"
-          printf("Evaluating aconst_null...");
+          printf("Evaluating aconst_null...\n");
           // aconst_null_eval(frame);
           break;
         case 2: //"iconst_m1"
-          printf("Evaluating iconst_m1...");
+          printf("Evaluating iconst_m1...\n");
           iconst_m1_eval(frame);
           break;
         case 3: //"iconst_0"
-          printf("Evaluating iconst_0...");
+          printf("Evaluating iconst_0...\n");
           iconst_0_eval(frame);
           break;
         case 4: //"iconst_1"
-          printf("Evaluating iconst_1...");
+          printf("Evaluating iconst_1...\n");
           iconst_1_eval(frame);
           break;
         case 5: //"iconst_2"
-          printf("Evaluating iconst_2...");
+          printf("Evaluating iconst_2...\n");
           iconst_2_eval(frame);
           break;
         case 6: //"iconst_3"
-          printf("Evaluating iconst_3...");
+          printf("Evaluating iconst_3...\n");
           iconst_3_eval(frame);
           break;
         case 7: //"iconst_4"
-          printf("Evaluating iconst_4...");
+          printf("Evaluating iconst_4...\n");
           iconst_4_eval(frame);
           break;
         case 8: //"iconst_5"
-          printf("Evaluating iconst_5...");
+          printf("Evaluating iconst_5...\n");
           iconst_5_eval(frame);
           break;
         case 9: //"lconst_0"
-          printf("Evaluating lconst_0...");
+          printf("Evaluating lconst_0...\n");
           break;
         case 10: //"lconst_1"
-          printf("Evaluating lconst_1...");
+          printf("Evaluating lconst_1...\n");
           break;
         case 11: //"fconst_0"
-          printf("Evaluating fconst_0...");
+          printf("Evaluating fconst_0...\n");
           break;
         case 12: //"fconst_1"
-          printf("Evaluating fconst_1...");
+          printf("Evaluating fconst_1...\n");
           break;
         case 13: //"fconst_2"
-          printf("Evaluating fconst_2...");
+          printf("Evaluating fconst_2...\n");
           break;
         case 14: //"dconst_0"
-          printf("Evaluating x.dconst_0.");
+          printf("Evaluating x.dco\nnst_0.");
           break;
         case 15: //"dconst_1"
-          printf("Evaluating x.dconst_1.");
+          printf("Evaluating x.dco\nnst_1.");
           break;
         case 16: //"bipush"
-          printf("Evaluating bipush...");
+          printf("Evaluating bipush...\n");
           break;
         case 17: //"sipush"
-          printf("Evaluating sipush...");
+          printf("Evaluating sipush...\n");
           break;
         case 18: //"ldc"
-          printf("Evaluating ldc...");
+          printf("Evaluating ldc...\n");
           break;
         case 19: //"ldc_w"
-          printf("Evaluating ldc_w...");
+          printf("Evaluating ldc_w...\n");
           break;
         case 20: //"ldc2_w"
-          printf("Evaluating ldc2_w...");
+          printf("Evaluating ldc2_w...\n");
           break;
         case 21: //"iload"
-          printf("Evaluating iload...");
+          printf("Evaluating iload...\n");
           break;
         case 22: //"lload"
-          printf("Evaluating lload...");
+          printf("Evaluating lload...\n");
           break;
         case 23: //"fload"
-          printf("Evaluating fload...");
+          printf("Evaluating fload...\n");
           break;
         case 24: //"dload"
-          printf("Evaluating dload...");
+          printf("Evaluating dload...\n");
           break;
         case 25: //"aload"
-          printf("Evaluating aload...");
+          printf("Evaluating aload...\n");
           break;
         case 26: //"iload_0"
-          printf("Evaluating iload_0...");
+          printf("Evaluating iload_0...\n");
+          iload_0_eval(frame);
           break;
         case 27: //"iload_1"
-          printf("Evaluating iload_1...");
+          printf("Evaluating iload_1...\n");
+          iload_1_eval(frame);
           break;
         case 28: //"iload_2"
-          printf("Evaluating iload_2...");
+          printf("Evaluating iload_2...\n");
+          iload_2_eval(frame);
           break;
         case 29: //"iload_3"
-          printf("Evaluating iload_3...");
+          printf("Evaluating iload_3...\n");
+          iload_3_eval(frame);
           break;
         case 30: //"lload_0"
-          printf("Evaluating lload_0...");
+          printf("Evaluating lload_0...\n");
           break;
         case 31: //"lload_1"
-          printf("Evaluating lload_1...");
+          printf("Evaluating lload_1...\n");
           break;
         case 32: //"lload_2"
-          printf("Evaluating lload_2...");
+          printf("Evaluating lload_2...\n");
           break;
         case 33: //"lload_3"
-          printf("Evaluating lload_3...");
+          printf("Evaluating lload_3...\n");
           break;
         case 34: //"fload_0"
-          printf("Evaluating fload_0...");
+          printf("Evaluating fload_0...\n");
           break;
         case 35: //"fload_1"
-          printf("Evaluating fload_1...");
+          printf("Evaluating fload_1...\n");
           break;
         case 36: //"fload_2"
-          printf("Evaluating fload_2...");
+          printf("Evaluating fload_2...\n");
           break;
         case 37: //"fload_3"
-          printf("Evaluating fload_3...");
+          printf("Evaluating fload_3...\n");
           break;
         case 38: //"dload_0"
-          printf("Evaluating dload_0...");
+          printf("Evaluating dload_0...\n");
           break;
         case 39: //"dload_1"
-          printf("Evaluating dload_1...");
+          printf("Evaluating dload_1...\n");
           break;
         case 40: //"dload_2"
-          printf("Evaluating dload_2...");
+          printf("Evaluating dload_2...\n");
           break;
         case 41: //"dload_3"
-          printf("Evaluating dload_3...");
+          printf("Evaluating dload_3...\n");
           break;
         case 42: //"aload_0"
-          printf("Evaluating aload_0...");
+          printf("Evaluating aload_0...\n");
           aload_0_eval(frame);
           break;
         case 43: //"aload_1"
-          printf("Evaluating aload_1...");
+          printf("Evaluating aload_1...\n");
           aload_1_eval(frame);
           break;
         case 44: //"aload_2"
-          printf("Evaluating aload_2...");
+          printf("Evaluating aload_2...\n");
           aload_2_eval(frame);
           break;
         case 45: //"aload_3"
-          printf("Evaluating aload_3...");
+          printf("Evaluating aload_3...\n");
           aload_3_eval(frame);
           break;
         case 46: //"iaload"
-          printf("Evaluating iaload...");
+          printf("Evaluating iaload...\n");
           break;
         case 47: //"laload"
-          printf("Evaluating laload...");
+          printf("Evaluating laload...\n");
           break;
         case 48: //"faload"
-          printf("Evaluating faload...");
+          printf("Evaluating faload...\n");
           break;
         case 49: //"daload"
-          printf("Evaluating daload...");
+          printf("Evaluating daload...\n");
           break;
         case 50: //"aaload"
-          printf("Evaluating aaload...");
+          printf("Evaluating aaload...\n");
           break;
         case 51: //"baload"
-          printf("Evaluating baload...");
+          printf("Evaluating baload...\n");
           break;
         case 52: //"caload"
-          printf("Evaluating caload...");
+          printf("Evaluating caload...\n");
           break;
         case 53: //"saload"
-          printf("Evaluating saload...");
+          printf("Evaluating saload...\n");
           break;
         case 54: //"istore"
-          printf("Evaluating istore...");
+          printf("Evaluating istore...\n");
           break;
         case 55: //"lstore"
-          printf("Evaluating lstore...");
+          printf("Evaluating lstore...\n");
           break;
         case 56: //"fstore"
-          printf("Evaluating fstore...");
+          printf("Evaluating fstore...\n");
           break;
         case 57: //"dstore"
-          printf("Evaluating dstore...");
+          printf("Evaluating dstore...\n");
           break;
         case 58: //"astore"
-          printf("Evaluating astore...");
+          printf("Evaluating astore...\n");
           break;
         case 59: //"istore_0"
-          printf("Evaluating istore_0...");
+          printf("Evaluating istore_0...\n");
           istore_0_eval(frame);
           break;
         case 60: //"istore_1"
-          printf("Evaluating istore_1...");
+          printf("Evaluating istore_1...\n");
           istore_1_eval(frame);
           break;
         case 61: //"istore_2"
-          printf("Evaluating istore_2...");
+          printf("Evaluating istore_2...\n");
           istore_2_eval(frame);
           break;
         case 62: //"istore_3"
-          printf("Evaluating istore_3...");
+          printf("Evaluating istore_3...\n");
           istore_3_eval(frame);
           break;
         case 63: //"lstore_0"
-          printf("Evaluating lstore_0...");
+          printf("Evaluating lstore_0...\n");
           break;
         case 64: //"lstore_1"
-          printf("Evaluating lstore_1...");
+          printf("Evaluating lstore_1...\n");
           break;
         case 65: //"lstore_2"
-          printf("Evaluating lstore_2...");
+          printf("Evaluating lstore_2...\n");
           break;
         case 66: //"lstore_3"
-          printf("Evaluating lstore_3...");
+          printf("Evaluating lstore_3...\n");
           break;
         case 67: //"fstore_0"
-          printf("Evaluating fstore_0...");
+          printf("Evaluating fstore_0...\n");
           break;
         case 68: //"fstore_1"
-          printf("Evaluating fstore_1...");
+          printf("Evaluating fstore_1...\n");
           break;
         case 69: //"fstore_2"
-          printf("Evaluating fstore_2...");
+          printf("Evaluating fstore_2...\n");
           break;
         case 70: //"fstore_3"
-          printf("Evaluating fstore_3...");
+          printf("Evaluating fstore_3...\n");
           break;
         case 71: //"dstore_0"
-          printf("Evaluating dstore_0...");
+          printf("Evaluating dstore_0...\n");
           break;
         case 72: //"dstore_1"
-          printf("Evaluating dstore_1...");
+          printf("Evaluating dstore_1...\n");
           break;
         case 73: //"dstore_2"
-          printf("Evaluating dstore_2...");
+          printf("Evaluating dstore_2...\n");
           break;
         case 74: //"dstore_3"
-          printf("Evaluating dstore_3...");
+          printf("Evaluating dstore_3...\n");
           break;
         case 75: //"astore_0"
-          printf("Evaluating astore_0...");
+          printf("Evaluating astore_0...\n");
           break;
         case 76: //"astore_1"
-          printf("Evaluating astore_1...");
+          printf("Evaluating astore_1...\n");
           break;
         case 77: //"astore_2"
-          printf("Evaluating astore_2...");
+          printf("Evaluating astore_2...\n");
           break;
         case 78: //"astore_3"
-          printf("Evaluating astore_3...");
+          printf("Evaluating astore_3...\n");
           break;
         case 79: //"iastore"
-          printf("Evaluating iastore...");
+          printf("Evaluating iastore...\n");
           break;
         case 80: //"lastore"
-          printf("Evaluating lastore...");
+          printf("Evaluating lastore...\n");
           break;
         case 81: //"fastore"
-          printf("Evaluating fastore...");
+          printf("Evaluating fastore...\n");
           break;
         case 82: //"dastore"
-          printf("Evaluating dastore...");
+          printf("Evaluating dastore...\n");
           break;
         case 83: //"aastore"
-          printf("Evaluating aastore...");
+          printf("Evaluating aastore...\n");
           break;
         case 84: //"bastore"
-          printf("Evaluating bastore...");
+          printf("Evaluating bastore...\n");
           break;
         case 85: //"castore"
-          printf("Evaluating castore...");
+          printf("Evaluating castore...\n");
           break;
         case 86: //"sastore"
-          printf("Evaluating sastore...");
+          printf("Evaluating sastore...\n");
           break;
         case 87: //"pop"
-          printf("Evaluating pop...");
+          printf("Evaluating pop...\n");
           break;
         case 88: //"pop2"
-          printf("Evaluating pop2...");
+          printf("Evaluating pop2...\n");
           break;
         case 89: //"dup"
-          printf("Evaluating dup...");
+          printf("Evaluating dup...\n");
           break;
         case 90: //"dup_x1"
-          printf("Evaluating dup_x1...");
+          printf("Evaluating dup_x1...\n");
           break;
         case 91: //"dup_x2"
-          printf("Evaluating dup_x2...");
+          printf("Evaluating dup_x2...\n");
           break;
         case 92: //"dup2"
-          printf("Evaluating dup2...");
+          printf("Evaluating dup2...\n");
           break;
         case 93: //"dup2_x1"
-          printf("Evaluating dup2_x1...");
+          printf("Evaluating dup2_x1...\n");
           break;
         case 94: //"dup2_x2"
-          printf("Evaluating dup2_x2...");
+          printf("Evaluating dup2_x2...\n");
           break;
         case 95: //"swap"
-          printf("Evaluating swap...");
+          printf("Evaluating swap...\n");
           break;
         case 96: //"iadd"
-          printf("Evaluating iadd...");
+          printf("Evaluating iadd...\n");
           iadd_eval(frame);
           break;
         case 97: //"ladd"
-          printf("Evaluating ladd...");
+          printf("Evaluating ladd...\n");
           break;
         case 98: //"fadd"
-          printf("Evaluating fadd...");
+          printf("Evaluating fadd...\n");
           break;
         case 99: //"dadd"
-          printf("Evaluating dadd...");
+          printf("Evaluating dadd...\n");
           break;
         case 100: //"isub"
-          printf("Evaluating isub...");
+          printf("Evaluating isub...\n");
           isub_eval(frame);
           break;
         case 101: //"lsub"
-          printf("Evaluating lsub...");
+          printf("Evaluating lsub...\n");
           break;
         case 102: //"fsub"
-          printf("Evaluating fsub...");
+          printf("Evaluating fsub...\n");
           break;
         case 103: //"dsub"
-          printf("Evaluating dsub...");
+          printf("Evaluating dsub...\n");
           break;
         case 104: //"imul"
-          printf("Evaluating imul...");
+          printf("Evaluating imul...\n");
           imul_eval(frame);
           break;
         case 105: //"lmul"
-          printf("Evaluating lmul...");
+          printf("Evaluating lmul...\n");
           break;
         case 106: //"fmul"
-          printf("Evaluating fmul...");
+          printf("Evaluating fmul...\n");
           break;
         case 107: //"dmul"
-          printf("Evaluating dmul...");
+          printf("Evaluating dmul...\n");
           break;
         case 108: //"idiv"
-          printf("Evaluating idiv...");
+          printf("Evaluating idiv...\n");
           idiv_eval(frame);
           break;
         case 109: //"ldiv"
-          printf("Evaluating ldiv...");
+          printf("Evaluating ldiv...\n");
           break;
         case 110: //"fdiv"
-          printf("Evaluating fdiv...");
+          printf("Evaluating fdiv...\n");
           break;
         case 111: //"ddiv"
-          printf("Evaluating ddiv...");
+          printf("Evaluating ddiv...\n");
           break;
         case 112: //"irem"
-          printf("Evaluating irem...");
+          printf("Evaluating irem...\n");
           break;
         case 113: //"lrem"
-          printf("Evaluating lrem...");
+          printf("Evaluating lrem...\n");
           break;
         case 114: //"frem"
-          printf("Evaluating frem...");
+          printf("Evaluating frem...\n");
           break;
         case 115: //"drem"
-          printf("Evaluating drem...");
+          printf("Evaluating drem...\n");
           break;
         case 116: //"ineg"
-          printf("Evaluating ineg...");
+          printf("Evaluating ineg...\n");
           break;
         case 117: //"lneg"
-          printf("Evaluating lneg...");
+          printf("Evaluating lneg...\n");
           break;
         case 118: //"fneg"
-          printf("Evaluating fneg...");
+          printf("Evaluating fneg...\n");
           break;
         case 119: //"dneg"
-          printf("Evaluating dneg...");
+          printf("Evaluating dneg...\n");
           break;
         case 120: //"ishl"
-          printf("Evaluating ishl...");
+          printf("Evaluating ishl...\n");
           break;
         case 121: //"lshl"
-          printf("Evaluating lshl...");
+          printf("Evaluating lshl...\n");
           break;
         case 122: //"ishr"
-          printf("Evaluating ishr...");
+          printf("Evaluating ishr...\n");
           break;
         case 123: //"lshr"
-          printf("Evaluating lshr...");
+          printf("Evaluating lshr...\n");
           break;
         case 124: //"iushr"
-          printf("Evaluating iushr...");
+          printf("Evaluating iushr...\n");
           break;
         case 125: //"lushr"
-          printf("Evaluating lushr...");
+          printf("Evaluating lushr...\n");
           break;
         case 126: //"iand"
-          printf("Evaluating iand...");
+          printf("Evaluating iand...\n");
           break;
         case 127: //"land"
-          printf("Evaluating land...");
+          printf("Evaluating land...\n");
           break;
         case 128: //"ior"
-          printf("Evaluating ior...");
+          printf("Evaluating ior...\n");
           break;
         case 129: //"lor"
-          printf("Evaluating lor...");
+          printf("Evaluating lor...\n");
           break;
         case 130: //"ixor"
-          printf("Evaluating ixor...");
+          printf("Evaluating ixor...\n");
           break;
         case 131: //"lxor"
-          printf("Evaluating lxor...");
+          printf("Evaluating lxor...\n");
           break;
         case 132: //"iinc"
-          printf("Evaluating iinc...");
+          printf("Evaluating iinc...\n");
           break;
         case 133: //"i2l"
-          printf("Evaluating i2l...");
+          printf("Evaluating i2l...\n");
           break;
         case 134: //"i2f"
-          printf("Evaluating i2f...");
+          printf("Evaluating i2f...\n");
           break;
         case 135: //"i2d"
-          printf("Evaluating i2d...");
+          printf("Evaluating i2d...\n");
           break;
         case 136: //"l2i"
-          printf("Evaluating l2i...");
+          printf("Evaluating l2i...\n");
           break;
         case 137: //"l2f"
-          printf("Evaluating l2f...");
+          printf("Evaluating l2f...\n");
           break;
         case 138: //"l2d"
-          printf("Evaluating l2d...");
+          printf("Evaluating l2d...\n");
           break;
         case 139: //"f2i"
-          printf("Evaluating f2i...");
+          printf("Evaluating f2i...\n");
           break;
         case 140: //"f2l"
-          printf("Evaluating f2l...");
+          printf("Evaluating f2l...\n");
           break;
         case 141: //"f2d"
-          printf("Evaluating f2d...");
+          printf("Evaluating f2d...\n");
           break;
         case 142: //"d2i"
-          printf("Evaluating d2i...");
+          printf("Evaluating d2i...\n");
           break;
         case 143: //"d2l"
-          printf("Evaluating d2l...");
+          printf("Evaluating d2l...\n");
           break;
         case 144: //"d2f"
-          printf("Evaluating d2f...");
+          printf("Evaluating d2f...\n");
           break;
         case 145: //"i2b"
-          printf("Evaluating i2b...");
+          printf("Evaluating i2b...\n");
           break;
         case 146: //"i2c"
-          printf("Evaluating i2c...");
+          printf("Evaluating i2c...\n");
           break;
         case 147: //"i2s"
-          printf("Evaluating i2s...");
+          printf("Evaluating i2s...\n");
           break;
         case 148: //"lcmp"
-          printf("Evaluating lcmp...");
+          printf("Evaluating lcmp...\n");
           break;
         case 149: //"fcmpl"
-          printf("Evaluating fcmpl...");
+          printf("Evaluating fcmpl...\n");
           break;
         case 150: //"fcmpg"
-          printf("Evaluating fcmpg...");
+          printf("Evaluating fcmpg...\n");
           break;
         case 151: //"dcmpl"
-          printf("Evaluating dcmpl...");
+          printf("Evaluating dcmpl...\n");
           break;
         case 152: //"dcmpg"
-          printf("Evaluating dcmpg...");
+          printf("Evaluating dcmpg...\n");
           break;
         case 153: //"ifeq"
-          printf("Evaluating ifeq...");
+          printf("Evaluating ifeq...\n");
           break;
         case 154: //"ifne"
-          printf("Evaluating ifne...");
+          printf("Evaluating ifne...\n");
           break;
         case 155: //"iflt"
-          printf("Evaluating iflt...");
+          printf("Evaluating iflt...\n");
           break;
         case 156: //"ifge"
-          printf("Evaluating ifge...");
+          printf("Evaluating ifge...\n");
           break;
         case 157: //"ifgt"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 158: //"ifle"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 159: //"if_icmpeq"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 160: //"if_icmpne"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 161: //"if_icmplt"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 162: //"if_icmpg2"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 163: //"if_icmpgt"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 164: //"if_icmple"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 165: //"if_acmpeq"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 166: //"if_acmpne"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 167: //"goto"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 168: //"jsr"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 169: //"ret"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 170: //"tableswitch"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 171: //"lookupswitch"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 172: //"ireturn"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 173: //"lreturn"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 174: //"freturn"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 175: //"dreturn"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 176: //"areturn"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 177: //"return"
-          printf("Evaluating return...");
+          printf("Evaluating return...\n");
           return_eval();
           break;
         case 178: //"getstatic"
-          printf("Evaluating getstatic...");
+          printf("Evaluating getstatic...\n");
           getstatic_eval(frame);
           break;
         case 179: //"putstatic"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 180: //"getfield"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 181: //"putfield"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 182: //"invokevirtual"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 183: //"invokespecial"
-          printf("Evaluating invokespecial...");
+          printf("Evaluating invokespecial...\n");
           invokespecial_eval(frame);
           break;
         case 184: //"invokestatic"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 185: //"invokeinterface"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 186: //"invokedynamic"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 187: //"new"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 188: //"newarray"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 189: //"anewarray"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 190: //"arraylength"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 191: //"athrow"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 192: //"checkcast"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 193: //"instanceof"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 194: //"monitorenter"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 195: //"monitorexit"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 196: //"wide"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 197: //"multianewarray"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 198: //"ifnull"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 199: //"ifnonnull"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 200: //"goto_w"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 201: //"jsr_w"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 202: //"breakpoint"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 254: //"impdep1"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         case 255: //"impdep2"
-          printf("Evaluating x...");
+          printf("Evaluating x...\n");
           break;
         default:
           printf("Instrução inválida...");

@@ -165,21 +165,21 @@ void iconst_5_eval(Frame *f) {
 //   push_operand();
 // }
 
-// void iload_0_eval(Frame *f) {
-//   push_operand();
-// }
+void iload_0_eval(Frame *f) {
+  push_operand(&(f->local_variables[0]),f->operands);
+}
 
-// void iload_1_eval(Frame *f) {
-//   push_operand();
-// }
+void iload_1_eval(Frame *f) {
+  push_operand(&(f->local_variables[1]),f->operands);
+}
 
-// void iload_2_eval(Frame *f) {
-//   push_operand();
-// }
+void iload_2_eval(Frame *f) {
+  push_operand(&(f->local_variables[2]),f->operands);
+}
 
-// void iload_3_eval(Frame *f) {
-//   push_operand();
-// }
+void iload_3_eval(Frame *f) {
+  push_operand(&(f->local_variables[3]),f->operands);
+}
 
 // void lload_0_eval(Frame *f) {
 //   push_operand();
@@ -463,8 +463,8 @@ void iadd_eval(Frame *f) {
   int32_t v1,v2;
   LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  v1 = 5;//pop_operand(f->operands);
-  v2 = 4;//pop_operand(f->operands);
+  v1 = pop_operand(f->operands)->value;
+  v2 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Integer;
   result->value = v1 + v2;
   printf("v1: %04x\n", v1);
