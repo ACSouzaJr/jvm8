@@ -582,14 +582,16 @@ void sastore_eval(Frame *f)
   //   push_operand();
 }
 
+// só usado para int -> cat1
 void pop_eval(Frame *f)
 {
-  //   push_operand();
+  pop_operand(f->operands);
 }
 
+// só usado para long/double -> cat2
 void pop2_eval(Frame *f)
 {
-  //   push_operand();
+  pop_operand(f->operands);
 }
 
 void dup_eval(Frame *f)
