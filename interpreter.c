@@ -736,8 +736,8 @@ void fadd_eval(Frame *f)
   u4 v1, v2;
   LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  v1 = pop_operand(f->operands)->value;
   v2 = pop_operand(f->operands)->value;
+  v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Float;
   result->value = v1 + v2;
   printf("v1_float: %04x\n", v1);
@@ -776,8 +776,8 @@ void fsub_eval(Frame *f)
   float v1, v2;
   LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  v1 = pop_operand(f->operands)->value;
   v2 = pop_operand(f->operands)->value;
+  v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Float;
   result->value = v1 - v2;
   printf("v1: %04f\n", v1);
@@ -816,8 +816,8 @@ void fmul_eval(Frame *f)
   float v1, v2;
   LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  v1 = pop_operand(f->operands)->value;
   v2 = pop_operand(f->operands)->value;
+  v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Float;
   result->value = v1 * v2;
   printf("v1: %04f\n", v1);
@@ -856,8 +856,8 @@ void fdiv_eval(Frame *f)
   float v1, v2;
   LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  v1 = pop_operand(f->operands)->value;
   v2 = pop_operand(f->operands)->value;
+  v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Float;
   result->value = v1 / v2;
   printf("v1: %04f\n", v1);
