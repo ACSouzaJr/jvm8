@@ -235,14 +235,10 @@ void lload_eval(Frame *f)
 
 void fload_eval(Frame *f)
 {
-  u1 branchbyte1, branchbyte2;
-  branchbyte1 = f->bytecode[f->pc++];
-  branchbyte2 = f->bytecode[f->pc++];
+  u1 index = f->bytecode[f->pc++];
 
-  int16_t offset = ((branchbyte1 << 8) | branchbyte2);
-
-  if(f->local_variables[offset].type == CONSTANT_Float){
-    push_operand(&(f->local_variables[offset]), f->operands);
+  if(f->local_variables[index].type == CONSTANT_Float){
+    push_operand(&(f->local_variables[index]), f->operands);
   } else {
     printf("javax.persistence.PersistenceException\n");
     exit(0);
@@ -443,11 +439,7 @@ void lstore_eval(Frame *f)
 
 void fstore_eval(Frame *f)
 {
-  u1 branchbyte1, branchbyte2;
-  branchbyte1 = f->bytecode[f->pc++];
-  branchbyte2 = f->bytecode[f->pc++];
-
-  int16_t offset = ((branchbyte1 << 8) | branchbyte2);
+  u1 index = f->bytecode[f->pc++];
 
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
@@ -456,8 +448,8 @@ void fstore_eval(Frame *f)
 
   aux_linha->value = aux->value;
   aux_linha->type = CONSTANT_Float;
-  f->local_variables[offset] = *aux_linha;
-  printf("fstore_0 val: %04x\n", f->local_variables[offset].value);
+  f->local_variables[index] = *aux_linha;
+  printf("fstore_0 val: %04x\n", f->local_variables[index].value);
 }
 
 void dstore_eval(Frame *f)
