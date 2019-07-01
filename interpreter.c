@@ -487,8 +487,9 @@ void fstore_0_eval(Frame *f)
 {
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
-  printf("aux: %f\n", aux->value);
-  
+  printf("aux: %04x\n", aux->value);
+  aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
+
   aux_linha->value = (float)aux->value;
   aux_linha->type = CONSTANT_Float;
   f->local_variables[0] = *aux_linha;
@@ -499,7 +500,8 @@ void fstore_1_eval(Frame *f)
 {
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
-  printf("aux: %f\n", aux->value);
+  printf("aux: %04x\n", aux->value);
+  aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
   aux_linha->value = (float)aux->value;
   aux_linha->type = CONSTANT_Float;
   f->local_variables[1] = *aux_linha;
@@ -510,7 +512,8 @@ void fstore_2_eval(Frame *f)
 {
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
-  printf("aux: %f\n", aux->value);
+  printf("aux: %04x\n", aux->value);
+  aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
   aux_linha->value = (float)aux->value;
   aux_linha->type = CONSTANT_Float;
   f->local_variables[2] = *aux_linha;
@@ -521,7 +524,8 @@ void fstore_3_eval(Frame *f)
 {
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
-  printf("aux: %f\n", aux->value);
+  printf("aux: %04x\n", aux->value);
+  aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
   aux_linha->value = (float)aux->value;
   aux_linha->type = CONSTANT_Float;
   f->local_variables[3] = *aux_linha;
