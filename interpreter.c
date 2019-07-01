@@ -590,7 +590,12 @@ void lastore_eval(Frame *f)
 
 void fastore_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *arrayref, *index, *value;
+  arrayref = pop_operand(f->operands);
+  index = pop_operand(f->operands);
+  value = pop_operand(f->operands);
+
+  arrayref[index->value] = *value;
 }
 
 void dastore_eval(Frame *f)
