@@ -280,22 +280,42 @@ void lload_3_eval(Frame *f)
 
 void fload_0_eval(Frame *f)
 {
-  //   push_operand();
+  if(f->local_variables[0].type == CONSTANT_Float){
+    push_operand(&(f->local_variables[0]), f->operands);
+  } else {
+    printf("javax.persistence.PersistenceException\n");
+    exit(0);
+  }
 }
 
 void fload_1_eval(Frame *f)
 {
-  //   push_operand();
+  if(f->local_variables[1].type == CONSTANT_Float){
+    push_operand(&(f->local_variables[1]), f->operands);
+  } else {
+    printf("javax.persistence.PersistenceException\n");
+    exit(0);
+  }
 }
 
 void fload_2_eval(Frame *f)
 {
-  //   push_operand();
+  if(f->local_variables[2].type == CONSTANT_Float){
+    push_operand(&(f->local_variables[2]), f->operands);
+  } else {
+    printf("javax.persistence.PersistenceException\n");
+    exit(0);
+  }
 }
 
 void fload_3_eval(Frame *f)
 {
-  //   push_operand();
+  if(f->local_variables[3].type == CONSTANT_Float){
+    push_operand(&(f->local_variables[3]), f->operands);
+  } else {
+    printf("javax.persistence.PersistenceException\n");
+    exit(0);
+  }
 }
 
 void dload_0_eval(Frame *f)
@@ -465,22 +485,46 @@ void lstore_3_eval(Frame *f)
 
 void fstore_0_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *aux, *aux_linha;
+  aux = pop_operand(f->operands);
+  printf("aux: %f\n", aux->value);
+  aux_linha->value = (float)aux->value;
+  aux_linha->type = CONSTANT_Float;
+  f->local_variables[0] = *aux_linha;
+  printf("fstore_0 val: %04x\n", f->local_variables[1].value);
 }
 
 void fstore_1_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *aux, *aux_linha;
+  aux = pop_operand(f->operands);
+  printf("aux: %f\n", aux->value);
+  aux_linha->value = (float)aux->value;
+  aux_linha->type = CONSTANT_Float;
+  f->local_variables[1] = *aux_linha;
+  printf("fstore_1 val: %04x\n", f->local_variables[1].value);
 }
 
 void fstore_2_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *aux, *aux_linha;
+  aux = pop_operand(f->operands);
+  printf("aux: %f\n", aux->value);
+  aux_linha->value = (float)aux->value;
+  aux_linha->type = CONSTANT_Float;
+  f->local_variables[2] = *aux_linha;
+  printf("fstore_2 val: %04x\n", f->local_variables[1].value);
 }
 
 void fstore_3_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *aux, *aux_linha;
+  aux = pop_operand(f->operands);
+  printf("aux: %f\n", aux->value);
+  aux_linha->value = (float)aux->value;
+  aux_linha->type = CONSTANT_Float;
+  f->local_variables[3] = *aux_linha;
+  printf("fstore_3 val: %04x\n", f->local_variables[1].value);
 }
 
 void dstore_0_eval(Frame *f)
@@ -670,7 +714,17 @@ void lsub_eval(Frame *f)
 
 void fsub_eval(Frame *f)
 {
-  //   push_operand();
+  float v1, v2;
+  LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  v1 = pop_operand(f->operands)->value;
+  v2 = pop_operand(f->operands)->value;
+  result->type = CONSTANT_Float;
+  result->value = v1 - v2;
+  printf("v1: %04f\n", v1);
+  printf("v2: %04f\n", v2);
+  printf("resultado: %04x\n", result->value);
+  push_operand(result, f->operands);
 }
 
 void dsub_eval(Frame *f)
@@ -700,7 +754,17 @@ void lmul_eval(Frame *f)
 
 void fmul_eval(Frame *f)
 {
-  //   push_operand();
+  float v1, v2;
+  LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  v1 = pop_operand(f->operands)->value;
+  v2 = pop_operand(f->operands)->value;
+  result->type = CONSTANT_Float;
+  result->value = v1 * v2;
+  printf("v1: %04f\n", v1);
+  printf("v2: %04f\n", v2);
+  printf("resultado: %04x\n", result->value);
+  push_operand(result, f->operands);
 }
 
 void dmul_eval(Frame *f)
@@ -730,7 +794,17 @@ void ldiv_eval(Frame *f)
 
 void fdiv_eval(Frame *f)
 {
-  //   push_operand();
+  float v1, v2;
+  LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  v1 = pop_operand(f->operands)->value;
+  v2 = pop_operand(f->operands)->value;
+  result->type = CONSTANT_Float;
+  result->value = v1 / v2;
+  printf("v1: %04f\n", v1);
+  printf("v2: %04f\n", v2);
+  printf("resultado: %04x\n", result->value);
+  push_operand(result, f->operands);
 }
 
 void ddiv_eval(Frame *f)
@@ -1074,7 +1148,13 @@ void lreturn_eval(Frame *f)
 
 void freturn_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *lv = pop_operand(f->operands);
+
+  pop(JvmStack);
+  if (!empty(JvmStack))
+  {
+    push_operand(lv, JvmStack->top->f->operands);
+  }
 }
 
 void dreturn_eval(Frame *f)
