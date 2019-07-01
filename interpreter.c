@@ -1025,12 +1025,47 @@ void lcmp_eval(Frame *f)
 
 void fcmpl_eval(Frame *f)
 {
+  LocalVariable *v1, *v2, *lv;
+  u4 value1, value2;
+  v1 = pop_operand(f->operands);
+  v2 = pop_operand(f->operands);
+
+  value1 = v1->value;
+  value2 = v2->value;
+  lv->type = CONSTANT_Integer;
+  if(value1 > value2){
+    lv->value = 1;
+  } else if(value1 == value2){
+    lv->value = 0;
+  } else if(value1 < value2){
+    lv->value = -1;
+  } else {
+    lv->value = -1;
+  }
+  push_operand(lv, f->operands);
   //   push_operand();
 }
 
 void fcmpg_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *v1, *v2, *lv;
+  u4 value1, value2;
+  v1 = pop_operand(f->operands);
+  v2 = pop_operand(f->operands);
+
+  value1 = v1->value;
+  value2 = v2->value;
+  lv->type = CONSTANT_Integer;
+  if(value1 > value2){
+    lv->value = 1;
+  } else if(value1 == value2){
+    lv->value = 0;
+  } else if(value1 < value2){
+    lv->value = -1;
+  } else {
+    lv->value = 1;
+  }
+  push_operand(lv, f->operands);
 }
 
 void dcmpl_eval(Frame *f)
