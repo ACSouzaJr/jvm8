@@ -603,14 +603,30 @@ void dup_eval(Frame *f)
   push_operand(dup_top, f->operands);
 }
 
+// só usado para int -> cat1
 void dup_x1_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *dup_top1 = pop_operand(f->operands);
+  LocalVariable *dup_top2 = pop_operand(f->operands);
+
+  push_operand(dup_top1, f->operands);
+  push_operand(dup_top2, f->operands);
+  push_operand(dup_top1, f->operands);
 }
 
 void dup_x2_eval(Frame *f)
 {
-  //   push_operand();
+  // se for cat1 => 1 3 2 1
+  LocalVariable *dup_top1 = pop_operand(f->operands);
+  LocalVariable *dup_top2 = pop_operand(f->operands);
+  LocalVariable *dup_top3 = pop_operand(f->operands);
+
+  push_operand(dup_top1, f->operands);
+  push_operand(dup_top3, f->operands);
+  push_operand(dup_top2, f->operands);
+  push_operand(dup_top1, f->operands);
+
+  // se for cat2 -> implementar => 1 2 1
 }
 
 void dup2_eval(Frame *f)
