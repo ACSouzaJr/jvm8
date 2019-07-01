@@ -235,7 +235,18 @@ void lload_eval(Frame *f)
 
 void fload_eval(Frame *f)
 {
-  //   push_operand();
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
+
+  int16_t offset = ((branchbyte1 << 8) | branchbyte2);
+
+  if(f->local_variables[offset].type == CONSTANT_Float){
+    push_operand(&(f->local_variables[offset]), f->operands);
+  } else {
+    printf("javax.persistence.PersistenceException\n");
+    exit(0);
+  }
 }
 
 void dload_eval(Frame *f)
