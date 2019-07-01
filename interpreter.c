@@ -175,15 +175,12 @@ void sipush_eval(Frame *f)
 
 void ldc_eval(Frame *f)
 {
-  u1 index;
-
-  u1 *bytecode = f->method->attributes->info->Code_attribute.code;
-  index = bytecode[f->pc++];
+  u1 index = f->bytecode[f->pc++];
 
   cp_info *item = &(f->cp[index - 1]);
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
-  printf("TAGGGG: %01x\n", item->tag);
-  // printf("RONALDINHOOOOOOOOOOOOOO: %01x\n", item->tag);
+  printf("tag: %01x\n", item->tag);
+  printf("RONALDINHOOOOOOOOOOOOOO: %01x\n", item->tag);
   switch (item->tag)
   {
   case CONSTANT_String:
@@ -193,18 +190,17 @@ void ldc_eval(Frame *f)
     break;
   case CONSTANT_Float:
     lv->type = CONSTANT_Float;
-    lv->value = f->cp[index].Float.bytes;
-    printf("ldc_float: %04x\n", lv->value);
+    lv->value = item->Float.bytes;
     push_operand(lv, f->operands);
     break;
   case CONSTANT_Integer:
     lv->type = CONSTANT_Integer;
-    lv->value = f->cp[index].Integer.bytes;
+    lv->value = item->Integer.bytes;
     push_operand(lv, f->operands);
     break;
   case CONSTANT_Class:
     lv->type = CONSTANT_Class;
-    lv->value = 0;
+    lv->value = item->Class.name_index;
     push_operand(lv, f->operands);
     break;
   default:
