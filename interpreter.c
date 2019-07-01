@@ -127,17 +127,26 @@ void lconst_1_eval(Frame *f)
 
 void fconst_0_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *lv = (LocalVariable*) malloc(sizeof(LocalVariable));
+  lv->type = CONSTANT_Float;
+  lv->value = 0.0;
+  push_operand(lv, f->operands);
 }
 
 void fconst_1_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *lv = (LocalVariable*) malloc(sizeof(LocalVariable));
+  lv->type = CONSTANT_Float;
+  lv->value = 1.0;
+  push_operand(lv, f->operands);
 }
 
 void fconst_2_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *lv = (LocalVariable*) malloc(sizeof(LocalVariable));
+  lv->type = CONSTANT_Float;
+  lv->value = 2.0;
+  push_operand(lv, f->operands);
 }
 
 void dconst_0_eval(Frame *f)
