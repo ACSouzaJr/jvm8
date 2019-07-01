@@ -686,9 +686,9 @@ void fadd_eval(Frame *f)
   v2 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Float;
   result->value = v1 + v2;
-  printf("v1: %04f\n", v1);
-  printf("v2: %04f\n", v2);
-  printf("resultado: %04x\n", result->value);
+  printf("v1_float: %04f\n", v1);
+  printf("v2_float: %04f\n", v2);
+  printf("resultado_float: %04x\n", result->value);
   push_operand(result, f->operands);
 }
 
