@@ -443,7 +443,21 @@ void lstore_eval(Frame *f)
 
 void fstore_eval(Frame *f)
 {
-  //   push_operand();
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
+
+  int16_t offset = ((branchbyte1 << 8) | branchbyte2);
+
+  LocalVariable *aux, *aux_linha;
+  aux = pop_operand(f->operands);
+  printf("aux: %04x\n", aux->value);
+  aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  aux_linha->value = aux->value;
+  aux_linha->type = CONSTANT_Float;
+  f->local_variables[offset] = *aux_linha;
+  printf("fstore_0 val: %04x\n", f->local_variables[offset].value);
 }
 
 void dstore_eval(Frame *f)
