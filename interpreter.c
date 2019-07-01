@@ -113,7 +113,7 @@ void lconst_0_eval(Frame *f)
 {
   LocalVariable *lv = (LocalVariable*) malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Long;
-  lv->value = 0;
+  lv->type_long = 0;
   push_operand(lv, f->operands);
 }
 
@@ -121,7 +121,7 @@ void lconst_1_eval(Frame *f)
 {
   LocalVariable *lv = (LocalVariable*) malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Long;
-  lv->value = 1;
+  lv->type_long = 1;
   push_operand(lv, f->operands);
 }
 
@@ -392,7 +392,7 @@ void lstore_eval(Frame *f)
   u1 index = f->bytecode[f->pc++];
   LocalVariable *lv = pop_operand(f->operands);
   f->local_variables[index] = *lv;
-  printf("lstore val: %04x\n", f->local_variables[index].value);
+  printf("lstore val: %04x\n", f->local_variables[index].type_long);
 }
 
 void fstore_eval(Frame *f)
@@ -445,22 +445,30 @@ void istore_3_eval(Frame *f)
 
 void lstore_0_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *lv = pop_operand(f->operands);
+  f->local_variables[0] = *lv;
+  printf("lstore_0 val: %04x\n", f->local_variables[0].type_long);
 }
 
 void lstore_1_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *lv = pop_operand(f->operands);
+  f->local_variables[1] = *lv;
+  printf("lstore_1 val: %04x\n", f->local_variables[1].type_long);
 }
 
 void lstore_2_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *lv = pop_operand(f->operands);
+  f->local_variables[2] = *lv;
+  printf("lstore_2 val: %04x\n", f->local_variables[2].type_long);
 }
 
 void lstore_3_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *lv = pop_operand(f->operands);
+  f->local_variables[3] = *lv;
+  printf("lstore_3 val: %04x\n", f->local_variables[3].type_long);
 }
 
 void fstore_0_eval(Frame *f)
@@ -977,17 +985,47 @@ void ifle_eval(Frame *f)
 
 void if_icmpeq_eval(Frame *f)
 {
-  //   push_operand();
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
+
+  int16_t offset = ((branchbyte1 << 8) | branchbyte2);
+  u2 value1 = pop_operand(f->operands)->value;
+  u2 value2 = pop_operand(f->operands)->value;
+  if (value1 == value2)
+  {
+    f->pc += offset;
+  }
 }
 
 void if_icmpne_eval(Frame *f)
 {
-  //   push_operand();
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
+
+  int16_t offset = ((branchbyte1 << 8) | branchbyte2);
+  u2 value1 = pop_operand(f->operands)->value;
+  u2 value2 = pop_operand(f->operands)->value;
+  if (value1 != value2)
+  {
+    f->pc += offset;
+  }
 }
 
 void if_icmplt_eval(Frame *f)
 {
-  //   push_operand();
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
+
+  int16_t offset = ((branchbyte1 << 8) | branchbyte2);
+  u2 value1 = pop_operand(f->operands)->value;
+  u2 value2 = pop_operand(f->operands)->value;
+  if (value1 < value2)
+  {
+    f->pc += offset;
+  }
 }
 
 void if_icmpg2_eval(Frame *f)
@@ -1013,7 +1051,17 @@ void if_icmpgt_eval(Frame *f)
 
 void if_icmple_eval(Frame *f)
 {
-  //   push_operand();
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
+
+  int16_t offset = ((branchbyte1 << 8) | branchbyte2);
+  u2 value1 = pop_operand(f->operands)->value;
+  u2 value2 = pop_operand(f->operands)->value;
+  if (value1 <= value2)
+  {
+    f->pc += offset;
+  }
 }
 
 void if_acmpeq_eval(Frame *f)

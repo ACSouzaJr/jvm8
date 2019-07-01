@@ -409,7 +409,13 @@ typedef struct
 typedef struct
 {
   u1 type;
-  u4 value;
+  union 
+  {
+    u4 value; //cat1
+    uint64_t type_long;
+    uint64_t type_double;
+  };
+  
 } LocalVariable;
 
 // class type
