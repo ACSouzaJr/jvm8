@@ -11,6 +11,7 @@ typedef struct
   cp_info *cp;  
   LocalVariable *local_variables;//[300]; //[]
   StackOperand *operands;
+  u1 *bytecode;
 }Frame;
 
 Frame* cria_frame(ClassFile *cf, method_info *mi);
