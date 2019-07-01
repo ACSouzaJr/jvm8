@@ -485,13 +485,11 @@ void lstore_3_eval(Frame *f)
 
 void fstore_0_eval(Frame *f)
 {
-  float v1;
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
   printf("aux: %f\n", aux->value);
-  memcpy(&v1, aux->value, sizeof(u4));
-
-  aux_linha->value = v1;
+  
+  aux_linha->value = (float)aux->value;
   aux_linha->type = CONSTANT_Float;
   f->local_variables[0] = *aux_linha;
   printf("fstore_0 val: %04x\n", f->local_variables[0].value);
@@ -499,44 +497,35 @@ void fstore_0_eval(Frame *f)
 
 void fstore_1_eval(Frame *f)
 {
-  float v1;
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
   printf("aux: %f\n", aux->value);
-  memcpy(&v1, aux->value, sizeof(u4));
-
-  aux_linha->value = v1;
+  aux_linha->value = (float)aux->value;
   aux_linha->type = CONSTANT_Float;
   f->local_variables[1] = *aux_linha;
-  printf("fstore_0 val: %04x\n", f->local_variables[1].value);
+  printf("fstore_1 val: %04x\n", f->local_variables[1].value);
 }
 
 void fstore_2_eval(Frame *f)
 {
-  float v1;
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
   printf("aux: %f\n", aux->value);
-  memcpy(&v1, aux->value, sizeof(u4));
-
-  aux_linha->value = v1;
+  aux_linha->value = (float)aux->value;
   aux_linha->type = CONSTANT_Float;
   f->local_variables[2] = *aux_linha;
-  printf("fstore_0 val: %04x\n", f->local_variables[2].value);
+  printf("fstore_2 val: %04x\n", f->local_variables[2].value);
 }
 
 void fstore_3_eval(Frame *f)
 {
-  float v1;
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
   printf("aux: %f\n", aux->value);
-  memcpy(&v1, aux->value, sizeof(u4));
-
-  aux_linha->value = v1;
+  aux_linha->value = (float)aux->value;
   aux_linha->type = CONSTANT_Float;
   f->local_variables[3] = *aux_linha;
-  printf("fstore_0 val: %04x\n", f->local_variables[3].value);
+  printf("fstore_3 val: %04x\n", f->local_variables[3].value);
 }
 
 void dstore_0_eval(Frame *f)
