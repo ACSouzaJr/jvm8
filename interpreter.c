@@ -424,7 +424,7 @@ void istore_eval(Frame *f)
   u1 index = f->bytecode[f->pc++];
   LocalVariable *aux = pop_operand(f->operands);
   f->local_variables[index] = *aux;
-  printf("istore val: %04x\n", f->local_variables[index].value);
+  printf("istore %d val: %04x\n", index, f->local_variables[index].value);
 }
 
 void lstore_eval(Frame *f)
@@ -1147,8 +1147,8 @@ void if_icmpeq_eval(Frame *f)
   branchbyte2 = f->bytecode[f->pc++];
 
   int16_t offset = ((branchbyte1 << 8) | branchbyte2);
-  u2 value1 = pop_operand(f->operands)->value;
-  u2 value2 = pop_operand(f->operands)->value;
+  int32_t value2 = pop_operand(f->operands)->value;
+  int32_t value1 = pop_operand(f->operands)->value;
   if (value1 == value2)
   {
     f->pc += offset - 3;
@@ -1162,8 +1162,8 @@ void if_icmpne_eval(Frame *f)
   branchbyte2 = f->bytecode[f->pc++];
 
   int16_t offset = ((branchbyte1 << 8) | branchbyte2);
-  u2 value1 = pop_operand(f->operands)->value;
-  u2 value2 = pop_operand(f->operands)->value;
+  int32_t value2 = pop_operand(f->operands)->value;
+  int32_t value1 = pop_operand(f->operands)->value;
   if (value1 != value2)
   {
     f->pc += offset - 3;
@@ -1177,8 +1177,8 @@ void if_icmplt_eval(Frame *f)
   branchbyte2 = f->bytecode[f->pc++];
 
   int16_t offset = ((branchbyte1 << 8) | branchbyte2);
-  u2 value1 = pop_operand(f->operands)->value;
-  u2 value2 = pop_operand(f->operands)->value;
+  int32_t value2 = pop_operand(f->operands)->value;
+  int32_t value1 = pop_operand(f->operands)->value;
   if (value1 < value2)
   {
     f->pc += offset - 3;
@@ -1213,8 +1213,8 @@ void if_icmple_eval(Frame *f)
   branchbyte2 = f->bytecode[f->pc++];
 
   int16_t offset = ((branchbyte1 << 8) | branchbyte2);
-  u2 value1 = pop_operand(f->operands)->value;
-  u2 value2 = pop_operand(f->operands)->value;
+  int32_t value2 = pop_operand(f->operands)->value;
+  int32_t value1 = pop_operand(f->operands)->value;
   if (value1 <= value2)
   {
     f->pc += offset - 3;
