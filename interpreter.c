@@ -161,7 +161,18 @@ void bipush_eval(Frame *f)
 
 void sipush_eval(Frame *f)
 {
-  //   push_operand();
+  u1 byte1, byte2;
+  LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  u1 *bytecode = f->method->attributes->info->Code_attribute.code;
+  byte1 = bytecode[f->pc++];
+  byte2 = bytecode[f->pc++];
+
+  u2 val_sipush = ((byte1 << 8) | byte2);
+  lv->value = (int32_t)val_sipush;
+  lv->type = CONSTANT_Integer;
+
+  push_operand(lv, f->operands);
 }
 
 void ldc_eval(Frame *f)
