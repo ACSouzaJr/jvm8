@@ -10,6 +10,7 @@ Frame* cria_frame(ClassFile *cf, method_info *mi){
   frame->pc = 0;
   frame->cp = cf->constant_pool;
   frame->method = mi;
+  frame->bytecode = mi->attributes->info->Code_attribute.code;
   // aloca stack de operandos, acho que era para ser um vetor ?
   frame->operands = (StackOperand *) malloc(sizeof(StackOperand));
   if (!frame->operands)

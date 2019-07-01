@@ -111,12 +111,18 @@ void iconst_5_eval(Frame *f)
 
 void lconst_0_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *lv = (LocalVariable*) malloc(sizeof(LocalVariable));
+  lv->type = CONSTANT_Long;
+  lv->value = 0;
+  push_operand(lv, f->operands);
 }
 
 void lconst_1_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *lv = (LocalVariable*) malloc(sizeof(LocalVariable));
+  lv->type = CONSTANT_Long;
+  lv->value = 1;
+  push_operand(lv, f->operands);
 }
 
 void fconst_0_eval(Frame *f)
@@ -146,7 +152,11 @@ void dconst_1_eval(Frame *f)
 
 void bipush_eval(Frame *f)
 {
-  //   push_operand();
+  // Pega o byte de argument extend para int e empilha nos operandos.
+  LocalVariable *lv = (LocalVariable*) malloc(sizeof(LocalVariable));
+  lv->type = CONSTANT_Integer;
+  lv->value = (int32_t)f->bytecode[f->pc++];
+  push_operand(lv, f->operands);
 }
 
 void sipush_eval(Frame *f)
@@ -204,7 +214,8 @@ void ldc2_w_eval(Frame *f)
 
 void iload_eval(Frame *f)
 {
-  //   push_operand();
+  u1 index = f->bytecode[f->pc++];
+  push_operand(&(f->local_variables[index]),f->operands);
 }
 
 void lload_eval(Frame *f)
@@ -370,12 +381,18 @@ void saload_eval(Frame *f)
 
 void istore_eval(Frame *f)
 {
-  //   push_operand();
+  u1 index = f->bytecode[f->pc++];
+  LocalVariable *aux = pop_operand(f->operands);
+  f->local_variables[0] = *aux;
+  printf("istore val: %04x\n", f->local_variables[0].value);
 }
 
 void lstore_eval(Frame *f)
 {
-  //   push_operand();
+  u1 index = f->bytecode[f->pc++];
+  LocalVariable *lv = pop_operand(f->operands);
+  f->local_variables[index] = *lv;
+  printf("lstore val: %04x\n", f->local_variables[index].value);
 }
 
 void fstore_eval(Frame *f)
@@ -823,7 +840,9 @@ void lxor_eval(Frame *f)
 
 void iinc_eval(Frame *f)
 {
-  //   push_operand();
+  u1 index = f->bytecode[f->pc++];
+  int8_t value = f->bytecode[f->pc++];
+  f->local_variables[index].value += value;
 }
 
 void i2l_eval(Frame *f)
@@ -978,7 +997,18 @@ void if_icmpg2_eval(Frame *f)
 
 void if_icmpgt_eval(Frame *f)
 {
-  //   push_operand();
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
+
+  int16_t offset = ((branchbyte1 << 8) | branchbyte2);
+  u2 value1 = pop_operand(f->operands)->value;
+  u2 value2 = pop_operand(f->operands)->value;
+  if (value1 > value2)
+  {
+    f->pc += offset;
+  }
+  
 }
 
 void if_icmple_eval(Frame *f)
@@ -998,7 +1028,12 @@ void if_acmpne_eval(Frame *f)
 
 void goto_eval(Frame *f)
 {
-  //   push_operand();
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
+
+  int16_t offset = ((branchbyte1 << 8) | branchbyte2);
+  f->pc += offset;
 }
 
 void jsr_eval(Frame *f)

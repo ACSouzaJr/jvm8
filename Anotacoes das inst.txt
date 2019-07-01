@@ -1,0 +1,2 @@
+store: operand_stack -> local_variable
+load: local_variable -> operand_stack
