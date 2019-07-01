@@ -372,7 +372,12 @@ void laload_eval(Frame *f)
 
 void faload_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *arrayref, *index, result;
+  arrayref = pop_operand(f->operands);
+  index = pop_operand(f->operands);
+  result = arrayref[index->value];
+
+  push_operand(&result, f->operands);
 }
 
 void daload_eval(Frame *f)
