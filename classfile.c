@@ -2354,6 +2354,7 @@ void execute_gvm(){
     u1 *bytecode = current_frame->method->attributes->info->Code_attribute.code;
     u2 opcode = bytecode[current_frame->pc++];
 
+    printf("----  Evaluando ----\n %s\n-----------------------\n", op_codes_array[opcode].value);
     op_codes_array[opcode].eval(current_frame);
   } while (!empty(JvmStack));
   

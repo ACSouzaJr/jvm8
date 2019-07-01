@@ -173,8 +173,8 @@ void ldc_eval(Frame *f)
 
   cp_info *item = &(f->cp[index - 1]);
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
-  printf("tag: %01x\n", item->tag);
-  printf("RONALDINHOOOOOOOOOOOOOO: %01x\n", item->tag);
+  printf("TAGGGG: %01x\n", item->tag);
+  // printf("RONALDINHOOOOOOOOOOOOOO: %01x\n", item->tag);
   switch (item->tag)
   {
   case CONSTANT_String:
@@ -185,6 +185,7 @@ void ldc_eval(Frame *f)
   case CONSTANT_Float:
     lv->type = CONSTANT_Float;
     lv->value = f->cp[index].Float.bytes;
+    printf("ldc_float: %04x\n", lv->value);
     push_operand(lv, f->operands);
     break;
   case CONSTANT_Integer:
