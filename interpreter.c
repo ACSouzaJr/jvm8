@@ -1208,8 +1208,8 @@ void if_icmpgt_eval(Frame *f)
   branchbyte2 = f->bytecode[f->pc++];
 
   int16_t offset = ((branchbyte1 << 8) | branchbyte2);
-  u4 value1 = pop_operand(f->operands)->value;
-  u4 value2 = pop_operand(f->operands)->value;
+  int32_t value2 = pop_operand(f->operands)->value;
+  int32_t value1 = pop_operand(f->operands)->value;
   if (value1 > value2)
   {
     f->pc += offset - 3;
@@ -1245,11 +1245,11 @@ void if_acmpne_eval(Frame *f)
 void goto_eval(Frame *f)
 {
   u1 branchbyte1, branchbyte2;
-  branchbyte1 = f->bytecode[f->pc];
-  branchbyte2 = f->bytecode[f->pc];
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
 
   int16_t offset = ((branchbyte1 << 8) | branchbyte2);
-  f->pc += offset;
+  f->pc += offset - 3;
 }
 
 void jsr_eval(Frame *f)
@@ -1386,6 +1386,11 @@ void invokevirtual_eval(Frame *f)
       {
         char *string = readUtf8(f->cp, lv->value);
         printf("%s \n", string);
+      }
+      else if (strcmp(method_desc, "(I)V") == 0)
+      {
+        int32_t value = lv->value;
+        printf("%d \n", value);
       }
       else if (strcmp(method_desc, "(J)V") == 0)
       {
