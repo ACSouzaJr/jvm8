@@ -596,7 +596,11 @@ void pop2_eval(Frame *f)
 
 void dup_eval(Frame *f)
 {
-  //   push_operand();
+  // duplica o topo da pilha
+  LocalVariable *dup_top = pop_operand(f->operands);
+
+  push_operand(dup_top, f->operands);
+  push_operand(dup_top, f->operands);
 }
 
 void dup_x1_eval(Frame *f)
