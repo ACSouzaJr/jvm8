@@ -8,6 +8,10 @@
 #include "stack_frame.h"
 #include "classfile.h"
 
+#define exponent(x) ((x << 1) >> 24)
+#define mantiss(x) ((x << 9) >> 9)
+#define signal(x) (x >> 31)
+
 // ClassFile *resolveClass(char *class_name)
 // {
 //   // classesCarregadas *c = BuscarElemento_classes(jvm->classes,class_name);
@@ -733,13 +737,21 @@ void ladd_eval(Frame *f)
 
 void fadd_eval(Frame *f)
 {
-  u4 v1, v2;
+  u4 v1, v2, r1;
+  float value1, value2, res;
   LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
 
   v2 = pop_operand(f->operands)->value;
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Float;
-  result->value = v1 + v2;
+  value1 = *(float *)&v1;
+  value2 = *(float *)&v2;
+  res = value1 + value2;
+
+  u4 sum = (u4)(*(u4*)&res);
+	r1 = (signal(sum)<<31) | (exponent(sum)<<23) | mantiss(sum);
+
+  result->value = r1;
   printf("v1_float: %04x\n", v1);
   printf("v2_float: %04x\n", v2);
   printf("resultado_float: %04x\n", result->value);
