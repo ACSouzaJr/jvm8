@@ -1,11 +1,12 @@
-#include "structures.h"
-#include "frame.h"
-#include "stack_operands.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include "structures.h"
+#include "frame.h"
+#include "stack_operands.h"
 #include "interpreter.h"
 #include "stack_frame.h"
+#include "classfile.h"
 
 // ClassFile *resolveClass(char *class_name)
 // {
@@ -619,8 +620,8 @@ void fadd_eval(Frame *f)
   v2 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Float;
   result->value = v1 + v2;
-  printf("v1: %04x\n", v1);
-  printf("v2: %04x\n", v2);
+  printf("v1: %04f\n", v1);
+  printf("v2: %04f\n", v2);
   printf("resultado: %04x\n", result->value);
   push_operand(result, f->operands);
 }
@@ -1159,6 +1160,8 @@ void invokespecial_eval(Frame *f)
   u1 index1byte, index2byte;
   index1byte = f->pc++;
   index2byte = f->pc++;
+
+  // recupera Utf8 da referencia do invokespecial
   u2 index = ((index1byte << 8) | index2byte);
   // printf("%d", index);
   //algo
@@ -1169,25 +1172,30 @@ void invokespecial_eval(Frame *f)
   if (strcmp("java/lang/Object", class_name) == 0)
   {
 
-    // carregaMemClasse(class_name);
-
-    // atualizaPc();
-    return;
-  }
+		ClassLoader(class_name);
+		return;
+	}
 
   if (strcmp("java/lang/StringBuffer", class_name) == 0)
   {
 
-    // atualizaPc();
-    return;
-  }
+		return;
+	}
 
   if (strcmp("java/util/Scanner", class_name) == 0)
   {
 
-    // atualizaPc();
-    return;
-  }
+		return;
+	}
+
+  //Pega posição da classe no array de classes
+
+  //Pega referencia ao classFile pelo indice anterior.
+	// ClassFile* cf = Mem.classes_arr[ClassLoader(class_name)];
+
+  // //Pega o nome e tipo dó método pelo indice da instrução.
+	// uint16_t nomeTipoIndice = f->cp[index-1].Methodref.name_and_type_index;
+
 }
 
 void invokestatic_eval(Frame *f)
