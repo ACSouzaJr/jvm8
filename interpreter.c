@@ -850,7 +850,15 @@ void lneg_eval(Frame *f)
 
 void fneg_eval(Frame *f)
 {
-  //   push_operand();
+  u4 v1;
+  LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  v1 = pop_operand(f->operands)->value;
+  result->type = CONSTANT_Float;
+  result->value = 0 - v1;
+  printf("resultado_neg: %04x\n", result->value);
+
+  push_operand(result, f->operands);
 }
 
 void dneg_eval(Frame *f)
