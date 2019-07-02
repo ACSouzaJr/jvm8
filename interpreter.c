@@ -1491,7 +1491,62 @@ void new_eval(Frame *f)
 
 void newarray_eval(Frame *f)
 {
-  u2 index = getIndexFromb1b2(f);
+  LocalVariable *lv, *rlv;
+  u4 count;
+  u1 byte1;
+  u1 *bytecode = f->method->attributes->info->Code_attribute.code;
+  byte1 = bytecode[f->pc++];
+  lv = pop_operand(f->operands);
+  count = lv->value;
+  void *arrayref = NULL;
+  rlv = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  if(count < 0){
+    printf("NegativeArraySizeException.\n");
+  } else {
+    switch(count){
+      case T_BOOLEAN:
+        rlv->type = CONSTANT_Integer;
+        arrayref = (u4*) malloc((count+1)*sizeof(u4));
+        // int return_array[count]; 
+        break;
+      case T_CHAR:
+        rlv->type = CONSTANT_String;
+        arrayref = (u1*) malloc((count+1)*sizeof(u1));
+        // char return_array[count];
+        break;
+      case T_FLOAT:
+        rlv->type = CONSTANT_Float;
+        arrayref = (u4*) malloc((count+1)*sizeof(u4));
+        // float return_array[count];
+        break;
+      case T_DOUBLE:
+        arrayref = (uint64_t*) malloc((count+1)*sizeof(uint64_t));
+        // double return_array[count];
+        break;
+      case T_BYTE:
+        rlv->type = CONSTANT_Integer;
+        arrayref = (u1*) malloc((count+1)*sizeof(u1));
+        // u1 return_array[count];
+        break;
+      case T_SHORT:
+        rlv->type = CONSTANT_Integer;
+        arrayref = (u2*) malloc((count+1)*sizeof(u2));
+        // u2 return_array[count];
+        break;
+      case T_INT:
+        rlv->type = CONSTANT_Integer;
+        arrayref = (u4*) malloc((count+1)*sizeof(u4));
+        // int return_array[count];
+        break;
+      case T_LONG:
+        arrayref = (uint64_t*) malloc((count+1)*sizeof(uint64_t));
+        // long return_array[count];
+        break;
+      default:
+        break;
+    }
+  }
 }
 
 void anewarray_eval(Frame *f)
