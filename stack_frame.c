@@ -39,7 +39,6 @@ void push(Frame *frame)
   }
   else
   {
-   
     if (JvmStack == NULL)
     {
     }
