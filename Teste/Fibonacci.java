@@ -6,7 +6,7 @@ class Fibonacci{
 
           System.out.println("Serie De Fibonacci: ");
 
-          long f1, f2=0, f3=1;
+          int f1, f2=0, f3=1;
 
           for(int i=1;i<=num;i++){
 
