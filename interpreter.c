@@ -48,11 +48,13 @@
 //   return 0;
 // }
 
+// da um push NULL para a pilha de operandos
 void aconst_null_eval(Frame *f)
 {
   push_operand(NULL, f->operands);
 }
 
+// da um push de um int constante para a pilha de operandos
 void iconst_m1_eval(Frame *f)
 {
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -109,6 +111,7 @@ void iconst_5_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
+// da um push de um long constante para a pilha de operandos
 void lconst_0_eval(Frame *f)
 {
   LocalVariable *lv = (LocalVariable*) malloc(sizeof(LocalVariable));
@@ -125,6 +128,7 @@ void lconst_1_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
+// push de um float constante para pilha de operandos (</> 0 ou 1)
 void fconst_0_eval(Frame *f)
 {
   //   push_operand();
@@ -140,6 +144,7 @@ void fconst_2_eval(Frame *f)
   //   push_operand();
 }
 
+// push de um double constante para pilha de operandos (</> 0 ou 1)
 void dconst_0_eval(Frame *f)
 {
   //   push_operand();
@@ -150,6 +155,7 @@ void dconst_1_eval(Frame *f)
   //   push_operand();
 }
 
+// push de um byte na pilha de operandos - o byte tem seu sinal extendido para um valor int
 void bipush_eval(Frame *f)
 {
   // Pega o byte de argument extend para int e empilha nos operandos.
@@ -159,6 +165,8 @@ void bipush_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
+// push para a pilha de operandos de um valor do tipo shot
+// recebe dois bytes e os junto em um intermediário de 16 bits, para futuramente extender seu sinal e dar push para a pilha de operandos
 void sipush_eval(Frame *f)
 {
   u1 byte1, byte2;
@@ -175,6 +183,11 @@ void sipush_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
+// push de um item da constant_pool
+// o índice de acesso à constant_pool deve ser de categoria 1
+// Caso seja int ou float, seu valor é levado à cp como int, ou float
+// Caso seja String, então a referência value para aquela instância é levada a op_stack
+// Caso seja uma referência para uma classe, é retornada uma referência para a class Object [0] 
 void ldc_eval(Frame *f)
 {
   u1 index;
@@ -223,12 +236,14 @@ void ldc2_w_eval(Frame *f)
   //   push_operand();
 }
 
+// Load de um int vindo do vetor de variáveis locais - índice sem sinal
 void iload_eval(Frame *f)
 {
   u1 index = f->bytecode[f->pc++];
   push_operand(&(f->local_variables[index]),f->operands);
 }
 
+// Load de um long vindo vo vetor de variáveis locais - índice sem sinal
 void lload_eval(Frame *f)
 {
   //   push_operand();
@@ -390,6 +405,7 @@ void saload_eval(Frame *f)
   //   push_operand();
 }
 
+// recupera um valor int da op_stack e da store desse operando na pilha de var_locais
 void istore_eval(Frame *f)
 {
   u1 index = f->bytecode[f->pc++];
@@ -479,12 +495,14 @@ void lstore_3_eval(Frame *f)
 {
   LocalVariable *lv = pop_operand(f->operands);
   f->local_variables[3] = *lv;
-  printf("lstore_3 val: %04x\n", f->local_variables[3].type_long);
+  print("lstore_3 val: %04x\n", f->local_variables[3].type_long);
 }
 
 void fstore_0_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *lv = pop_operand(f->operands);
+  f->local_variables[0] = *lv;
+  print("fstore: %04x\n", f->local_variables[0].value);
 }
 
 void fstore_1_eval(Frame *f)
