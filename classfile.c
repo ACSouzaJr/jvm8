@@ -5,6 +5,7 @@
 #include "instructions.h"
 #include "string.h"
 #include "interpreter.h"
+#define DEBUG
 
 
 u1 u1Read(FILE *file)
@@ -2354,7 +2355,9 @@ void execute_gvm(){
     u1 *bytecode = current_frame->method->attributes->info->Code_attribute.code;
     u2 opcode = bytecode[current_frame->pc++];
 
+    #ifdef DEBUG
     printf("\n----  Evaluando ----\n %d) %s\n-----------------------\n\n",((current_frame->pc) - 1), op_codes_array[opcode].value);
+    #endif
     op_codes_array[opcode].eval(current_frame);
   } while (!empty(JvmStack));
   

@@ -392,7 +392,13 @@ void aload_3_eval(Frame *f)
 
 void iaload_eval(Frame *f)
 {
-  //   push_operand();
+  // Incompleto
+  LocalVariable *arrayref, *index, value;
+  index = pop_operand(f->operands);
+  arrayref = pop_operand(f->operands);
+  // value = arrayref->array_type[index->value];
+
+  push_operand(&value, f->operands);
 }
 
 void laload_eval(Frame *f)
@@ -628,7 +634,12 @@ void astore_3_eval(Frame *f)
 
 void iastore_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *arrayref, *index, *value;
+  value = pop_operand(f->operands);
+  index = pop_operand(f->operands);
+  arrayref = pop_operand(f->operands);
+
+  // arrayref->array_type[index->value] = value;
 }
 
 void lastore_eval(Frame *f)
@@ -885,7 +896,17 @@ void ddiv_eval(Frame *f)
 
 void irem_eval(Frame *f)
 {
-  //   push_operand();
+  int32_t v1, v2;
+  LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  v2 = pop_operand(f->operands)->value;
+  v1 = pop_operand(f->operands)->value;
+  result->type = CONSTANT_Integer;
+  result->value = v1 - (v1 / v2) * v2;
+  printf("v1: %04x\n", v1);
+  printf("v2: %04x\n", v2);
+  printf("resultado: %04x\n", result->value);
+  push_operand(result, f->operands);
 }
 
 void lrem_eval(Frame *f)
@@ -905,7 +926,10 @@ void drem_eval(Frame *f)
 
 void ineg_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *result = pop_operand(f->operands);
+  result->value = -result->value;
+  printf("value: %04x\n", result);
+  push_operand(result, f->operands);
 }
 
 void lneg_eval(Frame *f)
@@ -933,7 +957,17 @@ void dneg_eval(Frame *f)
 
 void ishl_eval(Frame *f)
 {
-  //   push_operand();
+  u4 v1, v2;
+  LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  v2 = pop_operand(f->operands)->value;
+  v1 = pop_operand(f->operands)->value;
+  result->type = CONSTANT_Integer;
+  result->value = v1 << (v2 & 0x1F);
+  printf("v1: %04x\n", v1);
+  printf("v2: %04x\n", (v2 & 0x1F));
+  printf("resultado: %04x\n", result->value);
+  push_operand(result, f->operands);
 }
 
 void lshl_eval(Frame *f)
@@ -943,7 +977,17 @@ void lshl_eval(Frame *f)
 
 void ishr_eval(Frame *f)
 {
-  //   push_operand();
+  int32_t v1, v2;
+  LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  v2 = pop_operand(f->operands)->value;
+  v1 = pop_operand(f->operands)->value;
+  result->type = CONSTANT_Integer;
+  result->value = v1 >> (v2 & 0x1F);
+  printf("v1: %04x\n", v1);
+  printf("v2: %04x\n", (v2 & 0x1F));
+  printf("resultado: %04x\n", result->value);
+  push_operand(result, f->operands);
 }
 
 void lshr_eval(Frame *f)
@@ -953,7 +997,17 @@ void lshr_eval(Frame *f)
 
 void iushr_eval(Frame *f)
 {
-  //   push_operand();
+  u4 v1, v2;
+  LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  v2 = pop_operand(f->operands)->value;
+  v1 = pop_operand(f->operands)->value;
+  result->type = CONSTANT_Integer;
+  result->value = v1 >> (v2 & 0x1F);
+  printf("v1: %04x\n", v1);
+  printf("v2: %04x\n", (v2 & 0x1F));
+  printf("resultado: %04x\n", result->value);
+  push_operand(result, f->operands);
 }
 
 void lushr_eval(Frame *f)
@@ -963,7 +1017,17 @@ void lushr_eval(Frame *f)
 
 void iand_eval(Frame *f)
 {
-  //   push_operand();
+  u4 v1, v2;
+  LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  v2 = pop_operand(f->operands)->value;
+  v1 = pop_operand(f->operands)->value;
+  result->type = CONSTANT_Integer;
+  result->value = v1 & v2;
+  printf("v1: %04x\n", v1);
+  printf("v2: %04x\n", v2);
+  printf("resultado: %04x\n", result->value);
+  push_operand(result, f->operands);
 }
 
 void land_eval(Frame *f)
@@ -973,7 +1037,17 @@ void land_eval(Frame *f)
 
 void ior_eval(Frame *f)
 {
-  //   push_operand();
+  u4 v1, v2;
+  LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  v2 = pop_operand(f->operands)->value;
+  v1 = pop_operand(f->operands)->value;
+  result->type = CONSTANT_Integer;
+  result->value = v1 | v2;
+  printf("v1: %04x\n", v1);
+  printf("v2: %04x\n", v2);
+  printf("resultado: %04x\n", result->value);
+  push_operand(result, f->operands);
 }
 
 void lor_eval(Frame *f)
@@ -983,7 +1057,17 @@ void lor_eval(Frame *f)
 
 void ixor_eval(Frame *f)
 {
-  //   push_operand();
+  u4 v1, v2;
+  LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  v2 = pop_operand(f->operands)->value;
+  v1 = pop_operand(f->operands)->value;
+  result->type = CONSTANT_Integer;
+  result->value = v1 ^ v2;
+  printf("v1: %04x\n", v1);
+  printf("v2: %04x\n", v2);
+  printf("resultado: %04x\n", result->value);
+  push_operand(result, f->operands);
 }
 
 void lxor_eval(Frame *f)
@@ -1220,8 +1304,8 @@ void if_icmpgt_eval(Frame *f)
   branchbyte2 = f->bytecode[f->pc++];
 
   int16_t offset = ((branchbyte1 << 8) | branchbyte2);
-  u4 value1 = pop_operand(f->operands)->value;
-  u4 value2 = pop_operand(f->operands)->value;
+  int32_t value2 = pop_operand(f->operands)->value;
+  int32_t value1 = pop_operand(f->operands)->value;
   if (value1 > value2)
   {
     f->pc += offset - 3;
@@ -1257,11 +1341,11 @@ void if_acmpne_eval(Frame *f)
 void goto_eval(Frame *f)
 {
   u1 branchbyte1, branchbyte2;
-  branchbyte1 = f->bytecode[f->pc];
-  branchbyte2 = f->bytecode[f->pc];
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
 
   int16_t offset = ((branchbyte1 << 8) | branchbyte2);
-  f->pc += offset;
+  f->pc += offset - 3;
 }
 
 void jsr_eval(Frame *f)
@@ -1400,6 +1484,11 @@ void invokevirtual_eval(Frame *f)
       {
         char *string = readUtf8(f->cp, lv->value);
         printf("%s \n", string);
+      }
+      else if (strcmp(method_desc, "(I)V") == 0)
+      {
+        int32_t value = lv->value;
+        printf("%d \n", value);
       }
       else if (strcmp(method_desc, "(J)V") == 0)
       {
