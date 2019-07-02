@@ -7,6 +7,7 @@
 #include "interpreter.h"
 #include "stack_frame.h"
 #include "classfile.h"
+#include "helpers.h"
 
 #define exponent(x) ((x << 1) >> 24)
 #define mantiss(x) ((x << 9) >> 9)
@@ -748,8 +749,7 @@ void fadd_eval(Frame *f)
   value2 = *(float *)&v2;
   res = value1 + value2;
 
-  u4 sum = (u4)(*(u4*)&res);
-	r1 = (signal(sum)<<31) | (exponent(sum)<<23) | mantiss(sum);
+	r1 = convertFloatToBytes(&res);
 
   result->value = r1;
   printf("v1_float: %04x\n", v1);
@@ -1358,7 +1358,9 @@ void getstatic_eval(Frame *f)
 
 void putstatic_eval(Frame *f)
 {
-  //   push_operand();
+  u2 index = getIndexFromb1b2(f);
+
+  f->cp[index].Fieldref.name_and_type_index;
 }
 
 void getfield_eval(Frame *f)
@@ -1489,12 +1491,12 @@ void new_eval(Frame *f)
 
 void newarray_eval(Frame *f)
 {
-  //   push_operand();
+  u2 index = getIndexFromb1b2(f);
 }
 
 void anewarray_eval(Frame *f)
 {
-  //   push_operand();
+  u2 index = getIndexFromb1b2(f);
 }
 
 void arraylength_eval(Frame *f)
