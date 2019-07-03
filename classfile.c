@@ -5,7 +5,6 @@
 #include "instructions.h"
 #include "string.h"
 #include "interpreter.h"
-#define DEBUG
 
 
 u1 u1Read(FILE *file)
