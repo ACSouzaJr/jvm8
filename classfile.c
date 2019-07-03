@@ -5,7 +5,6 @@
 #include "instructions.h"
 #include "string.h"
 #include "interpreter.h"
-#define DEBUG
 
 
 u1 u1Read(FILE *file)
@@ -268,7 +267,7 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
     {
       attr->info->Exceptions_attribute.number_of_exceptions = u2Read(fp);
       attr->info->Exceptions_attribute.exception_index_table = (u2 *)malloc(sizeof(u2) * attr->info->Exceptions_attribute.number_of_exceptions);
-      for (u2 *i = 0; i < attr->info->Exceptions_attribute.exception_index_table + attr->info->Exceptions_attribute.number_of_exceptions; i++)
+      for (u2 *i = attr->info->Exceptions_attribute.exception_index_table; i < attr->info->Exceptions_attribute.exception_index_table + attr->info->Exceptions_attribute.number_of_exceptions; i++)
       {
         *i = u2Read(fp);
       }
@@ -841,7 +840,7 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
     {
       printf("Number of exceptions: %d\n", attr->info->Exceptions_attribute.number_of_exceptions);
 
-      for (u2 *i = 0; i < attr->info->Exceptions_attribute.exception_index_table + attr->info->Exceptions_attribute.number_of_exceptions; i++)
+      for (u2 *i = attr->info->Exceptions_attribute.exception_index_table; i < attr->info->Exceptions_attribute.exception_index_table + attr->info->Exceptions_attribute.number_of_exceptions; i++)
       {
         printf("Exception index table: %d\n", *i);
       }
@@ -867,7 +866,7 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
     }
     else if (strcmp(attribute_name, "StackMapTable") == 0)
     {
-      printStackMapTable(attr->info->StackMapTable_attribute.entries, cp, attr);
+      // printStackMapTable(attr->info->StackMapTable_attribute.entries, cp, attr);
     }
     else if (strcmp(attribute_name, "ConstantValue") == 0)
     {
