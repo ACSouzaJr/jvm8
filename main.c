@@ -34,9 +34,10 @@ int main(int argc, char *argv[])
   // FILE *pFile;
   Mem.num_classes = 0;
 
-  if (argc != 2)
+  if (argc != 3)
   {
-    printf("Warning: Caminho do arquivo nao fornecido.");
+    printf("Warning: Caminho do arquivo nao fornecido.\n");
+    printf("Ajuda: ./a.out path/to/file -e (para leitor-exibidor) ou -i (para interpretador)\n");
     // pFile = fopen("Teste/multi.class", "rb");
     return 0;
   }
@@ -59,12 +60,20 @@ int main(int argc, char *argv[])
   if (strcmp(removeExtension(print_reference(cf->constant_pool, cf->attributes->info->SourceFile_attribute.sourcefile_index)), findNameFile(removeExtension(argv[1]))) == 0)
   {
     initialize_op_codes();
-    print_class_file(cf);
-    // Execute Gvm
-    method_info *main = find_main(cf);
-    Frame *frame = cria_frame(cf, main);
-    push(frame);
-    execute_gvm();
+
+    if(strcmp( argv[2], "-e") == 0) { /* para modo leitor-exibidor */
+      print_class_file(cf);
+    }
+    else if(strcmp( argv[2], "-i") == 0) { /* para modo interpretador */
+      // Execute Gvm
+      method_info *main = find_main(cf);
+      Frame *frame = cria_frame(cf, main);
+      push(frame);
+      execute_gvm();
+    }
+    else {
+      printf("Modo de execução do programa não fornecido. \n");
+    }
   }
   else
   {
