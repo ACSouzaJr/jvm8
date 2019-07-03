@@ -1631,7 +1631,7 @@ void newarray_eval(Frame *f)
   if(count < 0){
     printf("NegativeArraySizeException.\n");
   } else {
-    switch(count){
+    switch(byte1){
       case T_BOOLEAN:
         rlv->type = CONSTANT_Integer;
         arrayref = (u4*) malloc((count+1)*sizeof(u4));
@@ -1673,6 +1673,8 @@ void newarray_eval(Frame *f)
       default:
         break;
     }
+    rlv->value = arrayref;
+    push_operand(rlv, f->operands);
   }
 }
 
