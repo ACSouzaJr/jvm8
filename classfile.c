@@ -2153,7 +2153,7 @@ void print_class_file(ClassFile *cf)
     // printf("Methods Attributes Count: %02d\n", mi->attributes_count);
 
     printAttributes(mi->attributes, cf->constant_pool, mi->attributes_count);
-    printf("CAFEBABEEEEE!\n");
+    // printf("CAFEBABEEEEE!\n");
     // evalAttributes(mi->attributes, cf->constant_pool, mi->attributes_count, cf);
 
     // for (attribute_info *ai = mi->attributes; ai < mi->attributes + mi->attributes_count; ai++)
