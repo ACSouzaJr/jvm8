@@ -74,9 +74,9 @@ void iconst_0_eval(Frame *f)
   lv->type = CONSTANT_Integer;
   lv->value = 0;
   push_operand(lv, f->operands);
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("Iconst_0");
-  #endif
+#endif
 }
 
 void iconst_1_eval(Frame *f)
@@ -85,9 +85,9 @@ void iconst_1_eval(Frame *f)
   lv->type = CONSTANT_Integer;
   lv->value = 1;
   push_operand(lv, f->operands);
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("Iconst_1");
-  #endif
+#endif
 }
 
 void iconst_2_eval(Frame *f)
@@ -125,7 +125,7 @@ void iconst_5_eval(Frame *f)
 // da um push de um long constante para a pilha de operandos
 void lconst_0_eval(Frame *f)
 {
-  LocalVariable *lv = (LocalVariable*) malloc(sizeof(LocalVariable));
+  LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Long;
   lv->type_long = 0;
   push_operand(lv, f->operands);
@@ -133,7 +133,7 @@ void lconst_0_eval(Frame *f)
 
 void lconst_1_eval(Frame *f)
 {
-  LocalVariable *lv = (LocalVariable*) malloc(sizeof(LocalVariable));
+  LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Long;
   lv->type_long = 1;
   push_operand(lv, f->operands);
@@ -142,7 +142,7 @@ void lconst_1_eval(Frame *f)
 // push de um float constante para pilha de operandos (</> 0 ou 1)
 void fconst_0_eval(Frame *f)
 {
-  LocalVariable *lv = (LocalVariable*) malloc(sizeof(LocalVariable));
+  LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Float;
   lv->value = 0.0;
   push_operand(lv, f->operands);
@@ -150,7 +150,7 @@ void fconst_0_eval(Frame *f)
 
 void fconst_1_eval(Frame *f)
 {
-  LocalVariable *lv = (LocalVariable*) malloc(sizeof(LocalVariable));
+  LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Float;
   lv->value = 1.0;
   push_operand(lv, f->operands);
@@ -158,7 +158,7 @@ void fconst_1_eval(Frame *f)
 
 void fconst_2_eval(Frame *f)
 {
-  LocalVariable *lv = (LocalVariable*) malloc(sizeof(LocalVariable));
+  LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Float;
   lv->value = 2.0;
   push_operand(lv, f->operands);
@@ -179,12 +179,12 @@ void dconst_1_eval(Frame *f)
 void bipush_eval(Frame *f)
 {
   // Pega o byte de argument extend para int e empilha nos operandos.
-  LocalVariable *lv = (LocalVariable*) malloc(sizeof(LocalVariable));
+  LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Integer;
   lv->value = (int32_t)f->bytecode[f->pc++];
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("bipush: %d \n", lv->value);
-  #endif
+#endif
   push_operand(lv, f->operands);
 }
 
@@ -210,16 +210,16 @@ void sipush_eval(Frame *f)
 // o índice de acesso à constant_pool deve ser de categoria 1
 // Caso seja int ou float, seu valor é levado à cp como int, ou float
 // Caso seja String, então a referência value para aquela instância é levada a op_stack
-// Caso seja uma referência para uma classe, é retornada uma referência para a class Object [0] 
+// Caso seja uma referência para uma classe, é retornada uma referência para a class Object [0]
 void ldc_eval(Frame *f)
 {
   u1 index = f->bytecode[f->pc++];
 
   cp_info *item = &(f->cp[index - 1]);
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("tag: %01x\n", item->tag);
-  #endif
+#endif
   switch (item->tag)
   {
   case CONSTANT_String:
@@ -258,29 +258,32 @@ void ldc2_w_eval(Frame *f)
 void iload_eval(Frame *f)
 {
   u1 index = f->bytecode[f->pc++];
-  push_operand(&(f->local_variables[index]),f->operands);
-  #ifdef DEBUG
+  push_operand(&(f->local_variables[index]), f->operands);
+#ifdef DEBUG
   printf("iload %d", f->local_variables[index].value);
-  #endif
+#endif
 }
 
 // Load de um long vindo vo vetor de variáveis locais - índice sem sinal
 void lload_eval(Frame *f)
 {
   u1 index = f->bytecode[f->pc++];
-  push_operand(&(f->local_variables[index]),f->operands);
+  push_operand(&(f->local_variables[index]), f->operands);
 }
 
 void fload_eval(Frame *f)
 {
   u1 index = f->bytecode[f->pc++];
 
-  if(f->local_variables[index].type == CONSTANT_Float){
+  if (f->local_variables[index].type == CONSTANT_Float)
+  {
     push_operand(&(f->local_variables[index]), f->operands);
-  } else {
-    #ifdef DEBUG
+  }
+  else
+  {
+#ifdef DEBUG
     printf("javax.persistence.PersistenceException\n");
-    #endif
+#endif
     exit(0);
   }
 }
@@ -303,9 +306,9 @@ void iload_0_eval(Frame *f)
 void iload_1_eval(Frame *f)
 {
   push_operand(&(f->local_variables[1]), f->operands);
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("iload_1");
-  #endif
+#endif
 }
 
 void iload_2_eval(Frame *f)
@@ -320,68 +323,80 @@ void iload_3_eval(Frame *f)
 
 void lload_0_eval(Frame *f)
 {
-  push_operand(&(f->local_variables[0]),f->operands);
+  push_operand(&(f->local_variables[0]), f->operands);
 }
 
 void lload_1_eval(Frame *f)
 {
-  push_operand(&(f->local_variables[1]),f->operands);
+  push_operand(&(f->local_variables[1]), f->operands);
 }
 
 void lload_2_eval(Frame *f)
 {
-  push_operand(&(f->local_variables[2]),f->operands);
+  push_operand(&(f->local_variables[2]), f->operands);
 }
 
 void lload_3_eval(Frame *f)
 {
-  push_operand(&(f->local_variables[3]),f->operands);
+  push_operand(&(f->local_variables[3]), f->operands);
 }
 
 void fload_0_eval(Frame *f)
 {
-  if(f->local_variables[0].type == CONSTANT_Float){
+  if (f->local_variables[0].type == CONSTANT_Float)
+  {
     push_operand(&(f->local_variables[0]), f->operands);
-  } else {
-    #ifdef DEBUG
+  }
+  else
+  {
+#ifdef DEBUG
     printf("javax.persistence.PersistenceException\n");
-    #endif
+#endif
     exit(0);
   }
 }
 
 void fload_1_eval(Frame *f)
 {
-  if(f->local_variables[1].type == CONSTANT_Float){
+  if (f->local_variables[1].type == CONSTANT_Float)
+  {
     push_operand(&(f->local_variables[1]), f->operands);
-  } else {
-    #ifdef DEBUG
+  }
+  else
+  {
+#ifdef DEBUG
     printf("javax.persistence.PersistenceException\n");
-    #endif
+#endif
     exit(0);
   }
 }
 
 void fload_2_eval(Frame *f)
 {
-  if(f->local_variables[2].type == CONSTANT_Float){
+  if (f->local_variables[2].type == CONSTANT_Float)
+  {
     push_operand(&(f->local_variables[2]), f->operands);
-  } else {
-    #ifdef DEBUG
+  }
+  else
+  {
+#ifdef DEBUG
     printf("javax.persistence.PersistenceException\n");
-    #endif
+#endif
     exit(0);
   }
 }
 
 void fload_3_eval(Frame *f)
 {
-  if(f->local_variables[3].type == CONSTANT_Float){
+  if (f->local_variables[3].type == CONSTANT_Float)
+  {
     push_operand(&(f->local_variables[3]), f->operands);
-  } else {
-    #ifdef DEBUG
+  }
+  else
+  {
+#ifdef DEBUG
     printf("javax.persistence.PersistenceException\n");
-    #endif
+#endif
     exit(0);
   }
 }
@@ -408,9 +423,9 @@ void dload_3_eval(Frame *f)
 
 void aload_0_eval(Frame *f)
 {
-  #ifdef DEBUG
-  // printf("lvv: %02x\n", f->local_variables[0].value);
-  #endif
+#ifdef DEBUG
+// printf("lvv: %02x\n", f->local_variables[0].value);
+#endif
   push_operand(&(f->local_variables[0]), f->operands);
 }
 
@@ -486,9 +501,9 @@ void istore_eval(Frame *f)
   u1 index = f->bytecode[f->pc++];
   LocalVariable *aux = pop_operand(f->operands);
   f->local_variables[index] = *aux;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("istore %d val: %04x\n", index, f->local_variables[index].value);
-  #endif
+#endif
 }
 
 void lstore_eval(Frame *f)
@@ -496,9 +511,9 @@ void lstore_eval(Frame *f)
   u1 index = f->bytecode[f->pc++];
   LocalVariable *lv = pop_operand(f->operands);
   f->local_variables[index] = *lv;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("lstore val: %04lx\n", f->local_variables[index].type_long);
-  #endif
+#endif
 }
 
 void fstore_eval(Frame *f)
@@ -507,17 +522,17 @@ void fstore_eval(Frame *f)
 
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("aux: %04x\n", aux->value);
-  #endif
+#endif
   aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
 
   aux_linha->value = aux->value;
   aux_linha->type = CONSTANT_Float;
   f->local_variables[index] = *aux_linha;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("fstore_0 val: %04x\n", f->local_variables[index].value);
-  #endif
+#endif
 }
 
 void dstore_eval(Frame *f)
@@ -535,22 +550,22 @@ void istore_0_eval(Frame *f)
   LocalVariable *aux;
   aux = pop_operand(f->operands);
   f->local_variables[0] = *aux;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("istore_0 val: %04x\n", f->local_variables[0].value);
-  #endif
+#endif
 }
 
 void istore_1_eval(Frame *f)
 {
   LocalVariable *aux;
   aux = pop_operand(f->operands);
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("aux: %04x\n", aux->value);
-  #endif
+#endif
   f->local_variables[1] = *aux;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("istore_1 val: %04x\n", f->local_variables[1].value);
-  #endif
+#endif
 }
 
 void istore_2_eval(Frame *f)
@@ -558,9 +573,9 @@ void istore_2_eval(Frame *f)
   LocalVariable *aux;
   aux = pop_operand(f->operands);
   f->local_variables[2] = *aux;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("istore_2 val: %04x\n", f->local_variables[2].value);
-  #endif
+#endif
 }
 
 void istore_3_eval(Frame *f)
@@ -568,110 +583,110 @@ void istore_3_eval(Frame *f)
   LocalVariable *aux;
   aux = pop_operand(f->operands);
   f->local_variables[3] = *aux;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("istore_3 val: %04x\n", f->local_variables[3].value);
-  #endif
+#endif
 }
 
 void lstore_0_eval(Frame *f)
 {
   LocalVariable *lv = pop_operand(f->operands);
   f->local_variables[0] = *lv;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("lstore_0 val: %04lx\n", f->local_variables[0].type_long);
-  #endif
+#endif
 }
 
 void lstore_1_eval(Frame *f)
 {
   LocalVariable *lv = pop_operand(f->operands);
   f->local_variables[1] = *lv;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("lstore_1 val: %04lx\n", f->local_variables[1].type_long);
-  #endif
+#endif
 }
 
 void lstore_2_eval(Frame *f)
 {
   LocalVariable *lv = pop_operand(f->operands);
   f->local_variables[2] = *lv;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("lstore_2 val: %04lx\n", f->local_variables[2].type_long);
-  #endif
+#endif
 }
 
 void lstore_3_eval(Frame *f)
 {
   LocalVariable *lv = pop_operand(f->operands);
   f->local_variables[3] = *lv;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("lstore_3 val: %04lx\n", f->local_variables[3].type_long);
-  #endif
+#endif
 }
 
 void fstore_0_eval(Frame *f)
 {
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("aux: %04x\n", aux->value);
-  #endif
+#endif
   aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
 
   aux_linha->value = aux->value;
   aux_linha->type = CONSTANT_Float;
   f->local_variables[0] = *aux_linha;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("fstore_0 val: %04x\n", f->local_variables[0].value);
-  #endif
+#endif
 }
 
 void fstore_1_eval(Frame *f)
 {
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("aux: %04x\n", aux->value);
-  #endif
+#endif
   aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
   aux_linha->value = aux->value;
   aux_linha->type = CONSTANT_Float;
   f->local_variables[1] = *aux_linha;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("fstore_1 val: %04x\n", f->local_variables[1].value);
-  #endif
+#endif
 }
 
 void fstore_2_eval(Frame *f)
 {
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("aux: %04x\n", aux->value);
-  #endif
+#endif
   aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
   aux_linha->value = aux->value;
   aux_linha->type = CONSTANT_Float;
   f->local_variables[2] = *aux_linha;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("fstore_2 val: %04x\n", f->local_variables[2].value);
-  #endif
+#endif
 }
 
 void fstore_3_eval(Frame *f)
 {
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("aux: %04x\n", aux->value);
-  #endif
+#endif
   aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
   aux_linha->value = aux->value;
   aux_linha->type = CONSTANT_Float;
   f->local_variables[3] = *aux_linha;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("fstore_3 val: %04x\n", f->local_variables[3].value);
-  #endif
+#endif
 }
 
 void dstore_0_eval(Frame *f)
@@ -840,15 +855,15 @@ void iadd_eval(Frame *f)
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Integer;
   result->value = v1 + v2;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("v1: %04x\n", v1);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("v2: %04x\n", v2);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("resultado: %04x\n", result->value);
-  #endif
+#endif
   push_operand(result, f->operands);
 }
 
@@ -870,18 +885,18 @@ void fadd_eval(Frame *f)
   value2 = *(float *)&v2;
   res = value1 + value2;
 
-	r1 = convertFloatToBytes(&res);
+  r1 = convertFloatToBytes(&res);
 
   result->value = r1;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("v1_float: %04x\n", v1);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("v2_float: %04x\n", v2);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("resultado_float: %04x\n", result->value);
-  #endif
+#endif
   push_operand(result, f->operands);
 }
 
@@ -899,15 +914,15 @@ void isub_eval(Frame *f)
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Integer;
   result->value = v1 - v2;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("v1: %04x\n", v1);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("v2: %04x\n", v2);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("resultado: %04x\n", result->value);
-  #endif
+#endif
   push_operand(result, f->operands);
 }
 
@@ -925,15 +940,15 @@ void fsub_eval(Frame *f)
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Float;
   result->value = v1 - v2;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("v1: %04f\n", v1);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("v2: %04f\n", v2);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("resultado: %04x\n", result->value);
-  #endif
+#endif
   push_operand(result, f->operands);
 }
 
@@ -951,15 +966,15 @@ void imul_eval(Frame *f)
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Integer;
   result->value = v1 * v2;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("v1: %04x\n", v1);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("v2: %04x\n", v2);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("resultado: %04x\n", result->value);
-  #endif
+#endif
   push_operand(result, f->operands);
 }
 
@@ -977,15 +992,15 @@ void fmul_eval(Frame *f)
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Float;
   result->value = v1 * v2;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("v1: %04f\n", v1);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("v2: %04f\n", v2);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("resultado: %04x\n", result->value);
-  #endif
+#endif
   push_operand(result, f->operands);
 }
 
@@ -1003,15 +1018,15 @@ void idiv_eval(Frame *f)
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Integer;
   result->value = v1 / v2;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("v1: %04x\n", v1);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("v2: %04x\n", v2);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("resultado: %04x\n", result->value);
-  #endif
+#endif
   push_operand(result, f->operands);
 }
 
@@ -1029,15 +1044,15 @@ void fdiv_eval(Frame *f)
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Float;
   result->value = v1 / v2;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("v1: %04f\n", v1);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("v2: %04f\n", v2);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("resultado: %04x\n", result->value);
-  #endif
+#endif
   push_operand(result, f->operands);
 }
 
@@ -1055,15 +1070,15 @@ void irem_eval(Frame *f)
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Integer;
   result->value = v1 - (v1 / v2) * v2;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("v1: %04x\n", v1);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("v2: %04x\n", v2);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("resultado: %04x\n", result->value);
-  #endif
+#endif
   push_operand(result, f->operands);
 }
 
@@ -1086,9 +1101,9 @@ void ineg_eval(Frame *f)
 {
   LocalVariable *result = pop_operand(f->operands);
   result->value = -result->value;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("value: %04x\n", result);
-  #endif
+#endif
   push_operand(result, f->operands);
 }
 
@@ -1105,9 +1120,9 @@ void fneg_eval(Frame *f)
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Float;
   result->value = 0 - v1;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("resultado_neg: %04x\n", result->value);
-  #endif
+#endif
 
   push_operand(result, f->operands);
 }
@@ -1126,15 +1141,15 @@ void ishl_eval(Frame *f)
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Integer;
   result->value = v1 << (v2 & 0x1F);
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("v1: %04x\n", v1);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("v2: %04x\n", (v2 & 0x1F));
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("resultado: %04x\n", result->value);
-  #endif
+#endif
   push_operand(result, f->operands);
 }
 
@@ -1152,15 +1167,15 @@ void ishr_eval(Frame *f)
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Integer;
   result->value = v1 >> (v2 & 0x1F);
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("v1: %04x\n", v1);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("v2: %04x\n", (v2 & 0x1F));
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("resultado: %04x\n", result->value);
-  #endif
+#endif
   push_operand(result, f->operands);
 }
 
@@ -1178,15 +1193,15 @@ void iushr_eval(Frame *f)
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Integer;
   result->value = v1 >> (v2 & 0x1F);
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("v1: %04x\n", v1);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("v2: %04x\n", (v2 & 0x1F));
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("resultado: %04x\n", result->value);
-  #endif
+#endif
   push_operand(result, f->operands);
 }
 
@@ -1204,15 +1219,15 @@ void iand_eval(Frame *f)
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Integer;
   result->value = v1 & v2;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("v1: %04x\n", v1);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("v2: %04x\n", v2);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("resultado: %04x\n", result->value);
-  #endif
+#endif
   push_operand(result, f->operands);
 }
 
@@ -1230,15 +1245,15 @@ void ior_eval(Frame *f)
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Integer;
   result->value = v1 | v2;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("v1: %04x\n", v1);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("v2: %04x\n", v2);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("resultado: %04x\n", result->value);
-  #endif
+#endif
   push_operand(result, f->operands);
 }
 
@@ -1256,15 +1271,15 @@ void ixor_eval(Frame *f)
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Integer;
   result->value = v1 ^ v2;
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("v1: %04x\n", v1);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("v2: %04x\n", v2);
-  #endif
-  #ifdef DEBUG
+#endif
+#ifdef DEBUG
   printf("resultado: %04x\n", result->value);
-  #endif
+#endif
   push_operand(result, f->operands);
 }
 
@@ -1370,13 +1385,20 @@ void fcmpl_eval(Frame *f)
   value1 = v1->value;
   value2 = v2->value;
   lv->type = CONSTANT_Integer;
-  if(value1 > value2){
+  if (value1 > value2)
+  {
     lv->value = 1;
-  } else if(value1 == value2){
+  }
+  else if (value1 == value2)
+  {
     lv->value = 0;
-  } else if(value1 < value2){
+  }
+  else if (value1 < value2)
+  {
     lv->value = -1;
-  } else {
+  }
+  else
+  {
     lv->value = -1;
   }
   push_operand(lv, f->operands);
@@ -1393,13 +1415,20 @@ void fcmpg_eval(Frame *f)
   value1 = v1->value;
   value2 = v2->value;
   lv->type = CONSTANT_Integer;
-  if(value1 > value2){
+  if (value1 > value2)
+  {
     lv->value = 1;
-  } else if(value1 == value2){
+  }
+  else if (value1 == value2)
+  {
     lv->value = 0;
-  } else if(value1 < value2){
+  }
+  else if (value1 < value2)
+  {
     lv->value = -1;
-  } else {
+  }
+  else
+  {
     lv->value = 1;
   }
   push_operand(lv, f->operands);
@@ -1508,7 +1537,6 @@ void if_icmpgt_eval(Frame *f)
   {
     f->pc += offset - 3;
   }
-  
 }
 
 void if_icmple_eval(Frame *f)
@@ -1606,9 +1634,9 @@ void areturn_eval(Frame *f)
 void return_eval(Frame *f)
 {
   pop(JvmStack);
-  #ifdef DEBUG
-  // printf("%02x", JvmStack->f->pc);
-  #endif
+#ifdef DEBUG
+// printf("%02x", JvmStack->f->pc);
+#endif
 }
 
 void getstatic_eval(Frame *f)
@@ -1627,12 +1655,12 @@ void getstatic_eval(Frame *f)
   // Name and type
   // uint16_t name_n_type = f->cp[index-1].Methodref.name_and_type_index;
 
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("nome da classe: %s\n", class_name);
-  #endif
-  #ifdef DEBUG
-  // printf("local_variable_to_empilhar: %04x\n", f->local_variables[index].value);
-  #endif
+#endif
+#ifdef DEBUG
+// printf("local_variable_to_empilhar: %04x\n", f->local_variables[index].value);
+#endif
   if (strcmp(class_name, "java/lang/System") == 0)
   {
     // push_operand(&(f->local_variables[index]), f->operands);
@@ -1668,7 +1696,7 @@ void invokevirtual_eval(Frame *f)
   index1byte = bytecode[f->pc++];
   index2byte = bytecode[f->pc++];
 
-  // recupera Utf8 da referencia 
+  // recupera Utf8 da referencia
   u2 index = ((index1byte << 8) | index2byte);
   char *class_name = ret_method_name(f->cp, index);
 
@@ -1720,59 +1748,84 @@ void invokevirtual_eval(Frame *f)
 
 void invokespecial_eval(Frame *f)
 {
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("Invocando satanás...\n");
-  #endif
+#endif
   u1 index1byte, index2byte;
   index1byte = f->pc++;
   index2byte = f->pc++;
 
   // recupera Utf8 da referencia do invokespecial
   u2 index = ((index1byte << 8) | index2byte);
-  #ifdef DEBUG
-  // printf("%d", index);
-  #endif
-  //algo
-  #ifdef DEBUG
-  // printf("index: %02x\n",f->cp[index].Class.name_index);
-  #endif
+#ifdef DEBUG
+// printf("%d", index);
+#endif
+//algo
+#ifdef DEBUG
+// printf("index: %02x\n",f->cp[index].Class.name_index);
+#endif
   char *class_name = ret_method_name(f->cp, index);
-  #ifdef DEBUG
+#ifdef DEBUG
   printf("string_method: %s\n", class_name);
-  #endif
+#endif
 
   if (strcmp("java/lang/Object", class_name) == 0)
   {
 
-		ClassLoader(class_name);
-		return;
-	}
+    ClassLoader(class_name);
+    return;
+  }
 
   if (strcmp("java/lang/StringBuffer", class_name) == 0)
   {
 
-		return;
-	}
+    return;
+  }
 
   if (strcmp("java/util/Scanner", class_name) == 0)
   {
 
-		return;
-	}
+    return;
+  }
 
   //Pega posição da classe no array de classes
 
   //Pega referencia ao classFile pelo indice anterior.
-	// ClassFile* cf = Mem.classes_arr[ClassLoader(class_name)];
+  // ClassFile* cf = Mem.classes_arr[ClassLoader(class_name)];
 
   // //Pega o nome e tipo dó método pelo indice da instrução.
-	// uint16_t nomeTipoIndice = f->cp[index-1].Methodref.name_and_type_index;
-
+  // uint16_t nomeTipoIndice = f->cp[index-1].Methodref.name_and_type_index;
 }
 
 void invokestatic_eval(Frame *f)
 {
-  //   push_operand();
+  u2 index = getIndexFromb1b2(f);
+  // Method Name and type
+  uint16_t name_n_type = f->cp[index - 1].Methodref.name_and_type_index;
+
+  char *method_name = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.name_index);
+
+  char *method_desc = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.descriptor_index);
+  u2 args = 0;
+
+  for (size_t i = 1; method_desc[i] != ')'; i++)
+  {
+    if (method_desc[i] != '[')
+    {
+      /* code */
+    }
+    args++;
+  }
+
+  method_info *method = find_method(f->cp, method_name);
+  Frame *frame = cria_frame(f->cp, method);
+  // Adiciona argumestos
+  for (size_t i = args - 1; i >= 0; i--)
+  {
+    frame->local_variables[i] = *pop_operand(f->operands);
+  }
+
+  push(frame);
 }
 
 void invokeinterface_eval(Frame *f)
@@ -1802,52 +1855,56 @@ void newarray_eval(Frame *f)
   void *arrayref = NULL;
   rlv = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  if(count < 0){
-    #ifdef DEBUG
+  if (count < 0)
+  {
+#ifdef DEBUG
     printf("NegativeArraySizeException.\n");
-    #endif
-  } else {
-    switch(byte1){
-      case T_BOOLEAN:
-        rlv->type = CONSTANT_Integer;
-        arrayref = (u4*) malloc((count+1)*sizeof(u4));
-        // int return_array[count]; 
-        break;
-      case T_CHAR:
-        rlv->type = CONSTANT_String;
-        arrayref = (u1*) malloc((count+1)*sizeof(u1));
-        // char return_array[count];
-        break;
-      case T_FLOAT:
-        rlv->type = CONSTANT_Float;
-        arrayref = (u4*) malloc((count+1)*sizeof(u4));
-        // float return_array[count];
-        break;
-      case T_DOUBLE:
-        arrayref = (uint64_t*) malloc((count+1)*sizeof(uint64_t));
-        // double return_array[count];
-        break;
-      case T_BYTE:
-        rlv->type = CONSTANT_Integer;
-        arrayref = (u1*) malloc((count+1)*sizeof(u1));
-        // u1 return_array[count];
-        break;
-      case T_SHORT:
-        rlv->type = CONSTANT_Integer;
-        arrayref = (u2*) malloc((count+1)*sizeof(u2));
-        // u2 return_array[count];
-        break;
-      case T_INT:
-        rlv->type = CONSTANT_Integer;
-        arrayref = (u4*) malloc((count+1)*sizeof(u4));
-        // int return_array[count];
-        break;
-      case T_LONG:
-        arrayref = (uint64_t*) malloc((count+1)*sizeof(uint64_t));
-        // long return_array[count];
-        break;
-      default:
-        break;
+#endif
+  }
+  else
+  {
+    switch (byte1)
+    {
+    case T_BOOLEAN:
+      rlv->type = CONSTANT_Integer;
+      arrayref = (u4 *)malloc((count + 1) * sizeof(u4));
+      // int return_array[count];
+      break;
+    case T_CHAR:
+      rlv->type = CONSTANT_String;
+      arrayref = (u1 *)malloc((count + 1) * sizeof(u1));
+      // char return_array[count];
+      break;
+    case T_FLOAT:
+      rlv->type = CONSTANT_Float;
+      arrayref = (u4 *)malloc((count + 1) * sizeof(u4));
+      // float return_array[count];
+      break;
+    case T_DOUBLE:
+      arrayref = (uint64_t *)malloc((count + 1) * sizeof(uint64_t));
+      // double return_array[count];
+      break;
+    case T_BYTE:
+      rlv->type = CONSTANT_Integer;
+      arrayref = (u1 *)malloc((count + 1) * sizeof(u1));
+      // u1 return_array[count];
+      break;
+    case T_SHORT:
+      rlv->type = CONSTANT_Integer;
+      arrayref = (u2 *)malloc((count + 1) * sizeof(u2));
+      // u2 return_array[count];
+      break;
+    case T_INT:
+      rlv->type = CONSTANT_Integer;
+      arrayref = (u4 *)malloc((count + 1) * sizeof(u4));
+      // int return_array[count];
+      break;
+    case T_LONG:
+      arrayref = (uint64_t *)malloc((count + 1) * sizeof(uint64_t));
+      // long return_array[count];
+      break;
+    default:
+      break;
     }
     rlv->value = arrayref;
     push_operand(rlv, f->operands);

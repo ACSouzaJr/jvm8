@@ -345,7 +345,9 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
     }
     else // caso o atributo não esteja implementado ele é ignorado.
     {
+      #ifdef DEBUG
       printf("Attributo Ignorado! \n");
+      #endif
       fseek(fp, attr->attribute_length, SEEK_CUR);
     }
   }
