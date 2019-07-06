@@ -2360,7 +2360,6 @@ void execute_gvm(){
     #endif
     op_codes_array[opcode].eval(current_frame);
   } while (!empty(JvmStack));
-  
 }
 
 method_info* find_main(ClassFile *cf){
@@ -2372,7 +2371,7 @@ method_info* find_main(ClassFile *cf){
     if (strcmp(method_name, "main") == 0)
     {
       return i;
-    }  
+    }
   }
   printf("Nao achou a main! \n");
   return NULL;

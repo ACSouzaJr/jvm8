@@ -11,7 +11,7 @@ Frame* pop(){
     {
     }
     else
-    { 
+    {
         // Se a pilha estiver vazia
         if (JvmStack->top == NULL)
         {
@@ -19,7 +19,6 @@ Frame* pop(){
           // return JvmStack->top;
           return NULL;
         }
-        
         ptr = JvmStack->top;
         item = JvmStack->top->f;
         JvmStack->top = ptr->pointer;

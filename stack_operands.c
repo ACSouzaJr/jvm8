@@ -11,7 +11,6 @@ void push_operand(LocalVariable * operand, StackOperand *stack_operand){
     }
     else
     {
-    
         if (stack_operand == NULL)
         {
         }
@@ -25,12 +24,11 @@ void push_operand(LocalVariable * operand, StackOperand *stack_operand){
 
     printf("Acabou de ser empilhado: %04x\n", stack_operand->top->f->value);
     // return *stack_operand;
-} 
+}
 
 LocalVariable* pop_operand(StackOperand *stack_operand){
     LocalVariable *aux;
     Operand *ptr;
-    
     // Se o ponteiro for nulo faz nada
     if (stack_operand == NULL)
     {

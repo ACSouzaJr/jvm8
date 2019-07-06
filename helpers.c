@@ -9,7 +9,7 @@ u2 getIndexFromb1b2(Frame *f){
     index1byte = bytecode[f->pc++];
     index2byte = bytecode[f->pc++];
 
-    // recupera Utf8 da referencia 
+    // recupera Utf8 da referencia
     u2 index = ((index1byte << 8) | index2byte);
 
     return index;
