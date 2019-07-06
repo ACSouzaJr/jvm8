@@ -1651,14 +1651,24 @@ void putstatic_eval(Frame *f)
 
   char *field_name = readUtf8(f->cp, f->cp[nati - 1].NameAndType.name_index);
   char *field_desc = readUtf8(f->cp, f->cp[nati - 1].NameAndType.descriptor_index);
-  
-  // GLOBAL_CLASS->fields->attributes->info->
-  
-  // printf("magic: %04x\n",GLOBAL_CLASS->magic);
 
-  // LocalVariable * lv;
+  printf("field_name: %s\n",field_name);
+  printf("field_desc: %s\n",field_desc);
 
-  // lv = pop_operand(f->operands);
+  LocalVariable * lv;
+
+  lv = pop_operand(f->operands);
+
+  printf("lv_putstatic: %04x\n", lv->value);
+
+  if(strcmp(field_name, "vetint") == 0){
+    GLOBAL_CLASS->fields->staticData = (staticData*)malloc(sizeof(staticData));
+    GLOBAL_CLASS->fields->staticData->low = (u4*) malloc(sizeof(u4));
+    GLOBAL_CLASS->fields->staticData->high = NULL;
+    GLOBAL_CLASS->fields->staticData->low = lv->value;
+
+    printf("static_data_low: %04x\n", GLOBAL_CLASS->fields->staticData->low);
+  }
 }
 
 void getfield_eval(Frame *f)
