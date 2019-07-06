@@ -1894,9 +1894,9 @@ void newarray_eval(Frame *f)
 
   if (count < 0)
   {
-#ifdef DEBUG
-    printf("NegativeArraySizeException.\n");
-#endif
+  #ifdef DEBUG
+      printf("NegativeArraySizeException.\n");
+  #endif
   }
   else
   {
@@ -1933,7 +1933,9 @@ void newarray_eval(Frame *f)
       break;
     case T_INT:
       rlv->type = CONSTANT_Integer;
-      arrayref = (u4 *)malloc((count + 1) * sizeof(u4));
+      arrayref = (u4 *)malloc((count) * sizeof(u4));
+      rlv->type_array.array = arrayref;
+      rlv->type_array.size = count;
       // int return_array[count];
       break;
     case T_LONG:
@@ -1943,7 +1945,8 @@ void newarray_eval(Frame *f)
     default:
       break;
     }
-    rlv->value = arrayref;
+    // rlv->type_array.array = arrayref;
+
     push_operand(rlv, f->operands);
   }
 }

@@ -410,9 +410,10 @@ typedef struct
 
 typedef struct LocalVariable LocalVariable;
 typedef struct {
-    LocalVariable *array;
+    void *array;
     u2 size;
 } TypeArray;
+
 struct LocalVariable
 {
   u1 type;
@@ -421,6 +422,7 @@ struct LocalVariable
     u4 value; //cat1
     uint64_t type_long;
     uint64_t type_double;
+    TypeArray type_array;
   };
   
 };
