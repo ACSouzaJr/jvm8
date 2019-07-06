@@ -451,14 +451,15 @@ void aload_3_eval(Frame *f)
 void iaload_eval(Frame *f)
 {
   // Incompleto
-  LocalVariable *arrayref, *index, value;
-  // value.value = 42;
+  LocalVariable *arrayref, *index, *lv;
+  lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
-  value.value = ((u4*)arrayref->type_array.array)[index->value];
+  lv->value = ((u4*)arrayref->type_array.array)[index->value];
+  lv->type = CONSTANT_Integer;
   // value.value = arrayref.value[index->value];
 
-  push_operand(&value, f->operands);
+  push_operand(lv, f->operands);
 }
 
 void laload_eval(Frame *f)
@@ -518,7 +519,7 @@ void lstore_eval(Frame *f)
   LocalVariable *lv = pop_operand(f->operands);
   f->local_variables[index] = *lv;
 #ifdef DEBUG
-  printf("lstore val: %04lx\n", f->local_variables[index].type_long);
+  printf("lstore val: %04llx\n", f->local_variables[index].type_long);
 #endif
 }
 
@@ -599,7 +600,7 @@ void lstore_0_eval(Frame *f)
   LocalVariable *lv = pop_operand(f->operands);
   f->local_variables[0] = *lv;
 #ifdef DEBUG
-  printf("lstore_0 val: %04lx\n", f->local_variables[0].type_long);
+  printf("lstore_0 val: %04llx\n", f->local_variables[0].type_long);
 #endif
 }
 
@@ -608,7 +609,7 @@ void lstore_1_eval(Frame *f)
   LocalVariable *lv = pop_operand(f->operands);
   f->local_variables[1] = *lv;
 #ifdef DEBUG
-  printf("lstore_1 val: %04lx\n", f->local_variables[1].type_long);
+  printf("lstore_1 val: %04llx\n", f->local_variables[1].type_long);
 #endif
 }
 
@@ -617,7 +618,7 @@ void lstore_2_eval(Frame *f)
   LocalVariable *lv = pop_operand(f->operands);
   f->local_variables[2] = *lv;
 #ifdef DEBUG
-  printf("lstore_2 val: %04lx\n", f->local_variables[2].type_long);
+  printf("lstore_2 val: %04llx\n", f->local_variables[2].type_long);
 #endif
 }
 
@@ -626,7 +627,7 @@ void lstore_3_eval(Frame *f)
   LocalVariable *lv = pop_operand(f->operands);
   f->local_variables[3] = *lv;
 #ifdef DEBUG
-  printf("lstore_3 val: %04lx\n", f->local_variables[3].type_long);
+  printf("lstore_3 val: %04llx\n", f->local_variables[3].type_long);
 #endif
 }
 
@@ -742,8 +743,10 @@ void iastore_eval(Frame *f)
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
 
+  u4 * vetor;
+  vetor = (u4*)arrayref->value;
   // (u4 *) arrayref->value[index->value] = value;
-  ((u4*)arrayref->type_array.array)[index->value] = value->value;
+  vetor[index->value] = value->value;
   printf("Referencia array: %d", ((u4*)arrayref->value)[index->value]);
 }
 
@@ -1110,7 +1113,7 @@ void ineg_eval(Frame *f)
   LocalVariable *result = pop_operand(f->operands);
   result->value = -result->value;
 #ifdef DEBUG
-  printf("value: %04x\n", result);
+  printf("value: %04x\n", result->value);
 #endif
   push_operand(result, f->operands);
 }
@@ -1389,6 +1392,7 @@ void fcmpl_eval(Frame *f)
   u4 value1, value2;
   v1 = pop_operand(f->operands);
   v2 = pop_operand(f->operands);
+  lv = (LocalVariable *)malloc(sizeof(LocalVariable));
 
   value1 = v1->value;
   value2 = v2->value;
@@ -1419,6 +1423,7 @@ void fcmpg_eval(Frame *f)
   u4 value1, value2;
   v1 = pop_operand(f->operands);
   v2 = pop_operand(f->operands);
+  lv = (LocalVariable *)malloc(sizeof(LocalVariable));
 
   value1 = v1->value;
   value2 = v2->value;
@@ -1720,7 +1725,7 @@ void putstatic_eval(Frame *f)
     GLOBAL_CLASS->fields->staticData->high = NULL;
     GLOBAL_CLASS->fields->staticData->low[0] = lv->value;
 
-    printf("put static_data_low: %04x\n", GLOBAL_CLASS->fields->staticData->low);
+    printf("put static_data_low: %04x\n", GLOBAL_CLASS->fields->staticData->low[0]);
   }
   else if (strcmp(field_desc, "I") == 0)
   {
@@ -1780,7 +1785,7 @@ void invokevirtual_eval(Frame *f)
       else if (strcmp(method_desc, "(J)V") == 0)
       {
         int64_t value = lv->type_long;
-        printf("%ld \n", value);
+        printf("%lld \n", value);
       }
       else
       {
@@ -1971,11 +1976,11 @@ void newarray_eval(Frame *f)
     case T_INT:
       rlv->type = CONSTANT_Integer;
       arrayref = (u4 *)malloc((count) * sizeof(u4));
-      printf("array ref: %x", arrayref);
+      printf("array ref: %x", (u4)arrayref);
       rlv->type_array.array = (u4 *) arrayref;
       rlv->type_array.size = count;
-      printf("array type: %x \n",rlv->type_array.array);
-      printf("rlv type: %x \n",rlv);
+      printf("array type: %x \n",(u4)(rlv->type_array.array));
+      printf("rlv type: %x \n",rlv->type);
       // int return_array[count];
       break;
     case T_LONG:
@@ -1993,7 +1998,7 @@ void newarray_eval(Frame *f)
 
 void anewarray_eval(Frame *f)
 {
-  u2 index = getIndexFromb1b2(f);
+  // u2 index = getIndexFromb1b2(f);
 }
 
 void arraylength_eval(Frame *f)

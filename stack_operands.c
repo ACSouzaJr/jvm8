@@ -35,6 +35,7 @@ LocalVariable* pop_operand(StackOperand *stack_operand){
     // Se o ponteiro for nulo faz nada
     if (stack_operand == NULL)
     {
+        aux = NULL;
     }
     else
     {
