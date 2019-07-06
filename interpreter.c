@@ -748,7 +748,9 @@ void iastore_eval(Frame *f)
   vetor = (u4 *)arrayref->value;
   // (u4 *) arrayref->value[index->value] = value;
   vetor[index->value] = value->value;
+#ifdef DEBUG
   printf("Referencia array: %d", ((u4 *)arrayref->value)[index->value]);
+#endif
 }
 
 void lastore_eval(Frame *f)
@@ -1687,15 +1689,19 @@ void getstatic_eval(Frame *f)
   char *field_name = readUtf8(f->cp, f->cp[nati - 1].NameAndType.name_index);
   char *field_desc = readUtf8(f->cp, f->cp[nati - 1].NameAndType.descriptor_index);
 
+#ifdef DEBUG
   printf("field_name: %s\n", field_name);
   printf("field_desc: %s\n", field_desc);
+#endif
 
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
 
   if (strcmp(field_desc, "I") == 0)
   {
   }
+#ifdef DEBUG
   printf("get static_data_low: %04x\n", GLOBAL_CLASS->fields->staticData->low[0]);
+#endif
   lv->value = GLOBAL_CLASS->fields->staticData->low[0];
   lv->type = CONSTANT_Fieldref;
   push_operand(lv, f->operands);
@@ -1709,15 +1715,19 @@ void putstatic_eval(Frame *f)
   char *field_name = readUtf8(f->cp, f->cp[nati - 1].NameAndType.name_index);
   char *field_desc = readUtf8(f->cp, f->cp[nati - 1].NameAndType.descriptor_index);
 
+#ifdef DEBUG
   printf("field_name: %s\n", field_name);
   printf("field_desc: %s\n", field_desc);
+#endif
 
   LocalVariable *lv;
 
   lv = pop_operand(f->operands);
   // lv = f->operands->top;
 
+#ifdef DEBUG
   printf("put lv_putstatic: %04x\n", lv->value);
+#endif
 
   if (strcmp(field_desc, "[I") == 0)
   {
@@ -1726,7 +1736,9 @@ void putstatic_eval(Frame *f)
     GLOBAL_CLASS->fields->staticData->high = NULL;
     GLOBAL_CLASS->fields->staticData->low[0] = lv->value;
 
+#ifdef DEBUG
     printf("put static_data_low: %04x\n", GLOBAL_CLASS->fields->staticData->low[0]);
+#endif
   }
   else if (strcmp(field_desc, "I") == 0)
   {
@@ -1735,7 +1747,9 @@ void putstatic_eval(Frame *f)
     GLOBAL_CLASS->fields->staticData->high = NULL;
     GLOBAL_CLASS->fields->staticData->low[0] = lv->value;
 
+#ifdef DEBUG
     printf("put static_data_low: %04x\n", GLOBAL_CLASS->fields->staticData->low[0]);
+#endif
   }
 }
 
@@ -1781,12 +1795,12 @@ void invokevirtual_eval(Frame *f)
       {
         // printf("PASSEI POR AQUI DE MOTO\n");
         int32_t value = lv->value;
-        printf("%04x \n", value);
+        printf("%d \n", value);
       }
       else if (strcmp(method_desc, "(J)V") == 0)
       {
         int64_t value = lv->type_long;
-        printf("%lld \n", value);
+        printf("%ld \n", value);
       }
       else
       {
@@ -1902,7 +1916,9 @@ void invokestatic_eval(Frame *f)
   for (size_t i = 0; i <= args; i++)
   {
     frame->local_variables[i] = *(pop_operand(f->operands));
+#ifdef DEBUG
     printf("DEBUG DE VERDADE:  ==== %04x\n", frame->local_variables[i].value);
+#endif
   }
 
   push(frame);
@@ -1977,11 +1993,15 @@ void newarray_eval(Frame *f)
     case T_INT:
       rlv->type = CONSTANT_Integer;
       arrayref = (u4 *)malloc((count) * sizeof(u4));
-      printf("array ref: %x", (u4)arrayref);
+#ifdef DEBUG
+      printf("array ref: %x \n", (u4)arrayref);
+#endif
       rlv->type_array.array = (u4 *)arrayref;
       rlv->type_array.size = count;
+#ifdef DEBUG
       printf("array type: %x \n", (u4)(rlv->type_array.array));
       printf("rlv type: %x \n", rlv->type);
+#endif
       // int return_array[count];
       break;
     case T_LONG:
