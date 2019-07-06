@@ -167,7 +167,7 @@ void ifle_eval(Frame *f);
 void if_icmpeq_eval(Frame *f);
 void if_icmpne_eval(Frame *f);
 void if_icmplt_eval(Frame *f);
-void if_icmpg2_eval(Frame *f);
+void if_icmpge_eval(Frame *f);
 void if_icmpgt_eval(Frame *f);
 void if_icmple_eval(Frame *f);
 void if_acmpeq_eval(Frame *f);

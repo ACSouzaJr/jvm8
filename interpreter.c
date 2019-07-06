@@ -736,7 +736,10 @@ void iastore_eval(Frame *f)
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
 
-  // arrayref->array_type[index->value] = value;
+  // (u4 *) arrayref->value[index->value] = value;
+  u4 * array = (u4*) &arrayref->value;
+  array[index->value] = value->value;
+  printf("Referencia array: %d", array[index->value]);
 }
 
 void lastore_eval(Frame *f)
@@ -1519,9 +1522,19 @@ void if_icmplt_eval(Frame *f)
   }
 }
 
-void if_icmpg2_eval(Frame *f)
+void if_icmpge_eval(Frame *f)
 {
-  //   push_operand();
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
+
+  int16_t offset = ((branchbyte1 << 8) | branchbyte2);
+  int32_t value2 = pop_operand(f->operands)->value;
+  int32_t value1 = pop_operand(f->operands)->value;
+  if (value1 >= value2)
+  {
+    f->pc += offset - 3;
+  }
 }
 
 void if_icmpgt_eval(Frame *f)
@@ -1822,12 +1835,19 @@ void invokestatic_eval(Frame *f)
   {
     if (method_desc[i] != '[')
     {
-      /* code */
+      continue;
+    }
+    if(method_desc[i] == 'L') {
+      while(method_desc[++i] != ';');
     }
     args++;
   }
 
-  method_info *method = find_method(f->cp, method_name);
+  #ifdef DEBUG
+    printf("Argumentos %d", args);
+  #endif
+
+  method_info *method = find_method(GLOBAL_CLASS, method_name);
   Frame *frame = cria_frame(f->cp, method);
   // Adiciona argumestos
   for (size_t i = args - 1; i >= 0; i--)

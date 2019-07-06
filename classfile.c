@@ -883,7 +883,7 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
 
 void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile * cf)
 {
-  Frame *frame = cria_frame(cf, &cf->methods[1]);
+  Frame *frame = cria_frame(cf->constant_pool, &cf->methods[1]);
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Integer;
   lv->value = 7; 
@@ -2364,18 +2364,18 @@ void execute_gvm(){
   
 }
 
-method_info* find_main(ClassFile *cf){
+method_info* find_method(ClassFile *cf, char* method){
   // corrigir depois
   for (method_info *i = cf->methods; i < cf->methods + cf->methods_count; i++)
   {
     char *method_name = readUtf8(cf->constant_pool, i->name_index);
     // char *method_desc = readUtf8(cf->constant_pool, i->descriptor_index);
-    if (strcmp(method_name, "main") == 0)
+    if (strcmp(method_name, method) == 0)
     {
       return i;
     }  
   }
-  printf("Nao achou a main! \n");
+  printf("Nao achou o methodo! \n");
   return NULL;
 }
 

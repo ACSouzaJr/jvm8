@@ -6,7 +6,7 @@
 #define u1 uint8_t
 #define u2 uint16_t
 #define u4 uint32_t
-// #define DEBUG
+#define DEBUG
 
 extern char *GLOBAL_ptr;
 /**
@@ -408,7 +408,12 @@ typedef struct
   attribute_info *attributes; //[attributes_count];
 } field_info;
 
-typedef struct
+typedef struct LocalVariable LocalVariable;
+typedef struct {
+    LocalVariable *array;
+    u2 size;
+} TypeArray;
+struct LocalVariable
 {
   u1 type;
   union 
@@ -418,7 +423,7 @@ typedef struct
     uint64_t type_double;
   };
   
-} LocalVariable;
+};
 
 // class type
 typedef struct

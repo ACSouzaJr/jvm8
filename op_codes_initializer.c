@@ -819,10 +819,10 @@ void initialize_op_codes()
   op_codes_array[161].references = 0;
   op_codes_array[161].eval = if_icmplt_eval;
 
-  strcpy(op_codes_array[162].value, "if_icmpg2");
+  strcpy(op_codes_array[162].value, "if_icmpge");
   op_codes_array[162].arguments = 2;
   op_codes_array[162].references = 0;
-  op_codes_array[162].eval = if_icmpg2_eval;
+  op_codes_array[162].eval = if_icmpge_eval;
 
   strcpy(op_codes_array[163].value, "if_icmpgt");
   op_codes_array[163].arguments = 2;
