@@ -452,9 +452,11 @@ void iaload_eval(Frame *f)
 {
   // Incompleto
   LocalVariable *arrayref, *index, value;
+  // value.value = 42;
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
-  // value = arrayref->array_type[index->value];
+  value.value = ((int*)arrayref->type_array.array)[index->value];
+  // value.value = arrayref.value[index->value];
 
   push_operand(&value, f->operands);
 }
@@ -1770,8 +1772,9 @@ void invokevirtual_eval(Frame *f)
       }
       else if (strcmp(method_desc, "(I)V") == 0)
       {
+        // printf("PASSEI POR AQUI DE MOTO\n");
         int32_t value = lv->value;
-        printf("%d \n", value);
+        printf("%04x \n", value);
       }
       else if (strcmp(method_desc, "(J)V") == 0)
       {
@@ -1888,9 +1891,10 @@ void invokestatic_eval(Frame *f)
   method_info *method = find_method(GLOBAL_CLASS, method_name);
   Frame *frame = cria_frame(f->cp, method);
   // Adiciona argumestos
-  for (size_t i = args - 1; i >= 0; i--)
+  for (size_t i = 0; i <= args; i++)
   {
     frame->local_variables[i] = *(pop_operand(f->operands));
+    printf("DEBUG DE VERDADE:  ==== %04x\n", frame->local_variables[i].value);
   }
 
   push(frame);
