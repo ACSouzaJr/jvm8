@@ -456,7 +456,7 @@ void iaload_eval(Frame *f)
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
   // value.value = ((u4*)arrayref->type_array.array)[index->value];
-  lv->value = ((int *)arrayref->value)[index->value];
+  lv->value = ((u4 *)arrayref->value)[index->value];
   lv->type = CONSTANT_Integer;
   // value.value = arrayref.value[index->value];
 
@@ -1686,7 +1686,7 @@ void getstatic_eval(Frame *f)
 
   u2 nati = f->cp[index - 1].Fieldref.name_and_type_index;
 
-  char *field_name = readUtf8(f->cp, f->cp[nati - 1].NameAndType.name_index);
+  // char *field_name = readUtf8(f->cp, f->cp[nati - 1].NameAndType.name_index);
   char *field_desc = readUtf8(f->cp, f->cp[nati - 1].NameAndType.descriptor_index);
 
 #ifdef DEBUG
@@ -1712,7 +1712,7 @@ void putstatic_eval(Frame *f)
   u2 index = getIndexFromb1b2(f);
   u2 nati = f->cp[index - 1].Fieldref.name_and_type_index;
 
-  char *field_name = readUtf8(f->cp, f->cp[nati - 1].NameAndType.name_index);
+  // char *field_name = readUtf8(f->cp, f->cp[nati - 1].NameAndType.name_index);
   char *field_desc = readUtf8(f->cp, f->cp[nati - 1].NameAndType.descriptor_index);
 
 #ifdef DEBUG
