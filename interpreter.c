@@ -1831,6 +1831,13 @@ void invokestatic_eval(Frame *f)
   char *method_desc = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.descriptor_index);
   u2 args = 0;
 
+  char *class_name = ret_method_name(f->cp, index);
+
+  if (class_name == "java/lang/Object") {
+    printf("Nao implementado ! \n");
+    return;
+   }
+
   for (size_t i = 1; method_desc[i] != ')'; i++)
   {
     if (method_desc[i] != '[')
