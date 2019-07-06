@@ -456,7 +456,7 @@ void iaload_eval(Frame *f)
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
   // value.value = ((u4*)arrayref->type_array.array)[index->value];
-  lv->value = ((u4 *)arrayref->value)[index->value];
+  lv->value = ((u4 *)arrayref->type_array.array)[index->value];
   lv->type = CONSTANT_Integer;
   // value.value = arrayref.value[index->value];
 
@@ -745,11 +745,11 @@ void iastore_eval(Frame *f)
   arrayref = pop_operand(f->operands);
 
   u4 *vetor;
-  vetor = (u4 *)arrayref->value;
-  // (u4 *) arrayref->value[index->value] = value;
+  vetor = (u4 *)arrayref->type_array.array;
+  // (u4 *) arrayref->type_array.array[index->value] = value;
   vetor[index->value] = value->value;
 #ifdef DEBUG
-  printf("Referencia array: %d", ((u4 *)arrayref->value)[index->value]);
+  printf("Referencia array: %d", ((u4 *)arrayref->type_array.array)[index->value]);
 #endif
 }
 
@@ -1690,21 +1690,21 @@ void getstatic_eval(Frame *f)
   char *field_desc = readUtf8(f->cp, f->cp[nati - 1].NameAndType.descriptor_index);
 
 #ifdef DEBUG
-  printf("field_name: %s\n", field_name);
+  // printf("field_name: %s\n", field_name);
   printf("field_desc: %s\n", field_desc);
 #endif
 
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  if (strcmp(field_desc, "I") == 0)
+  if (strcmp(field_desc, "[I") == 0)
   {
-  }
 #ifdef DEBUG
-  printf("get static_data_low: %04x\n", GLOBAL_CLASS->fields->staticData->low[0]);
+    printf("get static_data_low: %04x\n", GLOBAL_CLASS->fields->staticData->low[0]);
 #endif
-  lv->value = GLOBAL_CLASS->fields->staticData->low[0];
-  lv->type = CONSTANT_Fieldref;
-  push_operand(lv, f->operands);
+    lv->type_array.array = (u4*)GLOBAL_CLASS->fields->staticData->low[0];
+    lv->type = CONSTANT_Fieldref;
+    push_operand(lv, f->operands);
+  }
 }
 
 void putstatic_eval(Frame *f)
@@ -1716,7 +1716,7 @@ void putstatic_eval(Frame *f)
   char *field_desc = readUtf8(f->cp, f->cp[nati - 1].NameAndType.descriptor_index);
 
 #ifdef DEBUG
-  printf("field_name: %s\n", field_name);
+  // printf("field_name: %s\n", field_name);
   printf("field_desc: %s\n", field_desc);
 #endif
 
