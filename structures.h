@@ -400,12 +400,21 @@ typedef struct
 
 typedef struct
 {
+  u4 * low;
+	u4 * high;
+	u1 * string_ref;
+}staticData;
+
+
+typedef struct
+{
   u2 access_flags;
   u2 name_index;
   u2 descriptor_index;
   u2 attributes_count;
   // Cosntant value
   attribute_info *attributes; //[attributes_count];
+  staticData * staticData;
 } field_info;
 
 typedef struct LocalVariable LocalVariable;

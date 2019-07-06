@@ -53,6 +53,10 @@
 //   return 0;
 // }
 
+void nop_eval(Frame *f){
+  
+}
+
 // da um push NULL para a pilha de operandos
 void aconst_null_eval(Frame *f)
 {
@@ -1654,34 +1658,22 @@ void return_eval(Frame *f)
 
 void getstatic_eval(Frame *f)
 {
-  //  f->method->attributes->info->Code_attribute.code;
-  // u2 opcode = bytecode[current_frame->pc++];
-  u1 index1byte, index2byte;
-  u1 *bytecode = f->method->attributes->info->Code_attribute.code;
-  index1byte = bytecode[f->pc++];
-  index2byte = bytecode[f->pc++];
+  u2 index = getIndexFromb1b2(f);
+  u2 nati = f->cp[index-1].Fieldref.name_and_type_index;
 
-  // recupera Utf8 da referencia do invokespecial
-  u2 index = ((index1byte << 8) | index2byte);
-  char *class_name = ret_method_name(f->cp, index);
+  char *field_name = readUtf8(f->cp, f->cp[nati - 1].NameAndType.name_index);
+  char *field_desc = readUtf8(f->cp, f->cp[nati - 1].NameAndType.descriptor_index);
 
-  // Name and type
-  // uint16_t name_n_type = f->cp[index-1].Methodref.name_and_type_index;
+  printf("field_name: %s\n",field_name);
+  printf("field_desc: %s\n",field_desc);
 
-#ifdef DEBUG
-  printf("nome da classe: %s\n", class_name);
-#endif
-#ifdef DEBUG
-// printf("local_variable_to_empilhar: %04x\n", f->local_variables[index].value);
-#endif
-  if (strcmp(class_name, "java/lang/System") == 0)
-  {
-    // push_operand(&(f->local_variables[index]), f->operands);
-    return;
-  }
-  else
-  {
-    //TODO
+  LocalVariable * lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  if(strcmp(field_name, "vetint") == 0){
+    printf("static_data_low: %04x\n", GLOBAL_CLASS->fields->staticData->low);
+    lv->value = GLOBAL_CLASS->fields->staticData->low;
+    lv->type = CONSTANT_Fieldref;
+    push_operand(lv, f->operands);
   }
 }
 
@@ -1692,14 +1684,24 @@ void putstatic_eval(Frame *f)
 
   char *field_name = readUtf8(f->cp, f->cp[nati - 1].NameAndType.name_index);
   char *field_desc = readUtf8(f->cp, f->cp[nati - 1].NameAndType.descriptor_index);
-  
-  // GLOBAL_CLASS->fields->attributes->info->
-  
-  // printf("magic: %04x\n",GLOBAL_CLASS->magic);
 
-  // LocalVariable * lv;
+  printf("field_name: %s\n",field_name);
+  printf("field_desc: %s\n",field_desc);
 
-  // lv = pop_operand(f->operands);
+  LocalVariable * lv;
+
+  lv = pop_operand(f->operands);
+
+  printf("lv_putstatic: %04x\n", lv->value);
+
+  if(strcmp(field_name, "vetint") == 0){
+    GLOBAL_CLASS->fields->staticData = (staticData*)malloc(sizeof(staticData));
+    GLOBAL_CLASS->fields->staticData->low = (u4*) malloc(sizeof(u4));
+    GLOBAL_CLASS->fields->staticData->high = NULL;
+    GLOBAL_CLASS->fields->staticData->low = lv->value;
+
+    printf("static_data_low: %04x\n", GLOBAL_CLASS->fields->staticData->low);
+  }
 }
 
 void getfield_eval(Frame *f)

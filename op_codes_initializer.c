@@ -10,7 +10,7 @@ void initialize_op_codes()
 {
   strcpy(op_codes_array[0].value, "nop");
   op_codes_array[0].arguments = 0;
-  // op_codes_array[0].eval = nop_eval;
+  op_codes_array[0].eval = nop_eval;
 
   strcpy(op_codes_array[1].value, "aconst_null");
   op_codes_array[1].arguments = 0;
