@@ -6,6 +6,7 @@
 
 int resolveMethod(cp_info *cp, u2 indice_cp, u1 interface);
 ClassFile* resolveClass(char* class_name);
+void nop_eval(Frame *f);
 void aconst_null_eval(Frame *f);
 void iconst_m1_eval(Frame *f);
 void iconst_0_eval(Frame *f);
