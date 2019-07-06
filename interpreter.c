@@ -455,7 +455,8 @@ void iaload_eval(Frame *f)
   lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
-  lv->value = ((u4*)arrayref->type_array.array)[index->value];
+  // value.value = ((u4*)arrayref->type_array.array)[index->value];
+  lv->value = ((int *)arrayref->value)[index->value];
   lv->type = CONSTANT_Integer;
   // value.value = arrayref.value[index->value];
 
@@ -743,11 +744,11 @@ void iastore_eval(Frame *f)
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
 
-  u4 * vetor;
-  vetor = (u4*)arrayref->value;
+  u4 *vetor;
+  vetor = (u4 *)arrayref->value;
   // (u4 *) arrayref->value[index->value] = value;
   vetor[index->value] = value->value;
-  printf("Referencia array: %d", ((u4*)arrayref->value)[index->value]);
+  printf("Referencia array: %d", ((u4 *)arrayref->value)[index->value]);
 }
 
 void lastore_eval(Frame *f)
@@ -1977,10 +1978,10 @@ void newarray_eval(Frame *f)
       rlv->type = CONSTANT_Integer;
       arrayref = (u4 *)malloc((count) * sizeof(u4));
       printf("array ref: %x", (u4)arrayref);
-      rlv->type_array.array = (u4 *) arrayref;
+      rlv->type_array.array = (u4 *)arrayref;
       rlv->type_array.size = count;
-      printf("array type: %x \n",(u4)(rlv->type_array.array));
-      printf("rlv type: %x \n",rlv->type);
+      printf("array type: %x \n", (u4)(rlv->type_array.array));
+      printf("rlv type: %x \n", rlv->type);
       // int return_array[count];
       break;
     case T_LONG:
