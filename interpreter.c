@@ -1707,6 +1707,7 @@ void putstatic_eval(Frame *f)
   LocalVariable *lv;
 
   lv = pop_operand(f->operands);
+  // lv = f->operands->top;
 
   printf("put lv_putstatic: %04x\n", lv->value);
 
