@@ -48,7 +48,7 @@ LocalVariable* pop_operand(StackOperand *stack_operand){
         ptr = stack_operand->top;
         aux = stack_operand->top->f;
         stack_operand->top = ptr->pointer;
-        free(ptr);
+        // free(ptr);
         // printf("Item popped (cafebabe)\n");
     }
     return aux;
