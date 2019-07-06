@@ -455,7 +455,7 @@ void iaload_eval(Frame *f)
   // value.value = 42;
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
-  value.value = ((int*)arrayref->type_array.array)[index->value];
+  value.value = ((u4*)arrayref->type_array.array)[index->value];
   // value.value = arrayref.value[index->value];
 
   push_operand(&value, f->operands);
@@ -743,7 +743,7 @@ void iastore_eval(Frame *f)
   arrayref = pop_operand(f->operands);
 
   // (u4 *) arrayref->value[index->value] = value;
-  ((u4*)arrayref->value)[index->value] = value->value;
+  ((u4*)arrayref->type_array.array)[index->value] = value->value;
   printf("Referencia array: %d", ((u4*)arrayref->value)[index->value]);
 }
 
@@ -1892,6 +1892,7 @@ void invokestatic_eval(Frame *f)
   method_info *method = find_method(GLOBAL_CLASS, method_name);
   Frame *frame = cria_frame(f->cp, method);
   // Adiciona argumestos
+  // for (size_t i = args - 1; i >= 0; i--)
   for (size_t i = 0; i <= args; i++)
   {
     frame->local_variables[i] = *(pop_operand(f->operands));
