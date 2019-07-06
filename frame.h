@@ -14,7 +14,7 @@ typedef struct
   u1 *bytecode;
 }Frame;
 
-Frame* cria_frame(ClassFile *cf, method_info *mi);
+Frame* cria_frame(cp_info *cp, method_info *mi);
 
 
 #endif

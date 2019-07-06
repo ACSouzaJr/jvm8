@@ -21,8 +21,9 @@ void push_operand(LocalVariable * operand, StackOperand *stack_operand){
             stack_operand->top = ptr;
         }
     }
-
+    #ifdef DEBUG
     printf("Acabou de ser empilhado: %04x\n", stack_operand->top->f->value);
+    #endif
     // return *stack_operand;
 }
 

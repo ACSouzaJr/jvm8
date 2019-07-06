@@ -5,7 +5,6 @@
 #include "instructions.h"
 #include "string.h"
 #include "interpreter.h"
-#define DEBUG
 
 
 u1 u1Read(FILE *file)
@@ -268,7 +267,7 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
     {
       attr->info->Exceptions_attribute.number_of_exceptions = u2Read(fp);
       attr->info->Exceptions_attribute.exception_index_table = (u2 *)malloc(sizeof(u2) * attr->info->Exceptions_attribute.number_of_exceptions);
-      for (u2 *i = 0; i < attr->info->Exceptions_attribute.exception_index_table + attr->info->Exceptions_attribute.number_of_exceptions; i++)
+      for (u2 *i = attr->info->Exceptions_attribute.exception_index_table; i < attr->info->Exceptions_attribute.exception_index_table + attr->info->Exceptions_attribute.number_of_exceptions; i++)
       {
         *i = u2Read(fp);
       }
@@ -346,7 +345,9 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
     }
     else // caso o atributo não esteja implementado ele é ignorado.
     {
+      #ifdef DEBUG
       printf("Attributo Ignorado! \n");
+      #endif
       fseek(fp, attr->attribute_length, SEEK_CUR);
     }
   }
@@ -841,7 +842,7 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
     {
       printf("Number of exceptions: %d\n", attr->info->Exceptions_attribute.number_of_exceptions);
 
-      for (u2 *i = 0; i < attr->info->Exceptions_attribute.exception_index_table + attr->info->Exceptions_attribute.number_of_exceptions; i++)
+      for (u2 *i = attr->info->Exceptions_attribute.exception_index_table; i < attr->info->Exceptions_attribute.exception_index_table + attr->info->Exceptions_attribute.number_of_exceptions; i++)
       {
         printf("Exception index table: %d\n", *i);
       }
@@ -867,7 +868,7 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
     }
     else if (strcmp(attribute_name, "StackMapTable") == 0)
     {
-      printStackMapTable(attr->info->StackMapTable_attribute.entries, cp, attr);
+      // printStackMapTable(attr->info->StackMapTable_attribute.entries, cp, attr);
     }
     else if (strcmp(attribute_name, "ConstantValue") == 0)
     {
@@ -882,7 +883,7 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
 
 void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile * cf)
 {
-  Frame *frame = cria_frame(cf, &cf->methods[1]);
+  Frame *frame = cria_frame(cf->constant_pool, &cf->methods[1]);
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Integer;
   lv->value = 7; 
@@ -2154,7 +2155,7 @@ void print_class_file(ClassFile *cf)
     // printf("Methods Attributes Count: %02d\n", mi->attributes_count);
 
     printAttributes(mi->attributes, cf->constant_pool, mi->attributes_count);
-    printf("CAFEBABEEEEE!\n");
+    // printf("CAFEBABEEEEE!\n");
     // evalAttributes(mi->attributes, cf->constant_pool, mi->attributes_count, cf);
 
     // for (attribute_info *ai = mi->attributes; ai < mi->attributes + mi->attributes_count; ai++)
@@ -2362,18 +2363,18 @@ void execute_gvm(){
   } while (!empty(JvmStack));
 }
 
-method_info* find_main(ClassFile *cf){
+method_info* find_method(ClassFile *cf, char* method){
   // corrigir depois
   for (method_info *i = cf->methods; i < cf->methods + cf->methods_count; i++)
   {
     char *method_name = readUtf8(cf->constant_pool, i->name_index);
     // char *method_desc = readUtf8(cf->constant_pool, i->descriptor_index);
-    if (strcmp(method_name, "main") == 0)
+    if (strcmp(method_name, method) == 0)
     {
       return i;
     }
   }
-  printf("Nao achou a main! \n");
+  printf("Nao achou o methodo! \n");
   return NULL;
 }
 

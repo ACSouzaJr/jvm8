@@ -6,6 +6,7 @@
 
 int resolveMethod(cp_info *cp, u2 indice_cp, u1 interface);
 ClassFile* resolveClass(char* class_name);
+void nop_eval(Frame *f);
 void aconst_null_eval(Frame *f);
 void iconst_m1_eval(Frame *f);
 void iconst_0_eval(Frame *f);
@@ -167,7 +168,7 @@ void ifle_eval(Frame *f);
 void if_icmpeq_eval(Frame *f);
 void if_icmpne_eval(Frame *f);
 void if_icmplt_eval(Frame *f);
-void if_icmpg2_eval(Frame *f);
+void if_icmpge_eval(Frame *f);
 void if_icmpgt_eval(Frame *f);
 void if_icmple_eval(Frame *f);
 void if_acmpeq_eval(Frame *f);
