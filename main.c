@@ -23,6 +23,7 @@ Alunos: Nicholas Marques - 15/0019343
 #include "classfile.h"
 
 char *GLOBAL_ptr;
+ClassFile *GLOBAL_CLASS;
 u1 code_sep = 0;
 u1 name_or_type;
 char *FILE_NAME;
@@ -55,6 +56,7 @@ int main(int argc, char *argv[])
   GLOBAL_ptr = (char *)malloc(sizeof(char) * 100);
 
   read_class_file(cf, argv[1]);
+  GLOBAL_CLASS = cf;
   // fclose(pFile);
 
   if (strcmp(removeExtension(print_reference(cf->constant_pool, cf->attributes->info->SourceFile_attribute.sourcefile_index)), findNameFile(removeExtension(argv[1]))) == 0)
