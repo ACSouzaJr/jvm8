@@ -1675,8 +1675,18 @@ void getstatic_eval(Frame *f)
 void putstatic_eval(Frame *f)
 {
   u2 index = getIndexFromb1b2(f);
+  u2 nati = f->cp[index-1].Fieldref.name_and_type_index;
 
-  f->cp[index].Fieldref.name_and_type_index;
+  char *field_name = readUtf8(f->cp, f->cp[nati - 1].NameAndType.name_index);
+  char *field_desc = readUtf8(f->cp, f->cp[nati - 1].NameAndType.descriptor_index);
+  
+  // GLOBAL_CLASS->fields->attributes->info->
+  
+  // printf("magic: %04x\n",GLOBAL_CLASS->magic);
+
+  // LocalVariable * lv;
+
+  // lv = pop_operand(f->operands);
 }
 
 void getfield_eval(Frame *f)

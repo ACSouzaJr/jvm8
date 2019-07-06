@@ -449,4 +449,6 @@ typedef struct
   u2 num_classes;
 } Method;
 
+extern ClassFile *GLOBAL_CLASS;
+
 #endif
