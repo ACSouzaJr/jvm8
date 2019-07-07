@@ -2387,7 +2387,9 @@ u4 ClassLoader(char *class_name)
 	} else {
 		sprintf(GLOBAL_ptr, "./%s.class",class_name);
 	}
-  printf("%s", GLOBAL_ptr);
+  #ifdef DEBUG
+  printf("Loaded class: %s \n", GLOBAL_ptr);
+  #endif
   read_class_file(cf, GLOBAL_ptr);
   Mem.classes_arr[Mem.num_classes++] = cf;
   if (Mem.classes_arr[Mem.num_classes - 1] == NULL)
@@ -2396,4 +2398,22 @@ u4 ClassLoader(char *class_name)
     exit(0);
   }
   return Mem.num_classes - 1;
+}
+
+u2 find_class(char* class_name){
+  char *this_class;
+  for (size_t i = 0; i < Mem.num_classes; i++)
+  {
+    this_class = ret_method_name(Mem.classes_arr[i]->constant_pool, Mem.classes_arr[i]->this_class);
+    #ifdef DEBUG
+    printf("This class: %s \n", this_class);
+    #endif
+    if (strcmp(this_class, class_name) == 0)
+    {
+      return i;
+    }
+    
+  }
+  // Se nao encontrar a classe carrega na memoria;
+  return ClassLoader(class_name);
 }

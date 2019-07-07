@@ -1909,7 +1909,8 @@ void invokestatic_eval(Frame *f)
   printf("Argumentos %d", args);
 #endif
 
-  method_info *method = find_method(GLOBAL_CLASS, method_name);
+  u2 class_index = find_class(class_name);
+  method_info *method = find_method(Mem.classes_arr[class_index], method_name);
   Frame *frame = cria_frame(f->cp, method);
   // Adiciona argumestos
   // for (size_t i = args - 1; i >= 0; i--)
@@ -1936,7 +1937,14 @@ void invokedynamic_eval(Frame *f)
 
 void new_eval(Frame *f)
 {
-  //   push_operand();
+  u2 index = getIndexFromb1b2(f);
+  char *class_name = ret_method_name(f->cp, index);
+  u2 class_index = ClassLoader(class_name);
+  LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  lv->type = CONSTANT_Class;
+  lv->value = class_index;
+  // Empilha referencia para a classe no array de classes;
+  push_operand(lv,f->operands);
 }
 
 void newarray_eval(Frame *f)
