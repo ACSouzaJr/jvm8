@@ -2416,3 +2416,17 @@ u2 find_class(char* class_name){
   // Se nao encontrar a classe carrega na memoria;
   return ClassLoader(class_name);
 }
+
+field_info* find_field(ClassFile *cf, char *field_name, char* field_desc){
+  for (field_info* i = cf->fields; i < cf->fields + cf->fields_count; i++)
+  {
+    char* name = readUtf8(cf->constant_pool, i->name_index);
+    char* desc = readUtf8(cf->constant_pool, i->descriptor_index);
+    if (strcmp(name, field_name) == 0 && strcmp(desc, field_desc) == 0)
+    {
+      return i;
+    } 
+  }
+  printf("Nao achou o field! \n");
+  return NULL;
+}

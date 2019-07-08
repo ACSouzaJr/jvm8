@@ -358,7 +358,11 @@ void dload_eval(Frame *f)
 
 void aload_eval(Frame *f)
 {
-  //   push_operand();
+  u1 index = f->bytecode[f->pc++];
+  push_operand(&(f->local_variables[index]), f->operands);
+#ifdef DEBUG
+  printf("aload %d", f->local_variables[index].value);
+#endif
 }
 
 void iload_0_eval(Frame *f)
@@ -552,7 +556,6 @@ void aload_3_eval(Frame *f)
 
 void iaload_eval(Frame *f)
 {
-  // Incompleto
   LocalVariable *arrayref, *index, *lv;
   lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   index = pop_operand(f->operands);
@@ -587,7 +590,15 @@ void daload_eval(Frame *f)
 
 void aaload_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *arrayref, *index, *lv;
+  lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  index = pop_operand(f->operands);
+  arrayref = pop_operand(f->operands);
+
+  lv->value = ((u4 *)arrayref->type_array.array)[index->value];
+  lv->type = CONSTANT_Class;
+
+  push_operand(lv, f->operands);
 }
 
 void baload_eval(Frame *f)
@@ -662,7 +673,16 @@ void dstore_eval(Frame *f)
 
 void astore_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *aux;
+  aux = pop_operand(f->operands);
+  u1 index = f->bytecode[f->pc++];
+#ifdef DEBUG
+  printf("aux: %04x\n", aux->value);
+#endif
+  f->local_variables[index] = *aux;
+#ifdef DEBUG
+  printf("astore val: %04x\n", f->local_variables[index].value);
+#endif
 }
 
 void istore_0_eval(Frame *f)
@@ -879,7 +899,15 @@ void dstore_3_eval(Frame *f)
 
 void astore_0_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *aux;
+  aux = pop_operand(f->operands);
+#ifdef DEBUG
+  printf("aux: %04x\n", aux->value);
+#endif
+  f->local_variables[0] = *aux;
+#ifdef DEBUG
+  printf("astore_0 val: %04x\n", f->local_variables[0].value);
+#endif
 }
 
 void astore_1_eval(Frame *f)
@@ -891,18 +919,34 @@ void astore_1_eval(Frame *f)
 #endif
   f->local_variables[1] = *aux;
 #ifdef DEBUG
-  printf("istore_1 val: %04x\n", f->local_variables[1].value);
+  printf("astore_1 val: %04x\n", f->local_variables[1].value);
 #endif
 }
 
 void astore_2_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *aux;
+  aux = pop_operand(f->operands);
+#ifdef DEBUG
+  printf("aux: %04x\n", aux->value);
+#endif
+  f->local_variables[2] = *aux;
+#ifdef DEBUG
+  printf("astore_2 val: %04x\n", f->local_variables[2].value);
+#endif
 }
 
 void astore_3_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *aux;
+  aux = pop_operand(f->operands);
+#ifdef DEBUG
+  printf("aux: %04x\n", aux->value);
+#endif
+  f->local_variables[3] = *aux;
+#ifdef DEBUG
+  printf("astore_3 val: %04x\n", f->local_variables[3].value);
+#endif
 }
 
 void iastore_eval(Frame *f)
@@ -943,7 +987,17 @@ void dastore_eval(Frame *f)
 
 void aastore_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *arrayref, *index, *value;
+  value = pop_operand(f->operands);
+  index = pop_operand(f->operands);
+  arrayref = pop_operand(f->operands);
+
+  u4 *vetor;
+  vetor = (u4 *)arrayref->type_array.array;
+  vetor[index->value] = value->value;
+#ifdef DEBUG
+  printf("Referencia array: %d", ((u4 *)arrayref->type_array.array)[index->value]);
+#endif
 }
 
 void bastore_eval(Frame *f)
@@ -2129,11 +2183,11 @@ void ifeq_eval(Frame *f)
   printf("valor_ifeq_value: %d\n", value);
   if (value == 0)
   {
-    u1 branchbyte1, branchbyte2;
+    int16_t branchbyte1, branchbyte2;
     branchbyte1 = f->bytecode[f->pc++];
     branchbyte2 = f->bytecode[f->pc++];
 
-    u2 offset = ((branchbyte1 << 8) | branchbyte2);
+    int16_t offset = ((branchbyte1 << 8) | branchbyte2);
 
 #ifdef DEBUG
     printf("ifeq: vou pular %d\n", (offset - 3));
@@ -2151,11 +2205,11 @@ void ifne_eval(Frame *f)
   printf("valor_ifne_value: %d\n", value);
   if (value != 0)
   {
-    u1 branchbyte1, branchbyte2;
+    int16_t branchbyte1, branchbyte2;
     branchbyte1 = f->bytecode[f->pc++];
     branchbyte2 = f->bytecode[f->pc++];
 
-    u2 offset = ((branchbyte1 << 8) | branchbyte2);
+    int16_t offset = ((branchbyte1 << 8) | branchbyte2);
 
 #ifdef DEBUG
     printf("ifne: vou pular %d\n", (offset - 3));
@@ -2173,11 +2227,11 @@ void iflt_eval(Frame *f)
   printf("valor_iflt_value: %d\n", value);
   if (value < 0)
   {
-    u1 branchbyte1, branchbyte2;
+    int16_t branchbyte1, branchbyte2;
     branchbyte1 = f->bytecode[f->pc++];
     branchbyte2 = f->bytecode[f->pc++];
 
-    u2 offset = ((branchbyte1 << 8) | branchbyte2);
+    int16_t offset = ((branchbyte1 << 8) | branchbyte2);
 
 #ifdef DEBUG
     printf("iflt: vou pular %d\n", (offset - 3));
@@ -2195,11 +2249,11 @@ void ifge_eval(Frame *f)
   printf("valor_ifge_value: %d\n", value);
   if (value >= 0)
   {
-    u1 branchbyte1, branchbyte2;
+    int16_t branchbyte1, branchbyte2;
     branchbyte1 = f->bytecode[f->pc++];
     branchbyte2 = f->bytecode[f->pc++];
 
-    u2 offset = ((branchbyte1 << 8) | branchbyte2);
+    int16_t offset = ((branchbyte1 << 8) | branchbyte2);
 
 #ifdef DEBUG
     printf("ifge: vou pular %d\n", (offset - 3));
@@ -2217,11 +2271,11 @@ void ifgt_eval(Frame *f)
   printf("valor_ifgt_value: %d\n", value);
   if (value > 0)
   {
-    u1 branchbyte1, branchbyte2;
+    int16_t branchbyte1, branchbyte2;
     branchbyte1 = f->bytecode[f->pc++];
     branchbyte2 = f->bytecode[f->pc++];
 
-    u2 offset = ((branchbyte1 << 8) | branchbyte2);
+    int16_t offset = ((branchbyte1 << 8) | branchbyte2);
 
 #ifdef DEBUG
     printf("ifgt: vou pular %d\n", (offset - 3));
@@ -2239,11 +2293,11 @@ void ifle_eval(Frame *f)
   printf("valor_ifle_value: %d\n", value);
   if (value <= 0)
   {
-    u1 branchbyte1, branchbyte2;
+    int16_t branchbyte1, branchbyte2;
     branchbyte1 = f->bytecode[f->pc++];
     branchbyte2 = f->bytecode[f->pc++];
 
-    u2 offset = ((branchbyte1 << 8) | branchbyte2);
+    int16_t offset = ((branchbyte1 << 8) | branchbyte2);
 
 #ifdef DEBUG
     printf("ifle: vou pular %d\n", (offset - 3));
@@ -2255,7 +2309,7 @@ void ifle_eval(Frame *f)
 
 void if_icmpeq_eval(Frame *f)
 {
-  u1 branchbyte1, branchbyte2;
+  int16_t branchbyte1, branchbyte2;
   branchbyte1 = f->bytecode[f->pc++];
   branchbyte2 = f->bytecode[f->pc++];
 
@@ -2270,7 +2324,7 @@ void if_icmpeq_eval(Frame *f)
 
 void if_icmpne_eval(Frame *f)
 {
-  u1 branchbyte1, branchbyte2;
+  int16_t branchbyte1, branchbyte2;
   branchbyte1 = f->bytecode[f->pc++];
   branchbyte2 = f->bytecode[f->pc++];
 
@@ -2285,7 +2339,7 @@ void if_icmpne_eval(Frame *f)
 
 void if_icmplt_eval(Frame *f)
 {
-  u1 branchbyte1, branchbyte2;
+  int16_t branchbyte1, branchbyte2;
   branchbyte1 = f->bytecode[f->pc++];
   branchbyte2 = f->bytecode[f->pc++];
 
@@ -2300,7 +2354,7 @@ void if_icmplt_eval(Frame *f)
 
 void if_icmpge_eval(Frame *f)
 {
-  u1 branchbyte1, branchbyte2;
+  int16_t branchbyte1, branchbyte2;
   branchbyte1 = f->bytecode[f->pc++];
   branchbyte2 = f->bytecode[f->pc++];
 
@@ -2315,7 +2369,7 @@ void if_icmpge_eval(Frame *f)
 
 void if_icmpgt_eval(Frame *f)
 {
-  u1 branchbyte1, branchbyte2;
+  int16_t branchbyte1, branchbyte2;
   branchbyte1 = f->bytecode[f->pc++];
   branchbyte2 = f->bytecode[f->pc++];
 
@@ -2330,7 +2384,7 @@ void if_icmpgt_eval(Frame *f)
 
 void if_icmple_eval(Frame *f)
 {
-  u1 branchbyte1, branchbyte2;
+  int16_t branchbyte1, branchbyte2;
   branchbyte1 = f->bytecode[f->pc++];
   branchbyte2 = f->bytecode[f->pc++];
 
@@ -2355,7 +2409,7 @@ void if_acmpne_eval(Frame *f)
 
 void goto_eval(Frame *f)
 {
-  u1 branchbyte1, branchbyte2;
+  int16_t branchbyte1, branchbyte2;
   branchbyte1 = f->bytecode[f->pc++];
   branchbyte2 = f->bytecode[f->pc++];
 
@@ -2444,7 +2498,7 @@ void getstatic_eval(Frame *f)
 {
   u2 index = getIndexFromb1b2(f);
 
-  // recupera Utf8 da referencia do invokespecial
+  // recupera Utf8 da referencia
   char *class_name = ret_method_name(f->cp, index);
 
 #ifdef DEBUG
@@ -2536,7 +2590,30 @@ void putstatic_eval(Frame *f)
 
 void getfield_eval(Frame *f)
 {
-  //   push_operand();
+  u2 index = getIndexFromb1b2(f);
+  LocalVariable *lv = pop_operand(f->operands);
+
+  // Method Name and type
+  u2 name_n_type = f->cp[index - 1].Fieldref.name_and_type_index;
+
+  char *field_name = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.name_index);
+
+  char *field_desc = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.descriptor_index);
+
+#ifdef DEBUG
+  printf("get field name: %s\n", field_name);
+  printf("get field desc: %s\n", field_desc);
+#endif
+
+  ClassFile *cf = Mem.classes_arr[lv->value];
+
+  field_info *field = find_field(cf, field_name, field_desc);
+
+  lv->type = CONSTANT_Fieldref;
+  lv->value = *(u4 *)&field;
+
+  // EMpilha referencia para o field
+  push_operand(lv, f->operands);
 }
 
 void putfield_eval(Frame *f)
@@ -2914,12 +2991,30 @@ void multianewarray_eval(Frame *f)
 
 void ifnull_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *lv = pop_operand(f->operands);
+  int16_t branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
+
+  int16_t offset = ((branchbyte1 << 8) | branchbyte2);
+  if (!lv->value)
+  {
+    f->pc += offset - 3;
+  }
 }
 
 void ifnonnull_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *lv = pop_operand(f->operands);
+  int16_t branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
+
+  int16_t offset = ((branchbyte1 << 8) | branchbyte2);
+  if (lv->value)
+  {
+    f->pc += offset - 3;
+  }
 }
 
 void goto_w_eval(Frame *f)
