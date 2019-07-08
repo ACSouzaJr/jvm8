@@ -991,29 +991,110 @@ void dup_x2_eval(Frame *f)
   // se for cat1 => 1 3 2 1
   LocalVariable *dup_top1 = pop_operand(f->operands);
   LocalVariable *dup_top2 = pop_operand(f->operands);
-  LocalVariable *dup_top3 = pop_operand(f->operands);
-
-  push_operand(dup_top1, f->operands);
-  push_operand(dup_top3, f->operands);
-  push_operand(dup_top2, f->operands);
-  push_operand(dup_top1, f->operands);
 
   // se for cat2 -> implementar => 1 2 1
+  if((dup_top1->type != CONSTANT_Long && dup_top1->type != CONSTANT_Double)
+      && (dup_top2->type == CONSTANT_Long || dup_top2->type == CONSTANT_Double)
+    ) {
+    push_operand(dup_top1, f->operands);
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+  }
+  else {
+    LocalVariable *dup_top3 = pop_operand(f->operands);
+
+    push_operand(dup_top1, f->operands);
+    push_operand(dup_top3, f->operands);
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+  }
 }
 
 void dup2_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *dup_top1 = pop_operand(f->operands);
+  
+  // se for cat2 -> implementar => 1 2 1
+  if((dup_top1->type != CONSTANT_Long && dup_top1->type != CONSTANT_Double)
+      && (f->operands->top->type == CONSTANT_Long || f->operands->top->type == CONSTANT_Double)
+    ) {
+    push_operand(dup_top1, f->operands);
+    push_operand(dup_top1, f->operands);
+  }
+  else {
+    LocalVariable *dup_top2 = pop_operand(f->operands);
+
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+  }
 }
 
 void dup2_x1_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *dup_top1 = pop_operand(f->operands);
+  LocalVariable *dup_top2 = pop_operand(f->operands);
+  
+  // se for cat2 -> implementar => 1 2 1
+  if((dup_top1->type != CONSTANT_Long && dup_top1->type != CONSTANT_Double)
+      && (dup_top2->type == CONSTANT_Long && dup_top2->type == CONSTANT_Double)
+    ) {
+    push_operand(dup_top1, f->operands);
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+  }
+  else {
+    LocalVariable *dup_top3 = pop_operand(f->operands);
+
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+    push_operand(dup_top3, f->operands);
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+  }
 }
 
 void dup2_x2_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *dup_top1 = pop_operand(f->operands);
+  LocalVariable *dup_top2 = pop_operand(f->operands);
+  LocalVariable *dup_top3 = pop_operand(f->operands);
+  
+  // se for cat2 -> implementar => 1 2 1
+  if((dup_top1->type == CONSTANT_Long || dup_top1->type == CONSTANT_Double)
+      && (dup_top2->type != CONSTANT_Long && dup_top2->type != CONSTANT_Double)
+      && (dup_top3->type != CONSTANT_Long && dup_top3->type != CONSTANT_Double)){
+    push_operand(dup_top1, f->operands);
+    push_operand(dup_top3, f->operands);
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+  }
+  else if((dup_top1->type != CONSTANT_Long && dup_top1->type != CONSTANT_Double)
+      && (dup_top2->type != CONSTANT_Long && dup_top2->type != CONSTANT_Double)
+      && (dup_top3->type == CONSTANT_Long || dup_top3->type == CONSTANT_Double)) {
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+    push_operand(dup_top3, f->operands);
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+  }
+  else if((dup_top1->type != CONSTANT_Long && dup_top1->type != CONSTANT_Double)
+      && (dup_top2->type != CONSTANT_Long && dup_top2->type != CONSTANT_Double)){
+    push_operand(dup_top1, f->operands);
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+  }
+  else {
+    LocalVariable *dup_top4 = pop_operand(f->operands);
+
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+    push_operand(dup_top4, f->operands);
+    push_operand(dup_top3, f->operands);
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+  }
 }
 
 void swap_eval(Frame *f)
