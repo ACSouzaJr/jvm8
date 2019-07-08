@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <math.h>
 #include "structures.h"
 #include "frame.h"
 #include "stack_operands.h"
@@ -152,12 +153,26 @@ void fconst_2_eval(Frame *f)
 // push de um double constante para pilha de operandos (</> 0 ou 1)
 void dconst_0_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  double aux = 0.0;
+  lv->type = CONSTANT_Double;
+  lv->type_double = *(uint64_t *)&(aux);
+  push_operand(lv, f->operands);
+  #ifdef DEBUG
+    printf("dconst_0: %f\n",*(double *)&(lv->type_double));
+  #endif
 }
 
 void dconst_1_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  double aux = 1.0;
+  lv->type = CONSTANT_Double;
+  lv->type_double = *(uint64_t *)&(aux);
+  push_operand(lv, f->operands);
+  #ifdef DEBUG
+    printf("dconst_1: %f\n",*(double *)&(lv->type_double));
+  #endif
 }
 
 // push de um byte na pilha de operandos - o byte tem seu sinal extendido para um valor int
@@ -1158,7 +1173,34 @@ void fsub_eval(Frame *f)
 
 void dsub_eval(Frame *f)
 {
-  //   push_operand();
+  int64_t v1, v2;
+  double value1, value2, resultdouble;
+  LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  v2 = pop_operand(f->operands)->type_double;
+  v1 = pop_operand(f->operands)->type_double;
+  value1 = *(double *)&v1;
+  value2 = *(double *)&v2;
+  // memcpy(&value1, &v1, sizeof(double));
+  // memcpy(&value2, &v2, sizeof(double));
+  resultdouble = value1 - value2;
+  result->type = CONSTANT_Double;
+  // result->type_double = convertDoubleToBytes(&resultdouble);
+  //memcpy(&(result->type_double), &resultdouble, sizeof(uint64_t));
+  // result->type_double = *(uint64_t *)&resultdouble;
+  // result->type_double = *(uint64_t*)&((*(double *)&v1) + (*(double *)&v2));
+  result->type_double = *(uint64_t*)&resultdouble;
+  #ifdef DEBUG
+    printf("v1_double: %f \n", value1);
+  #endif
+  #ifdef DEBUG
+    printf("v2_double: %f \n", value2);
+    printf("result: %f \n", resultdouble);
+  #endif
+  #ifdef DEBUG
+    printf("resultado_double: %f\n", result->type_double);
+  #endif
+    push_operand(result, f->operands);
 }
 
 void imul_eval(Frame *f)
@@ -1233,7 +1275,34 @@ void fmul_eval(Frame *f)
 
 void dmul_eval(Frame *f)
 {
-  //   push_operand();
+  int64_t v1, v2;
+  double value1, value2, resultdouble;
+  LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  v2 = pop_operand(f->operands)->type_double;
+  v1 = pop_operand(f->operands)->type_double;
+  value1 = *(double *)&v1;
+  value2 = *(double *)&v2;
+  // memcpy(&value1, &v1, sizeof(double));
+  // memcpy(&value2, &v2, sizeof(double));
+  resultdouble = value1 * value2;
+  result->type = CONSTANT_Double;
+  // result->type_double = convertDoubleToBytes(&resultdouble);
+  //memcpy(&(result->type_double), &resultdouble, sizeof(uint64_t));
+  // result->type_double = *(uint64_t *)&resultdouble;
+  // result->type_double = *(uint64_t*)&((*(double *)&v1) + (*(double *)&v2));
+  result->type_double = *(uint64_t*)&resultdouble;
+  #ifdef DEBUG
+    printf("v1_double: %f \n", value1);
+  #endif
+  #ifdef DEBUG
+    printf("v2_double: %f \n", value2);
+    printf("result: %f \n", resultdouble);
+  #endif
+  #ifdef DEBUG
+    printf("resultado_double: %f\n", result->type_double);
+  #endif
+    push_operand(result, f->operands);
 }
 
 void idiv_eval(Frame *f)
@@ -1308,7 +1377,34 @@ void fdiv_eval(Frame *f)
 
 void ddiv_eval(Frame *f)
 {
-  //   push_operand();
+  int64_t v1, v2;
+  double value1, value2, resultdouble;
+  LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  v2 = pop_operand(f->operands)->type_double;
+  v1 = pop_operand(f->operands)->type_double;
+  value1 = *(double *)&v1;
+  value2 = *(double *)&v2;
+  // memcpy(&value1, &v1, sizeof(double));
+  // memcpy(&value2, &v2, sizeof(double));
+  resultdouble = value1 / value2;
+  result->type = CONSTANT_Double;
+  // result->type_double = convertDoubleToBytes(&resultdouble);
+  //memcpy(&(result->type_double), &resultdouble, sizeof(uint64_t));
+  // result->type_double = *(uint64_t *)&resultdouble;
+  // result->type_double = *(uint64_t*)&((*(double *)&v1) + (*(double *)&v2));
+  result->type_double = *(uint64_t*)&resultdouble;
+  #ifdef DEBUG
+    printf("v1_double: %f \n", value1);
+  #endif
+  #ifdef DEBUG
+    printf("v2_double: %f \n", value2);
+    printf("result: %f \n", resultdouble);
+  #endif
+  #ifdef DEBUG
+    printf("resultado_double: %f\n", result->type_double);
+  #endif
+    push_operand(result, f->operands);
 }
 
 void irem_eval(Frame *f)
@@ -1367,7 +1463,34 @@ void frem_eval(Frame *f)
 
 void drem_eval(Frame *f)
 {
-  //   push_operand();
+  int64_t v1, v2;
+  double value1, value2, resultdouble;
+  LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  v2 = pop_operand(f->operands)->type_double;
+  v1 = pop_operand(f->operands)->type_double;
+  value1 = *(double *)&v1;
+  value2 = *(double *)&v2;
+  // memcpy(&value1, &v1, sizeof(double));
+  // memcpy(&value2, &v2, sizeof(double));
+  resultdouble = fmod(value2, value1);
+  result->type = CONSTANT_Double;
+  // result->type_double = convertDoubleToBytes(&resultdouble);
+  //memcpy(&(result->type_double), &resultdouble, sizeof(uint64_t));
+  // result->type_double = *(uint64_t *)&resultdouble;
+  // result->type_double = *(uint64_t*)&((*(double *)&v1) + (*(double *)&v2));
+  result->type_double = *(uint64_t*)&resultdouble;
+  #ifdef DEBUG
+    printf("v1_double: %f \n", value1);
+  #endif
+  #ifdef DEBUG
+    printf("v2_double: %f \n", value2);
+    printf("result: %f \n", resultdouble);
+  #endif
+  #ifdef DEBUG
+    printf("resultado_double: %f\n", result->type_double);
+  #endif
+    push_operand(result, f->operands);
 }
 
 void ineg_eval(Frame *f)
