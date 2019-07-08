@@ -458,6 +458,9 @@ void dload_1_eval(Frame *f)
 {
   if (f->local_variables[1].type == CONSTANT_Double)
   {
+    #ifdef DEBUG
+      printf("DOUBLE TYPE\n");
+    #endif
     push_operand(&(f->local_variables[1]), f->operands);
   }
   else
@@ -790,7 +793,7 @@ void dstore_0_eval(Frame *f)
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
   #ifdef DEBUG
-    printf("aux: %04x\n", aux->type_double);
+    printf("aux: %08x\n", aux->type_double);
   #endif
   aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
 
@@ -798,7 +801,7 @@ void dstore_0_eval(Frame *f)
   aux_linha->type = CONSTANT_Double;
   f->local_variables[0] = *aux_linha;
   #ifdef DEBUG
-    printf("dstore_0 val: %04x\n", f->local_variables[0].type_double);
+    printf("dstore_0 val: %08x\n", f->local_variables[0].type_double);
   #endif
 }
 
@@ -807,7 +810,7 @@ void dstore_1_eval(Frame *f)
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
   #ifdef DEBUG
-    printf("aux: %04x\n", aux->type_double);
+    printf("aux: %08x\n", aux->type_double);
   #endif
   aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
 
@@ -815,7 +818,7 @@ void dstore_1_eval(Frame *f)
   aux_linha->type = CONSTANT_Double;
   f->local_variables[1] = *aux_linha;
   #ifdef DEBUG
-    printf("dstore_1 val: %04x\n", f->local_variables[1].type_double);
+    printf("dstore_1 val: %08x\n", f->local_variables[1].type_double);
   #endif
 }
 
@@ -824,7 +827,7 @@ void dstore_2_eval(Frame *f)
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
   #ifdef DEBUG
-    printf("aux: %04x\n", aux->type_double);
+    printf("aux: %08x\n", aux->type_double);
   #endif
   aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
 
@@ -832,7 +835,7 @@ void dstore_2_eval(Frame *f)
   aux_linha->type = CONSTANT_Double;
   f->local_variables[2] = *aux_linha;
   #ifdef DEBUG
-    printf("dstore_2 val: %04x\n", f->local_variables[2].type_double);
+    printf("dstore_2 val: %08x\n", f->local_variables[2].type_double);
   #endif
 }
 
@@ -841,7 +844,7 @@ void dstore_3_eval(Frame *f)
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
   #ifdef DEBUG
-    printf("aux: %04x\n", aux->type_double);
+    printf("aux: %08x\n", aux->type_double);
   #endif
   aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
 
@@ -849,7 +852,7 @@ void dstore_3_eval(Frame *f)
   aux_linha->type = CONSTANT_Double;
   f->local_variables[3] = *aux_linha;
   #ifdef DEBUG
-    printf("dstore_3 val: %04x\n", f->local_variables[3].type_double);
+    printf("dstore_3 val: %08x\n", f->local_variables[3].type_double);
   #endif
 }
 
@@ -1052,18 +1055,21 @@ void fadd_eval(Frame *f)
 
 void dadd_eval(Frame *f)
 {
-  double v1, v2;
+  int64_t v1, v2;
+  double value1, value2;
   LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
 
   v2 = pop_operand(f->operands)->type_double;
   v1 = pop_operand(f->operands)->type_double;
+  value1 = *(double *)&v1;
+  value2 = *(double *)&v2;
   result->type = CONSTANT_Double;
-  result->type_double = v1 + v2;
+  result->type_double = value1 + value2;
   #ifdef DEBUG
-    printf("v1_double: %04x\n", v1);
+    printf("v1_double: %08x\n", v1);
   #endif
   #ifdef DEBUG
-    printf("v2_double: %04x\n", v2);
+    printf("v2_double: %08x\n", v2);
   #endif
   #ifdef DEBUG
     printf("resultado_double: %08x\n", result->type_double);
