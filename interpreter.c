@@ -1074,7 +1074,7 @@ void dadd_eval(Frame *f)
     printf("v1_double: %f\n", value1);
   #endif
   #ifdef DEBUG
-    printf("v2_double: %08x\n", v2);
+    printf("v2_double: %08x\n", value2);
   #endif
   #ifdef DEBUG
     printf("resultado_double: %08x\n", result->type_double);
