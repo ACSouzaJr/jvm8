@@ -1788,11 +1788,63 @@ void fcmpg_eval(Frame *f)
 
 void dcmpl_eval(Frame *f)
 {
+  LocalVariable *v1, *v2, *lv;
+  uint64_t value1, value2;
+  v2 = pop_operand(f->operands);
+  v1 = pop_operand(f->operands);
+  lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  value1 = *(double *)&(v1->type_double);
+  value2 = *(double *)&(v2->type_double);
+  lv->type = CONSTANT_Double;
+  if (value1 > value2)
+  {
+    lv->value = 1;
+  }
+  else if (value1 == value2)
+  {
+    lv->value = 0;
+  }
+  else if (value1 < value2)
+  {
+    lv->value = -1;
+  }
+  else
+  {
+    lv->value = -1;
+  }
+  push_operand(lv, f->operands);
   //   push_operand();
 }
 
 void dcmpg_eval(Frame *f)
 {
+  LocalVariable *v1, *v2, *lv;
+  uint64_t value1, value2;
+  v2 = pop_operand(f->operands);
+  v1 = pop_operand(f->operands);
+  lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  value1 = *(double *)&(v1->type_double);
+  value2 = *(double *)&(v2->type_double);
+  lv->type = CONSTANT_Double;
+  if (value1 > value2)
+  {
+    lv->value = 1;
+  }
+  else if (value1 == value2)
+  {
+    lv->value = 0;
+  }
+  else if (value1 < value2)
+  {
+    lv->value = -1;
+  }
+  else
+  {
+    lv->value = 1;
+  }
+  push_operand(lv, f->operands);
   //   push_operand();
 }
 
@@ -1818,12 +1870,38 @@ void ifge_eval(Frame *f)
 
 void ifgt_eval(Frame *f)
 {
-  //   push_operand();
+  u4 value = pop_operand(f->operands)->value;
+  if(value > 0){
+    u1 branchbyte1, branchbyte2;
+    branchbyte1 = f->bytecode[f->pc++];
+    branchbyte2 = f->bytecode[f->pc++];
+
+    u2 offset = ((branchbyte1 << 8) | branchbyte2);
+  
+    f->pc += offset - 3;
+  }
 }
 
 void ifle_eval(Frame *f)
 {
-  //   push_operand();
+  u4 v1 = pop_operand(f->operands)->value;
+  printf("valor_ifle: %04x\n", v1);
+  int value = *(int *)&(v1);
+  printf("valor_ifle_value: %d\n", value);
+  if(value <= 0){
+    u1 branchbyte1, branchbyte2;
+    branchbyte1 = f->bytecode[f->pc++];
+    branchbyte2 = f->bytecode[f->pc++];
+
+    u2 offset = ((branchbyte1 << 8) | branchbyte2);
+
+    #ifdef DEBUG
+      printf("ifle: vou pular %d\n", (offset - 3));
+    #endif
+  
+    f->pc += offset - 3;
+  }
+  
 }
 
 void if_icmpeq_eval(Frame *f)
