@@ -5,7 +5,7 @@ public class short_cast{
 	public static void main(String args[]){
 		short a=0xFF;
 		/*l2d*/
-		double b=(double)a;
+		double b=(long)a;
 		/*l2f*/
 		float c=(float)a;
 		/*l2i*/

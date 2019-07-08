@@ -1311,20 +1311,31 @@ void iinc_eval(Frame *f)
 
 void i2l_eval(Frame *f)
 {
+  LocalVariable *long_val = (LocalVariable *)malloc(sizeof(LocalVariable));
   LocalVariable *alta = (LocalVariable *)malloc(sizeof(LocalVariable));
   LocalVariable *baixa = (LocalVariable *)malloc(sizeof(LocalVariable));
-  alta->type = CONSTANT_Integer;
-  alta->type = CONSTANT_Integer;
 
   int32_t val = pop_operand(f->operands);
 
-  int64_t long_val = (int64_t)val;
-  alta->value = long_val >> 32;
-  baixa->value = long_val & 0xffffffff;
-  
+  int64_t aux_val = (int64_t)val;
+  alta->value = aux_val >> 32;
+  baixa->value = aux_val & 0xffffffff;
+#ifdef DEBUG
+  printf("ALTA ==> %04x\n", alta->value);
+  printf("BAIXA ==> %04X\n", baixa->value);
+#endif
 
-  push_operand(alta, f->operands);
-  push_operand(baixa, f->operands);
+  long_val->type_long = alta->value + baixa->value;
+#ifdef DEBUG
+  printf("VALOR TOTAL ==>  %04x\n", long_val->type_long);
+#endif  
+  long_val->type = CONSTANT_Long;
+
+  long_val->type_long = (uint64_t)long_val->type_long; // faz o typecast
+
+  // push_operand(alta, f->operands);
+  // push_operand(baixa, f->operands);
+  push_operand(long_val, f->operands);
 }
 
 void i2f_eval(Frame *f)
