@@ -1395,12 +1395,21 @@ void l2f_eval(Frame *f)
 
 void l2d_eval(Frame *f)
 {
-  //   push_operand();
+  
 }
 
 void f2i_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *int_val = (LocalVariable *)malloc(sizeof(LocalVariable));
+  LocalVariable *float_val = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  float_val->value = pop_operand(f->operands);
+
+  memcpy(&int_val->value, &float_val->value, sizeof(int32_t));
+  int_val->value = (int32_t)float_val;
+  int_val->type = CONSTANT_Integer;
+
+  push_operand(int_val, f->operands);
 }
 
 void f2l_eval(Frame *f)
@@ -1430,17 +1439,35 @@ void d2f_eval(Frame *f)
 
 void i2b_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *byte_val = (LocalVariable *)malloc(sizeof(LocalVariable));
+  int32_t int_val = pop_operand(f->operands);
+
+  byte_val->value = (int8_t)int_val;
+  byte_val->type = CONSTANT_Integer;
+
+  push_operand((int32_t)byte_val->value, f->operands);
 }
 
 void i2c_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *char_val = (LocalVariable *)malloc(sizeof(LocalVariable));
+  int32_t int_val = pop_operand(f->operands);
+
+  char_val->value = (int16_t)char_val;
+  char_val->type = CONSTANT_String;
+
+  push_operand((int32_t)char_val->value, f->operands);
 }
 
 void i2s_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *string_val = (LocalVariable *)malloc(sizeof(LocalVariable));
+  int32_t int_val = pop_operand(f->operands);
+
+  string_val->value = (int16_t)string_val;
+  string_val->type = CONSTANT_String;
+
+  push_operand((int32_t)string_val->value, f->operands);
 }
 
 void lcmp_eval(Frame *f)
