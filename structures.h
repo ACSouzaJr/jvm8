@@ -6,7 +6,7 @@
 #define u1 uint8_t
 #define u2 uint16_t
 #define u4 uint32_t
-#define DEBUG
+// #define DEBUG
 
 extern char *GLOBAL_ptr;
 /**
