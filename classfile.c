@@ -2361,7 +2361,6 @@ void execute_gvm(){
     #endif
     op_codes_array[opcode].eval(current_frame);
   } while (!empty(JvmStack));
-  
 }
 
 method_info* find_method(ClassFile *cf, char* method){
@@ -2373,7 +2372,7 @@ method_info* find_method(ClassFile *cf, char* method){
     if (strcmp(method_name, method) == 0)
     {
       return i;
-    }  
+    }
   }
   printf("Nao achou o methodo! \n");
   return NULL;

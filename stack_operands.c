@@ -11,7 +11,6 @@ void push_operand(LocalVariable * operand, StackOperand *stack_operand){
     }
     else
     {
-    
         if (stack_operand == NULL)
         {
         }
@@ -23,15 +22,18 @@ void push_operand(LocalVariable * operand, StackOperand *stack_operand){
         }
     }
     #ifdef DEBUG
-    printf("Acabou de ser empilhado: %04x\n", stack_operand->top->f->value);
+    if(stack_operand->top->f->type == CONSTANT_Double){
+        printf("Acabou de ser empilhado doublemente: %f\n", *(double*)&stack_operand->top->f->type_double);
+    } else {
+        printf("Acabou de ser empilhado: %04x\n", stack_operand->top->f->value);
+    }
     #endif
     // return *stack_operand;
-} 
+}
 
 LocalVariable* pop_operand(StackOperand *stack_operand){
     LocalVariable *aux;
     Operand *ptr;
-    
     // Se o ponteiro for nulo faz nada
     if (stack_operand == NULL)
     {
