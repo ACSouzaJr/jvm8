@@ -594,7 +594,7 @@ void aaload_eval(Frame *f)
   lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
-  
+
   lv->value = ((u4 *)arrayref->type_array.array)[index->value];
   lv->type = CONSTANT_Class;
 
@@ -2498,7 +2498,7 @@ void getstatic_eval(Frame *f)
 {
   u2 index = getIndexFromb1b2(f);
 
-  // recupera Utf8 da referencia do invokespecial
+  // recupera Utf8 da referencia
   char *class_name = ret_method_name(f->cp, index);
 
 #ifdef DEBUG
@@ -2584,7 +2584,30 @@ void putstatic_eval(Frame *f)
 
 void getfield_eval(Frame *f)
 {
-  //   push_operand();
+  u2 index = getIndexFromb1b2(f);
+  LocalVariable *lv = pop_operand(f->operands);
+
+  // Method Name and type
+  u2 name_n_type = f->cp[index - 1].Fieldref.name_and_type_index;
+
+  char *field_name = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.name_index);
+
+  char *field_desc = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.descriptor_index);
+
+#ifdef DEBUG
+  printf("get field name: %s\n", field_name);
+  printf("get field desc: %s\n", field_desc);
+#endif
+
+  ClassFile *cf = Mem.classes_arr[lv->value];
+
+  field_info *field = find_field(cf, field_name, field_desc);
+
+  lv->type = CONSTANT_Fieldref;
+  lv->value = *(u4 *)&field;
+
+  // EMpilha referencia para o field
+  push_operand(lv, f->operands);
 }
 
 void putfield_eval(Frame *f)
