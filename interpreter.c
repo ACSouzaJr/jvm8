@@ -252,19 +252,45 @@ void ldc_w_eval(Frame *f)
 void ldc2_w_eval(Frame *f)
 {
   u2 index = getIndexFromb1b2(f);
-  u4 low = f->cp[index-1].Double.low_bytes;
-  u4 high = f->cp[index-1].Double.high_bytes;
-  #ifdef DEBUG
-    printf("low: %04x, high: %04x\n",low, high);
-  #endif
-  uint64_t total = (int64_t)high << 32 | (int64_t)low;
-  #ifdef DEBUG
-    printf("total: %04x \n", total);
-    printf("total: %f \n", *(double*)&total);
-  #endif
+  u4 low;
+  u4 high; 
+  uint64_t total;
   LocalVariable * lv = (LocalVariable *)malloc(sizeof(LocalVariable));
-  lv->type = CONSTANT_Double;
-  lv->type_double = total;
+
+  switch (f->cp[index-1].tag)
+  {
+  case CONSTANT_Double:
+    low = f->cp[index-1].Double.low_bytes;
+    high = f->cp[index-1].Double.high_bytes;
+    #ifdef DEBUG
+      printf("low: %04x, high: %04x\n",low, high);
+    #endif
+    total = (int64_t)high << 32 | (int64_t)low;
+    #ifdef DEBUG
+      printf("total: %04x \n", total);
+      printf("total: %f \n", *(double*)&total);
+    #endif
+    lv->type = CONSTANT_Double;
+    lv->type_double = total;
+    break;
+  case CONSTANT_Long:
+    low = f->cp[index-1].Long.low_bytes;
+    high = f->cp[index-1].Long.high_bytes;
+    #ifdef DEBUG
+      printf("low: %04x, high: %04x\n",low, high);
+    #endif
+    total = (int64_t)high << 32 | (int64_t)low;
+    #ifdef DEBUG
+      printf("total: %04x \n", total);
+      printf("total: %ld \n", *(long*)&total);
+    #endif
+    lv->type = CONSTANT_Long;
+    lv->type_double = total;
+    break;
+  
+  default:
+    break;
+  }
   push_operand(lv, f->operands);
   // uint8_t indice = f->bytecode[f->pc + 2];
 	// uint8_t tag = (f->cp[indice-1]).tag;
@@ -597,7 +623,7 @@ void lstore_eval(Frame *f)
   LocalVariable *lv = pop_operand(f->operands);
   f->local_variables[index] = *lv;
 #ifdef DEBUG
-  printf("lstore val: %04llx\n", f->local_variables[index].type_long);
+  printf("lstore val: %04lx\n", f->local_variables[index].type_long);
 #endif
 }
 
@@ -1018,7 +1044,7 @@ void iadd_eval(Frame *f)
 
 void ladd_eval(Frame *f)
 {
-  int64_t v1, v2;
+  uint64_t v1, v2;
   long value1, value2, resultlong;
   LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
 
@@ -1495,8 +1521,10 @@ void drem_eval(Frame *f)
 
 void ineg_eval(Frame *f)
 {
-  LocalVariable *result = pop_operand(f->operands);
-  result->value = -result->value;
+  LocalVariable *value = pop_operand(f->operands);
+  LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
+  result->type = CONSTANT_Integer;
+  result->value = -value->value;
 #ifdef DEBUG
   printf("value: %04x\n", result->value);
 #endif
@@ -1505,12 +1533,15 @@ void ineg_eval(Frame *f)
 
 void lneg_eval(Frame *f)
 {
-  LocalVariable *result = pop_operand(f->operands);
-  long result_long = *(long*)&result->type_long;
+  LocalVariable *value = pop_operand(f->operands);
+  LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  long result_long = *(long*)&value->type_long;
   result_long = -result_long;
+  result->type = CONSTANT_Long;
   result->type_long = *(uint64_t*)&result_long;
 #ifdef DEBUG
-  printf("type_long: %04x\n", result->type_long);
+  printf("type_long: %ld\n", result->type_long);
 #endif
   push_operand(result, f->operands);
 }
