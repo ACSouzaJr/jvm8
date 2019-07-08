@@ -1891,24 +1891,6 @@ void iinc_eval(Frame *f)
 
 void i2l_eval(Frame *f)
 {
-//   LocalVariable *long_val = (LocalVariable *)malloc(sizeof(LocalVariable));
-//   // LocalVariable *alta = (LocalVariable *)malloc(sizeof(LocalVariable));
-//   // LocalVariable *baixa = (LocalVariable *)malloc(sizeof(LocalVariable));
-//   int32_t val = pop_operand(f->operands);
-//   long val_long = val;
-
-// #ifdef DEBUG
-//   printf("BEFORE CAST ====> %04x\n", val_long);
-// #endif
-
-//   long_val->type_long = *(uint64_t *)&val_long;
-//   long_val->type = CONSTANT_Long;
-// #ifdef DEBUG
-//   printf("EM DECIMAL =====> %d\n", *(int *)&long_val->type_long);
-// #endif
-
-//   push_operand(long_val, f->operands);
-
   long val = (long ) pop_operand(f->operands)->value;
 
   LocalVariable *long_val = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -1923,10 +1905,6 @@ void i2f_eval(Frame *f)
 {
   float val = (float) pop_operand(f->operands)->value;
 
-#ifdef DEBUG
-  printf("VAL EM DECIMAL ====> %f\n", val);
-#endif
-
   LocalVariable *float_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
   memcpy(&float_val->value, &val, sizeof(uint32_t));
@@ -1937,23 +1915,14 @@ void i2f_eval(Frame *f)
 
 void i2d_eval(Frame *f)
 {
-  LocalVariable *alta = (LocalVariable *)malloc(sizeof(LocalVariable));
-  LocalVariable *baixa = (LocalVariable *)malloc(sizeof(LocalVariable));
-  int32_t int_val = pop_operand(f->operands);
+  double val = (double) pop_operand(f->operands)->value;
 
-  double double_val = (double)int_val;
+  LocalVariable *double_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  int64_t pilhaVal;
-  memcpy(&pilhaVal, &double_val, sizeof(int64_t));
+  memcpy(&double_val->value, &val, sizeof(uint64_t));
 
-  alta->value = pilhaVal >> 32;
-  baixa->value = pilhaVal & 0xffffffff;
-
-  alta->type = CONSTANT_Double;
-  baixa->type = CONSTANT_Double;
-
-  push_operand(alta, f->operands);
-  push_operand(baixa, f->operands);
+  double_val->type = CONSTANT_Double;
+  push_operand(double_val, f->operands);
 }
 
 void l2i_eval(Frame *f)

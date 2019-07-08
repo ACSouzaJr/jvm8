@@ -10,11 +10,13 @@ public class short_cast{
 		float c=(float)a;
 		/*l2i*/
 		int d=(int)a;
+		double e = (double)a;
 		
 		System.out.println(a);
 		System.out.println(b);
 		System.out.println(c);
 		System.out.println(d);
+		System.out.println(e);
 		
 		// b=(double)a;
 		/*l2f*/
