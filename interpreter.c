@@ -647,18 +647,14 @@ void dstore_eval(Frame *f)
 {
   u1 index = f->bytecode[f->pc++];
 
-  LocalVariable *aux, *aux_linha;
+  LocalVariable *aux;
   aux = pop_operand(f->operands);
 #ifdef DEBUG
   printf("aux: %04x\n", aux->type_double);
 #endif
-  aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
-
-  aux_linha->type_double = aux->type_double;
-  aux_linha->type = CONSTANT_Double;
-  f->local_variables[index] = *aux_linha;
+  f->local_variables[index] = *aux;
 #ifdef DEBUG
-  printf("fstore_0 val: %04x\n", f->local_variables[index].type_double);
+  printf("dstore val: %f\n", f->local_variables[index].type_double);
 #endif
 }
 
@@ -1614,8 +1610,8 @@ void fcmpg_eval(Frame *f)
 {
   LocalVariable *v1, *v2, *lv;
   u4 value1, value2;
-  v1 = pop_operand(f->operands);
   v2 = pop_operand(f->operands);
+  v1 = pop_operand(f->operands);
   lv = (LocalVariable *)malloc(sizeof(LocalVariable));
 
   value1 = v1->value;
