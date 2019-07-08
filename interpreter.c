@@ -191,12 +191,26 @@ void fconst_2_eval(Frame *f)
 // push de um double constante para pilha de operandos (</> 0 ou 1)
 void dconst_0_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  double aux = 0.0;
+  lv->type = CONSTANT_Double;
+  lv->type_double = *(uint64_t *)&(aux);
+  push_operand(lv, f->operands);
+  #ifdef DEBUG
+    printf("dconst_0: %f\n",*(double *)&(lv->type_double));
+  #endif
 }
 
 void dconst_1_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  double aux = 1.0;
+  lv->type = CONSTANT_Double;
+  lv->type_double = *(uint64_t *)&(aux);
+  push_operand(lv, f->operands);
+  #ifdef DEBUG
+    printf("dconst_1: %f\n",*(double *)&(lv->type_double));
+  #endif
 }
 
 // push de um byte na pilha de operandos - o byte tem seu sinal extendido para um valor int
