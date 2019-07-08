@@ -324,9 +324,9 @@ void dload_eval(Frame *f)
   }
   else
   {
-#ifdef DEBUG
-    printf("javax.persistence.PersistenceException\n");
-#endif
+  #ifdef DEBUG
+      printf("javax.persistence.PersistenceException\n");
+  #endif
     exit(0);
   }
 }
@@ -441,22 +441,62 @@ void fload_3_eval(Frame *f)
 
 void dload_0_eval(Frame *f)
 {
-  //   push_operand();
+  if (f->local_variables[0].type == CONSTANT_Double)
+  {
+    push_operand(&(f->local_variables[0]), f->operands);
+  }
+  else
+  {
+  #ifdef DEBUG
+      printf("javax.persistence.PersistenceException\n");
+  #endif
+    exit(0);
+  }
 }
 
 void dload_1_eval(Frame *f)
 {
-  //   push_operand();
+  if (f->local_variables[1].type == CONSTANT_Double)
+  {
+    push_operand(&(f->local_variables[1]), f->operands);
+  }
+  else
+  {
+  #ifdef DEBUG
+      printf("javax.persistence.PersistenceException\n");
+  #endif
+    exit(0);
+  }
 }
 
 void dload_2_eval(Frame *f)
 {
-  //   push_operand();
+  if (f->local_variables[2].type == CONSTANT_Double)
+  {
+    push_operand(&(f->local_variables[2]), f->operands);
+  }
+  else
+  {
+  #ifdef DEBUG
+      printf("javax.persistence.PersistenceException\n");
+  #endif
+    exit(0);
+  }
 }
 
 void dload_3_eval(Frame *f)
 {
-  //   push_operand();
+  if (f->local_variables[3].type == CONSTANT_Double)
+  {
+    push_operand(&(f->local_variables[3]), f->operands);
+  }
+  else
+  {
+  #ifdef DEBUG
+      printf("javax.persistence.PersistenceException\n");
+  #endif
+    exit(0);
+  }
 }
 
 void aload_0_eval(Frame *f)
@@ -747,22 +787,70 @@ void fstore_3_eval(Frame *f)
 
 void dstore_0_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *aux, *aux_linha;
+  aux = pop_operand(f->operands);
+  #ifdef DEBUG
+    printf("aux: %04x\n", aux->type_double);
+  #endif
+  aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  aux_linha->type_double = aux->type_double;
+  aux_linha->type = CONSTANT_Double;
+  f->local_variables[0] = *aux_linha;
+  #ifdef DEBUG
+    printf("dstore_0 val: %04x\n", f->local_variables[0].type_double);
+  #endif
 }
 
 void dstore_1_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *aux, *aux_linha;
+  aux = pop_operand(f->operands);
+  #ifdef DEBUG
+    printf("aux: %04x\n", aux->type_double);
+  #endif
+  aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  aux_linha->type_double = aux->type_double;
+  aux_linha->type = CONSTANT_Double;
+  f->local_variables[1] = *aux_linha;
+  #ifdef DEBUG
+    printf("dstore_1 val: %04x\n", f->local_variables[1].type_double);
+  #endif
 }
 
 void dstore_2_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *aux, *aux_linha;
+  aux = pop_operand(f->operands);
+  #ifdef DEBUG
+    printf("aux: %04x\n", aux->type_double);
+  #endif
+  aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  aux_linha->type_double = aux->type_double;
+  aux_linha->type = CONSTANT_Double;
+  f->local_variables[2] = *aux_linha;
+  #ifdef DEBUG
+    printf("dstore_2 val: %04x\n", f->local_variables[2].type_double);
+  #endif
 }
 
 void dstore_3_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *aux, *aux_linha;
+  aux = pop_operand(f->operands);
+  #ifdef DEBUG
+    printf("aux: %04x\n", aux->type_double);
+  #endif
+  aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  aux_linha->type_double = aux->type_double;
+  aux_linha->type = CONSTANT_Double;
+  f->local_variables[3] = *aux_linha;
+  #ifdef DEBUG
+    printf("dstore_3 val: %04x\n", f->local_variables[3].type_double);
+  #endif
 }
 
 void astore_0_eval(Frame *f)
@@ -970,7 +1058,7 @@ void dadd_eval(Frame *f)
   v2 = pop_operand(f->operands)->type_double;
   v1 = pop_operand(f->operands)->type_double;
   result->type = CONSTANT_Double;
-  result->value = v1 + v2;
+  result->type_double = v1 + v2;
   #ifdef DEBUG
     printf("v1_double: %04x\n", v1);
   #endif
@@ -978,7 +1066,7 @@ void dadd_eval(Frame *f)
     printf("v2_double: %04x\n", v2);
   #endif
   #ifdef DEBUG
-    printf("resultado_double: %04x\n", result->value);
+    printf("resultado_double: %08x\n", result->type_double);
   #endif
     push_operand(result, f->operands);
 }
