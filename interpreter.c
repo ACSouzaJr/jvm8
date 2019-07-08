@@ -909,9 +909,9 @@ void iastore_eval(Frame *f)
   vetor = (u4 *)arrayref->type_array.array;
   // (u4 *) arrayref->type_array.array[index->value] = value;
   vetor[index->value] = value->value;
-#ifdef DEBUG
-  printf("Referencia array: %d", ((u4 *)arrayref->type_array.array)[index->value]);
-#endif
+  #ifdef DEBUG
+    printf("Referencia array: %d", ((u4 *)arrayref->type_array.array)[index->value]);
+  #endif
 }
 
 void lastore_eval(Frame *f)
@@ -2462,9 +2462,9 @@ void getstatic_eval(Frame *f)
   if (strcmp(field_desc, "[I") == 0)
   {
 #ifdef DEBUG
-    printf("get static_data_low: %04x\n", GLOBAL_CLASS->fields->staticData->low[0]);
+    printf("get static_data_low: %04x\n", *(GLOBAL_CLASS->fields->staticData->low));
 #endif
-    lv->type_array.array = (u4 *)GLOBAL_CLASS->fields->staticData->low[0];
+    lv->type_array.array = (u4 *)GLOBAL_CLASS->fields->staticData->low;
     lv->type = CONSTANT_Fieldref;
     push_operand(lv, f->operands);
   }
@@ -2497,10 +2497,10 @@ void putstatic_eval(Frame *f)
     GLOBAL_CLASS->fields->staticData = (staticData *)malloc(sizeof(staticData));
     GLOBAL_CLASS->fields->staticData->low = (u4 *)malloc(sizeof(u4));
     GLOBAL_CLASS->fields->staticData->high = NULL;
-    GLOBAL_CLASS->fields->staticData->low[0] = lv->value;
+    GLOBAL_CLASS->fields->staticData->low = &(lv->value);
 
 #ifdef DEBUG
-    printf("put static_data_low: %04x\n", GLOBAL_CLASS->fields->staticData->low[0]);
+    printf("put static_data_low: %04x\n", *(GLOBAL_CLASS->fields->staticData->low));
 #endif
   }
   else if (strcmp(field_desc, "I") == 0)
@@ -2698,7 +2698,7 @@ void invokestatic_eval(Frame *f)
   Frame *frame = cria_frame(f->cp, method);
   // Adiciona argumestos
   // for (size_t i = args - 1; i >= 0; i--)
-  for (size_t i = 0; i <= args; i++)
+  for (size_t i = 0; i < args; i++)
   {
     frame->local_variables[i] = *(pop_operand(f->operands));
 #ifdef DEBUG
