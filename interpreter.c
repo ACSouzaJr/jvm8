@@ -1473,7 +1473,7 @@ void drem_eval(Frame *f)
   value2 = *(double *)&v2;
   // memcpy(&value1, &v1, sizeof(double));
   // memcpy(&value2, &v2, sizeof(double));
-  resultdouble = fmod(value2, value1);
+  // resultdouble = fmod(value2, value1);
   result->type = CONSTANT_Double;
   // result->type_double = convertDoubleToBytes(&resultdouble);
   //memcpy(&(result->type_double), &resultdouble, sizeof(uint64_t));
@@ -1724,7 +1724,7 @@ void land_eval(Frame *f)
   #endif
   #ifdef DEBUG
     printf("resultado_long: %ld \n", result->type_long);
-  #endif#endif
+  #endif
   push_operand(result, f->operands);
 }
 
