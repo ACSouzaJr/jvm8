@@ -2183,7 +2183,7 @@ void ifeq_eval(Frame *f)
   printf("valor_ifeq_value: %d\n", value);
   if (value == 0)
   {
-    int16_t branchbyte1, branchbyte2;
+    u1 branchbyte1, branchbyte2;
     branchbyte1 = f->bytecode[f->pc++];
     branchbyte2 = f->bytecode[f->pc++];
 
@@ -2205,7 +2205,7 @@ void ifne_eval(Frame *f)
   printf("valor_ifne_value: %d\n", value);
   if (value != 0)
   {
-    int16_t branchbyte1, branchbyte2;
+    u1 branchbyte1, branchbyte2;
     branchbyte1 = f->bytecode[f->pc++];
     branchbyte2 = f->bytecode[f->pc++];
 
@@ -2227,7 +2227,7 @@ void iflt_eval(Frame *f)
   printf("valor_iflt_value: %d\n", value);
   if (value < 0)
   {
-    int16_t branchbyte1, branchbyte2;
+    u1 branchbyte1, branchbyte2;
     branchbyte1 = f->bytecode[f->pc++];
     branchbyte2 = f->bytecode[f->pc++];
 
@@ -2249,7 +2249,7 @@ void ifge_eval(Frame *f)
   printf("valor_ifge_value: %d\n", value);
   if (value >= 0)
   {
-    int16_t branchbyte1, branchbyte2;
+    u1 branchbyte1, branchbyte2;
     branchbyte1 = f->bytecode[f->pc++];
     branchbyte2 = f->bytecode[f->pc++];
 
@@ -2271,7 +2271,7 @@ void ifgt_eval(Frame *f)
   printf("valor_ifgt_value: %d\n", value);
   if (value > 0)
   {
-    int16_t branchbyte1, branchbyte2;
+    u1 branchbyte1, branchbyte2;
     branchbyte1 = f->bytecode[f->pc++];
     branchbyte2 = f->bytecode[f->pc++];
 
@@ -2293,7 +2293,7 @@ void ifle_eval(Frame *f)
   printf("valor_ifle_value: %d\n", value);
   if (value <= 0)
   {
-    int16_t branchbyte1, branchbyte2;
+    u1 branchbyte1, branchbyte2;
     branchbyte1 = f->bytecode[f->pc++];
     branchbyte2 = f->bytecode[f->pc++];
 
@@ -2309,7 +2309,7 @@ void ifle_eval(Frame *f)
 
 void if_icmpeq_eval(Frame *f)
 {
-  int16_t branchbyte1, branchbyte2;
+  u1 branchbyte1, branchbyte2;
   branchbyte1 = f->bytecode[f->pc++];
   branchbyte2 = f->bytecode[f->pc++];
 
@@ -2324,7 +2324,7 @@ void if_icmpeq_eval(Frame *f)
 
 void if_icmpne_eval(Frame *f)
 {
-  int16_t branchbyte1, branchbyte2;
+  u1 branchbyte1, branchbyte2;
   branchbyte1 = f->bytecode[f->pc++];
   branchbyte2 = f->bytecode[f->pc++];
 
@@ -2339,7 +2339,7 @@ void if_icmpne_eval(Frame *f)
 
 void if_icmplt_eval(Frame *f)
 {
-  int16_t branchbyte1, branchbyte2;
+  u1 branchbyte1, branchbyte2;
   branchbyte1 = f->bytecode[f->pc++];
   branchbyte2 = f->bytecode[f->pc++];
 
@@ -2354,7 +2354,7 @@ void if_icmplt_eval(Frame *f)
 
 void if_icmpge_eval(Frame *f)
 {
-  int16_t branchbyte1, branchbyte2;
+  u1 branchbyte1, branchbyte2;
   branchbyte1 = f->bytecode[f->pc++];
   branchbyte2 = f->bytecode[f->pc++];
 
@@ -2369,7 +2369,7 @@ void if_icmpge_eval(Frame *f)
 
 void if_icmpgt_eval(Frame *f)
 {
-  int16_t branchbyte1, branchbyte2;
+  u1 branchbyte1, branchbyte2;
   branchbyte1 = f->bytecode[f->pc++];
   branchbyte2 = f->bytecode[f->pc++];
 
@@ -2384,7 +2384,7 @@ void if_icmpgt_eval(Frame *f)
 
 void if_icmple_eval(Frame *f)
 {
-  int16_t branchbyte1, branchbyte2;
+  u1 branchbyte1, branchbyte2;
   branchbyte1 = f->bytecode[f->pc++];
   branchbyte2 = f->bytecode[f->pc++];
 
@@ -2409,7 +2409,7 @@ void if_acmpne_eval(Frame *f)
 
 void goto_eval(Frame *f)
 {
-  int16_t branchbyte1, branchbyte2;
+  u1 branchbyte1, branchbyte2;
   branchbyte1 = f->bytecode[f->pc++];
   branchbyte2 = f->bytecode[f->pc++];
 
@@ -2992,7 +2992,7 @@ void multianewarray_eval(Frame *f)
 void ifnull_eval(Frame *f)
 {
   LocalVariable *lv = pop_operand(f->operands);
-  int16_t branchbyte1, branchbyte2;
+  u1 branchbyte1, branchbyte2;
   branchbyte1 = f->bytecode[f->pc++];
   branchbyte2 = f->bytecode[f->pc++];
 
@@ -3006,7 +3006,7 @@ void ifnull_eval(Frame *f)
 void ifnonnull_eval(Frame *f)
 {
   LocalVariable *lv = pop_operand(f->operands);
-  int16_t branchbyte1, branchbyte2;
+  u1 branchbyte1, branchbyte2;
   branchbyte1 = f->bytecode[f->pc++];
   branchbyte2 = f->bytecode[f->pc++];
 
