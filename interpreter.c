@@ -1709,8 +1709,18 @@ void getstatic_eval(Frame *f)
 #endif
     lv->type_array.array = (u4*)GLOBAL_CLASS->fields->staticData->low[0];
     lv->type = CONSTANT_Fieldref;
+
+#ifdef DEBUG
+    printf("==>>> DEBUG OPERAND IN GETSTATIC: %04x\n", f->operands);
+    printf("==>>> DEBUG LOCAL VARIABLE IN GETSTATIC: %04x\n", lv);
+#endif
+
     push_operand(lv, f->operands);
   }
+
+#ifdef DEBUG
+  print_stack_debug(f);
+#endif
 }
 
 void putstatic_eval(Frame *f)

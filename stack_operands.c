@@ -18,6 +18,9 @@ void push_operand(LocalVariable * operand, StackOperand *stack_operand){
         else
         {
             ptr->f = operand;
+            #ifdef DEBUG
+                printf("== OPERAND DEBUG INFO VALUE: %04x\n", ptr->f->value);
+            #endif
             ptr->pointer = (stack_operand->top);
             stack_operand->top = ptr;
         }

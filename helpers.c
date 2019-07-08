@@ -32,12 +32,15 @@ void print_stack_debug(Frame *f)
   printf("==================\n");
   printf("DEBUG: INFORMAÇÕES DO STACK DE OPERANDOS\n");
   printf("STACK TOP TYPE == %d\n", f->operands->top->f->type);
+  if(f->operands->top->f->type == 9) {
+    printf("     array ref: %04x\n", f->operands->top->f->value);
+  }
 
   while(next->f != NULL) {
     printf("STACK: %d\n", next->f->type);
 
     if(next->f->type == 9) {
-        printf("   array ref: %x\n", next->f);
+        printf("   array ref: %04x\n", next->f->value);
     }
 
     next = next->pointer;
