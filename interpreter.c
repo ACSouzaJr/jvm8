@@ -255,7 +255,18 @@ void ldc_w_eval(Frame *f)
 
 void ldc2_w_eval(Frame *f)
 {
-  //   push_operand();
+  uint8_t indice = f->bytecode[f->pc + 2];
+	uint8_t tag = (f->cp[indice-1]).tag;
+  if(tag == 5) {
+    uint32_t alta = f->cp[indice-1].info.Long.high_bytes;
+		uint32_t baixa = frameCorrente->constant_pool[indice-1].info.Long.low_bytes;
+		push(alta);
+		push(baixa);
+  }
+  if(tag == 6) {
+
+  }
+
 }
 
 // Load de um int vindo do vetor de variáveis locais - índice sem sinal
@@ -294,7 +305,19 @@ void fload_eval(Frame *f)
 
 void dload_eval(Frame *f)
 {
-  //   push_operand();
+  u1 index = f->bytecode[f->pc++];
+
+  if (f->local_variables[index].type == CONSTANT_Double)
+  {
+    push_operand(&(f->local_variables[index]), f->operands);
+  }
+  else
+  {
+#ifdef DEBUG
+    printf("javax.persistence.PersistenceException\n");
+#endif
+    exit(0);
+  }
 }
 
 void aload_eval(Frame *f)
@@ -541,7 +564,21 @@ void fstore_eval(Frame *f)
 
 void dstore_eval(Frame *f)
 {
-  //   push_operand();
+  u1 index = f->bytecode[f->pc++];
+
+  LocalVariable *aux, *aux_linha;
+  aux = pop_operand(f->operands);
+#ifdef DEBUG
+  printf("aux: %04x\n", aux->type_double);
+#endif
+  aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  aux_linha->type_double = aux->type_double;
+  aux_linha->type = CONSTANT_Double;
+  f->local_variables[index] = *aux_linha;
+#ifdef DEBUG
+  printf("fstore_0 val: %04x\n", f->local_variables[index].type_double);
+#endif
 }
 
 void astore_eval(Frame *f)
@@ -909,7 +946,23 @@ void fadd_eval(Frame *f)
 
 void dadd_eval(Frame *f)
 {
-  //   push_operand();
+  double v1, v2;
+  LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  v2 = pop_operand(f->operands)->type_double;
+  v1 = pop_operand(f->operands)->type_double;
+  result->type = CONSTANT_Double;
+  result->value = v1 + v2;
+  #ifdef DEBUG
+    printf("v1_double: %04x\n", v1);
+  #endif
+  #ifdef DEBUG
+    printf("v2_double: %04x\n", v2);
+  #endif
+  #ifdef DEBUG
+    printf("resultado_double: %04x\n", result->value);
+  #endif
+    push_operand(result, f->operands);
 }
 
 void isub_eval(Frame *f)
@@ -1640,7 +1693,13 @@ void freturn_eval(Frame *f)
 
 void dreturn_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *lv = pop_operand(f->operands);
+
+  pop(JvmStack);
+  if (!empty(JvmStack))
+  {
+    push_operand(lv, JvmStack->top->f->operands);
+  }
 }
 
 void areturn_eval(Frame *f)
