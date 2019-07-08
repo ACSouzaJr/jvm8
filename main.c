@@ -52,10 +52,10 @@ int main(int argc, char *argv[])
   // }
 
   init(); //inicia JvmStack
-  ClassFile *cf = (ClassFile *)malloc(sizeof(ClassFile));
   GLOBAL_ptr = (char *)malloc(sizeof(char) * 100);
 
-  read_class_file(cf, argv[1]);
+  // read_class_file(cf, argv[1]);
+  ClassFile *cf = Mem.classes_arr[ClassLoader(argv[1])];
   GLOBAL_CLASS = cf;
   // fclose(pFile);
 

@@ -9,6 +9,7 @@ Frame* pop(){
     // Se o ponteiro for nulo faz nada
     if (JvmStack ==  NULL)
     {
+      item = NULL;
     }
     else
     {

@@ -38,3 +38,4 @@ char *findNameFile(char *string);
 u4 ClassLoader(char *class_name);
 void execute_gvm();
 method_info* find_method(ClassFile *cf, char* method);
+u2 find_class(char* class_name);

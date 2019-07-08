@@ -49,7 +49,7 @@ class testeArray{
 		// vetdouble = new double[5];
 		int i;
 		for(i=0; i<5; i++){
-			vetint[i] = 10;
+			vetint[i] = 10 + i;
 			// vetlong[i] = 15;
 			// vetbyte[i] = 20;
 			// vetfloat[i] = 25.0F;

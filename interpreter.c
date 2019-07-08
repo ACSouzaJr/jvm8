@@ -53,8 +53,8 @@
 //   return 0;
 // }
 
-void nop_eval(Frame *f){
-  
+void nop_eval(Frame *f)
+{
 }
 
 // da um push NULL para a pilha de operandos
@@ -474,12 +474,16 @@ void aload_3_eval(Frame *f)
 void iaload_eval(Frame *f)
 {
   // Incompleto
-  LocalVariable *arrayref, *index, value;
+  LocalVariable *arrayref, *index, *lv;
+  lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
-  // value = arrayref->array_type[index->value];
+  // value.value = ((u4*)arrayref->type_array.array)[index->value];
+  lv->value = ((u4 *)arrayref->type_array.array)[index->value];
+  lv->type = CONSTANT_Integer;
+  // value.value = arrayref.value[index->value];
 
-  push_operand(&value, f->operands);
+  push_operand(lv, f->operands);
 }
 
 void laload_eval(Frame *f)
@@ -539,7 +543,7 @@ void lstore_eval(Frame *f)
   LocalVariable *lv = pop_operand(f->operands);
   f->local_variables[index] = *lv;
 #ifdef DEBUG
-  printf("lstore val: %04lx\n", f->local_variables[index].type_long);
+  printf("lstore val: %04llx\n", f->local_variables[index].type_long);
 #endif
 }
 
@@ -634,7 +638,7 @@ void lstore_0_eval(Frame *f)
   LocalVariable *lv = pop_operand(f->operands);
   f->local_variables[0] = *lv;
 #ifdef DEBUG
-  printf("lstore_0 val: %04lx\n", f->local_variables[0].type_long);
+  printf("lstore_0 val: %04llx\n", f->local_variables[0].type_long);
 #endif
 }
 
@@ -643,7 +647,7 @@ void lstore_1_eval(Frame *f)
   LocalVariable *lv = pop_operand(f->operands);
   f->local_variables[1] = *lv;
 #ifdef DEBUG
-  printf("lstore_1 val: %04lx\n", f->local_variables[1].type_long);
+  printf("lstore_1 val: %04llx\n", f->local_variables[1].type_long);
 #endif
 }
 
@@ -652,7 +656,7 @@ void lstore_2_eval(Frame *f)
   LocalVariable *lv = pop_operand(f->operands);
   f->local_variables[2] = *lv;
 #ifdef DEBUG
-  printf("lstore_2 val: %04lx\n", f->local_variables[2].type_long);
+  printf("lstore_2 val: %04llx\n", f->local_variables[2].type_long);
 #endif
 }
 
@@ -661,7 +665,7 @@ void lstore_3_eval(Frame *f)
   LocalVariable *lv = pop_operand(f->operands);
   f->local_variables[3] = *lv;
 #ifdef DEBUG
-  printf("lstore_3 val: %04lx\n", f->local_variables[3].type_long);
+  printf("lstore_3 val: %04llx\n", f->local_variables[3].type_long);
 #endif
 }
 
@@ -777,10 +781,13 @@ void iastore_eval(Frame *f)
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
 
-  // (u4 *) arrayref->value[index->value] = value;
-  u4 * array = (u4*) &arrayref->value;
-  array[index->value] = value->value;
-  printf("Referencia array: %d", array[index->value]);
+  u4 *vetor;
+  vetor = (u4 *)arrayref->type_array.array;
+  // (u4 *) arrayref->type_array.array[index->value] = value;
+  vetor[index->value] = value->value;
+#ifdef DEBUG
+  printf("Referencia array: %d", ((u4 *)arrayref->type_array.array)[index->value]);
+#endif
 }
 
 void lastore_eval(Frame *f)
@@ -1162,7 +1169,7 @@ void ineg_eval(Frame *f)
   LocalVariable *result = pop_operand(f->operands);
   result->value = -result->value;
 #ifdef DEBUG
-  printf("value: %04x\n", result);
+  printf("value: %04x\n", result->value);
 #endif
   push_operand(result, f->operands);
 }
@@ -1441,6 +1448,7 @@ void fcmpl_eval(Frame *f)
   u4 value1, value2;
   v1 = pop_operand(f->operands);
   v2 = pop_operand(f->operands);
+  lv = (LocalVariable *)malloc(sizeof(LocalVariable));
 
   value1 = v1->value;
   value2 = v2->value;
@@ -1471,6 +1479,7 @@ void fcmpg_eval(Frame *f)
   u4 value1, value2;
   v1 = pop_operand(f->operands);
   v2 = pop_operand(f->operands);
+  lv = (LocalVariable *)malloc(sizeof(LocalVariable));
 
   value1 = v1->value;
   value2 = v2->value;
@@ -1718,19 +1727,40 @@ void return_eval(Frame *f)
 void getstatic_eval(Frame *f)
 {
   u2 index = getIndexFromb1b2(f);
-  u2 nati = f->cp[index-1].Fieldref.name_and_type_index;
 
-  char *field_name = readUtf8(f->cp, f->cp[nati - 1].NameAndType.name_index);
+  // recupera Utf8 da referencia do invokespecial
+  char *class_name = ret_method_name(f->cp, index);
+
+#ifdef DEBUG
+  printf("nome da classe: %s\n", class_name);
+#endif
+#ifdef DEBUG
+// printf("local_variable_to_empilhar: %04x\n", f->local_variables[index].value);
+#endif
+  if (strcmp(class_name, "java/lang/System") == 0)
+  {
+    // push_operand(&(f->local_variables[index]), f->operands);
+    return;
+  }
+
+  u2 nati = f->cp[index - 1].Fieldref.name_and_type_index;
+
+  // char *field_name = readUtf8(f->cp, f->cp[nati - 1].NameAndType.name_index);
   char *field_desc = readUtf8(f->cp, f->cp[nati - 1].NameAndType.descriptor_index);
 
-  printf("field_name: %s\n",field_name);
-  printf("field_desc: %s\n",field_desc);
+#ifdef DEBUG
+  // printf("field_name: %s\n", field_name);
+  printf("field_desc: %s\n", field_desc);
+#endif
 
-  LocalVariable * lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  if(strcmp(field_name, "vetint") == 0){
-    printf("static_data_low: %04x\n", GLOBAL_CLASS->fields->staticData->low);
-    lv->value = GLOBAL_CLASS->fields->staticData->low;
+  if (strcmp(field_desc, "[I") == 0)
+  {
+#ifdef DEBUG
+    printf("get static_data_low: %04x\n", GLOBAL_CLASS->fields->staticData->low[0]);
+#endif
+    lv->type_array.array = (u4*)GLOBAL_CLASS->fields->staticData->low[0];
     lv->type = CONSTANT_Fieldref;
     push_operand(lv, f->operands);
   }
@@ -1739,27 +1769,46 @@ void getstatic_eval(Frame *f)
 void putstatic_eval(Frame *f)
 {
   u2 index = getIndexFromb1b2(f);
-  u2 nati = f->cp[index-1].Fieldref.name_and_type_index;
+  u2 nati = f->cp[index - 1].Fieldref.name_and_type_index;
 
-  char *field_name = readUtf8(f->cp, f->cp[nati - 1].NameAndType.name_index);
+  // char *field_name = readUtf8(f->cp, f->cp[nati - 1].NameAndType.name_index);
   char *field_desc = readUtf8(f->cp, f->cp[nati - 1].NameAndType.descriptor_index);
 
-  printf("field_name: %s\n",field_name);
-  printf("field_desc: %s\n",field_desc);
+#ifdef DEBUG
+  // printf("field_name: %s\n", field_name);
+  printf("field_desc: %s\n", field_desc);
+#endif
 
-  LocalVariable * lv;
+  LocalVariable *lv;
 
   lv = pop_operand(f->operands);
+  // lv = f->operands->top;
 
-  printf("lv_putstatic: %04x\n", lv->value);
+#ifdef DEBUG
+  printf("put lv_putstatic: %04x\n", lv->value);
+#endif
 
-  if(strcmp(field_name, "vetint") == 0){
-    GLOBAL_CLASS->fields->staticData = (staticData*)malloc(sizeof(staticData));
-    GLOBAL_CLASS->fields->staticData->low = (u4*) malloc(sizeof(u4));
+  if (strcmp(field_desc, "[I") == 0)
+  {
+    GLOBAL_CLASS->fields->staticData = (staticData *)malloc(sizeof(staticData));
+    GLOBAL_CLASS->fields->staticData->low = (u4 *)malloc(sizeof(u4));
     GLOBAL_CLASS->fields->staticData->high = NULL;
-    GLOBAL_CLASS->fields->staticData->low = lv->value;
+    GLOBAL_CLASS->fields->staticData->low[0] = lv->value;
 
-    printf("static_data_low: %04x\n", GLOBAL_CLASS->fields->staticData->low);
+#ifdef DEBUG
+    printf("put static_data_low: %04x\n", GLOBAL_CLASS->fields->staticData->low[0]);
+#endif
+  }
+  else if (strcmp(field_desc, "I") == 0)
+  {
+    GLOBAL_CLASS->fields->staticData = (staticData *)malloc(sizeof(staticData));
+    GLOBAL_CLASS->fields->staticData->low = (u4 *)malloc(sizeof(u4));
+    GLOBAL_CLASS->fields->staticData->high = NULL;
+    GLOBAL_CLASS->fields->staticData->low[0] = lv->value;
+
+#ifdef DEBUG
+    printf("put static_data_low: %04x\n", GLOBAL_CLASS->fields->staticData->low[0]);
+#endif
   }
 }
 
@@ -1803,6 +1852,7 @@ void invokevirtual_eval(Frame *f)
       }
       else if (strcmp(method_desc, "(I)V") == 0)
       {
+        // printf("PASSEI POR AQUI DE MOTO\n");
         int32_t value = lv->value;
         printf("%d \n", value);
       }
@@ -1894,33 +1944,41 @@ void invokestatic_eval(Frame *f)
 
   char *class_name = ret_method_name(f->cp, index);
 
-  if (class_name == "java/lang/Object") {
+  if (strcmp(class_name, "java/lang/Object") == 0)
+  {
     printf("Nao implementado ! \n");
     return;
-   }
+  }
 
   for (size_t i = 1; method_desc[i] != ')'; i++)
   {
-    if (method_desc[i] != '[')
+    if (method_desc[i] == '[')
     {
       continue;
     }
-    if(method_desc[i] == 'L') {
-      while(method_desc[++i] != ';');
+    if (method_desc[i] == 'L')
+    {
+      while (method_desc[++i] != ';')
+        ;
     }
     args++;
   }
 
-  #ifdef DEBUG
-    printf("Argumentos %d", args);
-  #endif
+#ifdef DEBUG
+  printf("Argumentos %d", args);
+#endif
 
-  method_info *method = find_method(GLOBAL_CLASS, method_name);
+  u2 class_index = find_class(class_name);
+  method_info *method = find_method(Mem.classes_arr[class_index], method_name);
   Frame *frame = cria_frame(f->cp, method);
   // Adiciona argumestos
-  for (size_t i = args - 1; i >= 0; i--)
+  // for (size_t i = args - 1; i >= 0; i--)
+  for (size_t i = 0; i <= args; i++)
   {
-    frame->local_variables[i] = *pop_operand(f->operands);
+    frame->local_variables[i] = *(pop_operand(f->operands));
+#ifdef DEBUG
+    printf("DEBUG DE VERDADE:  ==== %04x\n", frame->local_variables[i].value);
+#endif
   }
 
   push(frame);
@@ -1938,7 +1996,14 @@ void invokedynamic_eval(Frame *f)
 
 void new_eval(Frame *f)
 {
-  //   push_operand();
+  u2 index = getIndexFromb1b2(f);
+  char *class_name = ret_method_name(f->cp, index);
+  u2 class_index = ClassLoader(class_name);
+  LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  lv->type = CONSTANT_Class;
+  lv->value = class_index;
+  // Empilha referencia para a classe no array de classes;
+  push_operand(lv,f->operands);
 }
 
 void newarray_eval(Frame *f)
@@ -1955,9 +2020,9 @@ void newarray_eval(Frame *f)
 
   if (count < 0)
   {
-  #ifdef DEBUG
-      printf("NegativeArraySizeException.\n");
-  #endif
+#ifdef DEBUG
+    printf("NegativeArraySizeException.\n");
+#endif
   }
   else
   {
@@ -1995,8 +2060,15 @@ void newarray_eval(Frame *f)
     case T_INT:
       rlv->type = CONSTANT_Integer;
       arrayref = (u4 *)malloc((count) * sizeof(u4));
-      rlv->type_array.array = arrayref;
+#ifdef DEBUG
+      printf("array ref: %x \n", (u4)arrayref);
+#endif
+      rlv->type_array.array = (u4 *)arrayref;
       rlv->type_array.size = count;
+#ifdef DEBUG
+      printf("array type: %x \n", (u4)(rlv->type_array.array));
+      printf("rlv type: %x \n", rlv->type);
+#endif
       // int return_array[count];
       break;
     case T_LONG:
@@ -2014,7 +2086,7 @@ void newarray_eval(Frame *f)
 
 void anewarray_eval(Frame *f)
 {
-  u2 index = getIndexFromb1b2(f);
+  // u2 index = getIndexFromb1b2(f);
 }
 
 void arraylength_eval(Frame *f)
