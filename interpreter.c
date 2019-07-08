@@ -13,46 +13,6 @@
 #define mantiss(x) ((x << 9) >> 9)
 #define signal(x) (x >> 31)
 
-// ClassFile *resolveClass(char *class_name)
-// {
-//   // classesCarregadas *c = BuscarElemento_classes(jvm->classes,class_name);
-//   // ClassFile *classe = NULL;
-
-//   // if(c!=NULL){
-//   // 	return c->arquivoClass;
-//   // }
-//   // else{
-//   // 	char *nomearquivo = malloc((strlen(class_name)+7)*sizeof(char));
-//   // 	strcpy(nomearquivo,class_name);
-//   // 	strcat(nomearquivo,".class");
-//   // 	classe = lerArquivo(nomearquivo);
-//   // 	jvm->classes = InserirFim_classes(jvm->classes,classe);
-//   // }
-
-//   // return(classe);
-// }
-
-// int resolveMethod(cp_info *cp, u2 indice_cp, u1 interface)
-// {
-
-//   // cp_info *methodref = cp-1+indice_cp;
-//   // char *class_name = NULL;
-//   // if(!interface){
-//   // 	class_name = decodificaNIeNT(cp,methodref->UnionCP.Methodref.class_index,NAME_INDEX);;
-//   // }
-//   // else{
-//   // 	class_name = decodificaNIeNT(cp,methodref->UnionCP.InterfaceMethodref.class_index,NAME_INDEX);
-//   // }
-
-//   // if(resolveClass(class_name)!=NULL){
-//   // 	return 1;
-//   // }
-//   // else{
-//   // 	return 0;
-//   // }
-//   return 0;
-// }
-
 u2 count_args(char *method_desc)
 {
   u2 args = 0;
@@ -150,7 +110,8 @@ void lconst_0_eval(Frame *f)
 {
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Long;
-  lv->type_long = 0;
+  long value = 0;
+  lv->type_long = *(uint64_t *)&value;
   push_operand(lv, f->operands);
 }
 
@@ -158,7 +119,8 @@ void lconst_1_eval(Frame *f)
 {
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Long;
-  lv->type_long = 1;
+  long value = 1;
+  lv->type_long = *(uint64_t *)&value;
   push_operand(lv, f->operands);
 }
 
