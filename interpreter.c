@@ -1927,13 +1927,14 @@ void i2d_eval(Frame *f)
 
 void l2i_eval(Frame *f)
 {
-  LocalVariable *alta = (LocalVariable *)malloc(sizeof(LocalVariable));
-  LocalVariable *baixa = (LocalVariable *)malloc(sizeof(LocalVariable));
+  int val = (int) pop_operand(f->operands)->value;
 
-  alta->value = pop_operand(f->operands);
-  baixa->value = pop_operand(f->operands);
+  LocalVariable *int_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  push_operand(baixa, f->operands);
+  memcpy(&int_val->value, &val, sizeof(uint32_t));
+
+  int_val->type = CONSTANT_Integer;
+  push_operand(int_val, f->operands);
 }
 
 void l2f_eval(Frame *f)
