@@ -261,7 +261,11 @@ void ldc2_w_eval(Frame *f)
   #ifdef DEBUG
     printf("low: %04x, high: %04x\n",low, high);
   #endif
-  int64_t total = (high<<32 | low);
+  uint64_t total = (int64_t)high << 32 | (int64_t)low;
+  #ifdef DEBUG
+    printf("total: %04x \n", total);
+    printf("total: %f \n", *(double*)&total);
+  #endif
   LocalVariable * lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Double;
   lv->type_double = total;
@@ -1055,29 +1059,32 @@ void fadd_eval(Frame *f)
 
 void dadd_eval(Frame *f)
 {
-  uint64_t v1, v2;
+  int64_t v1, v2;
   double value1, value2, resultdouble;
   LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
 
   v2 = pop_operand(f->operands)->type_double;
   v1 = pop_operand(f->operands)->type_double;
-  // value1 = *(double *)&v1;
-  // value2 = *(double *)&v2;
-  memcpy(&value1, &v1, sizeof(double));
-  memcpy(&value2, &v2, sizeof(double));
+  value1 = *(double *)&v1;
+  value2 = *(double *)&v2;
+  // memcpy(&value1, &v1, sizeof(double));
+  // memcpy(&value2, &v2, sizeof(double));
   resultdouble = value1 + value2;
   result->type = CONSTANT_Double;
-  result->type_double = convertDoubleToBytes(&resultdouble);
+  // result->type_double = convertDoubleToBytes(&resultdouble);
   //memcpy(&(result->type_double), &resultdouble, sizeof(uint64_t));
   // result->type_double = *(uint64_t *)&resultdouble;
+  // result->type_double = *(uint64_t*)&((*(double *)&v1) + (*(double *)&v2));
+  result->type_double = *(uint64_t*)&resultdouble;
   #ifdef DEBUG
-    printf("v1_double: %f\n", value1);
+    printf("v1_double: %f \n", value1);
   #endif
   #ifdef DEBUG
-    printf("v2_double: %08x\n", v2);
+    printf("v2_double: %f \n", value2);
+    printf("result: %f \n", resultdouble);
   #endif
   #ifdef DEBUG
-    printf("resultado_double: %08x\n", result->type_double);
+    printf("resultado_double: %f\n", result->type_double);
   #endif
     push_operand(result, f->operands);
 }
