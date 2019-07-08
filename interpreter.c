@@ -456,7 +456,7 @@ void saload_eval(Frame *f)
   //   push_operand();
 }
 
-// recupera um valor int da op_stack e da store desse operando na pilha de var_locais
+// recupera um valor int da op_stack e da store desse operando no vetor de var_locais
 void istore_eval(Frame *f)
 {
   u1 index = f->bytecode[f->pc++];

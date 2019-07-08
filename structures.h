@@ -359,6 +359,7 @@ typedef union {
     u2 local_variable_table_length;
     Local_variable_table *local_variable_table; // [local_variable_table_length];
   } LocalVariableTable_attribute;
+  
   struct
   {
     u2 num_bootstrap_methods;
