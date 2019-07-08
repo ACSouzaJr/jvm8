@@ -1311,27 +1311,86 @@ void iinc_eval(Frame *f)
 
 void i2l_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *alta = (LocalVariable *)malloc(sizeof(LocalVariable));
+  LocalVariable *baixa = (LocalVariable *)malloc(sizeof(LocalVariable));
+  alta->type = CONSTANT_Integer;
+  alta->type = CONSTANT_Integer;
+
+  int32_t val = pop_operand(f->operands);
+
+  int64_t long_val = (int64_t)val;
+  alta->value = long_val >> 32;
+  baixa->value = long_val & 0xffffffff;
+  
+
+  push_operand(alta, f->operands);
+  push_operand(baixa, f->operands);
 }
 
 void i2f_eval(Frame *f)
 {
-  //   push_operand();
+  int32_t val = (int32_t) pop_operand(f->operands);
+  LocalVariable *float_val = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  float aux = (float)val;
+
+  memcpy(&float_val->value, &aux, sizeof(int32_t));
+
+  float_val->type = CONSTANT_Float;
+  push_operand(float_val, f->operands);
 }
 
 void i2d_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *alta = (LocalVariable *)malloc(sizeof(LocalVariable));
+  LocalVariable *baixa = (LocalVariable *)malloc(sizeof(LocalVariable));
+  int32_t int_val = pop_operand(f->operands);
+
+  double double_val = (double)int_val;
+
+  int64_t pilhaVal;
+  memcpy(&pilhaVal, &double_val, sizeof(int64_t));
+
+  alta->value = pilhaVal >> 32;
+  baixa->value = pilhaVal & 0xffffffff;
+
+  alta->type = CONSTANT_Double;
+  baixa->type = CONSTANT_Double;
+
+  push_operand(alta, f->operands);
+  push_operand(baixa, f->operands);
 }
 
 void l2i_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *alta = (LocalVariable *)malloc(sizeof(LocalVariable));
+  LocalVariable *baixa = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  alta->value = pop_operand(f->operands);
+  baixa->value = pop_operand(f->operands);
+
+  push_operand(baixa, f->operands);
 }
 
 void l2f_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *alta = (LocalVariable *)malloc(sizeof(LocalVariable));
+  LocalVariable *baixa = (LocalVariable *)malloc(sizeof(LocalVariable));
+  LocalVariable *float_val = (LocalVariable *)malloc(sizeof(LocalVariable));
+  float aux_float_val;
+
+  alta->value = pop_operand(f->operands);
+  baixa->value = pop_operand(f->operands);
+
+  int64_t long_val = alta;
+  long_val <<= 32;
+  long_val = long_val | baixa->value;
+  aux_float_val = (float)long_val;
+
+  memcpy(&float_val->value, &aux_float_val, sizeof(int32_t));
+  float_val->type = CONSTANT_Float;
+
+  push_operand(float_val, f->operands);
 }
 
 void l2d_eval(Frame *f)
