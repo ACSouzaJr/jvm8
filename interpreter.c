@@ -747,10 +747,6 @@ void iastore_eval(Frame *f)
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
 
-#ifdef DEBUG
-  printf("array ref (dentro do iastore): %x \n", (u4)arrayref);
-#endif
-
   u4 *vetor;
   vetor = (u4 *)arrayref->type_array.array;
   // (u4 *) arrayref->type_array.array[index->value] = value;
@@ -869,6 +865,9 @@ void swap_eval(Frame *f)
 
 void iadd_eval(Frame *f)
 {
+#ifdef DEBUG
+  print_stack_debug(f); // printa o que está no stack de operandos
+#endif
   int32_t v1, v2;
   LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
 
