@@ -274,7 +274,33 @@ void ldc_w_eval(Frame *f)
 
 void ldc2_w_eval(Frame *f)
 {
-  //   push_operand();
+  u2 index = getIndexFromb1b2(f);
+  u4 low = f->cp[index-1].Double.low_bytes;
+  u4 high = f->cp[index-1].Double.high_bytes;
+  #ifdef DEBUG
+    printf("low: %04x, high: %04x\n",low, high);
+  #endif
+  uint64_t total = (int64_t)high << 32 | (int64_t)low;
+  #ifdef DEBUG
+    printf("total: %04x \n", total);
+    printf("total: %f \n", *(double*)&total);
+  #endif
+  LocalVariable * lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  lv->type = CONSTANT_Double;
+  lv->type_double = total;
+  push_operand(lv, f->operands);
+  // uint8_t indice = f->bytecode[f->pc + 2];
+	// uint8_t tag = (f->cp[indice-1]).tag;
+  // if(tag == 5) {
+  //   uint32_t alta = f->cp[indice-1].info.Long.high_bytes;
+	// 	uint32_t baixa = frameCorrente->constant_pool[indice-1].info.Long.low_bytes;
+	// 	push(alta);
+	// 	push(baixa);
+  // }
+  // if(tag == 6) {
+
+  // }
+
 }
 
 // Load de um int vindo do vetor de variáveis locais - índice sem sinal
@@ -313,7 +339,19 @@ void fload_eval(Frame *f)
 
 void dload_eval(Frame *f)
 {
-  //   push_operand();
+  u1 index = f->bytecode[f->pc++];
+
+  if (f->local_variables[index].type == CONSTANT_Double)
+  {
+    push_operand(&(f->local_variables[index]), f->operands);
+  }
+  else
+  {
+  #ifdef DEBUG
+      printf("javax.persistence.PersistenceException\n");
+  #endif
+    exit(0);
+  }
 }
 
 void aload_eval(Frame *f)
@@ -426,22 +464,65 @@ void fload_3_eval(Frame *f)
 
 void dload_0_eval(Frame *f)
 {
-  //   push_operand();
+  if (f->local_variables[0].type == CONSTANT_Double)
+  {
+    push_operand(&(f->local_variables[0]), f->operands);
+  }
+  else
+  {
+  #ifdef DEBUG
+      printf("javax.persistence.PersistenceException\n");
+  #endif
+    exit(0);
+  }
 }
 
 void dload_1_eval(Frame *f)
 {
-  //   push_operand();
+  if (f->local_variables[1].type == CONSTANT_Double)
+  {
+    #ifdef DEBUG
+      printf("DOUBLE TYPE\n");
+    #endif
+    push_operand(&(f->local_variables[1]), f->operands);
+  }
+  else
+  {
+  #ifdef DEBUG
+      printf("javax.persistence.PersistenceException\n");
+  #endif
+    exit(0);
+  }
 }
 
 void dload_2_eval(Frame *f)
 {
-  //   push_operand();
+  if (f->local_variables[2].type == CONSTANT_Double)
+  {
+    push_operand(&(f->local_variables[2]), f->operands);
+  }
+  else
+  {
+  #ifdef DEBUG
+      printf("javax.persistence.PersistenceException\n");
+  #endif
+    exit(0);
+  }
 }
 
 void dload_3_eval(Frame *f)
 {
-  //   push_operand();
+  if (f->local_variables[3].type == CONSTANT_Double)
+  {
+    push_operand(&(f->local_variables[3]), f->operands);
+  }
+  else
+  {
+  #ifdef DEBUG
+      printf("javax.persistence.PersistenceException\n");
+  #endif
+    exit(0);
+  }
 }
 
 void aload_0_eval(Frame *f)
@@ -564,7 +645,21 @@ void fstore_eval(Frame *f)
 
 void dstore_eval(Frame *f)
 {
-  //   push_operand();
+  u1 index = f->bytecode[f->pc++];
+
+  LocalVariable *aux, *aux_linha;
+  aux = pop_operand(f->operands);
+#ifdef DEBUG
+  printf("aux: %04x\n", aux->type_double);
+#endif
+  aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  aux_linha->type_double = aux->type_double;
+  aux_linha->type = CONSTANT_Double;
+  f->local_variables[index] = *aux_linha;
+#ifdef DEBUG
+  printf("fstore_0 val: %04x\n", f->local_variables[index].type_double);
+#endif
 }
 
 void astore_eval(Frame *f)
@@ -718,22 +813,70 @@ void fstore_3_eval(Frame *f)
 
 void dstore_0_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *aux, *aux_linha;
+  aux = pop_operand(f->operands);
+  #ifdef DEBUG
+    printf("aux: %08x\n", aux->type_double);
+  #endif
+  aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  aux_linha->type_double = aux->type_double;
+  aux_linha->type = CONSTANT_Double;
+  f->local_variables[0] = *aux_linha;
+  #ifdef DEBUG
+    printf("dstore_0 val: %08x\n", f->local_variables[0].type_double);
+  #endif
 }
 
 void dstore_1_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *aux, *aux_linha;
+  aux = pop_operand(f->operands);
+  #ifdef DEBUG
+    printf("aux: %08x\n", aux->type_double);
+  #endif
+  aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  aux_linha->type_double = aux->type_double;
+  aux_linha->type = CONSTANT_Double;
+  f->local_variables[1] = *aux_linha;
+  #ifdef DEBUG
+    printf("dstore_1 val: %08x\n", f->local_variables[1].type_double);
+  #endif
 }
 
 void dstore_2_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *aux, *aux_linha;
+  aux = pop_operand(f->operands);
+  #ifdef DEBUG
+    printf("aux: %08x\n", aux->type_double);
+  #endif
+  aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  aux_linha->type_double = aux->type_double;
+  aux_linha->type = CONSTANT_Double;
+  f->local_variables[2] = *aux_linha;
+  #ifdef DEBUG
+    printf("dstore_2 val: %08x\n", f->local_variables[2].type_double);
+  #endif
 }
 
 void dstore_3_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *aux, *aux_linha;
+  aux = pop_operand(f->operands);
+  #ifdef DEBUG
+    printf("aux: %08x\n", aux->type_double);
+  #endif
+  aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  aux_linha->type_double = aux->type_double;
+  aux_linha->type = CONSTANT_Double;
+  f->local_variables[3] = *aux_linha;
+  #ifdef DEBUG
+    printf("dstore_3 val: %08x\n", f->local_variables[3].type_double);
+  #endif
 }
 
 void astore_0_eval(Frame *f)
@@ -936,7 +1079,34 @@ void fadd_eval(Frame *f)
 
 void dadd_eval(Frame *f)
 {
-  //   push_operand();
+  int64_t v1, v2;
+  double value1, value2, resultdouble;
+  LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  v2 = pop_operand(f->operands)->type_double;
+  v1 = pop_operand(f->operands)->type_double;
+  value1 = *(double *)&v1;
+  value2 = *(double *)&v2;
+  // memcpy(&value1, &v1, sizeof(double));
+  // memcpy(&value2, &v2, sizeof(double));
+  resultdouble = value1 + value2;
+  result->type = CONSTANT_Double;
+  // result->type_double = convertDoubleToBytes(&resultdouble);
+  //memcpy(&(result->type_double), &resultdouble, sizeof(uint64_t));
+  // result->type_double = *(uint64_t *)&resultdouble;
+  // result->type_double = *(uint64_t*)&((*(double *)&v1) + (*(double *)&v2));
+  result->type_double = *(uint64_t*)&resultdouble;
+  #ifdef DEBUG
+    printf("v1_double: %f \n", value1);
+  #endif
+  #ifdef DEBUG
+    printf("v2_double: %f \n", value2);
+    printf("result: %f \n", resultdouble);
+  #endif
+  #ifdef DEBUG
+    printf("resultado_double: %f\n", result->type_double);
+  #endif
+    push_operand(result, f->operands);
 }
 
 void isub_eval(Frame *f)
@@ -1669,7 +1839,13 @@ void freturn_eval(Frame *f)
 
 void dreturn_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *lv = pop_operand(f->operands);
+
+  pop(JvmStack);
+  if (!empty(JvmStack))
+  {
+    push_operand(lv, JvmStack->top->f->operands);
+  }
 }
 
 void areturn_eval(Frame *f)
