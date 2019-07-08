@@ -69,6 +69,7 @@ u2 count_args(char *method_desc)
     }
     args++;
   }
+  return args;
 }
 
 void nop_eval(Frame *f)
@@ -1804,27 +1805,43 @@ void invokevirtual_eval(Frame *f)
     if (strcmp(method_name, "println") == 0 || strcmp(method_name, "print"))
     {
       LocalVariable *lv = pop_operand(f->operands);
-      if (strcmp(method_desc, "(Ljava/lang/String;)V") == 0)
+      if (strcmp(method_desc, "(Ljava/lang/String;)V") == 0) // String
       {
         char *string = readUtf8(f->cp, lv->value);
-        printf("%s \n", string);
+        printf("%s ", string);
       }
-      else if (strcmp(method_desc, "(I)V") == 0)
+      else if (strcmp(method_desc, "(I)V") == 0) // Int
       {
         // printf("PASSEI POR AQUI DE MOTO\n");
         int32_t value = lv->value;
-        printf("%d \n", value);
+        printf("%d ", value);
       }
-      else if (strcmp(method_desc, "(J)V") == 0)
+      else if (strcmp(method_desc, "(Z)V") == 0) // Bool
+      {
+        int32_t value = lv->value;
+        printf("%s ", value ? "True":"False");
+      }
+      else if (strcmp(method_desc, "(F)V") == 0) // Float
+      {
+        int32_t value = lv->value;
+        printf("%f ", *(float *)&value);
+      }
+      else if (strcmp(method_desc, "(J)V") == 0) // Long
       {
         int64_t value = lv->type_long;
-        printf("%ld \n", value);
+        printf("%ld ", *(long *)&value);
+      }
+      else if (strcmp(method_desc, "(D)V") == 0) // Double
+      {
+        int64_t value = lv->type_double;
+        printf("%f ", *(double *)&value);
       }
       else
       {
         printf("invokevirtualFunction: falta implementar\n");
         exit(0);
       }
+      if (strcmp(method_name, "println") == 0) printf("\n");
     }
     else
     {
@@ -1883,7 +1900,6 @@ void invokespecial_eval(Frame *f)
 
   // Pega referencia da classe
   u2 class_index = find_class(class_name);
-  ClassFile *cf = Mem.classes_arr[class_index];
 
   // Pega o nome e tipo dó método pelo indice da instrução.
   // Method Name and type
