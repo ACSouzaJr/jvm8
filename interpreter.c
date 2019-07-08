@@ -1891,24 +1891,32 @@ void iinc_eval(Frame *f)
 
 void i2l_eval(Frame *f)
 {
+//   LocalVariable *long_val = (LocalVariable *)malloc(sizeof(LocalVariable));
+//   // LocalVariable *alta = (LocalVariable *)malloc(sizeof(LocalVariable));
+//   // LocalVariable *baixa = (LocalVariable *)malloc(sizeof(LocalVariable));
+//   int32_t val = pop_operand(f->operands);
+//   long val_long = val;
+
+// #ifdef DEBUG
+//   printf("BEFORE CAST ====> %04x\n", val_long);
+// #endif
+
+//   long_val->type_long = *(uint64_t *)&val_long;
+//   long_val->type = CONSTANT_Long;
+// #ifdef DEBUG
+//   printf("EM DECIMAL =====> %d\n", *(int *)&long_val->type_long);
+// #endif
+
+//   push_operand(long_val, f->operands);
+
+  long val = (long ) pop_operand(f->operands)->value;
+
   LocalVariable *long_val = (LocalVariable *)malloc(sizeof(LocalVariable));
-  // LocalVariable *alta = (LocalVariable *)malloc(sizeof(LocalVariable));
-  // LocalVariable *baixa = (LocalVariable *)malloc(sizeof(LocalVariable));
-  int32_t val = pop_operand(f->operands);
-  long val_long = val;
+  memcpy(&long_val->value, &val, sizeof(uint64_t));
 
-#ifdef DEBUG
-  printf("BEFORE CAST ====> %04x\n", val_long);
-#endif
-
-  long_val->type_long = *(uint64_t *)&val_long;
   long_val->type = CONSTANT_Long;
-#ifdef DEBUG
-  printf("AFTER CAST =====> %04x\n", long_val->type_long);
-  printf("EM DECIMAL =====> %d\n", long_val->type_long);
-#endif
-
   push_operand(long_val, f->operands);
+  printf("VALOR CONVERTIDO EM LONG ====> %d\n", *(int *)&long_val->type_long);
 }
 
 void i2f_eval(Frame *f)
