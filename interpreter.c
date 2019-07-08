@@ -960,9 +960,9 @@ void iastore_eval(Frame *f)
   vetor = (u4 *)arrayref->type_array.array;
   // (u4 *) arrayref->type_array.array[index->value] = value;
   vetor[index->value] = value->value;
-#ifdef DEBUG
-  printf("Referencia array: %d", ((u4 *)arrayref->type_array.array)[index->value]);
-#endif
+  #ifdef DEBUG
+    printf("Referencia array: %d", ((u4 *)arrayref->type_array.array)[index->value]);
+  #endif
 }
 
 void lastore_eval(Frame *f)
@@ -2527,13 +2527,19 @@ void getstatic_eval(Frame *f)
 
   if (strcmp(field_desc, "[I") == 0)
   {
-#ifdef DEBUG
-    printf("get static_data_low: %04x\n", GLOBAL_CLASS->fields->staticData->low[0]);
-#endif
-    lv->type_array.array = (u4 *)GLOBAL_CLASS->fields->staticData->low[0];
+    #ifdef DEBUG
+        printf("get static_data_low: %04x\n", *(GLOBAL_CLASS->fields->staticData->low));
+    #endif
+    lv->type_array.array = (u4 *)GLOBAL_CLASS->fields->staticData->low;
     lv->type = CONSTANT_Fieldref;
-    push_operand(lv, f->operands);
+  } else if((field_desc[0] == '[' ) && (field_desc[1] == 'L' )){
+    lv->type_array.array = (u4 *)GLOBAL_CLASS->fields->staticData->low;
+    lv->type = CONSTANT_Fieldref;
+    #ifdef DEBUG
+        printf("getstatic field_desc: %s\n", field_desc);
+    #endif
   }
+  push_operand(lv, f->operands);
 }
 
 void putstatic_eval(Frame *f)
@@ -2563,10 +2569,10 @@ void putstatic_eval(Frame *f)
     GLOBAL_CLASS->fields->staticData = (staticData *)malloc(sizeof(staticData));
     GLOBAL_CLASS->fields->staticData->low = (u4 *)malloc(sizeof(u4));
     GLOBAL_CLASS->fields->staticData->high = NULL;
-    GLOBAL_CLASS->fields->staticData->low[0] = lv->value;
+    GLOBAL_CLASS->fields->staticData->low = &(lv->value);
 
 #ifdef DEBUG
-    printf("put static_data_low: %04x\n", GLOBAL_CLASS->fields->staticData->low[0]);
+    printf("put static_data_low: %04x\n", *(GLOBAL_CLASS->fields->staticData->low));
 #endif
   }
   else if (strcmp(field_desc, "I") == 0)
@@ -2912,7 +2918,35 @@ void newarray_eval(Frame *f)
 
 void anewarray_eval(Frame *f)
 {
-  // u2 index = getIndexFromb1b2(f);
+  LocalVariable *lv, *rlv;
+  lv = pop_operand(f->operands);
+  u2 index = getIndexFromb1b2(f);
+  u4 count;
+  count = lv->value;
+  void *arrayref = NULL;
+  rlv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  u2 name_index = f->cp[index-1].Class.name_index;
+
+  rlv->type = CONSTANT_Fieldref;
+
+  arrayref = (u4 *)malloc((count) * sizeof(u4));  
+  rlv->value = *((u4 *)(arrayref));
+  
+  #ifdef DEBUG
+    printf("arrayref: %04x\n", rlv->value);
+    printf("classname_index: %02x\n", name_index);
+  #endif
+
+  if (count < 0)
+  {
+    printf("NegativeArraySizeException.\n");
+  }
+  else
+  {
+    // rlv->type_array.array = arrayref;
+
+    push_operand(rlv, f->operands);
+  }
 }
 
 void arraylength_eval(Frame *f)
