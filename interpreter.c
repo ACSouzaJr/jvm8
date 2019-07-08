@@ -255,17 +255,28 @@ void ldc_w_eval(Frame *f)
 
 void ldc2_w_eval(Frame *f)
 {
-  uint8_t indice = f->bytecode[f->pc + 2];
-	uint8_t tag = (f->cp[indice-1]).tag;
-  if(tag == 5) {
-    uint32_t alta = f->cp[indice-1].info.Long.high_bytes;
-		uint32_t baixa = frameCorrente->constant_pool[indice-1].info.Long.low_bytes;
-		push(alta);
-		push(baixa);
-  }
-  if(tag == 6) {
+  u2 index = getIndexFromb1b2(f);
+  u4 low = f->cp[index-1].Double.low_bytes;
+  u4 high = f->cp[index-1].Double.high_bytes;
+  #ifdef DEBUG
+    printf("low: %04x, high: %04x\n",low, high);
+  #endif
+  int64_t total = (high<<32 | low);
+  LocalVariable * lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  lv->type = CONSTANT_Double;
+  lv->type_double = total;
+  push_operand(lv, f->operands);
+  // uint8_t indice = f->bytecode[f->pc + 2];
+	// uint8_t tag = (f->cp[indice-1]).tag;
+  // if(tag == 5) {
+  //   uint32_t alta = f->cp[indice-1].info.Long.high_bytes;
+	// 	uint32_t baixa = frameCorrente->constant_pool[indice-1].info.Long.low_bytes;
+	// 	push(alta);
+	// 	push(baixa);
+  // }
+  // if(tag == 6) {
 
-  }
+  // }
 
 }
 
