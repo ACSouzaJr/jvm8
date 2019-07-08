@@ -1532,7 +1532,34 @@ void fneg_eval(Frame *f)
 
 void dneg_eval(Frame *f)
 {
-  //   push_operand();
+  int64_t v1, v2;
+  double value1, value2, resultdouble;
+  LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  v2 = 0;
+  v1 = pop_operand(f->operands)->type_double;
+  value1 = *(double *)&v1;
+  value2 = *(double *)&v2;
+  // memcpy(&value1, &v1, sizeof(double));
+  // memcpy(&value2, &v2, sizeof(double));
+  resultdouble = value2 - value1;
+  result->type = CONSTANT_Double;
+  // result->type_double = convertDoubleToBytes(&resultdouble);
+  //memcpy(&(result->type_double), &resultdouble, sizeof(uint64_t));
+  // result->type_double = *(uint64_t *)&resultdouble;
+  // result->type_double = *(uint64_t*)&((*(double *)&v1) + (*(double *)&v2));
+  result->type_double = *(uint64_t*)&resultdouble;
+  #ifdef DEBUG
+    printf("v1_double: %f \n", value1);
+  #endif
+  #ifdef DEBUG
+    printf("v2_double: %f \n", value2);
+    printf("result_neg: %f \n", resultdouble);
+  #endif
+  #ifdef DEBUG
+    printf("resultado_double_neg: %f\n", result->type_double);
+  #endif
+    push_operand(result, f->operands);
 }
 
 void ishl_eval(Frame *f)
