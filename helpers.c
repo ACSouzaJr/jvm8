@@ -22,3 +22,17 @@ u4 convertFloatToBytes(float *res){
 
     return r1;
 }
+
+void print_stack_debug(Frame *f)
+{
+  Operand * stack_top, * next;
+  stack_top = f->operands->top;
+  next = f->operands->top->pointer;
+
+  printf("STACK TOP TYPE == %d\n", f->operands->top->f->type);
+
+  while(next->f != NULL) {
+    printf("STACK: %d\n", next->f->type);
+    next = next->pointer;
+  }
+}

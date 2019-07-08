@@ -739,6 +739,9 @@ void astore_3_eval(Frame *f)
 
 void iastore_eval(Frame *f)
 {
+#ifdef DEBUG
+  print_stack_debug(f); // printa o que está no stack de operandos
+#endif
   LocalVariable *arrayref, *index, *value;
   value = pop_operand(f->operands);
   index = pop_operand(f->operands);
