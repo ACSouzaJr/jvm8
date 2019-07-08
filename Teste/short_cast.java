@@ -3,9 +3,9 @@
  */
 public class short_cast{
 	public static void main(String args[]){
-		short a=0xFF;
+		int a=0xFF;
 		/*l2d*/
-		double b=(long)a;
+		long b= a;
 		/*l2f*/
 		float c=(float)a;
 		/*l2i*/
@@ -16,7 +16,7 @@ public class short_cast{
 		System.out.println(c);
 		System.out.println(d);
 		
-		b=(double)a;
+		// b=(double)a;
 		/*l2f*/
 		c=(float)a;
 		/*l2i*/
