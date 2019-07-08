@@ -1,6 +1,6 @@
 class dOperations {
   public static double main(String[] s) {
-    double a = 5, b = 4, c;
+    double a = 5.2, b = 4.3, c;
     //c = a - b;
     //c = a * b;
     //c = a / b;
