@@ -9,6 +9,7 @@ class dOperations {
       c = -a;
     }
     c = a + b;
+    System.out.println(c);
     return c;
   }
 }
