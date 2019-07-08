@@ -6,4 +6,5 @@
 
 u2 getIndexFromb1b2(Frame *f);
 u4 convertFloatToBytes(float *res);
+uint64_t convertDoubleToBytes(double *res);
 #endif

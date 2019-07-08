@@ -1055,18 +1055,23 @@ void fadd_eval(Frame *f)
 
 void dadd_eval(Frame *f)
 {
-  int64_t v1, v2;
-  double value1, value2;
+  uint64_t v1, v2;
+  double value1, value2, resultdouble;
   LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
 
   v2 = pop_operand(f->operands)->type_double;
   v1 = pop_operand(f->operands)->type_double;
-  value1 = *(double *)&v1;
-  value2 = *(double *)&v2;
+  // value1 = *(double *)&v1;
+  // value2 = *(double *)&v2;
+  memcpy(&value1, &v1, sizeof(double));
+  memcpy(&value2, &v2, sizeof(double));
+  resultdouble = value1 + value2;
   result->type = CONSTANT_Double;
-  result->type_double = value1 + value2;
+  result->type_double = convertDoubleToBytes(&resultdouble);
+  //memcpy(&(result->type_double), &resultdouble, sizeof(uint64_t));
+  // result->type_double = *(uint64_t *)&resultdouble;
   #ifdef DEBUG
-    printf("v1_double: %08x\n", v1);
+    printf("v1_double: %f\n", value1);
   #endif
   #ifdef DEBUG
     printf("v2_double: %08x\n", v2);
