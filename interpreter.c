@@ -53,6 +53,24 @@
 //   return 0;
 // }
 
+u2 count_args(char *method_desc)
+{
+  u2 args = 0;
+  for (size_t i = 1; method_desc[i] != ')'; i++)
+  {
+    if (method_desc[i] == '[')
+    {
+      continue;
+    }
+    if (method_desc[i] == 'L')
+    {
+      while (method_desc[++i] != ';')
+        ;
+    }
+    args++;
+  }
+}
+
 void nop_eval(Frame *f)
 {
 }
@@ -1701,7 +1719,7 @@ void getstatic_eval(Frame *f)
 #ifdef DEBUG
     printf("get static_data_low: %04x\n", GLOBAL_CLASS->fields->staticData->low[0]);
 #endif
-    lv->type_array.array = (u4*)GLOBAL_CLASS->fields->staticData->low[0];
+    lv->type_array.array = (u4 *)GLOBAL_CLASS->fields->staticData->low[0];
     lv->type = CONSTANT_Fieldref;
     push_operand(lv, f->operands);
   }
@@ -1775,7 +1793,7 @@ void invokevirtual_eval(Frame *f)
   char *class_name = ret_method_name(f->cp, index);
 
   // Method Name and type
-  uint16_t name_n_type = f->cp[index - 1].Methodref.name_and_type_index;
+  u2 name_n_type = f->cp[index - 1].Methodref.name_and_type_index;
 
   char *method_name = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.name_index);
 
@@ -1863,13 +1881,32 @@ void invokespecial_eval(Frame *f)
     return;
   }
 
-  //Pega posição da classe no array de classes
+  // Pega referencia da classe
+  u2 class_index = find_class(class_name);
+  ClassFile *cf = Mem.classes_arr[class_index];
 
-  //Pega referencia ao classFile pelo indice anterior.
-  // ClassFile* cf = Mem.classes_arr[ClassLoader(class_name)];
+  // Pega o nome e tipo dó método pelo indice da instrução.
+  // Method Name and type
+  u2 name_n_type = f->cp[index - 1].Methodref.name_and_type_index;
 
-  // //Pega o nome e tipo dó método pelo indice da instrução.
-  // uint16_t nomeTipoIndice = f->cp[index-1].Methodref.name_and_type_index;
+  char *method_name = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.name_index);
+
+  char *method_desc = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.descriptor_index);
+
+  u2 args = count_args(method_desc);
+  method_info *method = find_method(Mem.classes_arr[class_index], method_name);
+  Frame *frame = cria_frame(f->cp, method);
+  // Adiciona argumestos
+  // for (size_t i = args - 1; i >= 0; i--)
+  for (size_t i = 0; i <= args; i++)
+  {
+    frame->local_variables[i] = *(pop_operand(f->operands));
+#ifdef DEBUG
+    printf("DEBUG DE VERDADE:  ==== %04x\n", frame->local_variables[i].value);
+#endif
+  }
+
+  push(frame);
 }
 
 void invokestatic_eval(Frame *f)
@@ -1881,7 +1918,6 @@ void invokestatic_eval(Frame *f)
   char *method_name = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.name_index);
 
   char *method_desc = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.descriptor_index);
-  u2 args = 0;
 
   char *class_name = ret_method_name(f->cp, index);
 
@@ -1891,19 +1927,7 @@ void invokestatic_eval(Frame *f)
     return;
   }
 
-  for (size_t i = 1; method_desc[i] != ')'; i++)
-  {
-    if (method_desc[i] == '[')
-    {
-      continue;
-    }
-    if (method_desc[i] == 'L')
-    {
-      while (method_desc[++i] != ';')
-        ;
-    }
-    args++;
-  }
+  u2 args = count_args(method_desc);
 
 #ifdef DEBUG
   printf("Argumentos %d", args);
@@ -1944,7 +1968,7 @@ void new_eval(Frame *f)
   lv->type = CONSTANT_Class;
   lv->value = class_index;
   // Empilha referencia para a classe no array de classes;
-  push_operand(lv,f->operands);
+  push_operand(lv, f->operands);
 }
 
 void newarray_eval(Frame *f)
