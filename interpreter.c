@@ -918,7 +918,8 @@ void fadd_eval(Frame *f)
   value2 = *(float *)&v2;
   res = value1 + value2;
 
-  r1 = convertFloatToBytes(&res);
+  // r1 = convertFloatToBytes(&res);
+  r1 = *(u4*)&res;
 
   result->value = r1;
 #ifdef DEBUG
