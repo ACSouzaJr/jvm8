@@ -1443,7 +1443,7 @@ void i2b_eval(Frame *f)
   int32_t int_val = pop_operand(f->operands);
 
   byte_val->value = (int8_t)int_val;
-  byte_val->type = CONSTANT_Integer;
+  byte_val->type = CONSTANT_Integer; // Adicionar tipo Byte
 
   push_operand((int32_t)byte_val->value, f->operands);
 }
@@ -1454,7 +1454,7 @@ void i2c_eval(Frame *f)
   int32_t int_val = pop_operand(f->operands);
 
   char_val->value = (int16_t)char_val;
-  char_val->type = CONSTANT_String;
+  char_val->type = CONSTANT_String; // Adicionar tipo Char
 
   push_operand((int32_t)char_val->value, f->operands);
 }
