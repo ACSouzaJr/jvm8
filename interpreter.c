@@ -2296,15 +2296,15 @@ void d2l_eval(Frame *f)
   aux_long = (long)aux;
   
   #ifdef DEBUG
-    printf("d2l_val: %d\n", aux_long);
+    printf("d2l_val: %ld\n", aux_long);
   #endif
   LocalVariable *long_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  r1 = *((u4*)(&aux_long));
+  r1 = *((uint64_t*)(&aux_long));
   // memcpy(&float_val->value, &val, sizeof(ulong32_t));
 
   long_val->type = CONSTANT_Long;
-  long_val->value = r1;
+  long_val->type_long = r1;
   push_operand(long_val, f->operands);
 }
 
