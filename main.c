@@ -23,6 +23,7 @@ Alunos: Nicholas Marques - 15/0019343
 #include "classfile.h"
 
 char *GLOBAL_ptr;
+ClassFile *GLOBAL_CLASS;
 u1 code_sep = 0;
 u1 name_or_type;
 char *FILE_NAME;
@@ -34,9 +35,10 @@ int main(int argc, char *argv[])
   // FILE *pFile;
   Mem.num_classes = 0;
 
-  if (argc != 2)
+  if (argc != 3)
   {
-    printf("Warning: Caminho do arquivo nao fornecido.");
+    printf("Warning: Caminho do arquivo nao fornecido.\n");
+    printf("Ajuda: ./a.out path/to/file -e (para leitor-exibidor) ou -i (para interpretador)\n");
     // pFile = fopen("Teste/multi.class", "rb");
     return 0;
   }
@@ -50,27 +52,37 @@ int main(int argc, char *argv[])
   // }
 
   init(); //inicia JvmStack
-  ClassFile *cf = (ClassFile *)malloc(sizeof(ClassFile));
   GLOBAL_ptr = (char *)malloc(sizeof(char) * 100);
 
-  read_class_file(cf, argv[1]);
+  // read_class_file(cf, argv[1]);
+  ClassFile *cf = Mem.classes_arr[ClassLoader(argv[1])];
+  GLOBAL_CLASS = cf;
   // fclose(pFile);
 
   if (strcmp(removeExtension(print_reference(cf->constant_pool, cf->attributes->info->SourceFile_attribute.sourcefile_index)), findNameFile(removeExtension(argv[1]))) == 0)
   {
     initialize_op_codes();
-    print_class_file(cf);
-    // Execute Gvm
-    method_info *main = find_main(cf);
-    Frame *frame = cria_frame(cf, main);
-    push(frame);
-    execute_gvm();
+
+    if(strcmp( argv[2], "-e") == 0) { /* para modo leitor-exibidor */
+      print_class_file(cf);
+    }
+    else if(strcmp( argv[2], "-i") == 0) { /* para modo interpretador */
+      // Execute Gvm
+      method_info *main = find_method(cf, "main");
+      Frame *frame = cria_frame(cf->constant_pool, main);
+      push(frame);
+      find_clinit(cf);
+      execute_gvm();
+    }
+    else {
+      printf("Modo de execução do programa não fornecido. \n");
+    }
   }
   else
   {
     printf("Nome do arquivo e do SourceFile diferentes. \n");
   }
-  
+
   free(GLOBAL_ptr);
   free_class_file(cf);
   free(cf);

@@ -37,4 +37,7 @@ char *removeExtension(char *string);
 char *findNameFile(char *string);
 u4 ClassLoader(char *class_name);
 void execute_gvm();
-method_info* find_main(ClassFile *cf);
+method_info* find_method(ClassFile *cf, char* method);
+u2 find_class(char* class_name);
+field_info* find_field(ClassFile *cf, char *field_name, char* field_desc);
+void find_clinit(ClassFile *cf);

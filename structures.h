@@ -6,6 +6,8 @@
 #define u1 uint8_t
 #define u2 uint16_t
 #define u4 uint32_t
+// #define DEBUG
+
 extern char *GLOBAL_ptr;
 /**
   Tabela contendo o valor para cada tag da constante (tipo id)
@@ -396,6 +398,15 @@ typedef struct
   // code, exception, etc
 } method_info;
 
+// typedef struct
+// {
+//   u4 * low;
+// 	u4 * high;
+// 	u1 * string_ref;
+// }staticData;
+
+typedef struct LocalVariable LocalVariable;
+
 typedef struct
 {
   u2 access_flags;
@@ -404,13 +415,27 @@ typedef struct
   u2 attributes_count;
   // Cosntant value
   attribute_info *attributes; //[attributes_count];
+  LocalVariable *static_data;
+  // staticData * staticData;
 } field_info;
 
-typedef struct
+typedef struct {
+    void *array;
+    u2 size;
+} TypeArray;
+
+struct LocalVariable
 {
   u1 type;
-  u4 value;
-} LocalVariable;
+  union 
+  {
+    u4 value; //cat1
+    uint64_t type_long;
+    uint64_t type_double;
+    TypeArray type_array;
+  };
+  
+};
 
 // class type
 typedef struct
@@ -440,5 +465,7 @@ typedef struct
   // numero de classes carregadas em memoria
   u2 num_classes;
 } Method;
+
+extern ClassFile *GLOBAL_CLASS;
 
 #endif

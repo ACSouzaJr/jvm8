@@ -6,7 +6,6 @@
 #include "string.h"
 #include "interpreter.h"
 
-
 u1 u1Read(FILE *file)
 {
   // u1 buffer;
@@ -267,7 +266,7 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
     {
       attr->info->Exceptions_attribute.number_of_exceptions = u2Read(fp);
       attr->info->Exceptions_attribute.exception_index_table = (u2 *)malloc(sizeof(u2) * attr->info->Exceptions_attribute.number_of_exceptions);
-      for (u2 *i = 0; i < attr->info->Exceptions_attribute.exception_index_table + attr->info->Exceptions_attribute.number_of_exceptions; i++)
+      for (u2 *i = attr->info->Exceptions_attribute.exception_index_table; i < attr->info->Exceptions_attribute.exception_index_table + attr->info->Exceptions_attribute.number_of_exceptions; i++)
       {
         *i = u2Read(fp);
       }
@@ -345,7 +344,9 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
     }
     else // caso o atributo não esteja implementado ele é ignorado.
     {
+#ifdef DEBUG
       printf("Attributo Ignorado! \n");
+#endif
       fseek(fp, attr->attribute_length, SEEK_CUR);
     }
   }
@@ -840,7 +841,7 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
     {
       printf("Number of exceptions: %d\n", attr->info->Exceptions_attribute.number_of_exceptions);
 
-      for (u2 *i = 0; i < attr->info->Exceptions_attribute.exception_index_table + attr->info->Exceptions_attribute.number_of_exceptions; i++)
+      for (u2 *i = attr->info->Exceptions_attribute.exception_index_table; i < attr->info->Exceptions_attribute.exception_index_table + attr->info->Exceptions_attribute.number_of_exceptions; i++)
       {
         printf("Exception index table: %d\n", *i);
       }
@@ -866,7 +867,7 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
     }
     else if (strcmp(attribute_name, "StackMapTable") == 0)
     {
-      printStackMapTable(attr->info->StackMapTable_attribute.entries, cp, attr);
+      // printStackMapTable(attr->info->StackMapTable_attribute.entries, cp, attr);
     }
     else if (strcmp(attribute_name, "ConstantValue") == 0)
     {
@@ -879,16 +880,16 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
   }
 }
 
-void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile * cf)
+void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile *cf)
 {
-  Frame *frame = cria_frame(cf, &cf->methods[1]);
+  Frame *frame = cria_frame(cf->constant_pool, &cf->methods[1]);
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Integer;
-  lv->value = 7; 
+  lv->value = 7;
   frame->pc = 0;
-  frame->method = cf->methods;//aki
+  frame->method = cf->methods; //aki
   frame->cp = cp;
-  push_operand(lv,frame->operands);
+  push_operand(lv, frame->operands);
   lv->value = 9;
   push_operand(lv, frame->operands);
   // frame->local_variables; //[]
@@ -902,7 +903,7 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
 
   // teste frame stack
   push(frame);
-  Frame*f2 = pop(frame);
+  Frame *f2 = pop(frame);
   printf("operand pop frame hahaha: %x \n", top_operand(f2->operands)->value);
 
   for (attribute_info *attr = field; attr < field + attr_count; attr++)
@@ -1633,10 +1634,10 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
 void read_class_file(ClassFile *cf, char *file_name)
 {
   FILE *fp = fopen(file_name, "rb");
-    if (!fp)
-    {
-      printf("Error ao abrir arquivo. \n");
-    }
+  if (!fp)
+  {
+    printf("Error ao abrir arquivo. \n");
+  }
   cf->magic = u4Read(fp);
   if (cf->magic != 0xCAFEBABE)
   {
@@ -2153,7 +2154,7 @@ void print_class_file(ClassFile *cf)
     // printf("Methods Attributes Count: %02d\n", mi->attributes_count);
 
     printAttributes(mi->attributes, cf->constant_pool, mi->attributes_count);
-    printf("CAFEBABEEEEE!\n");
+    // printf("CAFEBABEEEEE!\n");
     // evalAttributes(mi->attributes, cf->constant_pool, mi->attributes_count, cf);
 
     // for (attribute_info *ai = mi->attributes; ai < mi->attributes + mi->attributes_count; ai++)
@@ -2347,42 +2348,51 @@ char *findNameFile(char *string)
   }
 }
 
-void execute_gvm(){
+void execute_gvm()
+{
   do
   {
     Frame *current_frame = JvmStack->top->f;
     u1 *bytecode = current_frame->method->attributes->info->Code_attribute.code;
     u2 opcode = bytecode[current_frame->pc++];
 
+#ifdef DEBUG
+    printf("\n----  Evaluando ----\n %d) %s\n-----------------------\n\n", ((current_frame->pc) - 1), op_codes_array[opcode].value);
+#endif
     op_codes_array[opcode].eval(current_frame);
   } while (!empty(JvmStack));
-  
 }
 
-method_info* find_main(ClassFile *cf){
+method_info *find_method(ClassFile *cf, char *method)
+{
   // corrigir depois
   for (method_info *i = cf->methods; i < cf->methods + cf->methods_count; i++)
   {
     char *method_name = readUtf8(cf->constant_pool, i->name_index);
     // char *method_desc = readUtf8(cf->constant_pool, i->descriptor_index);
-    if (strcmp(method_name, "main") == 0)
+    if (strcmp(method_name, method) == 0)
     {
       return i;
-    }  
+    }
   }
-  printf("Nao achou a main! \n");
+  printf("Nao achou o methodo! \n");
   return NULL;
 }
 
 u4 ClassLoader(char *class_name)
 {
   ClassFile *cf = (ClassFile *)malloc(sizeof(ClassFile));
-  if (strstr(class_name,".class") != NULL) {
-		sprintf(GLOBAL_ptr, "%s", class_name);
-	} else {
-		sprintf(GLOBAL_ptr, "./%s.class",class_name);
-	}
-  printf("%s", GLOBAL_ptr);
+  if (strstr(class_name, ".class") != NULL)
+  {
+    sprintf(GLOBAL_ptr, "%s", class_name);
+  }
+  else
+  {
+    sprintf(GLOBAL_ptr, "./%s.class", class_name);
+  }
+#ifdef DEBUG
+  printf("Loaded class: %s \n", GLOBAL_ptr);
+#endif
   read_class_file(cf, GLOBAL_ptr);
   Mem.classes_arr[Mem.num_classes++] = cf;
   if (Mem.classes_arr[Mem.num_classes - 1] == NULL)
@@ -2391,4 +2401,50 @@ u4 ClassLoader(char *class_name)
     exit(0);
   }
   return Mem.num_classes - 1;
+}
+
+u2 find_class(char *class_name)
+{
+  char *this_class;
+  for (size_t i = 0; i < Mem.num_classes; i++)
+  {
+    this_class = ret_method_name(Mem.classes_arr[i]->constant_pool, Mem.classes_arr[i]->this_class);
+#ifdef DEBUG
+    printf("This class: %s \n", this_class);
+#endif
+    if (strcmp(this_class, class_name) == 0)
+    {
+      return i;
+    }
+  }
+  // Se nao encontrar a classe carrega na memoria;
+  return ClassLoader(class_name);
+}
+
+field_info *find_field(ClassFile *cf, char *field_name, char *field_desc)
+{
+  for (field_info *i = cf->fields; i < cf->fields + cf->fields_count; i++)
+  {
+    char *name = readUtf8(cf->constant_pool, i->name_index);
+    char *desc = readUtf8(cf->constant_pool, i->descriptor_index);
+    if (strcmp(name, field_name) == 0 && strcmp(desc, field_desc) == 0)
+    {
+      return i;
+    }
+  }
+  printf("Nao achou o field! \n");
+  return NULL;
+}
+
+void find_clinit(ClassFile *cf)
+{
+  method_info *method;
+  if ((method = find_method(cf, "<clinit>")) != NULL)
+  {
+    Frame *frame = cria_frame(cf->constant_pool, method);
+    push(frame);
+  }
+#ifdef DEBUG
+    printf("Nao possui init !\n");
+#endif
 }

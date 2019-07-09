@@ -9,9 +9,10 @@ Frame* pop(){
     // Se o ponteiro for nulo faz nada
     if (JvmStack ==  NULL)
     {
+      item = NULL;
     }
     else
-    { 
+    {
         // Se a pilha estiver vazia
         if (JvmStack->top == NULL)
         {
@@ -19,7 +20,6 @@ Frame* pop(){
           // return JvmStack->top;
           return NULL;
         }
-        
         ptr = JvmStack->top;
         item = JvmStack->top->f;
         JvmStack->top = ptr->pointer;
@@ -39,7 +39,6 @@ void push(Frame *frame)
   }
   else
   {
-   
     if (JvmStack == NULL)
     {
     }

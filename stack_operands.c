@@ -11,7 +11,6 @@ void push_operand(LocalVariable * operand, StackOperand *stack_operand){
     }
     else
     {
-    
         if (stack_operand == NULL)
         {
         }
@@ -22,18 +21,23 @@ void push_operand(LocalVariable * operand, StackOperand *stack_operand){
             stack_operand->top = ptr;
         }
     }
-
-    printf("Acabou de ser empilhado: %04x\n", stack_operand->top->f->value);
+    #ifdef DEBUG
+    if(stack_operand->top->f->type == CONSTANT_Double){
+        printf("Acabou de ser empilhado doublemente: %f\n", *(double*)&stack_operand->top->f->type_double);
+    } else {
+        printf("Acabou de ser empilhado: %04x\n", stack_operand->top->f->value);
+    }
+    #endif
     // return *stack_operand;
-} 
+}
 
 LocalVariable* pop_operand(StackOperand *stack_operand){
     LocalVariable *aux;
     Operand *ptr;
-    
     // Se o ponteiro for nulo faz nada
     if (stack_operand == NULL)
     {
+        aux = NULL;
     }
     else
     {
@@ -47,7 +51,7 @@ LocalVariable* pop_operand(StackOperand *stack_operand){
         ptr = stack_operand->top;
         aux = stack_operand->top->f;
         stack_operand->top = ptr->pointer;
-        free(ptr);
+        // free(ptr);
         // printf("Item popped (cafebabe)\n");
     }
     return aux;

@@ -3,12 +3,12 @@
 #include "frame.h"
 
 typedef struct StackFrame{
-    Frame *f;//Frame * f;
-    struct StackFrame * pointer;
+    Frame *f; // Frame dentro da pilha de Frames 
+    struct StackFrame * pointer; // Aponta para o próximo frame
 } NodeFrame;
 
 typedef struct {
-    struct StackFrame *top;
+    struct StackFrame *top; // Topo do StackFrame
 }StackFrame;
 
 // Global
