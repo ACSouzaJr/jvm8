@@ -2375,7 +2375,9 @@ method_info *find_method(ClassFile *cf, char *method)
       return i;
     }
   }
-  printf("Nao achou o methodo! \n");
+  #ifdef DEBUG
+    printf("Nao achou o methodo! \n");
+  #endif
   return NULL;
 }
 
