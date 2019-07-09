@@ -3165,7 +3165,27 @@ void getfield_eval(Frame *f)
 
 void putfield_eval(Frame *f)
 {
-  //TODO
+  u2 index = getIndexFromb1b2(f);
+  LocalVariable *lv = pop_operand(f->operands);
+
+  // Fieldref Name and type
+  u2 name_n_type = f->cp[index - 1].Fieldref.name_and_type_index;
+
+  char *field_name = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.name_index);
+
+  char *field_desc = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.descriptor_index);
+
+#ifdef DEBUG
+  printf("get field name: %s\n", field_name);
+  printf("get field desc: %s\n", field_desc);
+#endif
+
+  ClassFile *cf = Mem.classes_arr[lv->value];
+
+  field_info *field = find_field(cf, field_name, field_desc);
+
+  LocalVariable *obj_ref = pop_operand(f->operands);
+
 }
 
 void invokevirtual_eval(Frame *f)
