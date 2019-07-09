@@ -246,7 +246,7 @@ void ldc_eval(Frame *f)
 
 void ldc_w_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void ldc2_w_eval(Frame *f)
@@ -332,9 +332,7 @@ void fload_eval(Frame *f)
   }
   else
   {
-#ifdef DEBUG
     printf("javax.persistence.PersistenceException\n");
-#endif
     exit(0);
   }
 }
@@ -349,9 +347,7 @@ void dload_eval(Frame *f)
   }
   else
   {
-#ifdef DEBUG
     printf("javax.persistence.PersistenceException\n");
-#endif
     exit(0);
   }
 }
@@ -410,15 +406,16 @@ void lload_3_eval(Frame *f)
 
 void fload_0_eval(Frame *f)
 {
+  #ifdef DEBUG
+    printf("fload_0 type: %01x\n",f->local_variables[0].type);
+  #endif
   if (f->local_variables[0].type == CONSTANT_Float)
   {
     push_operand(&(f->local_variables[0]), f->operands);
   }
   else
   {
-#ifdef DEBUG
     printf("javax.persistence.PersistenceException\n");
-#endif
     exit(0);
   }
 }
@@ -431,9 +428,7 @@ void fload_1_eval(Frame *f)
   }
   else
   {
-#ifdef DEBUG
     printf("javax.persistence.PersistenceException\n");
-#endif
     exit(0);
   }
 }
@@ -446,9 +441,8 @@ void fload_2_eval(Frame *f)
   }
   else
   {
-#ifdef DEBUG
+
     printf("javax.persistence.PersistenceException\n");
-#endif
     exit(0);
   }
 }
@@ -461,9 +455,7 @@ void fload_3_eval(Frame *f)
   }
   else
   {
-#ifdef DEBUG
     printf("javax.persistence.PersistenceException\n");
-#endif
     exit(0);
   }
 }
@@ -476,9 +468,7 @@ void dload_0_eval(Frame *f)
   }
   else
   {
-#ifdef DEBUG
     printf("javax.persistence.PersistenceException\n");
-#endif
     exit(0);
   }
 }
@@ -494,9 +484,7 @@ void dload_1_eval(Frame *f)
   }
   else
   {
-#ifdef DEBUG
     printf("javax.persistence.PersistenceException\n");
-#endif
     exit(0);
   }
 }
@@ -509,9 +497,7 @@ void dload_2_eval(Frame *f)
   }
   else
   {
-#ifdef DEBUG
     printf("javax.persistence.PersistenceException\n");
-#endif
     exit(0);
   }
 }
@@ -524,9 +510,7 @@ void dload_3_eval(Frame *f)
   }
   else
   {
-#ifdef DEBUG
     printf("javax.persistence.PersistenceException\n");
-#endif
     exit(0);
   }
 }
@@ -570,7 +554,7 @@ void iaload_eval(Frame *f)
 
 void laload_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void faload_eval(Frame *f)
@@ -585,7 +569,7 @@ void faload_eval(Frame *f)
 
 void daload_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void aaload_eval(Frame *f)
@@ -603,17 +587,17 @@ void aaload_eval(Frame *f)
 
 void baload_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void caload_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void saload_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 // recupera um valor int da op_stack e da store desse operando na pilha de var_locais
@@ -967,7 +951,7 @@ void iastore_eval(Frame *f)
 
 void lastore_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void fastore_eval(Frame *f)
@@ -982,7 +966,7 @@ void fastore_eval(Frame *f)
 
 void dastore_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void aastore_eval(Frame *f)
@@ -995,24 +979,24 @@ void aastore_eval(Frame *f)
   u4 *vetor;
   vetor = (u4 *)arrayref->type_array.array;
   vetor[index->value] = value->value;
-#ifdef DEBUG
-  printf("Referencia array: %d", ((u4 *)arrayref->type_array.array)[index->value]);
-#endif
+  #ifdef DEBUG
+    printf("Referencia array: %d", ((u4 *)arrayref->type_array.array)[index->value]);
+  #endif
 }
 
 void bastore_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void castore_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void sastore_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 // só usado para int -> cat1
@@ -1064,22 +1048,22 @@ void dup_x2_eval(Frame *f)
 
 void dup2_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void dup2_x1_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void dup2_x2_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void swap_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void iadd_eval(Frame *f)
@@ -1545,7 +1529,7 @@ void lrem_eval(Frame *f)
 
 void frem_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void drem_eval(Frame *f)
@@ -1952,77 +1936,77 @@ void iinc_eval(Frame *f)
 
 void i2l_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void i2f_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void i2d_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void l2i_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void l2f_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void l2d_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void f2i_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void f2l_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void f2d_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void d2i_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void d2l_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void d2f_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void i2b_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void i2c_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void i2s_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void lcmp_eval(Frame *f)
@@ -2141,7 +2125,6 @@ void dcmpl_eval(Frame *f)
     lv->value = -1;
   }
   push_operand(lv, f->operands);
-  //   push_operand();
 }
 
 void dcmpg_eval(Frame *f)
@@ -2172,7 +2155,6 @@ void dcmpg_eval(Frame *f)
     lv->value = 1;
   }
   push_operand(lv, f->operands);
-  //   push_operand();
 }
 
 void ifeq_eval(Frame *f)
@@ -2399,12 +2381,32 @@ void if_icmple_eval(Frame *f)
 
 void if_acmpeq_eval(Frame *f)
 {
-  //   push_operand();
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
+
+  int16_t offset = ((branchbyte1 << 8) | branchbyte2);
+  u4 value2 = pop_operand(f->operands)->value;
+  u4 value1 = pop_operand(f->operands)->value;
+  if (value1 == value2)
+  {
+    f->pc += offset - 3;
+  }
 }
 
 void if_acmpne_eval(Frame *f)
 {
-  //   push_operand();
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
+
+  int16_t offset = ((branchbyte1 << 8) | branchbyte2);
+  u4 value2 = pop_operand(f->operands)->value;
+  u4 value1 = pop_operand(f->operands)->value;
+  if (value1 != value2)
+  {
+    f->pc += offset - 3;
+  }
 }
 
 void goto_eval(Frame *f)
@@ -2419,22 +2421,91 @@ void goto_eval(Frame *f)
 
 void jsr_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void ret_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void tableswitch_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void lookupswitch_eval(Frame *f)
 {
-  //   push_operand();
+  u1 defaultbyte1, defaultbyte2, defaultbyte3, defaultbyte4;
+  u4 aux_pc, bytes_padding, offset, pc_novo;
+  u4 key = pop_operand(f->operands)->value;
+  u1 *bytecode = f->method->attributes->info->Code_attribute.code;
+
+  int definido = 0;
+  int32_t pairs, match, default_v;
+
+  aux_pc = f->pc;
+  bytes_padding = (4 - ((aux_pc + 1) % 4) ) % 4;
+  aux_pc += bytes_padding;
+  aux_pc++;
+
+   // pega bytes default 
+  default_v = 0;
+  for (int l = 0; l < 4; l++)
+  {
+      default_v = (default_v << 8) + bytecode[aux_pc];   
+      aux_pc++;
+  }  
+
+  pairs = 0;
+  for (int l = 0; l < 4; l++)
+  {
+    pairs = (pairs << 8) + bytecode[aux_pc++];
+  }
+
+    // itera pelo numero de pares
+  for (int32_t l = 0; l < pairs; l++)
+  {
+      // pega match atual 
+      match = 0;
+      for (int l = 0; l < 4; l++)
+      {
+          match = (match << 8) + bytecode[aux_pc];   
+          aux_pc++;
+      }       
+      
+      // se a key corresponde ao match 
+      if (key == match)
+      {
+          // pega offset
+          offset = 0;
+          for (int l = 0; l < 4; l++)
+          {
+              offset = (offset << 8) + bytecode[aux_pc];   
+              aux_pc++;
+          }       
+          
+          // poe valor correto em pc_novo
+          pc_novo = f->pc + offset; 
+
+          // set booleano que achou o match
+          definido = 1;
+      } else {
+          // pula offset
+          for(int i = 0; i < 4; i++)
+          {
+              aux_pc++;
+          }
+      }
+    }
+
+    if (!definido)
+    {
+        pc_novo = f->pc + default_v;
+    }
+
+    // poe valor correto no offset
+    f->pc = pc_novo-1; 
 }
 
 void ireturn_eval(Frame *f)
@@ -2483,7 +2554,7 @@ void dreturn_eval(Frame *f)
 
 void areturn_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void return_eval(Frame *f)
@@ -2618,7 +2689,7 @@ void getfield_eval(Frame *f)
 
 void putfield_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void invokevirtual_eval(Frame *f)
@@ -2818,12 +2889,12 @@ void invokestatic_eval(Frame *f)
 
 void invokeinterface_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void invokedynamic_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void new_eval(Frame *f)
@@ -2951,42 +3022,50 @@ void anewarray_eval(Frame *f)
 
 void arraylength_eval(Frame *f)
 {
-  //   push_operand();
+  LocalVariable *arrayref;
+  LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  arrayref = pop_operand(f->operands);
+
+  lv->value = arrayref->type_array.size;
+  lv->type = CONSTANT_Integer;
+
+  push_operand(lv, f->operands);
 }
 
 void athrow_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void checkcast_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void instanceof_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void monitorenter_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void monitorexit_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void wide_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void multianewarray_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void ifnull_eval(Frame *f)
@@ -3019,25 +3098,25 @@ void ifnonnull_eval(Frame *f)
 
 void goto_w_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void jsr_w_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void breakpoint_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void impdep1_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
 
 void impdep2_eval(Frame *f)
 {
-  //   push_operand();
+  //TODO
 }
