@@ -2858,7 +2858,105 @@ void ret_eval(Frame *f)
 
 void tableswitch_eval(Frame *f)
 {
-  //TODO
+  u1 defaultbyte1, defaultbyte2, defaultbyte3, defaultbyte4;
+  u4 aux_pc, bytes_padding, offset, pc_novo;
+  u4 key = pop_operand(f->operands)->value;
+  int32_t default_v, low, high, npairs; 
+  int32_t qtd_offset, posicao;
+  uint32_t temp;
+  u1 *bytecode = f->method->attributes->info->Code_attribute.code;
+
+  // diz se o novo valor de pc ja esta definido ou nao 
+  int definido = 0; 
+
+  // pc auxiliar que iremos seguindo durante a execucao da instrucao 
+  aux_pc = f->pc; 
+  
+  /* passo 1 - le ateh o low. Se o key eh menor que low - define logo o novo valor para PC */
+  // pula bytes de preenchimento
+  //bytes_preench = (aux_pc + 1) % 4;
+  bytes_padding = (4 - ((aux_pc + 1) % 4) ) % 4;
+  aux_pc += bytes_padding;
+  aux_pc++;
+  
+  // pega bytes do target default
+  default_v = 0;
+  for (int l = 0; l < 4; l++)
+  {
+      default_v = (default_v << 8) + bytecode[aux_pc];   
+      aux_pc++;
+  }       
+
+  // pega bytes low
+  low = 0;
+  for (int l = 0; l < 4; l++)
+  {
+      low = (low << 8) + bytecode[aux_pc];   
+      aux_pc++; 
+  }       
+  
+
+  // se o key eh menor que o low e ainda nao definimos novo pc
+  if (key < low && !definido)
+  {
+      definido = 1;
+      pc_novo = f->pc + default_v; 
+  }
+
+  /* passo 2 - le ateh o high. Se o key eh maior que o high - define o novo valor para PC
+    * caso low ainda nao tenha sido definido */ 
+  // pega bytes high 
+  high = 0;
+  for (int l = 0; l < 4; l++)
+  {
+      high = (high << 8) + bytecode[aux_pc];   
+      aux_pc++; 
+  }       
+
+  // se o key eh maior que o high e ainda nao definimos novo pc
+  if (key > high && !definido)
+  {
+      definido = 1;
+      pc_novo = f->pc + default_v; 
+  }
+
+  /* passo 3 - calcula offset na posicao index - low. Coloca novo endereco de PC aqui, caso ainda não tenha sido 
+    * definido */ 
+  qtd_offset = 1 + high - low; 
+  posicao = key - low; 
+  for (int32_t l = 0; l < qtd_offset; l++)
+  {
+      // se estamos na posicao correta
+      if (l == posicao)
+      {
+          // extrai offset
+          offset = 0;
+          for (int i = 0; i < 4; i++)
+          {
+              offset = (offset << 8) + bytecode[aux_pc];   
+              aux_pc++; 
+          }       
+          
+          // calcula posicao 
+          pc_novo = f->pc + offset; 
+          definido = 1;
+          
+          // sai do loop 
+          break;
+      }
+
+      // senao, passa pelo offset atual incrementando pc
+      else
+      {
+          for (int i = 0; i < 4; i++)
+          {
+              aux_pc++;
+          }       
+      }
+  }
+
+  // poe valor correto em frameCorrente
+  f->pc = pc_novo-1;  
 }
 
 void lookupswitch_eval(Frame *f)
@@ -3312,7 +3410,7 @@ void invokespecial_eval(Frame *f)
   // Pega referencia da classe
   u2 class_index = find_class(class_name);
 
-  // Pega o nome e tipo dó método pelo indice da instrução.
+  // Pega o nome e tipo dó método pelo key da instrução.
   // Method Name and type
   u2 name_n_type = f->cp[index - 1].Methodref.name_and_type_index;
 
