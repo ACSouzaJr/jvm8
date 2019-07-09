@@ -1,3 +1,9 @@
+/**
+* @file         classfile.c
+* @brief        Classfile functions
+* @detail       Funções de apoio e leitura do ClassFile (bytecode)
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "structures.h"

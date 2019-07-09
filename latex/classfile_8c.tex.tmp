@@ -1,5 +1,10 @@
 \hypertarget{classfile_8c}{}\section{classfile.\+c File Reference}
 \label{classfile_8c}\index{classfile.\+c@{classfile.\+c}}
+
+
+Classfile functions  Funções de apoio e leitura do \hyperlink{structClassFile}{Class\+File} (bytecode)  
+
+
 {\ttfamily \#include $<$stdio.\+h$>$}\\*
 {\ttfamily \#include $<$stdlib.\+h$>$}\\*
 {\ttfamily \#include \char`\"{}structures.\+h\char`\"{}}\\*
@@ -76,6 +81,11 @@ void \hyperlink{classfile_8c_a55c80ae86c1c6d0666108a825df64a4b}{execute\+\_\+gvm
 \begin{DoxyCompactList}\small\item\em Procura por um field dentro do \hyperlink{structClassFile}{Class\+File}. \end{DoxyCompactList}\item 
 void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit} (\hyperlink{structClassFile}{Class\+File} $\ast$cf)
 \begin{DoxyCompactList}\small\item\em Procura por um init dentro do Classfile. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Classfile functions  Funções de apoio e leitura do \hyperlink{structClassFile}{Class\+File} (bytecode) 
+
 
 
 \subsection{Function Documentation}

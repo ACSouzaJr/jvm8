@@ -1,5 +1,10 @@
 \hypertarget{stack__frame_8c}{}\section{stack\+\_\+frame.\+c File Reference}
 \label{stack__frame_8c}\index{stack\+\_\+frame.\+c@{stack\+\_\+frame.\+c}}
+
+
+Funções de gerenciamento da pilha de frames.  Contém as implementações das funções de gerenciamento para a pilha de frames da \hyperlink{structJVM}{J\+VM}.  
+
+
 {\ttfamily \#include $<$stdlib.\+h$>$}\\*
 {\ttfamily \#include \char`\"{}stack\+\_\+frame.\+h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}frame.\+h\char`\"{}}\\*
@@ -9,17 +14,22 @@ Include dependency graph for stack\+\_\+frame.\+c\+:
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{structFrame}{Frame} $\ast$ \hyperlink{stack__frame_8c_a420b7f43dadaf2cf35fef826faca9a22}{pop} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Retira o último item na pilha de Frames e o retorna para o chamador. \end{DoxyCompactList}\item 
 void \hyperlink{stack__frame_8c_a9449cf29b3fcf4b4e6d6ea496a63c61b}{push} (\hyperlink{structFrame}{Frame} $\ast$frame)
-\item 
+\begin{DoxyCompactList}\small\item\em Adiciona um novo \hyperlink{structFrame}{Frame} na pilha de frames. \end{DoxyCompactList}\item 
 \hyperlink{structFrame}{Frame} $\ast$ \hyperlink{stack__frame_8c_aab3f5154c34897bf92794a175bf6d4cb}{top} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Retorna o \hyperlink{structFrame}{Frame} que está no topo da pilha. \end{DoxyCompactList}\item 
 void \hyperlink{stack__frame_8c_a02fd73d861ef2e4aabb38c0c9ff82947}{init} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Aloca espaço para a pilha de frames. \end{DoxyCompactList}\item 
 void \hyperlink{stack__frame_8c_a4bb1325b53dcb653e95a7935165c3b0e}{print\+\_\+stack} ()
 \item 
 int \hyperlink{stack__frame_8c_a946d97bd0b6c21223b5b220ca34c7ab1}{empty} ()
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Retorna verdadeiro caso a pilha de Frames esteja vazia. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Funções de gerenciamento da pilha de frames.  Contém as implementações das funções de gerenciamento para a pilha de frames da \hyperlink{structJVM}{J\+VM}. 
+
 
 
 \subsection{Function Documentation}
@@ -30,6 +40,10 @@ int \hyperlink{stack__frame_8c_a946d97bd0b6c21223b5b220ca34c7ab1}{empty} ()
 {}
 \end{DoxyParamCaption}
 )}\hypertarget{stack__frame_8c_a946d97bd0b6c21223b5b220ca34c7ab1}{}\label{stack__frame_8c_a946d97bd0b6c21223b5b220ca34c7ab1}
+
+
+Retorna verdadeiro caso a pilha de Frames esteja vazia. 
+
 \index{stack\+\_\+frame.\+c@{stack\+\_\+frame.\+c}!init@{init}}
 \index{init@{init}!stack\+\_\+frame.\+c@{stack\+\_\+frame.\+c}}
 \subsubsection[{\texorpdfstring{init()}{init()}}]{\setlength{\rightskip}{0pt plus 5cm}void init (
@@ -37,6 +51,10 @@ int \hyperlink{stack__frame_8c_a946d97bd0b6c21223b5b220ca34c7ab1}{empty} ()
 {}
 \end{DoxyParamCaption}
 )}\hypertarget{stack__frame_8c_a02fd73d861ef2e4aabb38c0c9ff82947}{}\label{stack__frame_8c_a02fd73d861ef2e4aabb38c0c9ff82947}
+
+
+Aloca espaço para a pilha de frames. 
+
 \index{stack\+\_\+frame.\+c@{stack\+\_\+frame.\+c}!pop@{pop}}
 \index{pop@{pop}!stack\+\_\+frame.\+c@{stack\+\_\+frame.\+c}}
 \subsubsection[{\texorpdfstring{pop()}{pop()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Frame}$\ast$ pop (
@@ -44,6 +62,10 @@ int \hyperlink{stack__frame_8c_a946d97bd0b6c21223b5b220ca34c7ab1}{empty} ()
 {}
 \end{DoxyParamCaption}
 )}\hypertarget{stack__frame_8c_a420b7f43dadaf2cf35fef826faca9a22}{}\label{stack__frame_8c_a420b7f43dadaf2cf35fef826faca9a22}
+
+
+Retira o último item na pilha de Frames e o retorna para o chamador. 
+
 \index{stack\+\_\+frame.\+c@{stack\+\_\+frame.\+c}!print\+\_\+stack@{print\+\_\+stack}}
 \index{print\+\_\+stack@{print\+\_\+stack}!stack\+\_\+frame.\+c@{stack\+\_\+frame.\+c}}
 \subsubsection[{\texorpdfstring{print\+\_\+stack()}{print_stack()}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+\_\+stack (
@@ -58,6 +80,10 @@ int \hyperlink{stack__frame_8c_a946d97bd0b6c21223b5b220ca34c7ab1}{empty} ()
 \item[{{\bf Frame} $\ast$}]{frame}
 \end{DoxyParamCaption}
 )}\hypertarget{stack__frame_8c_a9449cf29b3fcf4b4e6d6ea496a63c61b}{}\label{stack__frame_8c_a9449cf29b3fcf4b4e6d6ea496a63c61b}
+
+
+Adiciona um novo \hyperlink{structFrame}{Frame} na pilha de frames. 
+
 \index{stack\+\_\+frame.\+c@{stack\+\_\+frame.\+c}!top@{top}}
 \index{top@{top}!stack\+\_\+frame.\+c@{stack\+\_\+frame.\+c}}
 \subsubsection[{\texorpdfstring{top()}{top()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Frame}$\ast$ top (
@@ -65,3 +91,7 @@ int \hyperlink{stack__frame_8c_a946d97bd0b6c21223b5b220ca34c7ab1}{empty} ()
 {}
 \end{DoxyParamCaption}
 )}\hypertarget{stack__frame_8c_aab3f5154c34897bf92794a175bf6d4cb}{}\label{stack__frame_8c_aab3f5154c34897bf92794a175bf6d4cb}
+
+
+Retorna o \hyperlink{structFrame}{Frame} que está no topo da pilha. 
+

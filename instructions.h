@@ -1,9 +1,17 @@
+/**
+* @file         instructions.c
+* @brief        Criação dos op_codes para as instruções da JVM.
+*/
 #ifndef INSTRUCTIONS_H
 #define INSTRUCTIONS_H
 
 #include <stdint.h>
 #include "frame.h"
 
+/**
+ * @brief Estrutura de dados para facilitar o acesso ao op_code das instruções durante
+ * a execução do interpretador.
+ */
 typedef struct
 {
   uint8_t key;
@@ -16,6 +24,9 @@ typedef struct
 extern op_code op_codes_array[300];
 void initialize_op_codes();
 
+/**
+ * @brief Enum com informações dos opcodes da JVM.
+ */
 enum
 {
   newarray = 188,
