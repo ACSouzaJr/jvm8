@@ -6,6 +6,9 @@
 #include "string.h"
 #include "interpreter.h"
 
+/**
+ * @brief Faz a leitura de 1 byte do arquivo .class fornecido no path
+ */
 u1 u1Read(FILE *file)
 {
   // u1 buffer;
@@ -15,6 +18,9 @@ u1 u1Read(FILE *file)
   return toReturn;
 }
 
+/**
+ * @brief Faz a leitura de 2 bytes do arquivo .class fornecido no path
+ */
 u2 u2Read(FILE *file)
 {
   // u2 buffer;
@@ -25,6 +31,9 @@ u2 u2Read(FILE *file)
   return toReturn;
 }
 
+/**
+ * @brief Faz a leitura de 4 bytes do arquivo .class fornecido no path
+ */
 u4 u4Read(FILE *file)
 {
   // u4 buffer;
@@ -37,6 +46,9 @@ u4 u4Read(FILE *file)
   return toReturn;
 }
 
+/**
+ * @brief Printa a versão do arquivo .class
+ */
 char *printVersion(u2 version)
 {
   switch (version)
@@ -72,11 +84,17 @@ char *printVersion(u2 version)
   }
 }
 
+/**
+ * @brief Faz a leitua dos bytes no formato UTF-8
+ */
 char *readUtf8(cp_info *cp, u2 index)
 {
   return (char *)(cp[index - 1]).Utf8.bytes;
 }
 
+/**
+ * @brief Printa o tipo CONSTANT
+ */
 void printConstType(u4 high_bytes, u4 low_bytes, u1 type)
 {
   // char *str = (char *)malloc(sizeof(char) * 100);
@@ -108,6 +126,9 @@ void printConstType(u4 high_bytes, u4 low_bytes, u1 type)
   // return str;
 }
 
+/**
+ * @brief Printa o tipo do objeto
+ */
 char *printType(u2 type)
 {
   switch (type)
@@ -142,6 +163,9 @@ char *printType(u2 type)
   }
 }
 
+/**
+ * @brief Printa a flag correspondente ao tipo recebido
+ */
 char *printFlag(u2 type, u1 flag)
 {
   switch (type)
@@ -227,6 +251,9 @@ char *printFlag(u2 type, u1 flag)
   }
 }
 
+/**
+ * @brief Lê os atributos do bytecode recebido.
+ */
 attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
 {
   attribute_info *field = (attribute_info *)malloc(sizeof(attribute_info) * attr_count);
@@ -353,6 +380,9 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
   return field;
 }
 
+/**
+ * @brief Printa o tipo a partir da tag.
+ */
 void printVerificationTypeInfo(verification_type_info *ver_type, cp_info *cp, u2 verification_type_length)
 {
 
@@ -396,6 +426,9 @@ void printVerificationTypeInfo(verification_type_info *ver_type, cp_info *cp, u2
   }
 }
 
+/**
+ * @brief Faz a leitura de 1 byre do arquivo .class fornecido no path
+ */
 verification_type_info *fillVerificationTypeInfo(FILE *fp, u2 verification_type_length)
 {
   verification_type_info *ver_type = (verification_type_info *)malloc(sizeof(verification_type_info));
@@ -569,6 +602,9 @@ void freeStackMapTable(stack_map_frame *stack_map, attribute_info *attr)
   free(stack_map);
 }
 
+/**
+ * @brief Função utilizada para liberar a memória ocupada pelo classfile.
+ */
 void freeAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
 {
   // attribute_info *field = (attribute_info *)malloc(sizeof(attribute_info) * attr_count);
@@ -652,6 +688,9 @@ void freeAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
   free(field);
 }
 
+/**
+ * @brief Printa os atributos de um classfile.
+ */
 void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
 {
   for (attribute_info *attr = field; attr < field + attr_count; attr++)
@@ -880,6 +919,9 @@ void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)
   }
 }
 
+/**
+ * @brief todo: avalia os atributos do classfile.
+ */
 void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile *cf)
 {
   Frame *frame = cria_frame(cf->constant_pool, &cf->methods[1]);
@@ -1630,7 +1672,12 @@ void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile
     }
   }
 }
-
+/**
+ * @brief Faz a leitura do arquivo .class
+ * 
+ * Função principal de leitura. Recebe um ponteiro para uma struct do tipo cp_info, 
+ uma contagem do número de atributos e um ponteiro para o arquivo bytecodee raliza a leitura, byte a byte.
+ */
 void read_class_file(ClassFile *cf, char *file_name)
 {
   FILE *fp = fopen(file_name, "rb");
@@ -1797,6 +1844,9 @@ void read_class_file(ClassFile *cf, char *file_name)
   fclose(fp);
 }
 
+/**
+ * @brief Usa um índice para acessar a constant pool e printar recusrivamente os campos.
+ */
 void recursive_print(cp_info *cp, u2 index, char *str)
 {
   switch (cp[index - 1].tag)
@@ -1891,6 +1941,9 @@ void recursive_print(cp_info *cp, u2 index, char *str)
   }
 }
 
+/**
+ * @brief Usa um índice no constant pool para procurar o nome de um método recursivamente.
+ */
 void rec_method_name(cp_info *cp, u2 index, char *str)
 {
   switch (cp[index - 1].tag)
@@ -1977,6 +2030,9 @@ void rec_method_name(cp_info *cp, u2 index, char *str)
   }
 }
 
+/**
+ * @brief Usa um índice na constant pool para retorna uma referência no ponteiro global.
+ */
 char *print_reference(cp_info *cp, u2 index)
 {
   // char *str = (char *)malloc(sizeof(char *) * 200);
@@ -1985,6 +2041,9 @@ char *print_reference(cp_info *cp, u2 index)
   return GLOBAL_ptr;
 }
 
+/**
+ * @brief Retorna o nome de um método no ponteiro global.
+ */
 char *ret_method_name(cp_info *cp, u2 index)
 {
   // char *str = (char *)malloc(sizeof(char *) * 200);
@@ -1993,6 +2052,10 @@ char *ret_method_name(cp_info *cp, u2 index)
   return GLOBAL_ptr;
 }
 
+/**
+ * @brief Recebe um classfile como parâmetro e printa seu conteúdo de maneira organizada no terminal.
+ (Utilizado pelo leitor/exibidor de bytecode).
+ */
 void print_class_file(ClassFile *cf)
 {
   printf("General Info \n");
@@ -2198,6 +2261,9 @@ void print_class_file(ClassFile *cf)
   // }
 }
 
+/**
+ * @brief Libera o classfile da memória.
+ */
 void free_class_file(ClassFile *cf)
 {
   // interface -> u2
@@ -2293,6 +2359,9 @@ void free_class_file(ClassFile *cf)
   free(cf->constant_pool);
 }
 
+/**
+ * @brief Remove exetensão de uma string para printar de maneira correta.
+ */
 char *removeExtension(char *string)
 {
   int i;
@@ -2348,6 +2417,10 @@ char *findNameFile(char *string)
   }
 }
 
+/**
+ * @brief Função que busca pelo Frame no topo da pilha de frames e inicia a execução da JVM.
+ * Essa função é executada enquanto ainda há frames na pilha da JVM.
+ */
 void execute_gvm()
 {
   do
@@ -2363,6 +2436,9 @@ void execute_gvm()
   } while (!empty(JvmStack));
 }
 
+/**
+ * @brief Procura por um método dentro do Classfile carregado em memória.
+ */
 method_info *find_method(ClassFile *cf, char *method)
 {
   // corrigir depois
@@ -2381,6 +2457,10 @@ method_info *find_method(ClassFile *cf, char *method)
   return NULL;
 }
 
+/**
+ * @brief Aloca espaço para o ClassFile em memória e chama a função read_class_file para ler
+ o ClassFile recebido nas posições corretas.
+ */
 u4 ClassLoader(char *class_name)
 {
   ClassFile *cf = (ClassFile *)malloc(sizeof(ClassFile));
@@ -2405,6 +2485,9 @@ u4 ClassLoader(char *class_name)
   return Mem.num_classes - 1;
 }
 
+/**
+ * @brief Procura por cuma classe, e caso não consiga encontrá-la, carrega na memória usando a função ClassLoader.
+ */
 u2 find_class(char *class_name)
 {
   char *this_class;
@@ -2423,6 +2506,9 @@ u2 find_class(char *class_name)
   return ClassLoader(class_name);
 }
 
+/**
+ * @brief Procura por um field dentro do ClassFile.
+ */
 field_info *find_field(ClassFile *cf, char *field_name, char *field_desc)
 {
   for (field_info *i = cf->fields; i < cf->fields + cf->fields_count; i++)
@@ -2438,6 +2524,9 @@ field_info *find_field(ClassFile *cf, char *field_name, char *field_desc)
   return NULL;
 }
 
+/**
+ * @brief Procura por um init dentro do Classfile.
+ */
 void find_clinit(ClassFile *cf)
 {
   method_info *method;
