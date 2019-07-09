@@ -17,7 +17,7 @@ digraph "ClassFile"
   Node7 -> Node6 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" bootstrap_methods" ,fontname="Helvetica"];
   Node7 [label="Bootstrap_method",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structBootstrap__method.html"];
   Node8 -> Node6 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" exception_table" ,fontname="Helvetica"];
-  Node8 [label="exception_table_type",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structexception__table__type.html"];
+  Node8 [label="exception_table_type",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structexception__table__type.html",tooltip="Struct para representar a estrutura ExceptionTableType. "];
   Node9 -> Node6 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" local_variable_table" ,fontname="Helvetica"];
   Node9 [label="Local_variable_table",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structLocal__variable__table.html"];
   Node10 -> Node6 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" entries" ,fontname="Helvetica"];
@@ -63,11 +63,11 @@ digraph "ClassFile"
   Node28 [label="Classes",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structClasses.html"];
   Node5 -> Node6 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" attributes" ,fontname="Helvetica"];
   Node29 -> Node6 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" line_number_table" ,fontname="Helvetica"];
-  Node29 [label="line_number_table_type",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structline__number__table__type.html"];
+  Node29 [label="line_number_table_type",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structline__number__table__type.html",tooltip="Struct para representar a estrutura LIneNumberTable. "];
   Node30 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" methods" ,fontname="Helvetica"];
   Node30 [label="method_info",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmethod__info.html"];
   Node5 -> Node30 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" attributes" ,fontname="Helvetica"];
   Node31 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" constant_pool" ,fontname="Helvetica"];
-  Node31 [label="cp_info",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structcp__info.html"];
+  Node31 [label="cp_info",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structcp__info.html",tooltip="Struct para indicar o tipo de constant_pool. "];
   Node5 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" attributes" ,fontname="Helvetica"];
 }

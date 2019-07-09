@@ -21,11 +21,11 @@ typedef struct \hyperlink{structStackOperand}{Stack\+Operand} \hyperlink{stack__
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{structLocalVariable}{Local\+Variable} $\ast$ \hyperlink{stack__operands_8h_ad25a96b2568a831e2358b36ffd9badfa}{pop\+\_\+operand} (\hyperlink{structStackOperand}{Stack\+Operand} $\ast$stack\+\_\+operand)
-\item 
+\begin{DoxyCompactList}\small\item\em Retira o topo da pilha de operandos e retorna para o chamador. \end{DoxyCompactList}\item 
 void \hyperlink{stack__operands_8h_a9b8fdbdd132ce76d3351627cc4c4a0c4}{push\+\_\+operand} (\hyperlink{structLocalVariable}{Local\+Variable} $\ast$operand, \hyperlink{structStackOperand}{Stack\+Operand} $\ast$operands)
-\item 
+\begin{DoxyCompactList}\small\item\em Adiciona um novo operando dentro da pilha de operandos do \hyperlink{structFrame}{Frame}. \end{DoxyCompactList}\item 
 \hyperlink{structLocalVariable}{Local\+Variable} $\ast$ \hyperlink{stack__operands_8h_a93503085017543eef1171f1d98fe24d8}{top\+\_\+operand} (\hyperlink{structStackOperand}{Stack\+Operand} $\ast$stack\+\_\+operand)
-\item 
+\begin{DoxyCompactList}\small\item\em Retorna o topo da pilha de operandos. \end{DoxyCompactList}\item 
 void \hyperlink{stack__operands_8h_a02fd73d861ef2e4aabb38c0c9ff82947}{init} ()
 \begin{DoxyCompactList}\small\item\em Aloca espaço para a pilha de frames. \end{DoxyCompactList}\item 
 void \hyperlink{stack__operands_8h_a4bb1325b53dcb653e95a7935165c3b0e}{print\+\_\+stack} ()
@@ -57,6 +57,10 @@ Aloca espaço para a pilha de frames.
 \item[{{\bf Stack\+Operand} $\ast$}]{stack\+\_\+operand}
 \end{DoxyParamCaption}
 )}\hypertarget{stack__operands_8h_ad25a96b2568a831e2358b36ffd9badfa}{}\label{stack__operands_8h_ad25a96b2568a831e2358b36ffd9badfa}
+
+
+Retira o topo da pilha de operandos e retorna para o chamador. 
+
 \index{stack\+\_\+operands.\+h@{stack\+\_\+operands.\+h}!print\+\_\+stack@{print\+\_\+stack}}
 \index{print\+\_\+stack@{print\+\_\+stack}!stack\+\_\+operands.\+h@{stack\+\_\+operands.\+h}}
 \subsubsection[{\texorpdfstring{print\+\_\+stack()}{print_stack()}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+\_\+stack (
@@ -72,6 +76,10 @@ Aloca espaço para a pilha de frames.
 \item[{{\bf Stack\+Operand} $\ast$}]{operands}
 \end{DoxyParamCaption}
 )}\hypertarget{stack__operands_8h_a9b8fdbdd132ce76d3351627cc4c4a0c4}{}\label{stack__operands_8h_a9b8fdbdd132ce76d3351627cc4c4a0c4}
+
+
+Adiciona um novo operando dentro da pilha de operandos do \hyperlink{structFrame}{Frame}. 
+
 \index{stack\+\_\+operands.\+h@{stack\+\_\+operands.\+h}!top\+\_\+operand@{top\+\_\+operand}}
 \index{top\+\_\+operand@{top\+\_\+operand}!stack\+\_\+operands.\+h@{stack\+\_\+operands.\+h}}
 \subsubsection[{\texorpdfstring{top\+\_\+operand(\+Stack\+Operand $\ast$stack\+\_\+operand)}{top_operand(StackOperand *stack_operand)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Local\+Variable}$\ast$ top\+\_\+operand (
@@ -79,3 +87,7 @@ Aloca espaço para a pilha de frames.
 \item[{{\bf Stack\+Operand} $\ast$}]{stack\+\_\+operand}
 \end{DoxyParamCaption}
 )}\hypertarget{stack__operands_8h_a93503085017543eef1171f1d98fe24d8}{}\label{stack__operands_8h_a93503085017543eef1171f1d98fe24d8}
+
+
+Retorna o topo da pilha de operandos. 
+
