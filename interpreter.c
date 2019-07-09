@@ -2233,38 +2233,66 @@ void l2d_eval(Frame *f)
 
 void f2i_eval(Frame *f)
 {
-  int val = (int) pop_operand(f->operands)->value;
-
+  u4 val = (pop_operand(f->operands)->value);
+  u4 r1;
+  float aux;
+  int aux_int;
+  aux = *(float *)(&val);
+  aux_int = (int)aux;
+  
+  #ifdef DEBUG
+    printf("f2i_val: %d\n", aux_int);
+  #endif
   LocalVariable *int_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  memcpy(&int_val->value, &val, sizeof(uint32_t));
+  r1 = *((u4 *)(&aux_int));
 
   int_val->type = CONSTANT_Integer;
+  int_val->value = r1;
   push_operand(int_val, f->operands);
 }
 
 void f2l_eval(Frame *f)
 {
-  long val = (long) pop_operand(f->operands)->value;
-
+  u4 val = (pop_operand(f->operands)->value);
+  u4 r1;
+  float aux;
+  long aux_long;
+  aux = *(float *)(&val);
+  aux_long = (long)aux;
+  
+  #ifdef DEBUG
+    printf("f2l_val: %ld\n", aux_long);
+  #endif
   LocalVariable *long_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  memcpy(&long_val->value, &val, sizeof(uint64_t));
+  r1 = *((uint64_t *)(&aux_long));
 
   long_val->type = CONSTANT_Long;
+  long_val->type_long = r1;
   push_operand(long_val, f->operands);
 }
 
 void f2d_eval(Frame *f)
 {
-  double val = (double) pop_operand(f->operands)->value;
+  u4 val = (pop_operand(f->operands)->value);
+  u4 r1;
+  float aux;
+  double aux_double;
+  aux = *(float *)(&val);
+  aux_double = (double)aux;
+  
+  #ifdef DEBUG
+    printf("f2d_val: %f\n", aux_double);
+  #endif
+  LocalVariable *double_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  LocalVariable *double_value = (LocalVariable *)malloc(sizeof(LocalVariable));
-
-  memcpy(&double_value->value, &val, sizeof(uint64_t));
-
-  double_value->type = CONSTANT_Double;
-  push_operand(double_value, f->operands);
+  r1 = *((int64_t *)(&aux_double));
+  printf("r1: %ld\n", r1);
+  double_val->type = CONSTANT_Double;
+  double_val->type_double = r1;
+  printf("typedouble: %ld\n", double_val->type_double);
+  push_operand(double_val, f->operands);
 }
 
 void d2i_eval(Frame *f)
@@ -2400,13 +2428,13 @@ void lcmp_eval(Frame *f)
 void fcmpl_eval(Frame *f)
 {
   LocalVariable *v1, *v2, *lv;
-  int32_t value1, value2;
-  v1 = pop_operand(f->operands);
+  float value1, value2;
   v2 = pop_operand(f->operands);
+  v1 = pop_operand(f->operands);
   lv = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  value1 = v1->value;
-  value2 = v2->value;
+  value1 = *(float *)(&v1->value);
+  value2 = *(float *)(&v2->value);
   lv->type = CONSTANT_Integer;
   if (value1 > value2)
   {
@@ -2430,13 +2458,13 @@ void fcmpl_eval(Frame *f)
 void fcmpg_eval(Frame *f)
 {
   LocalVariable *v1, *v2, *lv;
-  u4 value1, value2;
+  float value1, value2;
   v2 = pop_operand(f->operands);
   v1 = pop_operand(f->operands);
   lv = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  value1 = v1->value;
-  value2 = v2->value;
+  value1 = *(float *)(&v1->value);
+  value2 = *(float *)(&v2->value);
   lv->type = CONSTANT_Integer;
   if (value1 > value2)
   {
