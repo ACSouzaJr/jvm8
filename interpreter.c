@@ -13,6 +13,7 @@
 #define exponent(x) ((x << 1) >> 24)
 #define mantiss(x) ((x << 9) >> 9)
 #define signal(x) (x >> 31)
+#define hex_0 0x00000000
 
 u2 count_args(char *method_desc)
 {
@@ -2174,37 +2175,47 @@ void iinc_eval(Frame *f)
 
 void i2l_eval(Frame *f)
 {
-  long val = (long ) pop_operand(f->operands)->value;
+  int32_t val = *((int32_t*)&pop_operand(f->operands)->value);
+  long aux;
 
   LocalVariable *long_val = (LocalVariable *)malloc(sizeof(LocalVariable));
-  memcpy(&long_val->value, &val, sizeof(uint64_t));
+  // memcpy(&long_val->value, &val, sizeof(uint64_t));
 
+  aux = (long)val;
+  long_val->type_long = *((uint64_t*)&aux);
   long_val->type = CONSTANT_Long;
   push_operand(long_val, f->operands);
-  printf("VALOR CONVERTIDO EM LONG ====> %d\n", *(int *)&long_val->type_long);
+  #ifdef DEBUG
+    printf("VALOR CONVERTIDO EM LONG ====> %d\n", *(int *)&long_val->type_long);
+  #endif
 }
 
 void i2f_eval(Frame *f)
 {
-  float val = (float) pop_operand(f->operands)->value;
-
+  int32_t val = *((int32_t*)&pop_operand(f->operands)->value);
+  float aux;
   LocalVariable *float_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  memcpy(&float_val->value, &val, sizeof(uint32_t));
-
+  // memcpy(&float_val->value, &val, sizeof(uint32_t));
+  aux = (float)val;
   float_val->type = CONSTANT_Float;
+  float_val->value = *((u4*)&aux);
   push_operand(float_val, f->operands);
 }
 
 void i2d_eval(Frame *f)
 {
-  double val = (double) pop_operand(f->operands)->value;
-
+  int32_t val = *((int32_t*)&pop_operand(f->operands)->value);
+  double aux;
   LocalVariable *double_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  memcpy(&double_val->type_double, &val, sizeof(uint64_t));
+  // memcpy(&double_val->type_double, &val, sizeof(uint64_t));
+  // printf("i2d_val: %d\n",val);
+  aux = (double)val;
+  // printf("i2d_aux: %f\n",aux);
 
   double_val->type = CONSTANT_Double;
+  double_val->type_double = *((uint64_t*)&aux);
   push_operand(double_val, f->operands);
 }
 
@@ -2376,11 +2387,14 @@ void d2f_eval(Frame *f)
 
 void i2b_eval(Frame *f)
 {
-  uint8_t val = (uint8_t) pop_operand(f->operands)->value;
-
+  int32_t val = *((int32_t*)&pop_operand(f->operands)->value);
+  int8_t aux;
+  aux = *(int8_t*)&val;
   LocalVariable *byte_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  memcpy(&byte_val->value, &val, sizeof(uint32_t));
+  // memcpy(&byte_val->value, &val, sizeof(uint32_t));
+  // printf("i2b_val: %01x\n", val);
+  byte_val->value = (hex_0 | aux);
 
   byte_val->type = CONSTANT_Integer; // colocar o tipo CONSTANT_Byte
   push_operand(byte_val, f->operands);
@@ -2389,10 +2403,11 @@ void i2b_eval(Frame *f)
 void i2c_eval(Frame *f)
 {
   int32_t val = *((int32_t*)&pop_operand(f->operands)->value);
-  uint8_t aux;
+  char aux;
   LocalVariable *short_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  aux = *(uint8_t*)&val;
+  aux = *(char*)&val;
+  // printf("aux_char_i2c: %c\n", aux);
   short_val->type = CONSTANT_Integer;
   short_val->value = (aux << 24);
   push_operand(short_val, f->operands);
@@ -2401,11 +2416,11 @@ void i2c_eval(Frame *f)
 void i2s_eval(Frame *f)
 {
   int32_t val = *((int32_t*)&pop_operand(f->operands)->value);
-  uint16_t aux;
+  int16_t aux;
   LocalVariable *short_val = (LocalVariable *)malloc(sizeof(LocalVariable));
-  aux = *(uint16_t*)&val;
+  aux = *(int16_t*)&val;
   short_val->type = CONSTANT_Integer;
-  short_val->value = (aux << 16);
+  short_val->value = (hex_0 | aux);
   push_operand(short_val, f->operands);
 }
 
