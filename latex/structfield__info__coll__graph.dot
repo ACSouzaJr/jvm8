@@ -15,7 +15,7 @@ digraph "field_info"
   Node6 -> Node5 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" bootstrap_methods" ];
   Node6 [label="Bootstrap_method",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structBootstrap__method.html"];
   Node7 -> Node5 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" exception_table" ];
-  Node7 [label="exception_table_type",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structexception__table__type.html"];
+  Node7 [label="exception_table_type",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structexception__table__type.html",tooltip="Struct para representar a estrutura ExceptionTableType. "];
   Node8 -> Node5 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" local_variable_table" ];
   Node8 [label="Local_variable_table",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structLocal__variable__table.html"];
   Node9 -> Node5 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" entries" ];
@@ -61,5 +61,5 @@ digraph "field_info"
   Node27 [label="Classes",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structClasses.html"];
   Node4 -> Node5 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" attributes" ];
   Node28 -> Node5 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" line_number_table" ];
-  Node28 [label="line_number_table_type",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structline__number__table__type.html"];
+  Node28 [label="line_number_table_type",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structline__number__table__type.html",tooltip="Struct para representar a estrutura LIneNumberTable. "];
 }

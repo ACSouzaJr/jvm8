@@ -1,5 +1,10 @@
 \hypertarget{structures_8h}{}\section{structures.\+h File Reference}
 \label{structures_8h}\index{structures.\+h@{structures.\+h}}
+
+
+Implementação das estruturas de dados da \hyperlink{structJVM}{J\+VM}.  Contém as implementações das principais estruturas de dados usadas pela \hyperlink{structJVM}{J\+VM}.  
+
+
 {\ttfamily \#include $<$stdint.\+h$>$}\\*
 Include dependency graph for structures.\+h\+:
 % FIG 0
@@ -9,11 +14,11 @@ This graph shows which files directly or indirectly include this file\+:
 \begin{DoxyCompactItemize}
 \item 
 struct \hyperlink{structcp__info}{cp\+\_\+info}
-\item 
+\begin{DoxyCompactList}\small\item\em Struct para indicar o tipo de constant\+\_\+pool. \end{DoxyCompactList}\item 
 struct \hyperlink{structline__number__table__type}{line\+\_\+number\+\_\+table\+\_\+type}
-\item 
+\begin{DoxyCompactList}\small\item\em Struct para representar a estrutura L\+Ine\+Number\+Table. \end{DoxyCompactList}\item 
 struct \hyperlink{structexception__table__type}{exception\+\_\+table\+\_\+type}
-\item 
+\begin{DoxyCompactList}\small\item\em Struct para representar a estrutura Exception\+Table\+Type. \end{DoxyCompactList}\item 
 struct \hyperlink{structTop__variable__info}{Top\+\_\+variable\+\_\+info}
 \item 
 struct \hyperlink{structInteger__variable__info}{Integer\+\_\+variable\+\_\+info}
@@ -69,9 +74,9 @@ struct \hyperlink{structTypeArray}{Type\+Array}
 struct \hyperlink{structLocalVariable}{Local\+Variable}
 \item 
 struct \hyperlink{structClassFile}{Class\+File}
-\item 
+\begin{DoxyCompactList}\small\item\em Struct que representa os campos do bytecode. \end{DoxyCompactList}\item 
 struct \hyperlink{structMethod}{Method}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Struct que contém o array de classfiles e o número de classes já carregadas em memória. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
@@ -80,8 +85,6 @@ struct \hyperlink{structMethod}{Method}
 \#define \hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2}~uint16\+\_\+t
 \item 
 \#define \hyperlink{structures_8h_ae391a1d79bb0c8cbc283f0283e3c098b}{u4}~uint32\+\_\+t
-\item 
-\#define \hyperlink{structures_8h_ad72dbcf6d0153db1b8d8a58001feed83}{D\+E\+B\+UG}
 \end{DoxyCompactItemize}
 \subsection*{Typedefs}
 \begin{DoxyCompactItemize}
@@ -111,7 +114,7 @@ enum \{ \\*
 \\*
 \hyperlink{structures_8h_adf764cbdea00d65edcd07bb9953ad2b7a52dbe317b7b19ea9d13a8b185842d245}{C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Method\+Type} = 16, 
 \hyperlink{structures_8h_adf764cbdea00d65edcd07bb9953ad2b7a914abae8d35d480c7856e97ca4fc00e0}{C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Invoke\+Dynamic} = 18
- \}
+ \}\begin{DoxyCompactList}\small\item\em Enum das tags C\+O\+N\+S\+T\+A\+NT. \end{DoxyCompactList}
 \item 
 enum \{ \\*
 \hyperlink{structures_8h_a99fb83031ce9923c84392b4e92f956b5abb2e4660927970307626910bc6f3a8cd}{I\+T\+E\+M\+\_\+\+Top}, 
@@ -145,15 +148,17 @@ enum \{ \\*
 char $\ast$ \hyperlink{structures_8h_a17dd988cd7a015cb95f53b4dcfd5842a}{G\+L\+O\+B\+A\+L\+\_\+ptr}
 \item 
 enum  \{ ... \}  \hyperlink{structures_8h_a114eb3fd8a0627af63075745a5e5d765}{pool\+\_\+tags}
-\item 
+\begin{DoxyCompactList}\small\item\em Enum das tags C\+O\+N\+S\+T\+A\+NT. \end{DoxyCompactList}\item 
 \hyperlink{structClassFile}{Class\+File} $\ast$ \hyperlink{structures_8h_ae33e7c4068cbc1cc6d0ce68a87642485}{G\+L\+O\+B\+A\+L\+\_\+\+C\+L\+A\+SS}
 \end{DoxyCompactItemize}
 
 
+\subsection{Detailed Description}
+Implementação das estruturas de dados da \hyperlink{structJVM}{J\+VM}.  Contém as implementações das principais estruturas de dados usadas pela \hyperlink{structJVM}{J\+VM}. 
+
+
+
 \subsection{Macro Definition Documentation}
-\index{structures.\+h@{structures.\+h}!D\+E\+B\+UG@{D\+E\+B\+UG}}
-\index{D\+E\+B\+UG@{D\+E\+B\+UG}!structures.\+h@{structures.\+h}}
-\subsubsection[{\texorpdfstring{D\+E\+B\+UG}{DEBUG}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+E\+B\+UG}\hypertarget{structures_8h_ad72dbcf6d0153db1b8d8a58001feed83}{}\label{structures_8h_ad72dbcf6d0153db1b8d8a58001feed83}
 \index{structures.\+h@{structures.\+h}!u1@{u1}}
 \index{u1@{u1}!structures.\+h@{structures.\+h}}
 \subsubsection[{\texorpdfstring{u1}{u1}}]{\setlength{\rightskip}{0pt plus 5cm}\#define u1~uint8\+\_\+t}\hypertarget{structures_8h_a64f8055b64cf2a4c299c841130c5c938}{}\label{structures_8h_a64f8055b64cf2a4c299c841130c5c938}
@@ -176,6 +181,10 @@ enum  \{ ... \}  \hyperlink{structures_8h_a114eb3fd8a0627af63075745a5e5d765}{poo
 
 \subsection{Enumeration Type Documentation}
 \subsubsection[{\texorpdfstring{anonymous enum}{anonymous enum}}]{\setlength{\rightskip}{0pt plus 5cm}anonymous enum}\hypertarget{structures_8h_adf764cbdea00d65edcd07bb9953ad2b7}{}\label{structures_8h_adf764cbdea00d65edcd07bb9953ad2b7}
+
+
+Enum das tags C\+O\+N\+S\+T\+A\+NT. 
+
 Tabela contendo o valor para cada tag da constante (tipo id) \begin{Desc}
 \item[Enumerator]\par
 \begin{description}
@@ -267,4 +276,8 @@ T\+\_\+\+L\+O\+NG\hypertarget{structures_8h_abc6126af1d45847bc59afa0aa3216b04a1f
 \index{structures.\+h@{structures.\+h}!pool\+\_\+tags@{pool\+\_\+tags}}
 \index{pool\+\_\+tags@{pool\+\_\+tags}!structures.\+h@{structures.\+h}}
 \subsubsection[{\texorpdfstring{pool\+\_\+tags}{pool_tags}}]{\setlength{\rightskip}{0pt plus 5cm}enum \{ ... \}   pool\+\_\+tags}\hypertarget{structures_8h_a114eb3fd8a0627af63075745a5e5d765}{}\label{structures_8h_a114eb3fd8a0627af63075745a5e5d765}
+
+
+Enum das tags C\+O\+N\+S\+T\+A\+NT. 
+
 Tabela contendo o valor para cada tag da constante (tipo id) 

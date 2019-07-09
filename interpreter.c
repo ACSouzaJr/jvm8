@@ -1,3 +1,9 @@
+/**
+* @file         interpreter.c
+* @brief        Implementação das instruções de execução da JVM.
+* @detail       Contém a implementação de todas as instruções da JVM.
+*/
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -14,6 +20,9 @@
 #define mantiss(x) ((x << 9) >> 9)
 #define signal(x) (x >> 31)
 
+/**
+ * @brief Conta o número de argumentos do método recebido como parâmetro.
+ */
 u2 count_args(char *method_desc)
 {
   u2 args = 0;
@@ -33,17 +42,24 @@ u2 count_args(char *method_desc)
   return args;
 }
 
+/**
+ * @brief Implementação da instrução nop, que não faz nada.
+ */
 void nop_eval(Frame *f)
 {
 }
 
-// da um push NULL para a pilha de operandos
+/**
+ * @brief Realiza um push NULL na pilha de operandos.
+ */
 void aconst_null_eval(Frame *f)
 {
   push_operand(NULL, f->operands);
 }
 
-// da um push de um int constante para a pilha de operandos
+/**
+ * @brief Realiza um push de um int constante para a pilha de operandos.
+ */
 void iconst_m1_eval(Frame *f)
 {
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -52,6 +68,9 @@ void iconst_m1_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
+/**
+ * @brief Coloca o inteiro constante 0 na pilha de operandos.
+ */
 void iconst_0_eval(Frame *f)
 {
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -63,6 +82,9 @@ void iconst_0_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Coloca o inteiro constante 1 na pilha de operandos.
+ */
 void iconst_1_eval(Frame *f)
 {
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -74,6 +96,9 @@ void iconst_1_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Coloca o inteiro constante 2 na pilha de operandos.
+ */
 void iconst_2_eval(Frame *f)
 {
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -82,6 +107,9 @@ void iconst_2_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
+/**
+ * @brief Coloca o inteiro constante 3 na pilha de operandos.
+ */
 void iconst_3_eval(Frame *f)
 {
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -90,6 +118,9 @@ void iconst_3_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
+/**
+ * @brief Coloca o inteiro constante 4 na pilha de operandos.
+ */
 void iconst_4_eval(Frame *f)
 {
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -98,6 +129,9 @@ void iconst_4_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
+/**
+ * @brief Coloca o inteiro constante 5 na pilha de operandos.
+ */
 void iconst_5_eval(Frame *f)
 {
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -106,7 +140,9 @@ void iconst_5_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
-// da um push de um long constante para a pilha de operandos
+/**
+ * @brief Coloca um long de valor constante 0 no topo da pilha de operandos.
+ */
 void lconst_0_eval(Frame *f)
 {
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -116,6 +152,9 @@ void lconst_0_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
+/**
+ * @brief Coloca um long de valor constante 1 no topo da pilha de operandos.
+ */
 void lconst_1_eval(Frame *f)
 {
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -125,7 +164,9 @@ void lconst_1_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
-// push de um float constante para pilha de operandos (</> 0 ou 1)
+/**
+ * @brief Coloca um float constante 0 no topo da pilha de operandos.
+ */
 void fconst_0_eval(Frame *f)
 {
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -135,6 +176,9 @@ void fconst_0_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
+/**
+ * @brief Coloca um float constante 1 no topo da pilha de operandos.
+ */
 void fconst_1_eval(Frame *f)
 {
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -144,6 +188,9 @@ void fconst_1_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
+/**
+ * @brief Coloca um float constante 2 no topo da pilha de operandos.
+ */
 void fconst_2_eval(Frame *f)
 {
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -153,7 +200,9 @@ void fconst_2_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
-// push de um double constante para pilha de operandos (</> 0 ou 1)
+/**
+ * @brief Coloca um double constante 0 no topo da pilha de operandos.
+ */
 void dconst_0_eval(Frame *f)
 {
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -166,6 +215,9 @@ void dconst_0_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Coloca um double constante 1 no topo da pilha de operandos.
+ */
 void dconst_1_eval(Frame *f)
 {
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -178,7 +230,11 @@ void dconst_1_eval(Frame *f)
 #endif
 }
 
-// push de um byte na pilha de operandos - o byte tem seu sinal extendido para um valor int
+/**
+ * @brief Coloca um byte na pilha de operandos.
+ *
+ * Faz um push na pilha de operandos de um byte. O byte tem seu sinal extendido para um valor int.
+ */
 void bipush_eval(Frame *f)
 {
   // Pega o byte de argument extend para int e empilha nos operandos.
@@ -191,8 +247,12 @@ void bipush_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
-// push para a pilha de operandos de um valor do tipo shot
-// recebe dois bytes e os junto em um intermediário de 16 bits, para futuramente extender seu sinal e dar push para a pilha de operandos
+/**
+ * @brief Faz um push na pilha de operandos de um valor do tipo short.
+ *
+ * Recebe dois bytes e os junta em um intermediário de 16 bits, para futuramente
+ * extender seu sinal e dar push para a pilha de operandos.
+ */
 void sipush_eval(Frame *f)
 {
   u1 byte1, byte2;
@@ -213,11 +273,14 @@ void sipush_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
-// push de um item da constant_pool
-// o índice de acesso à constant_pool deve ser de categoria 1
-// Caso seja int ou float, seu valor é levado à cp como int, ou float
-// Caso seja String, então a referência value para aquela instância é levada a op_stack
-// Caso seja uma referência para uma classe, é retornada uma referência para a class Object [0]
+/**
+ * @brief Realiza o push de um item da constant pool.
+ *
+ * O índice de acesso a constant pool deve ser de categoria 1.
+ * Caso seja int ou float, seu valor é levado à cp como int, ou float
+ * Caso seja String, então a referência value para aquela instância é levada a op_stack
+ * Caso seja uma referência para uma classe, é retornada uma referência para a class Object [0]
+ */
 void ldc_eval(Frame *f)
 {
   u1 index = f->bytecode[f->pc++];
@@ -256,6 +319,13 @@ void ldc_w_eval(Frame *f)
   //TODO
 }
 
+/**
+ * @brief Faz um push na pilha de operandos de um long ou double da constant pool.
+ *
+ * Recebe dois bytes e os junta em um intermediário de 16 bits, os quais são
+ * usados como índice na constant pool. O valor numérico naquela posição da constant pool
+ * é colocado na pilha de operandos.
+ */
 void ldc2_w_eval(Frame *f)
 {
   u2 index = getIndexFromb1b2(f);
@@ -313,6 +383,10 @@ void ldc2_w_eval(Frame *f)
 }
 
 // Load de um int vindo do vetor de variáveis locais - índice sem sinal
+
+/**
+ * @brief Carrega um inteiro vindo do vetor de variáveis locais - índice sem sinal.
+ */
 void iload_eval(Frame *f)
 {
   u1 index = f->bytecode[f->pc++];
@@ -322,13 +396,18 @@ void iload_eval(Frame *f)
 #endif
 }
 
-// Load de um long vindo vo vetor de variáveis locais - índice sem sinal
+/**
+ * @brief Load de um long vindo do vetor de variáveis locais - índice sem sinal.
+ */
 void lload_eval(Frame *f)
 {
   u1 index = f->bytecode[f->pc++];
   push_operand(&(f->local_variables[index]), f->operands);
 }
 
+/**
+ * @brief Carrega um float vindo do vetor de variáveis locais - índice sem sinal.
+ */
 void fload_eval(Frame *f)
 {
   u1 index = f->bytecode[f->pc++];
@@ -344,6 +423,9 @@ void fload_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Carrega um double vindo do vetor de variáveis locais - índice sem sinal.
+ */
 void dload_eval(Frame *f)
 {
   u1 index = f->bytecode[f->pc++];

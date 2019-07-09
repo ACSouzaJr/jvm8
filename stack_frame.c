@@ -1,7 +1,15 @@
+/**
+* @file         stack_frame.c
+* @brief        Funções de gerenciamento da pilha de frames.
+* @detail       Contém as implementações das funções de gerenciamento para a pilha de frames da JVM.
+*/
 #include <stdlib.h>
 #include "stack_frame.h"
 #include "frame.h"
 
+/**
+ * @brief Retira o último item na pilha de Frames e o retorna para o chamador.
+ */
 Frame* pop(){
     Frame* item;
     NodeFrame *ptr;
@@ -30,6 +38,9 @@ Frame* pop(){
     return item;
 }
 
+/**
+ * @brief Adiciona um novo Frame na pilha de frames.
+ */
 void push(Frame *frame)
 {
   NodeFrame *ptr = (NodeFrame *)malloc(sizeof(NodeFrame));
@@ -53,10 +64,16 @@ void push(Frame *frame)
   }
 }
 
+/**
+ * @brief Retorna o Frame que está no topo da pilha.
+ */
 Frame* top(){
     return JvmStack->top->f;
 }
 
+/**
+ * @brief Aloca espaço para a pilha de frames.
+ */
 void init(){
     // printf("Criando pilha...\n");
     JvmStack = (StackFrame *) malloc(sizeof(StackFrame));
@@ -86,6 +103,9 @@ void print_stack(){
 //    return 1;
 // }
 
+/**
+ * @brief Retorna verdadeiro caso a pilha de Frames esteja vazia.
+ */
 int empty(){
   return JvmStack->top == NULL;
 }

@@ -87,6 +87,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">stack_operands.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Funções de gerenciamento da pilha de operandos.  Contém as implementações das funções de gerenciamento para a pilha de operandos da <a class="el" href="structJVM.html">JVM</a>.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
 <code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="structures_8h_source.html">structures.h</a>&quot;</code><br />
@@ -101,13 +104,18 @@ Include dependency graph for stack_operands.c:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ad8a84e049ef9881ced4324970f42fb2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stack__operands_8c.html#ad8a84e049ef9881ced4324970f42fb2d">push_operand</a> (<a class="el" href="structLocalVariable.html">LocalVariable</a> *operand, <a class="el" href="structStackOperand.html">StackOperand</a> *stack_operand)</td></tr>
+<tr class="memdesc:ad8a84e049ef9881ced4324970f42fb2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adiciona um novo operando dentro da pilha de operandos do <a class="el" href="structFrame.html">Frame</a>.  <a href="#ad8a84e049ef9881ced4324970f42fb2d">More...</a><br /></td></tr>
 <tr class="separator:ad8a84e049ef9881ced4324970f42fb2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad25a96b2568a831e2358b36ffd9badfa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structLocalVariable.html">LocalVariable</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stack__operands_8c.html#ad25a96b2568a831e2358b36ffd9badfa">pop_operand</a> (<a class="el" href="structStackOperand.html">StackOperand</a> *stack_operand)</td></tr>
+<tr class="memdesc:ad25a96b2568a831e2358b36ffd9badfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retira o topo da pilha de operandos e retorna para o chamador.  <a href="#ad25a96b2568a831e2358b36ffd9badfa">More...</a><br /></td></tr>
 <tr class="separator:ad25a96b2568a831e2358b36ffd9badfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a93503085017543eef1171f1d98fe24d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structLocalVariable.html">LocalVariable</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stack__operands_8c.html#a93503085017543eef1171f1d98fe24d8">top_operand</a> (<a class="el" href="structStackOperand.html">StackOperand</a> *stack_operand)</td></tr>
+<tr class="memdesc:a93503085017543eef1171f1d98fe24d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retorna o topo da pilha de operandos.  <a href="#a93503085017543eef1171f1d98fe24d8">More...</a><br /></td></tr>
 <tr class="separator:a93503085017543eef1171f1d98fe24d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Funções de gerenciamento da pilha de operandos.  Contém as implementações das funções de gerenciamento para a pilha de operandos da <a class="el" href="structJVM.html">JVM</a>. </p>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="ad25a96b2568a831e2358b36ffd9badfa"></a>
 <div class="memitem">
 <div class="memproto">
@@ -121,6 +129,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Retira o topo da pilha de operandos e retorna para o chamador. </p>
 
 </div>
 </div>
@@ -148,6 +158,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Adiciona um novo operando dentro da pilha de operandos do <a class="el" href="structFrame.html">Frame</a>. </p>
+
 </div>
 </div>
 <a class="anchor" id="a93503085017543eef1171f1d98fe24d8"></a>
@@ -163,6 +175,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Retorna o topo da pilha de operandos. </p>
 
 </div>
 </div>
