@@ -2102,16 +2102,13 @@ void lor_eval(Frame *f)
   result->type = CONSTANT_Long;
 
   result->type_long = *(uint64_t *)&resultlong;
-#ifdef DEBUG
-  printf("v1_long: %ld \n", value1);
-#endif
-#ifdef DEBUG
-  printf("v2_long: %ld \n", value2);
-  printf("result: %ld \n", resultlong);
-#endif
-#ifdef DEBUG
-  printf("resultado_long: %ld \n", result->type_long);
-#endif
+  #ifdef DEBUG
+    printf("v1_long: %ld \n", value1);
+    printf("v2_long: %ld \n", value2);
+    printf("result: %ld \n", resultlong);
+    printf("resultado_long: %ld \n", result->type_long);
+  #endif
+  push_operand(result, f->operands);
 }
 
 void ixor_eval(Frame *f)
@@ -2150,16 +2147,13 @@ void lxor_eval(Frame *f)
   result->type = CONSTANT_Long;
 
   result->type_long = *(uint64_t *)&resultlong;
-#ifdef DEBUG
-  printf("v1_long: %ld \n", value1);
-#endif
-#ifdef DEBUG
-  printf("v2_long: %ld \n", value2);
-  printf("result: %ld \n", resultlong);
-#endif
-#ifdef DEBUG
-  printf("resultado_long: %ld \n", result->type_long);
-#endif
+  #ifdef DEBUG
+    printf("v1_long: %ld \n", value1);
+    printf("v2_long: %ld \n", value2);
+    printf("result: %ld \n", resultlong);
+    printf("resultado_long: %ld \n", result->type_long);
+  #endif
+  push_operand(result, f->operands);
 }
 
 void iinc_eval(Frame *f)
