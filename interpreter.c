@@ -1137,29 +1137,110 @@ void dup_x2_eval(Frame *f)
   // se for cat1 => 1 3 2 1
   LocalVariable *dup_top1 = pop_operand(f->operands);
   LocalVariable *dup_top2 = pop_operand(f->operands);
-  LocalVariable *dup_top3 = pop_operand(f->operands);
-
-  push_operand(dup_top1, f->operands);
-  push_operand(dup_top3, f->operands);
-  push_operand(dup_top2, f->operands);
-  push_operand(dup_top1, f->operands);
 
   // se for cat2 -> implementar => 1 2 1
+  if((dup_top1->type != CONSTANT_Long && dup_top1->type != CONSTANT_Double)
+      && (dup_top2->type == CONSTANT_Long || dup_top2->type == CONSTANT_Double)
+    ) {
+    push_operand(dup_top1, f->operands);
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+  }
+  else {
+    LocalVariable *dup_top3 = pop_operand(f->operands);
+
+    push_operand(dup_top1, f->operands);
+    push_operand(dup_top3, f->operands);
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+  }
 }
 
 void dup2_eval(Frame *f)
 {
-  //TODO
+  LocalVariable *dup_top1 = pop_operand(f->operands);
+  
+  // se for cat2 -> implementar => 1 2 1
+  if((dup_top1->type != CONSTANT_Long && dup_top1->type != CONSTANT_Double)
+      && (f->operands->top->f == CONSTANT_Long || f->operands->top->f == CONSTANT_Double)
+    ) {
+    push_operand(dup_top1, f->operands);
+    push_operand(dup_top1, f->operands);
+  }
+  else {
+    LocalVariable *dup_top2 = pop_operand(f->operands);
+
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+  }
 }
 
 void dup2_x1_eval(Frame *f)
 {
-  //TODO
+  LocalVariable *dup_top1 = pop_operand(f->operands);
+  LocalVariable *dup_top2 = pop_operand(f->operands);
+  
+  // se for cat2 -> implementar => 1 2 1
+  if((dup_top1->type != CONSTANT_Long && dup_top1->type != CONSTANT_Double)
+      && (dup_top2->type == CONSTANT_Long && dup_top2->type == CONSTANT_Double)
+    ) {
+    push_operand(dup_top1, f->operands);
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+  }
+  else {
+    LocalVariable *dup_top3 = pop_operand(f->operands);
+
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+    push_operand(dup_top3, f->operands);
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+  }
 }
 
 void dup2_x2_eval(Frame *f)
 {
-  //TODO
+  LocalVariable *dup_top1 = pop_operand(f->operands);
+  LocalVariable *dup_top2 = pop_operand(f->operands);
+  LocalVariable *dup_top3 = pop_operand(f->operands);
+  
+  // se for cat2 -> implementar => 1 2 1
+  if((dup_top1->type == CONSTANT_Long || dup_top1->type == CONSTANT_Double)
+      && (dup_top2->type != CONSTANT_Long && dup_top2->type != CONSTANT_Double)
+      && (dup_top3->type != CONSTANT_Long && dup_top3->type != CONSTANT_Double)){
+    push_operand(dup_top1, f->operands);
+    push_operand(dup_top3, f->operands);
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+  }
+  else if((dup_top1->type != CONSTANT_Long && dup_top1->type != CONSTANT_Double)
+      && (dup_top2->type != CONSTANT_Long && dup_top2->type != CONSTANT_Double)
+      && (dup_top3->type == CONSTANT_Long || dup_top3->type == CONSTANT_Double)) {
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+    push_operand(dup_top3, f->operands);
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+  }
+  else if((dup_top1->type != CONSTANT_Long && dup_top1->type != CONSTANT_Double)
+      && (dup_top2->type != CONSTANT_Long && dup_top2->type != CONSTANT_Double)){
+    push_operand(dup_top1, f->operands);
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+  }
+  else {
+    LocalVariable *dup_top4 = pop_operand(f->operands);
+
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+    push_operand(dup_top4, f->operands);
+    push_operand(dup_top3, f->operands);
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+  }
 }
 
 void swap_eval(Frame *f)
@@ -2077,77 +2158,182 @@ void iinc_eval(Frame *f)
 
 void i2l_eval(Frame *f)
 {
-  //TODO
+  long val = (long ) pop_operand(f->operands)->value;
+
+  LocalVariable *long_val = (LocalVariable *)malloc(sizeof(LocalVariable));
+  memcpy(&long_val->value, &val, sizeof(uint64_t));
+
+  long_val->type = CONSTANT_Long;
+  push_operand(long_val, f->operands);
+  printf("VALOR CONVERTIDO EM LONG ====> %d\n", *(int *)&long_val->type_long);
 }
 
 void i2f_eval(Frame *f)
 {
-  //TODO
+  float val = (float) pop_operand(f->operands)->value;
+
+  LocalVariable *float_val = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  memcpy(&float_val->value, &val, sizeof(uint32_t));
+
+  float_val->type = CONSTANT_Float;
+  push_operand(float_val, f->operands);
 }
 
 void i2d_eval(Frame *f)
 {
-  //TODO
+  double val = (double) pop_operand(f->operands)->value;
+
+  LocalVariable *double_val = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  memcpy(&double_val->value, &val, sizeof(uint64_t));
+
+  double_val->type = CONSTANT_Double;
+  push_operand(double_val, f->operands);
 }
 
 void l2i_eval(Frame *f)
 {
-  //TODO
+  int val = (int) pop_operand(f->operands)->value;
+
+  LocalVariable *int_val = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  memcpy(&int_val->value, &val, sizeof(uint32_t));
+
+  int_val->type = CONSTANT_Integer;
+  push_operand(int_val, f->operands);
 }
 
 void l2f_eval(Frame *f)
 {
-  //TODO
+  float val = (float) pop_operand(f->operands)->value;
+
+  LocalVariable *float_val = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  memcpy(&float_val->value, &val, sizeof(uint32_t));
+
+  float_val->type = CONSTANT_Float;
+  push_operand(float_val, f->operands);
 }
 
 void l2d_eval(Frame *f)
 {
-  //TODO
+  double val = (double) pop_operand(f->operands)->value;
+
+  LocalVariable *double_val = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  memcpy(&double_val->value, &val, sizeof(uint64_t));
+
+  double_val->type = CONSTANT_Double;
+  push_operand(double_val, f->operands);
 }
 
 void f2i_eval(Frame *f)
 {
-  //TODO
+  int val = (int) pop_operand(f->operands)->value;
+
+  LocalVariable *int_val = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  memcpy(&int_val->value, &val, sizeof(uint32_t));
+
+  int_val->type = CONSTANT_Integer;
+  push_operand(int_val, f->operands);
 }
 
 void f2l_eval(Frame *f)
 {
-  //TODO
+  long val = (long) pop_operand(f->operands)->value;
+
+  LocalVariable *long_val = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  memcpy(&long_val->value, &val, sizeof(uint64_t));
+
+  long_val->type = CONSTANT_Long;
+  push_operand(long_val, f->operands);
 }
 
 void f2d_eval(Frame *f)
 {
-  //TODO
+  double val = (double) pop_operand(f->operands)->value;
+
+  LocalVariable *double_value = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  memcpy(&double_value->value, &val, sizeof(uint64_t));
+
+  double_value->type = CONSTANT_Double;
+  push_operand(double_value, f->operands);
 }
 
 void d2i_eval(Frame *f)
 {
-  //TODO
+  int val = (int) pop_operand(f->operands)->value;
+
+  LocalVariable *int_val = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  memcpy(&int_val->value, &val, sizeof(uint32_t));
+
+  int_val->type = CONSTANT_Integer;
+  push_operand(int_val, f->operands);
 }
 
 void d2l_eval(Frame *f)
 {
-  //TODO
+  long val = (long) pop_operand(f->operands)->value;
+
+  LocalVariable *long_val = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  memcpy(&long_val->value, &val, sizeof(uint64_t));
+
+  long_val->type = CONSTANT_Long;
+  push_operand(long_val, f->operands);
 }
 
 void d2f_eval(Frame *f)
 {
-  //TODO
+  float val = (float) pop_operand(f->operands)->value;
+
+  LocalVariable *float_val = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  memcpy(&float_val->value, &val, sizeof(uint32_t));
+
+  float_val->type = CONSTANT_Float;
+  push_operand(float_val, f->operands);
 }
 
 void i2b_eval(Frame *f)
 {
-  //TODO
+  uint8_t val = (uint8_t) pop_operand(f->operands)->value;
+
+  LocalVariable *byte_val = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  memcpy(&byte_val->value, &val, sizeof(uint32_t));
+
+  byte_val->type = CONSTANT_Integer; // colocar o tipo CONSTANT_Byte
+  push_operand(byte_val, f->operands);
 }
 
 void i2c_eval(Frame *f)
 {
-  //TODO
+  uint8_t val = (uint8_t) pop_operand(f->operands)->value;
+
+  LocalVariable *char_value = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  memcpy(&char_value->value, &val, sizeof(uint32_t));
+
+  char_value->type = CONSTANT_Integer; // colocar o tipo CONSTANT_Char
+  push_operand(char_value, f->operands);
 }
 
 void i2s_eval(Frame *f)
 {
-  //TODO
+  uint32_t val = (uint32_t) pop_operand(f->operands)->value;
+
+  LocalVariable *string_val = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  memcpy(&string_val->value, &val, sizeof(uint32_t));
+
+  string_val->type = CONSTANT_String;
+  push_operand(string_val, f->operands);
 }
 
 void lcmp_eval(Frame *f)
