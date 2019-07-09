@@ -484,9 +484,9 @@ void dload_1_eval(Frame *f)
 {
   if (f->local_variables[1].type == CONSTANT_Double)
   {
-#ifdef DEBUG
-    printf("DOUBLE TYPE\n");
-#endif
+    #ifdef DEBUG
+        printf("DOUBLE TYPE\n");
+    #endif
     push_operand(&(f->local_variables[1]), f->operands);
   }
   else
@@ -1350,16 +1350,16 @@ void dadd_eval(Frame *f)
   result->type = CONSTANT_Double;
 
   result->type_double = *(uint64_t *)&resultdouble;
-#ifdef DEBUG
-  printf("v1_double: %f \n", value1);
-#endif
-#ifdef DEBUG
-  printf("v2_double: %f \n", value2);
-  printf("result: %f \n", resultdouble);
-#endif
-#ifdef DEBUG
-  printf("resultado_double: %f\n", result->type_double);
-#endif
+  #ifdef DEBUG
+    printf("v1_double: %f \n", value1);
+  #endif
+  #ifdef DEBUG
+    printf("v2_double: %f \n", value2);
+    printf("result: %f \n", resultdouble);
+  #endif
+  #ifdef DEBUG
+    printf("resultado_double: %f\n", result->type_double);
+  #endif
   push_operand(result, f->operands);
 }
 
@@ -2164,7 +2164,11 @@ void lxor_eval(Frame *f)
 void iinc_eval(Frame *f)
 {
   u1 index = f->bytecode[f->pc++];
-  int32_t value = f->bytecode[f->pc++];
+  int32_t value = ((int32_t)((int8_t)f->bytecode[f->pc++]));
+  #ifdef DEBUG
+    printf("iinc Index: %d\n", index);
+    printf("iinc Value: %d\n", value);
+  #endif
   f->local_variables[index].value += value;
 }
 
@@ -2198,7 +2202,7 @@ void i2d_eval(Frame *f)
 
   LocalVariable *double_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  memcpy(&double_val->value, &val, sizeof(uint64_t));
+  memcpy(&double_val->type_double, &val, sizeof(uint64_t));
 
   double_val->type = CONSTANT_Double;
   push_operand(double_val, f->operands);
@@ -2683,30 +2687,34 @@ void ifgt_eval(Frame *f)
     f->pc += offset - 3;
   }
 }
-
+int globalista = 0;
 void ifle_eval(Frame *f)
 {
-  u4 v1 = pop_operand(f->operands)->value;
+  globalista++;
+  printf("glob: %d\n", globalista);
+  int32_t v1 = (int32_t)pop_operand(f->operands)->value;
   #ifdef DEBUG
   printf("valor_ifle: %04x\n", v1);
   #endif
-  int value = *(int *)&(v1);
+  int32_t value = *(int32_t *)&(v1);
   #ifdef DEBUG
   printf("valor_ifle_value: %d\n", value);
   #endif
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
   if (value <= 0)
   {
-    u1 branchbyte1, branchbyte2;
-    branchbyte1 = f->bytecode[f->pc++];
-    branchbyte2 = f->bytecode[f->pc++];
 
-    int16_t offset = ((branchbyte1 << 8) | branchbyte2);
+    int16_t offset = ((int16_t)(branchbyte1 << 8) | (int16_t)branchbyte2);
 
-#ifdef DEBUG
-    printf("ifle: vou pular %d\n", (offset - 3));
-#endif
+    #ifdef DEBUG
+        printf("ifle: vou pular %d\n", (offset - 3));
+    #endif
 
     f->pc += offset - 3;
+  } else {
+    
   }
 }
 
