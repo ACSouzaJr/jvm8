@@ -2233,25 +2233,45 @@ void l2i_eval(Frame *f)
 
 void l2f_eval(Frame *f)
 {
-  float val = (float) pop_operand(f->operands)->value;
-
+  uint64_t val = (pop_operand(f->operands)->type_long);
+  u4 r1;
+  long aux;
+  float aux_float;
+  aux = *(long *)(&val);
+  aux_float = (float)aux;
+  
+  #ifdef DEBUG
+    printf("l2d_val: %f\n", aux_float);
+  #endif
   LocalVariable *float_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  memcpy(&float_val->value, &val, sizeof(uint32_t));
+  r1 = *((u4*)(&aux_float));
+  // memcpy(&float_val->value, &val, sizeof(ulong32_t));
 
   float_val->type = CONSTANT_Float;
+  float_val->value = r1;
   push_operand(float_val, f->operands);
 }
 
 void l2d_eval(Frame *f)
 {
-  double val = (double) pop_operand(f->operands)->value;
-
+  uint64_t val = (pop_operand(f->operands)->type_long);
+  uint64_t r1;
+  long aux;
+  double aux_double;
+  aux = *(long *)(&val);
+  aux_double = (double)aux;
+  
+  #ifdef DEBUG
+    printf("l2d_val: %f\n", aux_double);
+  #endif
   LocalVariable *double_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  memcpy(&double_val->value, &val, sizeof(uint64_t));
+  r1 = *((uint64_t*)(&aux_double));
+  // memcpy(&float_val->value, &val, sizeof(ulong32_t));
 
   double_val->type = CONSTANT_Double;
+  double_val->type_double = r1;
   push_operand(double_val, f->operands);
 }
 
@@ -2343,7 +2363,7 @@ void d2i_eval(Frame *f)
 void d2l_eval(Frame *f)
 {
   uint64_t val = (pop_operand(f->operands)->type_double);
-  u4 r1;
+  uint64_t r1;
   double aux;
   long aux_long;
   aux = *(double *)(&val);
