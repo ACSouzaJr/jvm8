@@ -181,7 +181,7 @@ void bipush_eval(Frame *f)
   // Pega o byte de argument extend para int e empilha nos operandos.
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Integer;
-  lv->value = (int32_t)f->bytecode[f->pc++];
+  lv->value = (int32_t)((int8_t)(f->bytecode[f->pc++]));
 #ifdef DEBUG
   printf("bipush: %d \n", lv->value);
 #endif
