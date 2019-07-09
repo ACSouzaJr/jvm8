@@ -1,6 +1,11 @@
 public class TesteLookupswitch {
 	public static void main(String[] args) {
-		simpleswitch(28);
+		int result = simpleswitch(1);
+        System.out.println(result);
+        result = simpleswitch(10);
+        System.out.println(result);
+        result = simpleswitch(28);
+        System.out.println(result);
 	}
 
     public static int simpleswitch(int i) {
