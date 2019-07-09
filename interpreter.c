@@ -2200,9 +2200,13 @@ void dcmpg_eval(Frame *f)
 void ifeq_eval(Frame *f)
 {
   u4 v1 = pop_operand(f->operands)->value;
+  #ifdef DEBUG
   printf("valor_ifeq: %04x\n", v1);
+  #endif
   int value = *(int *)&(v1);
+  #ifdef DEBUG
   printf("valor_ifeq_value: %d\n", value);
+  #endif
   if (value == 0)
   {
     u1 branchbyte1, branchbyte2;
@@ -2222,9 +2226,13 @@ void ifeq_eval(Frame *f)
 void ifne_eval(Frame *f)
 {
   u4 v1 = pop_operand(f->operands)->value;
+  #ifdef DEBUG
   printf("valor_ifne: %04x\n", v1);
+  #endif
   int value = *(int *)&(v1);
+  #ifdef DEBUG
   printf("valor_ifne_value: %d\n", value);
+  #endif
   if (value != 0)
   {
     u1 branchbyte1, branchbyte2;
@@ -2244,9 +2252,13 @@ void ifne_eval(Frame *f)
 void iflt_eval(Frame *f)
 {
   u4 v1 = pop_operand(f->operands)->value;
+  #ifdef DEBUG
   printf("valor_iflt: %04x\n", v1);
+  #endif
   int value = *(int *)&(v1);
+  #ifdef DEBUG
   printf("valor_iflt_value: %d\n", value);
+  #endif
   if (value < 0)
   {
     u1 branchbyte1, branchbyte2;
@@ -2266,9 +2278,13 @@ void iflt_eval(Frame *f)
 void ifge_eval(Frame *f)
 {
   u4 v1 = pop_operand(f->operands)->value;
+  #ifdef DEBUG
   printf("valor_ifge: %04x\n", v1);
+  #endif
   int value = *(int *)&(v1);
+  #ifdef DEBUG
   printf("valor_ifge_value: %d\n", value);
+  #endif
   if (value >= 0)
   {
     u1 branchbyte1, branchbyte2;
@@ -2288,9 +2304,13 @@ void ifge_eval(Frame *f)
 void ifgt_eval(Frame *f)
 {
   u4 v1 = pop_operand(f->operands)->value;
+  #ifdef DEBUG
   printf("valor_ifgt: %04x\n", v1);
+  #endif
   int value = *(int *)&(v1);
+  #ifdef DEBUG
   printf("valor_ifgt_value: %d\n", value);
+  #endif
   if (value > 0)
   {
     u1 branchbyte1, branchbyte2;
@@ -2310,9 +2330,13 @@ void ifgt_eval(Frame *f)
 void ifle_eval(Frame *f)
 {
   u4 v1 = pop_operand(f->operands)->value;
+  #ifdef DEBUG
   printf("valor_ifle: %04x\n", v1);
+  #endif
   int value = *(int *)&(v1);
+  #ifdef DEBUG
   printf("valor_ifle_value: %d\n", value);
+  #endif
   if (value <= 0)
   {
     u1 branchbyte1, branchbyte2;
