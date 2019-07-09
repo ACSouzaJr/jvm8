@@ -1,0 +1,120 @@
+\hypertarget{helpers_8c}{}\section{helpers.\+c File Reference}
+\label{helpers_8c}\index{helpers.\+c@{helpers.\+c}}
+
+
+Helpers  Funções de apoio para a execução do interpretador da \hyperlink{structJVM}{J\+VM}.  
+
+
+{\ttfamily \#include \char`\"{}helpers.\+h\char`\"{}}\\*
+Include dependency graph for helpers.\+c\+:
+% FIG 0
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{helpers_8c_acfedd718d4c266f123465f00cf71ff62}{exponent}(x)~((x $<$$<$ 1) $>$$>$ 24)
+\item 
+\#define \hyperlink{helpers_8c_adcb1a9e037617c6ee479b7dfacc07310}{mantiss}(x)~((x $<$$<$ 9) $>$$>$ 9)
+\item 
+\#define \hyperlink{helpers_8c_aefc2e44cf72e886b8c4d510b98b52f0a}{signal}(x)~(x $>$$>$ 31)
+\item 
+\#define \hyperlink{helpers_8c_a090f14ffdcbafc67e95a268449a4c497}{expoent\+\_\+d}(x)~((x $<$$<$ 1) $>$$>$ 53)
+\item 
+\#define \hyperlink{helpers_8c_adc3e3fbe627ce0ce7046fdcda4d5189c}{mantiss\+\_\+d}(x)~((x $<$$<$ 12) $>$$>$ 12)
+\item 
+\#define \hyperlink{helpers_8c_aeabfee8ee0631a179fa2f4806e36c429}{signal\+\_\+d}(x)~(x $>$$>$ 63)
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} \hyperlink{helpers_8c_a0a7debb62b7ecdf5d62fce5afb081b92}{get\+Index\+Fromb1b2} (\hyperlink{structFrame}{Frame} $\ast$f)
+\begin{DoxyCompactList}\small\item\em Retorna um indice a partir de dois bytes. \end{DoxyCompactList}\item 
+\hyperlink{structures_8h_ae391a1d79bb0c8cbc283f0283e3c098b}{u4} \hyperlink{helpers_8c_a4fd759b4559616dec03c8477fa4c2eb1}{convert\+Float\+To\+Bytes} (float $\ast$res)
+\begin{DoxyCompactList}\small\item\em Converte um valor em float para um valor em bytes. \end{DoxyCompactList}\item 
+uint64\+\_\+t \hyperlink{helpers_8c_ad32d227ebd8e73b12e9c827f545e87a2}{convert\+Double\+To\+Bytes} (double $\ast$res)
+\begin{DoxyCompactList}\small\item\em Converte um valor do tipo double para bytes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Helpers  Funções de apoio para a execução do interpretador da \hyperlink{structJVM}{J\+VM}. 
+
+
+
+\subsection{Macro Definition Documentation}
+\index{helpers.\+c@{helpers.\+c}!expoent\+\_\+d@{expoent\+\_\+d}}
+\index{expoent\+\_\+d@{expoent\+\_\+d}!helpers.\+c@{helpers.\+c}}
+\subsubsection[{\texorpdfstring{expoent\+\_\+d}{expoent_d}}]{\setlength{\rightskip}{0pt plus 5cm}\#define expoent\+\_\+d(
+\begin{DoxyParamCaption}
+\item[{}]{x}
+\end{DoxyParamCaption}
+)~((x $<$$<$ 1) $>$$>$ 53)}\hypertarget{helpers_8c_a090f14ffdcbafc67e95a268449a4c497}{}\label{helpers_8c_a090f14ffdcbafc67e95a268449a4c497}
+\index{helpers.\+c@{helpers.\+c}!exponent@{exponent}}
+\index{exponent@{exponent}!helpers.\+c@{helpers.\+c}}
+\subsubsection[{\texorpdfstring{exponent}{exponent}}]{\setlength{\rightskip}{0pt plus 5cm}\#define exponent(
+\begin{DoxyParamCaption}
+\item[{}]{x}
+\end{DoxyParamCaption}
+)~((x $<$$<$ 1) $>$$>$ 24)}\hypertarget{helpers_8c_acfedd718d4c266f123465f00cf71ff62}{}\label{helpers_8c_acfedd718d4c266f123465f00cf71ff62}
+\index{helpers.\+c@{helpers.\+c}!mantiss@{mantiss}}
+\index{mantiss@{mantiss}!helpers.\+c@{helpers.\+c}}
+\subsubsection[{\texorpdfstring{mantiss}{mantiss}}]{\setlength{\rightskip}{0pt plus 5cm}\#define mantiss(
+\begin{DoxyParamCaption}
+\item[{}]{x}
+\end{DoxyParamCaption}
+)~((x $<$$<$ 9) $>$$>$ 9)}\hypertarget{helpers_8c_adcb1a9e037617c6ee479b7dfacc07310}{}\label{helpers_8c_adcb1a9e037617c6ee479b7dfacc07310}
+\index{helpers.\+c@{helpers.\+c}!mantiss\+\_\+d@{mantiss\+\_\+d}}
+\index{mantiss\+\_\+d@{mantiss\+\_\+d}!helpers.\+c@{helpers.\+c}}
+\subsubsection[{\texorpdfstring{mantiss\+\_\+d}{mantiss_d}}]{\setlength{\rightskip}{0pt plus 5cm}\#define mantiss\+\_\+d(
+\begin{DoxyParamCaption}
+\item[{}]{x}
+\end{DoxyParamCaption}
+)~((x $<$$<$ 12) $>$$>$ 12)}\hypertarget{helpers_8c_adc3e3fbe627ce0ce7046fdcda4d5189c}{}\label{helpers_8c_adc3e3fbe627ce0ce7046fdcda4d5189c}
+\index{helpers.\+c@{helpers.\+c}!signal@{signal}}
+\index{signal@{signal}!helpers.\+c@{helpers.\+c}}
+\subsubsection[{\texorpdfstring{signal}{signal}}]{\setlength{\rightskip}{0pt plus 5cm}\#define signal(
+\begin{DoxyParamCaption}
+\item[{}]{x}
+\end{DoxyParamCaption}
+)~(x $>$$>$ 31)}\hypertarget{helpers_8c_aefc2e44cf72e886b8c4d510b98b52f0a}{}\label{helpers_8c_aefc2e44cf72e886b8c4d510b98b52f0a}
+\index{helpers.\+c@{helpers.\+c}!signal\+\_\+d@{signal\+\_\+d}}
+\index{signal\+\_\+d@{signal\+\_\+d}!helpers.\+c@{helpers.\+c}}
+\subsubsection[{\texorpdfstring{signal\+\_\+d}{signal_d}}]{\setlength{\rightskip}{0pt plus 5cm}\#define signal\+\_\+d(
+\begin{DoxyParamCaption}
+\item[{}]{x}
+\end{DoxyParamCaption}
+)~(x $>$$>$ 63)}\hypertarget{helpers_8c_aeabfee8ee0631a179fa2f4806e36c429}{}\label{helpers_8c_aeabfee8ee0631a179fa2f4806e36c429}
+
+
+\subsection{Function Documentation}
+\index{helpers.\+c@{helpers.\+c}!convert\+Double\+To\+Bytes@{convert\+Double\+To\+Bytes}}
+\index{convert\+Double\+To\+Bytes@{convert\+Double\+To\+Bytes}!helpers.\+c@{helpers.\+c}}
+\subsubsection[{\texorpdfstring{convert\+Double\+To\+Bytes(double $\ast$res)}{convertDoubleToBytes(double *res)}}]{\setlength{\rightskip}{0pt plus 5cm}uint64\+\_\+t convert\+Double\+To\+Bytes (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{res}
+\end{DoxyParamCaption}
+)}\hypertarget{helpers_8c_ad32d227ebd8e73b12e9c827f545e87a2}{}\label{helpers_8c_ad32d227ebd8e73b12e9c827f545e87a2}
+
+
+Converte um valor do tipo double para bytes. 
+
+\index{helpers.\+c@{helpers.\+c}!convert\+Float\+To\+Bytes@{convert\+Float\+To\+Bytes}}
+\index{convert\+Float\+To\+Bytes@{convert\+Float\+To\+Bytes}!helpers.\+c@{helpers.\+c}}
+\subsubsection[{\texorpdfstring{convert\+Float\+To\+Bytes(float $\ast$res)}{convertFloatToBytes(float *res)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u4} convert\+Float\+To\+Bytes (
+\begin{DoxyParamCaption}
+\item[{float $\ast$}]{res}
+\end{DoxyParamCaption}
+)}\hypertarget{helpers_8c_a4fd759b4559616dec03c8477fa4c2eb1}{}\label{helpers_8c_a4fd759b4559616dec03c8477fa4c2eb1}
+
+
+Converte um valor em float para um valor em bytes. 
+
+\index{helpers.\+c@{helpers.\+c}!get\+Index\+Fromb1b2@{get\+Index\+Fromb1b2}}
+\index{get\+Index\+Fromb1b2@{get\+Index\+Fromb1b2}!helpers.\+c@{helpers.\+c}}
+\subsubsection[{\texorpdfstring{get\+Index\+Fromb1b2(\+Frame $\ast$f)}{getIndexFromb1b2(Frame *f)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} get\+Index\+Fromb1b2 (
+\begin{DoxyParamCaption}
+\item[{{\bf Frame} $\ast$}]{f}
+\end{DoxyParamCaption}
+)}\hypertarget{helpers_8c_a0a7debb62b7ecdf5d62fce5afb081b92}{}\label{helpers_8c_a0a7debb62b7ecdf5d62fce5afb081b92}
+
+
+Retorna um indice a partir de dois bytes. 
+
