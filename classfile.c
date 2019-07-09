@@ -1928,19 +1928,19 @@ void recursive_print(cp_info *cp, u2 index, char *str)
   case CONSTANT_MethodHandle:
     // printf("MethodHandle Reference Kind: %02d \n", cp->MethodHandle.reference_kind, str);
     recursive_print(cp, cp[index - 1].MethodHandle.reference_kind, str);
-    // privoid rec_method_name(cp_info *cp, u2 index, char *str)ce Index: %02d \n", cp->MethodHandle.reference_index, str);
-    recursvoid rec_method_name(cp_info *cp, u2 index, char *str)1].MethodHandle.reference_index, str);
-    break;void rec_method_name(cp_info *cp, u2 index, char *str)
-  case CONvoid rec_method_name(cp_info *cp, u2 index, char *str)
-    // privoid rec_method_name(cp_info *cp, u2 index, char *str)r Index: %02d \n", cp->MethodType.descriptor_index, str);
-    recursvoid rec_method_name(cp_info *cp, u2 index, char *str)1].MethodType.descriptor_index, str);
-    break;void rec_method_name(cp_info *cp, u2 index, char *str)
-  case CONvoid rec_method_name(cp_info *cp, u2 index, char *str)
-    // privoid rec_method_name(cp_info *cp, u2 index, char *str)strap Method Attr Index: %02d \n", cp->Invoid rec_method_name(cp_info *cp, u2 index, char *str)hod_attr_index, str);
-    recursvoid rec_method_name(cp_info *cp, u2 index, char *str)1].InvokeDynamic.bootstrap_method_attr_index, str);
-    // privoid rec_method_name(cp_info *cp, u2 index, char *str) and Type Index: %02d \n", cp->Invoid rec_method_name(cp_info *cp, u2 index, char *str)_index, str);
-    recursvoid rec_method_name(cp_info *cp, u2 index, char *str)1].InvokeDynamic.name_and_type_index, str);
-    break;void rec_method_name(cp_info *cp, u2 index, char *str)
+    // printf("MethodHandle Reference Index: %02d \n", cp->MethodHandle.reference_index, str);
+    recursive_print(cp, cp[index - 1].MethodHandle.reference_index, str);
+    break;
+  case CONSTANT_MethodType:
+    // printf("MethodType Descriptor Index: %02d \n", cp->MethodType.descriptor_index, str);
+    recursive_print(cp, cp[index - 1].MethodType.descriptor_index, str);
+    break;
+  case CONSTANT_InvokeDynamic:
+    // printf("InvokeDynamic - Bootstrap Method Attr Index: %02d \n", cp->InvokeDynamic.bootstrap_method_attr_index, str);
+    recursive_print(cp, cp[index - 1].InvokeDynamic.bootstrap_method_attr_index, str);
+    // printf("InvokeDynamic - Name and Type Index: %02d \n", cp->InvokeDynamic.name_and_type_index, str);
+    recursive_print(cp, cp[index - 1].InvokeDynamic.name_and_type_index, str);
+    break;
   default:
     printf("No Ecxiste ese datapoole \n");
     break;
@@ -1951,7 +1951,7 @@ void recursive_print(cp_info *cp, u2 index, char *str)
  * @brief Usa um índice no constant pool para procurar o nome de um método recursivamente.
  */
 
-char *rec_method_name(cp_info *cp, u2 index)
+char* rec_method_name(cp_info *cp, u2 index)
 {
   switch (cp[index - 1].tag)
   {
@@ -2457,9 +2457,9 @@ method_info *find_method(ClassFile *cf, char *method)
       return i;
     }
   }
-#ifdef DEBUG
-  printf("Nao achou o methodo! \n");
-#endif
+  #ifdef DEBUG
+    printf("Nao achou o methodo! \n");
+  #endif
   return NULL;
 }
 
@@ -2542,6 +2542,6 @@ void find_clinit(ClassFile *cf)
     push(frame);
   }
 #ifdef DEBUG
-  printf("Nao possui init !\n");
+    printf("Nao possui init !\n");
 #endif
 }
