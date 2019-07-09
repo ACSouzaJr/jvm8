@@ -2299,23 +2299,22 @@ void f2l_eval(Frame *f)
 
 void f2d_eval(Frame *f)
 {
-  u4 val = (pop_operand(f->operands)->value);
-  u4 r1;
-  float aux;
+  float val = *((float*)&pop_operand(f->operands)->value);
+  uint64_t r1;
   double aux_double;
-  aux = *(float *)(&val);
-  aux_double = (double)aux;
+  aux_double = (double)val;
   
   #ifdef DEBUG
     printf("f2d_val: %f\n", aux_double);
   #endif
+  // printf("f2d_val: %f\n", aux_double);
   LocalVariable *double_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  r1 = *((int64_t *)(&aux_double));
-  printf("r1: %ld\n", r1);
+  r1 = *((uint64_t*)&aux_double);
+  // printf("r1: %ld\n", r1);
   double_val->type = CONSTANT_Double;
   double_val->type_double = r1;
-  printf("typedouble: %ld\n", double_val->type_double);
+  // printf("typedouble: %ld\n", double_val->type_double);
   push_operand(double_val, f->operands);
 }
 
