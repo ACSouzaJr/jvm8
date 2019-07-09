@@ -3,20 +3,24 @@
  */
 public class short_cast{
 	public static void main(String args[]){
-		short a=0xFF;
+		int a=0xFF;
 		/*l2d*/
-		double b=(double)a;
+		long b= a;
 		/*l2f*/
 		float c=(float)a;
 		/*l2i*/
 		int d=(int)a;
+		double e = (double)a;
+		int f = (int)b;
 		
 		System.out.println(a);
 		System.out.println(b);
 		System.out.println(c);
 		System.out.println(d);
+		System.out.println(e);
+		System.out.println(f);
 		
-		b=(double)a;
+		// b=(double)a;
 		/*l2f*/
 		c=(float)a;
 		/*l2i*/

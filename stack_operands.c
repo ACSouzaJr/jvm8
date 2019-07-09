@@ -32,7 +32,11 @@ void push_operand(LocalVariable * operand, StackOperand *stack_operand){
     }
     #ifdef DEBUG
     if(stack_operand->top->f->type == CONSTANT_Double){
-        printf("Acabou de ser empilhado doublemente: %f\n", *(double*)&stack_operand->top->f->type_double);
+        printf("Acabou de ser empilhado doublemente: %f\n", *(double*)&(stack_operand->top->f->type_double));
+    } else if(stack_operand->top->f->type == CONSTANT_Float){
+        printf("Acabou de ser empilhado floatmente: %f\n", *(float*)&stack_operand->top->f->value);
+    } else if(stack_operand->top->f->type == CONSTANT_Long){
+        printf("Acabou de ser empilhado longmente: %ld\n", *(long*)&stack_operand->top->f->type_long);
     } else {
         printf("Acabou de ser empilhado: %04x\n", stack_operand->top->f->value);
     }
