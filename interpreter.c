@@ -1556,7 +1556,7 @@ void frem_eval(Frame *f)
 
   value1 = *(float *)&v1;
   value2 = *(float *)&v2;
-  // resultfloat = fmodf(value1, value2);
+  resultfloat = fmodf(value1, value2);
 
   result->type = CONSTANT_Float;
   result->value = *(uint64_t *)&resultfloat;
@@ -1584,7 +1584,7 @@ void drem_eval(Frame *f)
   value2 = *(double *)&v2;
   // memcpy(&value1, &v1, sizeof(double));
   // memcpy(&value2, &v2, sizeof(double));
-  // resultdouble = fmod(value1, value2);
+  resultdouble = fmod(value1, value2);
   result->type = CONSTANT_Double;
   // result->type_double = convertDoubleToBytes(&resultdouble);
   //memcpy(&(result->type_double), &resultdouble, sizeof(uint64_t));
