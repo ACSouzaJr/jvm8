@@ -546,7 +546,7 @@ void iaload_eval(Frame *f)
   arrayref = pop_operand(f->operands);
   // value.value = ((u4*)arrayref->type_array.array)[index->value];
   lv->value = ((u4 *)arrayref->type_array.array)[index->value];
-  lv->type = T_INT;
+  lv->type = CONSTANT_Integer;
   // value.value = arrayref.value[index->value];
 
   push_operand(lv, f->operands);
@@ -560,7 +560,7 @@ void laload_eval(Frame *f)
   arrayref = pop_operand(f->operands);
   
   lv->type_long = ((uint64_t *)arrayref->type_array.array)[index->value];
-  lv->type = T_LONG;
+  lv->type = CONSTANT_Long;
 
   push_operand(lv, f->operands);
 }
@@ -573,7 +573,7 @@ void faload_eval(Frame *f)
   arrayref = pop_operand(f->operands);
   
   lv->value = ((u4 *)arrayref->type_array.array)[index->value];
-  lv->type = T_FLOAT;
+  lv->type = CONSTANT_Float;
 
   push_operand(lv, f->operands);
 }
@@ -586,7 +586,7 @@ void daload_eval(Frame *f)
   arrayref = pop_operand(f->operands);
   
   lv->type_double = ((uint64_t *)arrayref->type_array.array)[index->value];
-  lv->type = T_DOUBLE;
+  lv->type = CONSTANT_Double;
 
   push_operand(lv, f->operands);
 }
@@ -612,7 +612,7 @@ void baload_eval(Frame *f)
   arrayref = pop_operand(f->operands);
   
   lv->value = ((u1 *)arrayref->type_array.array)[index->value];
-  lv->type = T_BYTE;
+  lv->type = CONSTANT_Integer;
 
   push_operand(lv, f->operands);
 }
@@ -625,7 +625,7 @@ void caload_eval(Frame *f)
   arrayref = pop_operand(f->operands);
   
   lv->value = ((u1 *)arrayref->type_array.array)[index->value];
-  lv->type = T_CHAR;
+  lv->type = CONSTANT_Integer;
 
   push_operand(lv, f->operands);
 }
@@ -638,7 +638,7 @@ void saload_eval(Frame *f)
   arrayref = pop_operand(f->operands);
   
   lv->value = ((u2 *)arrayref->type_array.array)[index->value];
-  lv->type = T_SHORT;
+  lv->type = CONSTANT_Integer;
 
   push_operand(lv, f->operands);
 }
@@ -1149,7 +1149,22 @@ void dup_x2_eval(Frame *f)
 
 void dup2_eval(Frame *f)
 {
-  //TODO
+  if (f->operands->top->f->type == CONSTANT_Long || f->operands->top->f->type == CONSTANT_Double)
+  {
+    LocalVariable *dup_cat2 = pop_operand(f->operands);
+    push_operand(dup_cat2, f->operands);
+    push_operand(dup_cat2, f->operands);
+  }
+  else 
+  {
+    LocalVariable *dup_top1 = pop_operand(f->operands);
+    LocalVariable *dup_top2 = pop_operand(f->operands);
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+    push_operand(dup_top2, f->operands);
+    push_operand(dup_top1, f->operands);
+  }
+  
 }
 
 void dup2_x1_eval(Frame *f)
@@ -2248,7 +2263,7 @@ void dcmpl_eval(Frame *f)
 
   value1 = *(double *)&(v1->type_double);
   value2 = *(double *)&(v2->type_double);
-  lv->type = CONSTANT_Double;
+  lv->type = CONSTANT_Integer;
   if (value1 > value2)
   {
     lv->value = 1;
@@ -2278,7 +2293,7 @@ void dcmpg_eval(Frame *f)
 
   value1 = *(double *)&(v1->type_double);
   value2 = *(double *)&(v2->type_double);
-  lv->type = CONSTANT_Double;
+  lv->type = CONSTANT_Integer;
   if (value1 > value2)
   {
     lv->value = 1;
@@ -2964,9 +2979,13 @@ void invokevirtual_eval(Frame *f)
         int64_t value = lv->type_double;
         printf("%.4f ", *(double *)&value);
       }
+      else if (strcmp(method_desc, "()V") == 0) // Double
+      {
+        printf("\n");
+      }
       else
       {
-        printf("invokevirtualFunction: falta implementar\n");
+        printf("invokevirtual tipo nao encontrado \n");
         exit(0);
       }
       if (strcmp(method_name, "println") == 0)
@@ -2974,7 +2993,7 @@ void invokevirtual_eval(Frame *f)
     }
     else
     {
-      printf("invokevirtualFunction: falta implementar\n");
+      printf("invokevirtual so existe print aqui \n");
       exit(0);
     }
   }
