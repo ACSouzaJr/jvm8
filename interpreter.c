@@ -441,6 +441,12 @@ void dload_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Carrega uma referência de uma variável local.
+ *
+ * Usa como parâmetro um índice que é usado no vetor de variáveis locais, para colocar
+ * na pilha de operandos a referência correspondente aquele índice.
+ */
 void aload_eval(Frame *f)
 {
   u1 index = f->bytecode[f->pc++];
@@ -450,11 +456,17 @@ void aload_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Carrega um inteiro correspondente a posição 0 no vetor de variáveis locais na pilha de operandos.
+ */
 void iload_0_eval(Frame *f)
 {
   push_operand(&(f->local_variables[0]), f->operands);
 }
 
+/**
+ * @brief Carrega um inteiro correspondente a posição 1 no vetor de variáveis locais na pilha de operandos.
+ */
 void iload_1_eval(Frame *f)
 {
   push_operand(&(f->local_variables[1]), f->operands);
@@ -463,36 +475,57 @@ void iload_1_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Carrega um inteiro correspondente a posição 2 no vetor de variáveis locais na pilha de operandos.
+ */
 void iload_2_eval(Frame *f)
 {
   push_operand(&(f->local_variables[2]), f->operands);
 }
 
+/**
+ * @brief Carrega a referência correspondente a posição 3 no vetor de variáveis locais na pilha de operandos.
+ */
 void iload_3_eval(Frame *f)
 {
   push_operand(&(f->local_variables[3]), f->operands);
 }
 
+/**
+ * @brief Carrega um long correspondente ao índice 0 no vetor de variáveis locais na pilha de operandos.
+ */
 void lload_0_eval(Frame *f)
 {
   push_operand(&(f->local_variables[0]), f->operands);
 }
 
+/**
+ * @brief Carrega um long correspondente ao índice 1 no vetor de variáveis locais na pilha de operandos.
+ */
 void lload_1_eval(Frame *f)
 {
   push_operand(&(f->local_variables[1]), f->operands);
 }
 
+/**
+ * @brief Carrega um long correspondente ao índice 2 no vetor de variáveis locais na pilha de operandos.
+ */
 void lload_2_eval(Frame *f)
 {
   push_operand(&(f->local_variables[2]), f->operands);
 }
 
+/**
+ * @brief Carrega um long correspondente ao índice 3 no vetor de variáveis locais na pilha de operandos.
+ */
 void lload_3_eval(Frame *f)
 {
   push_operand(&(f->local_variables[3]), f->operands);
 }
 
+/**
+ * @brief Carrega um float correspondente ao índice 0 no vetor de variáveis locais na pilha de operandos.
+ */
 void fload_0_eval(Frame *f)
 {
   #ifdef DEBUG
@@ -509,6 +542,9 @@ void fload_0_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Carrega um float correspondente ao índice 1 no vetor de variáveis locais na pilha de operandos.
+ */
 void fload_1_eval(Frame *f)
 {
   if (f->local_variables[1].type == CONSTANT_Float)
@@ -522,6 +558,9 @@ void fload_1_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Carrega um float correspondente ao índice 2 no vetor de variáveis locais na pilha de operandos.
+ */
 void fload_2_eval(Frame *f)
 {
   if (f->local_variables[2].type == CONSTANT_Float)
@@ -536,6 +575,9 @@ void fload_2_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Carrega um float correspondente ao índice 3 no vetor de variáveis locais na pilha de operandos.
+ */
 void fload_3_eval(Frame *f)
 {
   if (f->local_variables[3].type == CONSTANT_Float)
@@ -549,6 +591,9 @@ void fload_3_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Carrega um double correspondente ao índice 0 no vetor de variáveis locais na pilha de operandos.
+ */
 void dload_0_eval(Frame *f)
 {
   if (f->local_variables[0].type == CONSTANT_Double)
@@ -562,6 +607,9 @@ void dload_0_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Carrega um double correspondente ao índice 1 no vetor de variáveis locais na pilha de operandos.
+ */
 void dload_1_eval(Frame *f)
 {
   if (f->local_variables[1].type == CONSTANT_Double)
@@ -578,6 +626,9 @@ void dload_1_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Carrega um double correspondente ao índice 2 no vetor de variáveis locais na pilha de operandos.
+ */
 void dload_2_eval(Frame *f)
 {
   if (f->local_variables[2].type == CONSTANT_Double)
@@ -591,6 +642,9 @@ void dload_2_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Carrega um double correspondente ao índice 3 no vetor de variáveis locais na pilha de operandos.
+ */
 void dload_3_eval(Frame *f)
 {
   if (f->local_variables[3].type == CONSTANT_Double)
@@ -604,6 +658,9 @@ void dload_3_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Carrega uma referência correspondente ao índice 0 no vetor de variáveis locais na pilha de operandos.
+ */
 void aload_0_eval(Frame *f)
 {
 #ifdef DEBUG
@@ -612,21 +669,34 @@ void aload_0_eval(Frame *f)
   push_operand(&(f->local_variables[0]), f->operands);
 }
 
+/**
+ * @brief Carrega uma referência correspondente ao índice 1 no vetor de variáveis locais na pilha de operandos.
+ */
 void aload_1_eval(Frame *f)
 {
   push_operand(&(f->local_variables[1]), f->operands);
 }
 
+/**
+ * @brief Carrega uma referência correspondente ao índice 2 no vetor de variáveis locais na pilha de operandos.
+ */
 void aload_2_eval(Frame *f)
 {
   push_operand(&(f->local_variables[2]), f->operands);
 }
 
+/**
+ * @brief Carrega uma referência correspondente ao índice 3 no vetor de variáveis locais na pilha de operandos.
+ */
 void aload_3_eval(Frame *f)
 {
   push_operand(&(f->local_variables[3]), f->operands);
 }
 
+/**
+ * @brief Carrega um int de um array. O arrayref deve ser do tipo reference, e deve se referir a um array
+ * cujos objetos sejam do tipo int.
+ */
 void iaload_eval(Frame *f)
 {
   LocalVariable *arrayref, *index, *lv;
@@ -641,6 +711,12 @@ void iaload_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
+/**
+ * @brief Carrega um long de um array.
+ *
+ * O arrayref e o índice são tirados da pilha de operandos e usados para acessar um valor do tipo long
+ * no array.
+ */
 void laload_eval(Frame *f)
 {
   LocalVariable *arrayref, *index, *lv;
@@ -654,6 +730,12 @@ void laload_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
+/**
+ * @brief Carrega um float de um array.
+ *
+ * O arrayref e o índice são tirados da pilha de operandos e usados para acessar um valor do tipo float
+ * no array.
+ */
 void faload_eval(Frame *f)
 {
   LocalVariable *arrayref, *index, *lv;
@@ -669,6 +751,12 @@ void faload_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
+/**
+ * @brief Carrega um double de um array.
+ *
+ * O arrayref e o índice são tirados da pilha de operandos e usados para acessar um valor do tipo double
+ * no array.
+ */
 void daload_eval(Frame *f)
 {
   LocalVariable *arrayref, *index, *lv;
@@ -682,6 +770,12 @@ void daload_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
+/**
+ * @brief Carrega uma referência de um array.
+ *
+ * O arrayref e o índice são tirados da pilha de operandos e usados para acessar um valor do tipo referência
+ * no array.
+ */
 void aaload_eval(Frame *f)
 {
   LocalVariable *arrayref, *index, *lv;
@@ -695,6 +789,12 @@ void aaload_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
+/**
+ * @brief Carrega um byte ou booleano de um array.
+ *
+ * O arrayref e o índice são tirados da pilha de operandos e usados para acessar um valor do tipo byte ou
+ * booleano no array.
+ */
 void baload_eval(Frame *f)
 {
   LocalVariable *arrayref, *index, *lv;
@@ -708,6 +808,12 @@ void baload_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
+/**
+ * @brief Carrega um char um array.
+ *
+ * O arrayref e o índice são tirados da pilha de operandos e usados para acessar um valor do tipo char
+ * no array.
+ */
 void caload_eval(Frame *f)
 {
   LocalVariable *arrayref, *index, *lv;
@@ -721,6 +827,12 @@ void caload_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
+/**
+ * @brief Carrega um short de um array.
+ *
+ * O arrayref e o índice são tirados da pilha de operandos e usados para acessar um valor do tipo short
+ * no array.
+ */
 void saload_eval(Frame *f)
 {
   LocalVariable *arrayref, *index, *lv;
@@ -734,7 +846,9 @@ void saload_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
-// recupera um valor int da op_stack e da store desse operando na pilha de var_locais
+/**
+ * @brief Recupera um valor inteiro da pilha de operando e guarda esse operando na pilha de variáveis locais.
+ */
 void istore_eval(Frame *f)
 {
   u1 index = f->bytecode[f->pc++];
@@ -745,6 +859,10 @@ void istore_eval(Frame *f)
 #endif
 }
 
+
+/**
+ * @brief Recupera um valor long da pilha de operando e guarda esse operando na pilha de variáveis locais.
+ */
 void lstore_eval(Frame *f)
 {
   u1 index = f->bytecode[f->pc++];
@@ -755,6 +873,9 @@ void lstore_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Recupera um valor float da pilha de operando e guarda esse operando na pilha de variáveis locais.
+ */
 void fstore_eval(Frame *f)
 {
   u1 index = f->bytecode[f->pc++];
@@ -774,6 +895,9 @@ void fstore_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Recupera um valor double da pilha de operando e guarda esse operando na pilha de variáveis locais.
+ */
 void dstore_eval(Frame *f)
 {
   u1 index = f->bytecode[f->pc++];
@@ -789,6 +913,9 @@ void dstore_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Recupera uma referência da pilha de operando e guarda esse operando na pilha de variáveis locais.
+ */
 void astore_eval(Frame *f)
 {
   LocalVariable *aux;
@@ -803,6 +930,9 @@ void astore_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Guarda um inteiro na posição 0 do vetor de variáveis locais.
+ */
 void istore_0_eval(Frame *f)
 {
   LocalVariable *aux;
@@ -813,6 +943,9 @@ void istore_0_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Guarda um inteiro na posição 1 do vetor de variáveis locais.
+ */
 void istore_1_eval(Frame *f)
 {
   LocalVariable *aux;
@@ -826,6 +959,9 @@ void istore_1_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Guarda um inteiro na posição 2 do vetor de variáveis locais.
+ */
 void istore_2_eval(Frame *f)
 {
   LocalVariable *aux;
@@ -836,6 +972,9 @@ void istore_2_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Guarda um inteiro na posição 3 do vetor de variáveis locais.
+ */
 void istore_3_eval(Frame *f)
 {
   LocalVariable *aux;
@@ -846,6 +985,9 @@ void istore_3_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Guarda um long na posição 0 do vetor de variáveis locais.
+ */
 void lstore_0_eval(Frame *f)
 {
   LocalVariable *lv = pop_operand(f->operands);
@@ -855,6 +997,9 @@ void lstore_0_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Guarda um long na posição 1 do vetor de variáveis locais.
+ */
 void lstore_1_eval(Frame *f)
 {
   LocalVariable *lv = pop_operand(f->operands);
@@ -864,6 +1009,9 @@ void lstore_1_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Guarda um long na posição 2 do vetor de variáveis locais.
+ */
 void lstore_2_eval(Frame *f)
 {
   LocalVariable *lv = pop_operand(f->operands);
@@ -873,6 +1021,9 @@ void lstore_2_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Guarda um long na posição 3 do vetor de variáveis locais.
+ */
 void lstore_3_eval(Frame *f)
 {
   LocalVariable *lv = pop_operand(f->operands);
@@ -882,6 +1033,9 @@ void lstore_3_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Guarda um float na posição 0 do vetor de variáveis locais.
+ */
 void fstore_0_eval(Frame *f)
 {
   LocalVariable *aux, *aux_linha;
@@ -899,6 +1053,9 @@ void fstore_0_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Guarda um float na posição 1 do vetor de variáveis locais.
+ */
 void fstore_1_eval(Frame *f)
 {
   LocalVariable *aux, *aux_linha;
@@ -915,6 +1072,9 @@ void fstore_1_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Guarda um float na posição 2 do vetor de variáveis locais.
+ */
 void fstore_2_eval(Frame *f)
 {
   LocalVariable *aux, *aux_linha;
@@ -931,6 +1091,9 @@ void fstore_2_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Guarda um float na posição 3 do vetor de variáveis locais.
+ */
 void fstore_3_eval(Frame *f)
 {
   LocalVariable *aux, *aux_linha;
@@ -947,6 +1110,9 @@ void fstore_3_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Guarda um double na posição 0 do vetor de variáveis locais.
+ */
 void dstore_0_eval(Frame *f)
 {
   LocalVariable *aux, *aux_linha;
@@ -964,6 +1130,9 @@ void dstore_0_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Guarda um double na posição 1 do vetor de variáveis locais.
+ */
 void dstore_1_eval(Frame *f)
 {
   LocalVariable *aux, *aux_linha;
@@ -981,6 +1150,9 @@ void dstore_1_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Guarda um double na posição 2 do vetor de variáveis locais.
+ */
 void dstore_2_eval(Frame *f)
 {
   LocalVariable *aux, *aux_linha;
@@ -998,6 +1170,9 @@ void dstore_2_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Guarda um double na posição 3 do vetor de variáveis locais.
+ */
 void dstore_3_eval(Frame *f)
 {
   LocalVariable *aux, *aux_linha;
@@ -1015,6 +1190,9 @@ void dstore_3_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Guarda uma referência na posição 0 do vetor de variáveis locais.
+ */
 void astore_0_eval(Frame *f)
 {
   LocalVariable *aux;
@@ -1028,6 +1206,9 @@ void astore_0_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Guarda uma referência na posição 0 do vetor de variáveis locais.
+ */
 void astore_1_eval(Frame *f)
 {
   LocalVariable *aux;
@@ -1041,6 +1222,9 @@ void astore_1_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Guarda uma referência na posição 1 do vetor de variáveis locais.
+ */
 void astore_2_eval(Frame *f)
 {
   LocalVariable *aux;
@@ -1054,6 +1238,9 @@ void astore_2_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Guarda uma referência na posição 2 do vetor de variáveis locais.
+ */
 void astore_3_eval(Frame *f)
 {
   LocalVariable *aux;
@@ -1067,6 +1254,9 @@ void astore_3_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Guarda uma referência na posição 3 do vetor de variáveis locais.
+ */
 void iastore_eval(Frame *f)
 {
   LocalVariable *arrayref, *index, *value;
@@ -1083,6 +1273,11 @@ void iastore_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Guarda um valor da pilha de operandos num array do tipo long.
+ *
+ * O arrayref deve ser do tipo reference e deve referir a um array cujos elementos sejam variáveis do tipo long.
+ */
 void lastore_eval(Frame *f)
 {
   LocalVariable *arrayref, *index, *value;
@@ -1099,6 +1294,11 @@ void lastore_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Guarda um valor da pilha de operandos num array do tipo float.
+ *
+ * O arrayref deve ser do tipo reference e deve referir a um array cujos elementos sejam variáveis do tipo float.
+ */
 void fastore_eval(Frame *f)
 {
   LocalVariable *arrayref, *index, *value;
@@ -1115,6 +1315,11 @@ void fastore_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Guarda um valor da pilha de operandos num array do tipo double.
+ *
+ * O arrayref deve ser do tipo reference e deve referir a um array cujos elementos sejam variáveis do tipo double.
+ */
 void dastore_eval(Frame *f)
 {
   LocalVariable *arrayref, *index, *value;
@@ -1131,6 +1336,11 @@ void dastore_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Guarda um valor da pilha de operandos num array do tipo reference.
+ *
+ * O arrayref deve ser do tipo reference e deve referir a um array cujos elementos sejam variáveis do tipo reference.
+ */
 void aastore_eval(Frame *f)
 {
   LocalVariable *arrayref, *index, *value;
@@ -1146,6 +1356,11 @@ void aastore_eval(Frame *f)
   #endif
 }
 
+/**
+ * @brief Guarda um valor da pilha de operandos num array do tipo byte ou boolean.
+ *
+ * O arrayref deve ser do tipo reference e deve referir a um array cujos elementos sejam variáveis do tipo byte ou boolean.
+ */
 void bastore_eval(Frame *f)
 {
   LocalVariable *arrayref, *index, *value;
@@ -1161,6 +1376,11 @@ void bastore_eval(Frame *f)
   #endif
 }
 
+/**
+ * @brief Guarda um valor da pilha de operandos num array do tipo char.
+ *
+ * O arrayref deve ser do tipo reference e deve referir a um array cujos elementos sejam variáveis do tipo char.
+ */
 void castore_eval(Frame *f)
 {
   LocalVariable *arrayref, *index, *value;
@@ -1176,6 +1396,11 @@ void castore_eval(Frame *f)
   #endif
 }
 
+/**
+ * @brief Guarda um valor da pilha de operandos num array do tipo short.
+ *
+ * O arrayref deve ser do tipo reference e deve referir a um array cujos elementos sejam variáveis do tipo short.
+ */
 void sastore_eval(Frame *f)
 {
   LocalVariable *arrayref, *index, *value;
@@ -1191,18 +1416,29 @@ void sastore_eval(Frame *f)
   #endif
 }
 
-// só usado para int -> cat1
+/**
+ * @brief Realiza a operação pop() na pilha de operandos.
+ *
+ * Só pode ser usado para int -> cat1
+ */
 void pop_eval(Frame *f)
 {
   pop_operand(f->operands);
 }
 
-// só usado para long/double -> cat2
+/**
+ * @brief Realiza a operação pop() na pilha de operandos.
+ *
+ * Só pode ser usado para long/double -> cat2
+ */
 void pop2_eval(Frame *f)
 {
   pop_operand(f->operands);
 }
 
+/**
+ * @brief Duplica o valor no topo da pilha de operandos.
+ */
 void dup_eval(Frame *f)
 {
   // duplica o topo da pilha
@@ -1212,7 +1448,11 @@ void dup_eval(Frame *f)
   push_operand(dup_top, f->operands);
 }
 
-// só usado para int -> cat1
+/**
+ * @brief Duplica o valor no topo da pilha de operandos e insere dois valores abaixo.
+ *
+ * Só usado para int -> cat1
+ */
 void dup_x1_eval(Frame *f)
 {
   LocalVariable *dup_top1 = pop_operand(f->operands);
@@ -1223,6 +1463,9 @@ void dup_x1_eval(Frame *f)
   push_operand(dup_top1, f->operands);
 }
 
+/**
+ * @brief Duplica o valor no topo da pilha de operandos e insere dois ou três valores abaixo.
+ */
 void dup_x2_eval(Frame *f)
 {
   // se for cat1 => 1 3 2 1
@@ -1238,6 +1481,9 @@ void dup_x2_eval(Frame *f)
   // se for cat2 -> implementar => 1 2 1
 }
 
+/**
+ * @brief Duplica os primeiro ou dois primeiros valores no topo da pilha de operandos.
+ */
 void dup2_eval(Frame *f)
 {
   if (f->operands->top->f->type == CONSTANT_Long || f->operands->top->f->type == CONSTANT_Double)
@@ -1258,21 +1504,37 @@ void dup2_eval(Frame *f)
   
 }
 
+/**
+ * @brief Duplica os primeiro ou dois primeiros valores no topo da pilha de operandos e insire dois
+ * ou três valores abaixo.
+ */
 void dup2_x1_eval(Frame *f)
 {
   //TODO
 }
 
+/**
+ * @brief Duplica os primeiro ou dois primeiros valores no topo da pilha de operandos e insire dois,
+ * três ou quatro valores abaixo.
+ */
 void dup2_x2_eval(Frame *f)
 {
   //TODO
 }
 
+/**
+ * @brief Realiza uma troca dos dois valores no topo da pilha de operandos.
+ */
 void swap_eval(Frame *f)
 {
   //TODO
 }
 
+/**
+ * @brief Realiza a operação de soma de inteiros 
+ * 
+ * Soma os valores do topo da pilha de operandos e guarda o valor na pilha de operandos.
+ */
 void iadd_eval(Frame *f)
 {
   int32_t v1, v2;
@@ -1294,6 +1556,11 @@ void iadd_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Realiza a operação de soma de long 
+ * 
+ * Soma os valores do topo da pilha de operandos e guarda o valor na pilha de operandos.
+ */
 void ladd_eval(Frame *f)
 {
   uint64_t v1, v2;
@@ -1322,6 +1589,11 @@ void ladd_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Realiza a operação de soma de floats 
+ * 
+ * Soma os valores do topo da pilha de operandos e guarda o valor na pilha de operandos.
+ */
 void fadd_eval(Frame *f)
 {
   u4 v1, v2, r1;
@@ -1351,6 +1623,11 @@ void fadd_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Realiza a operação de soma de doubles 
+ * 
+ * Soma os valores do topo da pilha de operandos e guarda o valor na pilha de operandos.
+ */
 void dadd_eval(Frame *f)
 {
   int64_t v1, v2;
@@ -1379,6 +1656,11 @@ void dadd_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Realiza a operação de subtração de inteiros 
+ * 
+ * Subtrai os valores do topo da pilha de operandos e guarda o valor na pilha de operandos.
+ */
 void isub_eval(Frame *f)
 {
   int32_t v1, v2;
@@ -1400,6 +1682,11 @@ void isub_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Realiza a operação de subtração de long 
+ * 
+ * Subtrai os valores do topo da pilha de operandos e guarda o valor na pilha de operandos.
+ */
 void lsub_eval(Frame *f)
 {
   int64_t v1, v2;
@@ -1428,6 +1715,11 @@ void lsub_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Realiza a operação de subtração de floats 
+ * 
+ * Subtrai os valores do topo da pilha de operandos e guarda o valor na pilha de operandos.
+ */
 void fsub_eval(Frame *f)
 {
   int64_t v1, v2;
@@ -1455,6 +1747,11 @@ void fsub_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Realiza a operação de subtração de doubles 
+ * 
+ * Subtrai os valores do topo da pilha de operandos e guarda o valor na pilha de operandos.
+ */
 void dsub_eval(Frame *f)
 {
   int64_t v1, v2;
@@ -1487,6 +1784,11 @@ void dsub_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Realiza a operação de multiplicação de inteiros 
+ * 
+ * Multiplica os valores do topo da pilha de operandos e guarda o valor na pilha de operandos.
+ */
 void imul_eval(Frame *f)
 {
   int32_t v1, v2;
@@ -1508,6 +1810,11 @@ void imul_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Realiza a operação de multiplicação de longs 
+ * 
+ * Multiplica os valores do topo da pilha de operandos e guarda o valor na pilha de operandos.
+ */
 void lmul_eval(Frame *f)
 {
   int64_t v1, v2;
@@ -1536,6 +1843,11 @@ void lmul_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Realiza a operação de multiplicação de floats 
+ * 
+ * Multiplica os valores do topo da pilha de operandos e guarda o valor na pilha de operandos.
+ */
 void fmul_eval(Frame *f)
 {
   int64_t v1, v2;
@@ -1563,6 +1875,11 @@ void fmul_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Realiza a operação de multiplicação de doubles 
+ * 
+ * Multiplica os valores do topo da pilha de operandos e guarda o valor na pilha de operandos.
+ */
 void dmul_eval(Frame *f)
 {
   int64_t v1, v2;
@@ -1595,6 +1912,11 @@ void dmul_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Realiza a operação de divisão de inteiros 
+ * 
+ * Divide os valores do topo da pilha de operandos e guarda o valor na pilha de operandos.
+ */
 void idiv_eval(Frame *f)
 {
   int32_t v1, v2;
@@ -1616,6 +1938,11 @@ void idiv_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Realiza a operação de divisão de longs 
+ * 
+ * Divide os valores do topo da pilha de operandos e guarda o valor na pilha de operandos.
+ */
 void ldiv_eval(Frame *f)
 {
   int64_t v1, v2;
@@ -1644,6 +1971,11 @@ void ldiv_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Realiza a operação de divisão de floats 
+ * 
+ * Divide os valores do topo da pilha de operandos e guarda o valor na pilha de operandos.
+ */
 void fdiv_eval(Frame *f)
 {
   int64_t v1, v2;
@@ -1671,6 +2003,11 @@ void fdiv_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Realiza a operação de divisão de doubles 
+ * 
+ * Divide os valores do topo da pilha de operandos e guarda o valor na pilha de operandos.
+ */
 void ddiv_eval(Frame *f)
 {
   int64_t v1, v2;
@@ -1703,6 +2040,9 @@ void ddiv_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Coloca na pilha de operandos o resto da divisão dos dois valores int no topo da pilha de operandos.
+ */
 void irem_eval(Frame *f)
 {
   int32_t v1, v2;
@@ -1724,6 +2064,9 @@ void irem_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Coloca na pilha de operandos o resto da divisão dos dois valores long no topo da pilha de operandos.
+ */
 void lrem_eval(Frame *f)
 {
   int64_t v1, v2;
@@ -1752,6 +2095,9 @@ void lrem_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Coloca na pilha de operandos o resto da divisão dos dois valores float no topo da pilha de operandos.
+ */
 void frem_eval(Frame *f)
 {
   int64_t v1, v2;
@@ -1779,6 +2125,9 @@ void frem_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Coloca na pilha de operandos o resto da divisão dos dois valores double no topo da pilha de operandos.
+ */
 void drem_eval(Frame *f)
 {
   int64_t v1, v2;
@@ -1811,6 +2160,9 @@ void drem_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Faz a negação do valor inteiro na pilha de operandos.
+ */
 void ineg_eval(Frame *f)
 {
   LocalVariable *value = pop_operand(f->operands);
@@ -1823,6 +2175,9 @@ void ineg_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Faz a negação do valor long na pilha de operandos.
+ */
 void lneg_eval(Frame *f)
 {
   LocalVariable *value = pop_operand(f->operands);
@@ -1838,6 +2193,9 @@ void lneg_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Faz a negação do valor float na pilha de operandos.
+ */
 void fneg_eval(Frame *f)
 {
   u4 v1;
@@ -1853,6 +2211,9 @@ void fneg_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Faz a negação do valor double na pilha de operandos.
+ */
 void dneg_eval(Frame *f)
 {
   int64_t v1, v2;
@@ -1885,6 +2246,9 @@ void dneg_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Faz o shift left de um inteiro da pilha de operandos.
+ */
 void ishl_eval(Frame *f)
 {
   u4 v1, v2;
@@ -1906,6 +2270,9 @@ void ishl_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Faz o shift left de um long da pilha de operandos.
+ */
 void lshl_eval(Frame *f)
 {
   uint64_t v1, v2;
@@ -1933,6 +2300,9 @@ void lshl_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Faz o shift right de um inteiro da pilha de operandos.
+ */
 void ishr_eval(Frame *f)
 {
   int32_t v1, v2;
@@ -1954,6 +2324,9 @@ void ishr_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Faz o shift right de um long da pilha de operandos.
+ */
 void lshr_eval(Frame *f)
 {
   int64_t v1, v2;
@@ -1981,6 +2354,9 @@ void lshr_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Faz o shift left lógico de um inteiro da pilha de operandos.
+ */
 void iushr_eval(Frame *f)
 {
   u4 v1, v2;
@@ -2002,6 +2378,9 @@ void iushr_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Faz o shift left lógico de um long da pilha de operandos.
+ */
 void lushr_eval(Frame *f)
 {
   uint64_t v1, v2;
@@ -2029,6 +2408,9 @@ void lushr_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Realiza o AND lógica de dois valores inteiros da pilha de operandos.
+ */
 void iand_eval(Frame *f)
 {
   u4 v1, v2;
@@ -2050,6 +2432,9 @@ void iand_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Realiza o AND lógico de dois valores long da pilha de operandos.
+ */
 void land_eval(Frame *f)
 {
   uint64_t v1, v2;
@@ -2078,6 +2463,9 @@ void land_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Realiza o OR lógico de dois valores inteiros da pilha de operandos.
+ */
 void ior_eval(Frame *f)
 {
   u4 v1, v2;
@@ -2099,6 +2487,9 @@ void ior_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Realiza o OR lógico de dois valores long da pilha de operandos.
+ */
 void lor_eval(Frame *f)
 {
   uint64_t v1, v2;
@@ -2126,6 +2517,9 @@ void lor_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Realiza o XOR lógico de dois valores inteiros da pilha de operandos.
+ */
 void ixor_eval(Frame *f)
 {
   u4 v1, v2;
@@ -2147,6 +2541,9 @@ void ixor_eval(Frame *f)
   push_operand(result, f->operands);
 }
 
+/**
+ * @brief Realiza o XOR lógico de dois valores long da pilha de operandos.
+ */
 void lxor_eval(Frame *f)
 {
   uint64_t v1, v2;
@@ -2174,6 +2571,9 @@ void lxor_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Incrementa a variável local por uma constante.
+ */
 void iinc_eval(Frame *f)
 {
   u1 index = f->bytecode[f->pc++];
@@ -2181,81 +2581,130 @@ void iinc_eval(Frame *f)
   f->local_variables[index].value += value;
 }
 
+/**
+ * @brief Converte um inteiro para um long.
+ */
 void i2l_eval(Frame *f)
 {
   //TODO
 }
 
+/**
+ * @brief Converte um inteiro para um float.
+ */
 void i2f_eval(Frame *f)
 {
   //TODO
 }
 
+/**
+ * @brief Converte um inteiro para um double.
+ */
 void i2d_eval(Frame *f)
 {
   //TODO
 }
 
+/**
+ * @brief Converte um long para um inteiro.
+ */
 void l2i_eval(Frame *f)
 {
   //TODO
 }
 
+/**
+ * @brief Converte um long para um float.
+ */
 void l2f_eval(Frame *f)
 {
   //TODO
 }
 
+
+/**
+ * @brief Converte um long para um double.
+ */
 void l2d_eval(Frame *f)
 {
   //TODO
 }
 
+/**
+ * @brief Converte um float para um inteiro.
+ */
 void f2i_eval(Frame *f)
 {
   //TODO
 }
 
+/**
+ * @brief Converte um float para um long.
+ */
 void f2l_eval(Frame *f)
 {
   //TODO
 }
 
+/**
+ * @brief Converte um float para um double.
+ */
 void f2d_eval(Frame *f)
 {
   //TODO
 }
 
+/**
+ * @brief Converte um double para um inteiro.
+ */
 void d2i_eval(Frame *f)
 {
   //TODO
 }
 
+/**
+ * @brief Converte um double para um long.
+ */
 void d2l_eval(Frame *f)
 {
   //TODO
 }
 
+/**
+ * @brief Converte um double para um float.
+ */
 void d2f_eval(Frame *f)
 {
   //TODO
 }
 
+/**
+ * @brief Converte um inteiro para um byte.
+ */
 void i2b_eval(Frame *f)
 {
   //TODO
 }
 
+/**
+ * @brief Converte um inteiro para um char.
+ */
 void i2c_eval(Frame *f)
 {
   //TODO
 }
 
+/**
+ * @brief Converte um inteiro para uma string.
+ */
 void i2s_eval(Frame *f)
 {
   //TODO
 }
 
+/**
+ * @brief Realiza uma comparação entre dois valores do tipo long.
+ */
 void lcmp_eval(Frame *f)
 {
   int64_t v1, v2;
@@ -2284,6 +2733,9 @@ void lcmp_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
+/**
+ * @brief Realiza uma comparação entre dois valores do tipo float.
+ */
 void fcmpl_eval(Frame *f)
 {
   LocalVariable *v1, *v2, *lv;
@@ -2314,6 +2766,9 @@ void fcmpl_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
+/**
+ * @brief Compara dois valores do tipo float para saber qual é o maior.
+ */
 void fcmpg_eval(Frame *f)
 {
   LocalVariable *v1, *v2, *lv;
@@ -2344,6 +2799,9 @@ void fcmpg_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
+/**
+ * @brief Compara dois valores do tipo double.
+ */
 void dcmpl_eval(Frame *f)
 {
   LocalVariable *v1, *v2, *lv;
@@ -2374,6 +2832,9 @@ void dcmpl_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
+/**
+ * @brief Compara dois valores do tipo double para saber qual é o maior.
+ */
 void dcmpg_eval(Frame *f)
 {
   LocalVariable *v1, *v2, *lv;
@@ -2404,6 +2865,9 @@ void dcmpg_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
+/**
+ * @brief Operação condicional que sucede se o valor retirado da pilha de operandos for igual a zero.
+ */
 void ifeq_eval(Frame *f)
 {
   u4 v1 = pop_operand(f->operands)->value;
@@ -2430,6 +2894,9 @@ void ifeq_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Operação condicional que sucede se o valor retirado da pilha de operandos for igual diferente de zero.
+ */
 void ifne_eval(Frame *f)
 {
   u4 v1 = pop_operand(f->operands)->value;
@@ -2456,6 +2923,9 @@ void ifne_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Operação condicional que sucede se o valor retirado da pilha de operandos for menor que zero.
+ */
 void iflt_eval(Frame *f)
 {
   u4 v1 = pop_operand(f->operands)->value;
@@ -2482,6 +2952,9 @@ void iflt_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Operação condicional que sucede se o valor retirado da pilha de operandos for maior ou igual a zero.
+ */
 void ifge_eval(Frame *f)
 {
   u4 v1 = pop_operand(f->operands)->value;
@@ -2508,6 +2981,9 @@ void ifge_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Operação condicional que sucede se o valor retirado da pilha de operandos for maior que zero.
+ */
 void ifgt_eval(Frame *f)
 {
   u4 v1 = pop_operand(f->operands)->value;
@@ -2534,6 +3010,9 @@ void ifgt_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Operação condicional que sucede se o valor retirado da pilha de operandos for menor ou igual a zero.
+ */
 void ifle_eval(Frame *f)
 {
   u4 v1 = pop_operand(f->operands)->value;
@@ -2560,6 +3039,9 @@ void ifle_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Operação condicional que sucede se os valores retirados da pilha forem iguais.
+ */
 void if_icmpeq_eval(Frame *f)
 {
   u1 branchbyte1, branchbyte2;
@@ -2575,6 +3057,9 @@ void if_icmpeq_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Operação condicional que sucede se os valores retirados da pilha forem diferentes.
+ */
 void if_icmpne_eval(Frame *f)
 {
   u1 branchbyte1, branchbyte2;
@@ -2590,6 +3075,11 @@ void if_icmpne_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Operação condicional que sucede se o valor 1 < valor 2.
+ *
+ * Valor1 e Valor2 são retirados da pilha de operandos.
+ */
 void if_icmplt_eval(Frame *f)
 {
   u1 branchbyte1, branchbyte2;
@@ -2605,6 +3095,11 @@ void if_icmplt_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Operação condicional que sucede se o o valor 1 >= valor 2.
+ *
+ * Valor1 e Valor2 são retirados da pilha de operandos.
+ */
 void if_icmpge_eval(Frame *f)
 {
   u1 branchbyte1, branchbyte2;
@@ -2620,6 +3115,11 @@ void if_icmpge_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Operação condicional que sucede se o valor 1 > valor 2.
+ *
+ * Valor1 e Valor2 são retirados da pilha de operandos.
+ */
 void if_icmpgt_eval(Frame *f)
 {
   u1 branchbyte1, branchbyte2;
@@ -2635,6 +3135,11 @@ void if_icmpgt_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Operação condicional que sucede se o valor 1 <= valor 2.
+ *
+ * Valor1 e Valor2 são retirados da pilha de operandos.
+ */
 void if_icmple_eval(Frame *f)
 {
   u1 branchbyte1, branchbyte2;
@@ -2650,6 +3155,11 @@ void if_icmple_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Operação condicional que sucede se o valor 1 = valor 2, onde os valores são referências.
+ *
+ * Valor1 e Valor2 são retirados da pilha de operandos.
+ */
 void if_acmpeq_eval(Frame *f)
 {
   u1 branchbyte1, branchbyte2;
@@ -2665,6 +3175,11 @@ void if_acmpeq_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Operação condicional que sucede se o valor 1 != valor 2, onde os valores são referências.
+ *
+ * Valor1 e Valor2 são retirados da pilha de operandos.
+ */
 void if_acmpne_eval(Frame *f)
 {
   u1 branchbyte1, branchbyte2;
@@ -2680,6 +3195,9 @@ void if_acmpne_eval(Frame *f)
   }
 }
 
+/**
+ * @brief É um branch que ocorre sempre.
+ */
 void goto_eval(Frame *f)
 {
   u1 branchbyte1, branchbyte2;
@@ -2690,21 +3208,33 @@ void goto_eval(Frame *f)
   f->pc += offset - 3;
 }
 
+/**
+ * @brief Pula para uma subrotina.
+ *
+ * Endereço do opcode que segue imediatamente a instrução é colocado na pilha de operandos.
+ */
 void jsr_eval(Frame *f)
 {
   //TODO
 }
-
+/**
+ * @brief Retorna de uma subrotina.
+ */
 void ret_eval(Frame *f)
 {
   //TODO
 }
-
+/**
+ * @brief Instrução de tamanho variável.
+ */
 void tableswitch_eval(Frame *f)
 {
   //TODO
 }
 
+/**
+ * @brief Acessa jump table pela key
+ */
 void lookupswitch_eval(Frame *f)
 {
   u1 defaultbyte1, defaultbyte2, defaultbyte3, defaultbyte4;
@@ -2779,6 +3309,9 @@ void lookupswitch_eval(Frame *f)
     f->pc = pc_novo-1; 
 }
 
+/**
+ * @brief Retorna um valor inteiro de um método.
+ */
 void ireturn_eval(Frame *f)
 {
   LocalVariable *lv = pop_operand(f->operands);
@@ -2790,6 +3323,9 @@ void ireturn_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Retorna valor long de um método.
+ */
 void lreturn_eval(Frame *f)
 {
   LocalVariable *lv = pop_operand(f->operands);
@@ -2801,6 +3337,9 @@ void lreturn_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Retorna valor float de um método.
+ */
 void freturn_eval(Frame *f)
 {
   LocalVariable *lv = pop_operand(f->operands);
@@ -2812,6 +3351,9 @@ void freturn_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Retorna valor double de um método.
+ */
 void dreturn_eval(Frame *f)
 {
   LocalVariable *lv = pop_operand(f->operands);
@@ -2823,11 +3365,17 @@ void dreturn_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Retorna valor reference de um método.
+ */
 void areturn_eval(Frame *f)
 {
   //TODO
 }
 
+/**
+ * @brief Retorna void de um método.
+ */
 void return_eval(Frame *f)
 {
   pop(JvmStack);
@@ -2836,6 +3384,12 @@ void return_eval(Frame *f)
 #endif
 }
 
+/**
+ * @brief Pega um campo static de uma classe.
+ *
+ * A função getIndexFromb1b2() é usada para calcular um indice que é usado para
+ * acessar um field na constant pool.
+ */
 void getstatic_eval(Frame *f)
 {
   u2 index = getIndexFromb1b2(f);
@@ -2889,6 +3443,12 @@ void getstatic_eval(Frame *f)
   // push_operand(lv, f->operands);
 }
 
+/**
+ * @brief Seta campo static numa classe.
+ *
+ * A função getIndexFromb1b2() é usada para calcular um indice que é usado para
+ * acessar um field na constant pool e guardar o seu valor.
+ */
 void putstatic_eval(Frame *f)
 {
   u2 index = getIndexFromb1b2(f);
@@ -2983,6 +3543,13 @@ void putstatic_eval(Frame *f)
   //   }
 }
 
+/**
+ * @brief Acessar um field de um objeto.
+ *
+ * O objectref deve ser do tipo reference e é retirado da pilha de operandos. O valor de um
+ * field é acessado na constant pool, o qual dá o nome e o descriptor de um field assim como
+ * uma referência simbólica para a classe a qual ele pertence.
+ */
 void getfield_eval(Frame *f)
 {
   u2 index = getIndexFromb1b2(f);
@@ -3011,11 +3578,21 @@ void getfield_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
+/**
+ * @brief Seta field de um objeto.
+ *
+ * O objectref deve ser do tipo reference e é retirado da pilha de operandos. O valor de um
+ * field é acessado na constant pool, o qual dá o nome e o descriptor de um field assim como
+ * uma referência simbólica para a classe a qual ele pertence. O valor do field é setado.
+ */
 void putfield_eval(Frame *f)
 {
   //TODO
 }
 
+/**
+ * @brief Invoca o método de uma instância.
+ */
 void invokevirtual_eval(Frame *f)
 {
   u1 index1byte, index2byte;
@@ -3115,6 +3692,9 @@ void invokevirtual_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Invoca o método de uma instância, tratando de superclasses, métodos privados.
+ */
 void invokespecial_eval(Frame *f)
 {
 #ifdef DEBUG
@@ -3181,6 +3761,9 @@ void invokespecial_eval(Frame *f)
   push(frame);
 }
 
+/**
+ * @brief Invoca um método estático de uma classe.
+ */
 void invokestatic_eval(Frame *f)
 {
   u2 index = getIndexFromb1b2(f);
@@ -3226,11 +3809,17 @@ void invokeinterface_eval(Frame *f)
   //TODO
 }
 
+/**
+ * @brief Invoca um método dinâmico.
+ */
 void invokedynamic_eval(Frame *f)
 {
   //TODO
 }
 
+/**
+ * @brief Instacia um novo objeto de uma classe.
+ */
 void new_eval(Frame *f)
 {
   u2 index = getIndexFromb1b2(f);
@@ -3243,6 +3832,11 @@ void new_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
+/**
+ * @brief Cria um novo array.
+ *
+ * Utiliza um parâmetro para saber que tipo de array criar.
+ */
 void newarray_eval(Frame *f)
 {
   LocalVariable *lv, *rlv;
@@ -3320,6 +3914,9 @@ void newarray_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Cria um novo array de references.
+ */
 void anewarray_eval(Frame *f)
 {
   LocalVariable *lv, *rlv;
@@ -3353,6 +3950,9 @@ void anewarray_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Encontra o tamanho do array.
+ */
 void arraylength_eval(Frame *f)
 {
   LocalVariable *arrayref;
@@ -3366,16 +3966,25 @@ void arraylength_eval(Frame *f)
   push_operand(lv, f->operands);
 }
 
+/**
+ * @brief Lança uma exceção ou erro.
+ */
 void athrow_eval(Frame *f)
 {
   //TODO
 }
 
+/**
+ * @brief Checa se um objeto é de determinado tipo.
+ */
 void checkcast_eval(Frame *f)
 {
   //TODO
 }
 
+/**
+ * @brief Checa se o objeto é uma instância de um determinado tipo.
+ */
 void instanceof_eval(Frame *f)
 {
   //TODO
@@ -3391,6 +4000,9 @@ void monitorexit_eval(Frame *f)
   //TODO
 }
 
+/**
+ * @brief Aumenta o índice de variáveis locais com bytes adicionais.
+ */
 void wide_eval(Frame *f)
 {
   //TODO
@@ -3401,6 +4013,9 @@ void multianewarray_eval(Frame *f)
   //TODO
 }
 
+/**
+ * @brief Realiza um branch condicional se a referência for nula.
+ */
 void ifnull_eval(Frame *f)
 {
   LocalVariable *lv = pop_operand(f->operands);
@@ -3415,6 +4030,9 @@ void ifnull_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Realiza um branch se a condição não for nula.
+ */
 void ifnonnull_eval(Frame *f)
 {
   LocalVariable *lv = pop_operand(f->operands);
@@ -3429,16 +4047,24 @@ void ifnonnull_eval(Frame *f)
   }
 }
 
+/**
+ * @brief Sempre realiza o branch (com indice wide)
+ */
 void goto_w_eval(Frame *f)
 {
   //TODO
 }
-
+/**
+ * @brief Pula para subrotina (com indice wide)
+ */
 void jsr_w_eval(Frame *f)
 {
   //TODO
 }
 
+/**
+ * @brief Invoca o método de uma instância, tratando de superclasses, métodos privados.
+ */
 void breakpoint_eval(Frame *f)
 {
   //TODO
