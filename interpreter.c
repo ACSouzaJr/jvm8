@@ -1239,18 +1239,24 @@ void lsub_eval(Frame *f)
 
 void fsub_eval(Frame *f)
 {
-  float v1, v2;
+  int64_t v1, v2;
+  float value1, value2, resultfloat;
   LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
 
   v2 = pop_operand(f->operands)->value;
   v1 = pop_operand(f->operands)->value;
+
+  value1 = *(float *)&v1;
+  value2 = *(float *)&v2;
+  resultfloat = value1 - value2;
+
   result->type = CONSTANT_Float;
-  result->value = v1 - v2;
+  result->value = *(uint64_t *)&resultfloat;
 #ifdef DEBUG
-  printf("v1: %04f\n", v1);
+  printf("v1: %04f\n", value1);
 #endif
 #ifdef DEBUG
-  printf("v2: %04f\n", v2);
+  printf("v2: %04f\n", value2);
 #endif
 #ifdef DEBUG
   printf("resultado: %04x\n", result->value);
@@ -1341,18 +1347,24 @@ void lmul_eval(Frame *f)
 
 void fmul_eval(Frame *f)
 {
-  float v1, v2;
+  int64_t v1, v2;
+  float value1, value2, resultfloat;
   LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
 
   v2 = pop_operand(f->operands)->value;
   v1 = pop_operand(f->operands)->value;
+
+  value1 = *(float *)&v1;
+  value2 = *(float *)&v2;
+  resultfloat = value1 * value2;
+
   result->type = CONSTANT_Float;
-  result->value = v1 * v2;
+  result->value = *(uint64_t *)&resultfloat;
 #ifdef DEBUG
-  printf("v1: %04f\n", v1);
+  printf("v1: %04f\n", value1);
 #endif
 #ifdef DEBUG
-  printf("v2: %04f\n", v2);
+  printf("v2: %04f\n", value2);
 #endif
 #ifdef DEBUG
   printf("resultado: %04x\n", result->value);
@@ -1443,18 +1455,24 @@ void ldiv_eval(Frame *f)
 
 void fdiv_eval(Frame *f)
 {
-  float v1, v2;
+  int64_t v1, v2;
+  float value1, value2, resultfloat;
   LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
 
   v2 = pop_operand(f->operands)->value;
   v1 = pop_operand(f->operands)->value;
+
+  value1 = *(float *)&v1;
+  value2 = *(float *)&v2;
+  resultfloat = value1 / value2;
+
   result->type = CONSTANT_Float;
-  result->value = v1 / v2;
+  result->value = *(uint64_t *)&resultfloat;
 #ifdef DEBUG
-  printf("v1: %04f\n", v1);
+  printf("v1: %04f\n", value1);
 #endif
 #ifdef DEBUG
-  printf("v2: %04f\n", v2);
+  printf("v2: %04f\n", value2);
 #endif
 #ifdef DEBUG
   printf("resultado: %04x\n", result->value);
@@ -1545,7 +1563,29 @@ void lrem_eval(Frame *f)
 
 void frem_eval(Frame *f)
 {
-  //   push_operand();
+  int64_t v1, v2;
+  float value1, value2, resultfloat;
+  LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
+
+  v2 = pop_operand(f->operands)->value;
+  v1 = pop_operand(f->operands)->value;
+
+  value1 = *(float *)&v1;
+  value2 = *(float *)&v2;
+  // resultfloat = fmodf(value1, value2);
+
+  result->type = CONSTANT_Float;
+  result->value = *(uint64_t *)&resultfloat;
+#ifdef DEBUG
+  printf("v1: %04f\n", value1);
+#endif
+#ifdef DEBUG
+  printf("v2: %04f\n", value2);
+#endif
+#ifdef DEBUG
+  printf("resultado: %04x\n", result->value);
+#endif
+  push_operand(result, f->operands);
 }
 
 void drem_eval(Frame *f)
@@ -1560,7 +1600,7 @@ void drem_eval(Frame *f)
   value2 = *(double *)&v2;
   // memcpy(&value1, &v1, sizeof(double));
   // memcpy(&value2, &v2, sizeof(double));
-  // resultdouble = fmod(value2, value1);
+  // resultdouble = fmod(value1, value2);
   result->type = CONSTANT_Double;
   // result->type_double = convertDoubleToBytes(&resultdouble);
   //memcpy(&(result->type_double), &resultdouble, sizeof(uint64_t));
@@ -2716,7 +2756,7 @@ void invokevirtual_eval(Frame *f)
       else if (strcmp(method_desc, "(F)V") == 0) // Float
       {
         int32_t value = lv->value;
-        printf("%f ", *(float *)&value);
+        printf("%.2f ", *(float *)&value);
       }
       else if (strcmp(method_desc, "(J)V") == 0) // Long
       {
@@ -2726,7 +2766,7 @@ void invokevirtual_eval(Frame *f)
       else if (strcmp(method_desc, "(D)V") == 0) // Double
       {
         int64_t value = lv->type_double;
-        printf("%f ", *(double *)&value);
+        printf("%.4f ", *(double *)&value);
       }
       else
       {
