@@ -2406,10 +2406,10 @@ void i2c_eval(Frame *f)
   char aux;
   LocalVariable *short_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  aux = *(char*)&val;
+  aux = val;
   // printf("aux_char_i2c: %c\n", aux);
-  short_val->type = CONSTANT_Integer;
-  short_val->value = (aux << 24);
+  short_val->type = CONSTANT_String;
+  short_val->value = (hex_0 | aux);
   push_operand(short_val, f->operands);
 }
 
