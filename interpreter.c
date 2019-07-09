@@ -498,15 +498,15 @@ void dload_1_eval(Frame *f)
 
 void dload_2_eval(Frame *f)
 {
-  if (f->local_variables[2].type == CONSTANT_Double)
-  {
+  // if (f->local_variables[2].type == CONSTANT_Double)
+  // {
     push_operand(&(f->local_variables[2]), f->operands);
-  }
-  else
-  {
-    printf("javax.persistence.PersistenceException\n");
-    exit(0);
-  }
+  // }
+  // else
+  // {
+  //   printf("javax.persistence.PersistenceException\n");
+  //   exit(0);
+  // }
 }
 
 void dload_3_eval(Frame *f)
@@ -3251,7 +3251,7 @@ void invokevirtual_eval(Frame *f)
     u2 args = count_args(method_desc);
     u2 class_index = find_class(class_name);
     method_info *method = find_method(Mem.classes_arr[class_index], method_name);
-    Frame *frame = cria_frame(f->cp, method);
+    Frame *frame = cria_frame(Mem.classes_arr[class_index]->constant_pool, method);
     // Adiciona argumestos comeca de 1
     // 0 é uma referencia
     // for (size_t i = 0; i <= args; i++)
@@ -3283,7 +3283,7 @@ void invokespecial_eval(Frame *f)
 #endif
   char *class_name = ret_method_name(f->cp, index);
 #ifdef DEBUG
-  printf("string_method: %s\n", class_name);
+  printf("class_name: %s\n", class_name);
 #endif
 
   if (strcmp("java/lang/Object", class_name) == 0)
@@ -3318,7 +3318,7 @@ void invokespecial_eval(Frame *f)
 
   u2 args = count_args(method_desc);
   method_info *method = find_method(Mem.classes_arr[class_index], method_name);
-  Frame *frame = cria_frame(f->cp, method);
+  Frame *frame = cria_frame(Mem.classes_arr[class_index]->constant_pool, method);
   // Adiciona argumestos
   // for (size_t i = args - 1; i >= 0; i--)
   // for (size_t i = 0; i < args; i++)
@@ -3359,7 +3359,7 @@ void invokestatic_eval(Frame *f)
 
   u2 class_index = find_class(class_name);
   method_info *method = find_method(Mem.classes_arr[class_index], method_name);
-  Frame *frame = cria_frame(f->cp, method);
+  Frame *frame = cria_frame(Mem.classes_arr[class_index]->constant_pool, method);
   // Adiciona argumestos
   // for (size_t i = 0; i < args - 1; i++)
   for (int8_t i = args - 1; i >= 0; i--)

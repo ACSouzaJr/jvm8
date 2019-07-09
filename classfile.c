@@ -1891,85 +1891,85 @@ void recursive_print(cp_info *cp, u2 index, char *str)
   }
 }
 
-void rec_method_name(cp_info *cp, u2 index, char *str)
+char* rec_method_name(cp_info *cp, u2 index)
 {
   switch (cp[index - 1].tag)
   {
   case CONSTANT_Class:
     // printf("Class Name Index: %02d \n", cp->Class.name_index);
-    rec_method_name(cp, cp[index - 1].Class.name_index, str);
+    rec_method_name(cp, cp[index - 1].Class.name_index);
     break;
   case CONSTANT_Fieldref:
     // printf("Fieldref Class Index: %02d \n", cp->Fieldref.class_index);
-    rec_method_name(cp, cp[index - 1].Fieldref.class_index, str);
-    // printf("Fieldref Name and Type Index: %02d \n", cp->Fieldref.name_and_type_index, str);
-    // rec_method_name(cp, cp[index - 1].Fieldref.name_and_type_index, str);
+    rec_method_name(cp, cp[index - 1].Fieldref.class_index);
+    // printf("Fieldref Name and Type Index: %02d \n", cp->Fieldref.name_and_type_index);
+    // rec_method_name(cp, cp[index - 1].Fieldref.name_and_type_index);
     break;
   case CONSTANT_Methodref:
-    // printf("Methodref Class Index: %02d \n", cp->Methodref.class_index, str);
-    rec_method_name(cp, cp[index - 1].Methodref.class_index, str);
-    // printf("Methodref Name and Type Index: %02d \n", cp->Methodref.name_and_type_inde, strx);
+    // printf("Methodref Class Index: %02d \n", cp->Methodref.class_index);
+    rec_method_name(cp, cp[index - 1].Methodref.class_index);
+    // printf("Methodref Name and Type Index: %02d \n", cp->Methodref.name_and_type_index);
     break;
   case CONSTANT_InterfaceMethodref:
-    // printf("InterfaceMethodref Class Index: %02d \n", cp->InterfaceMethodref.class_index, str);
-    rec_method_name(cp, cp[index - 1].InterfaceMethodref.class_index, str);
-    // printf("InterfaceMethodref Name and Type Index: %02d \n", cp->InterfaceMethodref.name_and_type_index, str);
-    // rec_method_name(cp, cp[index - 1].InterfaceMethodref.name_and_type_index, str);
+    // printf("InterfaceMethodref Class Index: %02d \n", cp->InterfaceMethodref.class_index);
+    rec_method_name(cp, cp[index - 1].InterfaceMethodref.class_index);
+    // printf("InterfaceMethodref Name and Type Index: %02d \n", cp->InterfaceMethodref.name_and_type_index);
+    // rec_method_name(cp, cp[index - 1].InterfaceMethodref.name_and_type_index);
     break;
   case CONSTANT_String:
-    // printf("String Index: %02d \n", cp->String.string_index, str);
-    rec_method_name(cp, cp[index - 1].String.string_index, str);
+    // printf("String Index: %02d \n", cp->String.string_index);
+    rec_method_name(cp, cp[index - 1].String.string_index);
     break;
   case CONSTANT_Integer:
-    // printf("Integer Bytes: %02d \n", cp->Integer.bytes, str);
+    // printf("Integer Bytes: %02d \n", cp->Integer.bytes);
     printConstType(0, cp[index - 1].Integer.bytes, CONSTANT_Integer);
     break;
   case CONSTANT_Float:
-    // printf("Float Bytes: %02d \n", cp->Float.bytes, str);
+    // printf("Float Bytes: %02d \n", cp->Float.bytes);
     printConstType(0, cp[index - 1].Float.bytes, CONSTANT_Float);
     break;
   case CONSTANT_Long:
-    // printf("Long High Bytes: %02d \n", cp->Long.high_bytes, str);
-    // printf("Long Low Bytes: %02d \n", cp->Long.low_bytes, str);
+    // printf("Long High Bytes: %02d \n", cp->Long.high_bytes);
+    // printf("Long Low Bytes: %02d \n", cp->Long.low_bytes);
     printConstType(cp[index - 1].Long.high_bytes, cp[index - 1].Long.low_bytes, CONSTANT_Long);
     break;
   case CONSTANT_Double:
-    // printf("Double High Bytes: %02d \n", cp->Double.high_bytes, str);
-    // printf("Double Low Bytes: %02d \n", cp->Double.low_bytes, str);
+    // printf("Double High Bytes: %02d \n", cp->Double.high_bytes);
+    // printf("Double Low Bytes: %02d \n", cp->Double.low_bytes);
 
     printConstType(cp[index - 1].Double.high_bytes, cp[index - 1].Double.low_bytes, CONSTANT_Double);
     break;
   case CONSTANT_NameAndType:
-    // printf("Name and Type - Name Index: %02d \n", cp->NameAndType.name_index, str);
-    rec_method_name(cp, cp[index - 1].NameAndType.name_index, str);
-    // printf("Name and Type - Descriptor Index: %02d \n", cp->NameAndType.descriptor_index, str);
+    // printf("Name and Type - Name Index: %02d \n", cp->NameAndType.name_index);
+    rec_method_name(cp, cp[index - 1].NameAndType.name_index);
+    // printf("Name and Type - Descriptor Index: %02d \n", cp->NameAndType.descriptor_index);
     break;
   case CONSTANT_Utf8:
-    // printf("UTF8 Length: %02d \n", cp->Utf8.length, str);
-    // printf("Bytes: ", str);
+    // printf("UTF8 Length: %02d \n", cp->Utf8.length);
+    // printf("Bytes: ");
     // for (u1 *i = cp->Utf8.bytes; i < cp->Utf8.bytes + cp->Utf8.length; i++)
     // {
-    //   printf("%c", *i, str);
+    //   printf("%c", *i);
     // }
-    // printf(" \n", str);
-    // printf("%s ", cp[index - 1].Utf8.bytes, str);
-    strcat(str, (char *)cp[index - 1].Utf8.bytes);
+    // printf(" \n");
+    // printf("%s ", cp[index - 1].Utf8.bytes);
+    return (char *)cp[index - 1].Utf8.bytes;
     break;
   case CONSTANT_MethodHandle:
-    // printf("MethodHandle Reference Kind: %02d \n", cp->MethodHandle.reference_kind, str);
-    rec_method_name(cp, cp[index - 1].MethodHandle.reference_kind, str);
-    // printf("MethodHandle Reference Index: %02d \n", cp->MethodHandle.reference_index, str);
-    rec_method_name(cp, cp[index - 1].MethodHandle.reference_index, str);
+    // printf("MethodHandle Reference Kind: %02d \n", cp->MethodHandle.reference_kind);
+    rec_method_name(cp, cp[index - 1].MethodHandle.reference_kind);
+    // printf("MethodHandle Reference Index: %02d \n", cp->MethodHandle.reference_index);
+    rec_method_name(cp, cp[index - 1].MethodHandle.reference_index);
     break;
   case CONSTANT_MethodType:
-    // printf("MethodType Descriptor Index: %02d \n", cp->MethodType.descriptor_index, str);
-    rec_method_name(cp, cp[index - 1].MethodType.descriptor_index, str);
+    // printf("MethodType Descriptor Index: %02d \n", cp->MethodType.descriptor_index);
+    rec_method_name(cp, cp[index - 1].MethodType.descriptor_index);
     break;
   case CONSTANT_InvokeDynamic:
-    // printf("InvokeDynamic - Bootstrap Method Attr Index: %02d \n", cp->InvokeDynamic.bootstrap_method_attr_index, str);
-    rec_method_name(cp, cp[index - 1].InvokeDynamic.bootstrap_method_attr_index, str);
-    // printf("InvokeDynamic - Name and Type Index: %02d \n", cp->InvokeDynamic.name_and_type_index, str);
-    rec_method_name(cp, cp[index - 1].InvokeDynamic.name_and_type_index, str);
+    // printf("InvokeDynamic - Bootstrap Method Attr Index: %02d \n", cp->InvokeDynamic.bootstrap_method_attr_index);
+    rec_method_name(cp, cp[index - 1].InvokeDynamic.bootstrap_method_attr_index);
+    // printf("InvokeDynamic - Name and Type Index: %02d \n", cp->InvokeDynamic.name_and_type_index);
+    rec_method_name(cp, cp[index - 1].InvokeDynamic.name_and_type_index);
     break;
   default:
     printf("No Ecxiste ese datapoole \n");
@@ -1988,9 +1988,8 @@ char *print_reference(cp_info *cp, u2 index)
 char *ret_method_name(cp_info *cp, u2 index)
 {
   // char *str = (char *)malloc(sizeof(char *) * 200);
-  strcpy(GLOBAL_ptr, "");
-  rec_method_name(cp, index, GLOBAL_ptr);
-  return GLOBAL_ptr;
+  // strcpy(GLOBAL_ptr, "");
+  return rec_method_name(cp, index);
 }
 
 void print_class_file(ClassFile *cf)
@@ -2390,7 +2389,7 @@ u4 ClassLoader(char *class_name)
   }
   else
   {
-    sprintf(GLOBAL_ptr, "./%s.class", class_name);
+    sprintf(GLOBAL_ptr, "%s/%s.class", PATH, class_name);
   }
 #ifdef DEBUG
   printf("Loaded class: %s \n", GLOBAL_ptr);
