@@ -2290,13 +2290,23 @@ void d2l_eval(Frame *f)
 
 void d2f_eval(Frame *f)
 {
-  float val = (float) pop_operand(f->operands)->value;
-
+  uint64_t val = (pop_operand(f->operands)->type_double);
+  u4 r1;
+  double aux;
+  float aux_float;
+  aux = *(double *)(&val);
+  aux_float = (float)aux;
+  
+  #ifdef DEBUG
+    printf("d2f_val: %f\n", aux_float);
+  #endif
   LocalVariable *float_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  memcpy(&float_val->value, &val, sizeof(uint32_t));
+  r1 = *((u4*)(&aux_float));
+  // memcpy(&float_val->value, &val, sizeof(uint32_t));
 
   float_val->type = CONSTANT_Float;
+  float_val->value = r1;
   push_operand(float_val, f->operands);
 }
 
