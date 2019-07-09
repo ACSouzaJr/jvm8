@@ -42,7 +42,7 @@ class vetor{
 		short array7[] = {15, 1000, -2};
 	
 		for (int i = 0; i < 10; i++){
-			array[i] = i;
+			array[i] = i - 5;
 		}
 		array[0] += 100000;
 		for (int i = 0; i < 10; i++){
