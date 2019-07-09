@@ -546,7 +546,7 @@ void iaload_eval(Frame *f)
   arrayref = pop_operand(f->operands);
   // value.value = ((u4*)arrayref->type_array.array)[index->value];
   lv->value = ((u4 *)arrayref->type_array.array)[index->value];
-  lv->type = CONSTANT_Integer;
+  lv->type = T_INT;
   // value.value = arrayref.value[index->value];
 
   push_operand(lv, f->operands);
@@ -554,22 +554,41 @@ void iaload_eval(Frame *f)
 
 void laload_eval(Frame *f)
 {
-  //TODO
+  LocalVariable *arrayref, *index, *lv;
+  lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  index = pop_operand(f->operands);
+  arrayref = pop_operand(f->operands);
+  
+  lv->type_long = ((uint64_t *)arrayref->type_array.array)[index->value];
+  lv->type = T_LONG;
+
+  push_operand(lv, f->operands);
 }
 
 void faload_eval(Frame *f)
 {
-  LocalVariable *arrayref, *index, result;
-  arrayref = pop_operand(f->operands);
+  LocalVariable *arrayref, *index, *lv;
+  lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   index = pop_operand(f->operands);
-  result = arrayref[index->value];
+  arrayref = pop_operand(f->operands);
+  
+  lv->value = ((u4 *)arrayref->type_array.array)[index->value];
+  lv->type = T_FLOAT;
 
-  push_operand(&result, f->operands);
+  push_operand(lv, f->operands);
 }
 
 void daload_eval(Frame *f)
 {
-  //TODO
+  LocalVariable *arrayref, *index, *lv;
+  lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  index = pop_operand(f->operands);
+  arrayref = pop_operand(f->operands);
+  
+  lv->type_double = ((uint64_t *)arrayref->type_array.array)[index->value];
+  lv->type = T_DOUBLE;
+
+  push_operand(lv, f->operands);
 }
 
 void aaload_eval(Frame *f)
@@ -587,17 +606,41 @@ void aaload_eval(Frame *f)
 
 void baload_eval(Frame *f)
 {
-  //TODO
+  LocalVariable *arrayref, *index, *lv;
+  lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  index = pop_operand(f->operands);
+  arrayref = pop_operand(f->operands);
+  
+  lv->value = ((u1 *)arrayref->type_array.array)[index->value];
+  lv->type = T_BYTE;
+
+  push_operand(lv, f->operands);
 }
 
 void caload_eval(Frame *f)
 {
-  //TODO
+  LocalVariable *arrayref, *index, *lv;
+  lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  index = pop_operand(f->operands);
+  arrayref = pop_operand(f->operands);
+  
+  lv->value = ((u1 *)arrayref->type_array.array)[index->value];
+  lv->type = T_CHAR;
+
+  push_operand(lv, f->operands);
 }
 
 void saload_eval(Frame *f)
 {
-  //TODO
+  LocalVariable *arrayref, *index, *lv;
+  lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  index = pop_operand(f->operands);
+  arrayref = pop_operand(f->operands);
+  
+  lv->value = ((u2 *)arrayref->type_array.array)[index->value];
+  lv->type = T_SHORT;
+
+  push_operand(lv, f->operands);
 }
 
 // recupera um valor int da op_stack e da store desse operando na pilha de var_locais
@@ -951,22 +994,50 @@ void iastore_eval(Frame *f)
 
 void lastore_eval(Frame *f)
 {
-  //TODO
+  LocalVariable *arrayref, *index, *value;
+  value = pop_operand(f->operands);
+  index = pop_operand(f->operands);
+  arrayref = pop_operand(f->operands);
+
+  uint64_t *vetor;
+  vetor = (uint64_t *)arrayref->type_array.array;
+  // (u4 *) arrayref->type_array.array[index->value] = value;
+  vetor[index->value] = value->type_long;
+#ifdef DEBUG
+  printf("Referencia array: %d", ((u4 *)arrayref->type_array.array)[index->value]);
+#endif
 }
 
 void fastore_eval(Frame *f)
 {
   LocalVariable *arrayref, *index, *value;
-  arrayref = pop_operand(f->operands);
-  index = pop_operand(f->operands);
   value = pop_operand(f->operands);
+  index = pop_operand(f->operands);
+  arrayref = pop_operand(f->operands);
 
-  arrayref[index->value] = *value;
+  u4 *vetor;
+  vetor = (u4 *)arrayref->type_array.array;
+  // (u4 *) arrayref->type_array.array[index->value] = value;
+  vetor[index->value] = value->value;
+#ifdef DEBUG
+  printf("Referencia array: %d", ((u4 *)arrayref->type_array.array)[index->value]);
+#endif
 }
 
 void dastore_eval(Frame *f)
 {
-  //TODO
+  LocalVariable *arrayref, *index, *value;
+  value = pop_operand(f->operands);
+  index = pop_operand(f->operands);
+  arrayref = pop_operand(f->operands);
+
+  uint64_t *vetor;
+  vetor = (uint64_t *)arrayref->type_array.array;
+  // (u4 *) arrayref->type_array.array[index->value] = value;
+  vetor[index->value] = value->type_double;
+#ifdef DEBUG
+  printf("Referencia array: %d", ((uint64_t *)arrayref->type_array.array)[index->value]);
+#endif
 }
 
 void aastore_eval(Frame *f)
@@ -986,17 +1057,47 @@ void aastore_eval(Frame *f)
 
 void bastore_eval(Frame *f)
 {
-  //TODO
+  LocalVariable *arrayref, *index, *value;
+  value = pop_operand(f->operands);
+  index = pop_operand(f->operands);
+  arrayref = pop_operand(f->operands);
+
+  u1 *vetor;
+  vetor = (u1 *)arrayref->type_array.array;
+  vetor[index->value] = value->value;
+  #ifdef DEBUG
+    printf("Referencia array: %d", ((u1 *)arrayref->type_array.array)[index->value]);
+  #endif
 }
 
 void castore_eval(Frame *f)
 {
-  //TODO
+  LocalVariable *arrayref, *index, *value;
+  value = pop_operand(f->operands);
+  index = pop_operand(f->operands);
+  arrayref = pop_operand(f->operands);
+
+  u1 *vetor;
+  vetor = (u1 *)arrayref->type_array.array;
+  vetor[index->value] = value->value;
+  #ifdef DEBUG
+    printf("Referencia array: %d", ((u1 *)arrayref->type_array.array)[index->value]);
+  #endif
 }
 
 void sastore_eval(Frame *f)
 {
-  //TODO
+  LocalVariable *arrayref, *index, *value;
+  value = pop_operand(f->operands);
+  index = pop_operand(f->operands);
+  arrayref = pop_operand(f->operands);
+
+  u2 *vetor;
+  vetor = (u2 *)arrayref->type_array.array;
+  vetor[index->value] = value->value;
+  #ifdef DEBUG
+    printf("Referencia array: %d", ((u2 *)arrayref->type_array.array)[index->value]);
+  #endif
 }
 
 // só usado para int -> cat1
