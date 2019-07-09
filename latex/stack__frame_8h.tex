@@ -1,0 +1,96 @@
+\hypertarget{stack__frame_8h}{}\section{stack\+\_\+frame.\+h File Reference}
+\label{stack__frame_8h}\index{stack\+\_\+frame.\+h@{stack\+\_\+frame.\+h}}
+{\ttfamily \#include \char`\"{}frame.\+h\char`\"{}}\\*
+Include dependency graph for stack\+\_\+frame.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structStackFrame}{Stack\+Frame}
+\item 
+struct \hyperlink{structStackFrame}{Stack\+Frame}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{structStackFrame}{Stack\+Frame} \hyperlink{stack__frame_8h_ac3cae008fc0bc76bc06c36ec0ec6cfb1}{Node\+Frame}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structFrame}{Frame} $\ast$ \hyperlink{stack__frame_8h_a420b7f43dadaf2cf35fef826faca9a22}{pop} ()
+\item 
+void \hyperlink{stack__frame_8h_a9449cf29b3fcf4b4e6d6ea496a63c61b}{push} (\hyperlink{structFrame}{Frame} $\ast$frame)
+\item 
+\hyperlink{structFrame}{Frame} $\ast$ \hyperlink{stack__frame_8h_aab3f5154c34897bf92794a175bf6d4cb}{top} ()
+\item 
+void \hyperlink{stack__frame_8h_a02fd73d861ef2e4aabb38c0c9ff82947}{init} ()
+\item 
+void \hyperlink{stack__frame_8h_a4bb1325b53dcb653e95a7935165c3b0e}{print\+\_\+stack} ()
+\item 
+int \hyperlink{stack__frame_8h_a946d97bd0b6c21223b5b220ca34c7ab1}{empty} ()
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structStackFrame}{Stack\+Frame} $\ast$ \hyperlink{stack__frame_8h_a15f64dbdb65ef3f2f338253004e88b99}{Jvm\+Stack}
+\end{DoxyCompactItemize}
+
+
+\subsection{Typedef Documentation}
+\index{stack\+\_\+frame.\+h@{stack\+\_\+frame.\+h}!Node\+Frame@{Node\+Frame}}
+\index{Node\+Frame@{Node\+Frame}!stack\+\_\+frame.\+h@{stack\+\_\+frame.\+h}}
+\subsubsection[{\texorpdfstring{Node\+Frame}{NodeFrame}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Stack\+Frame}  {\bf Node\+Frame}}\hypertarget{stack__frame_8h_ac3cae008fc0bc76bc06c36ec0ec6cfb1}{}\label{stack__frame_8h_ac3cae008fc0bc76bc06c36ec0ec6cfb1}
+
+
+\subsection{Function Documentation}
+\index{stack\+\_\+frame.\+h@{stack\+\_\+frame.\+h}!empty@{empty}}
+\index{empty@{empty}!stack\+\_\+frame.\+h@{stack\+\_\+frame.\+h}}
+\subsubsection[{\texorpdfstring{empty()}{empty()}}]{\setlength{\rightskip}{0pt plus 5cm}int empty (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{stack__frame_8h_a946d97bd0b6c21223b5b220ca34c7ab1}{}\label{stack__frame_8h_a946d97bd0b6c21223b5b220ca34c7ab1}
+\index{stack\+\_\+frame.\+h@{stack\+\_\+frame.\+h}!init@{init}}
+\index{init@{init}!stack\+\_\+frame.\+h@{stack\+\_\+frame.\+h}}
+\subsubsection[{\texorpdfstring{init()}{init()}}]{\setlength{\rightskip}{0pt plus 5cm}void init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{stack__frame_8h_a02fd73d861ef2e4aabb38c0c9ff82947}{}\label{stack__frame_8h_a02fd73d861ef2e4aabb38c0c9ff82947}
+\index{stack\+\_\+frame.\+h@{stack\+\_\+frame.\+h}!pop@{pop}}
+\index{pop@{pop}!stack\+\_\+frame.\+h@{stack\+\_\+frame.\+h}}
+\subsubsection[{\texorpdfstring{pop()}{pop()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Frame}$\ast$ pop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{stack__frame_8h_a420b7f43dadaf2cf35fef826faca9a22}{}\label{stack__frame_8h_a420b7f43dadaf2cf35fef826faca9a22}
+\index{stack\+\_\+frame.\+h@{stack\+\_\+frame.\+h}!print\+\_\+stack@{print\+\_\+stack}}
+\index{print\+\_\+stack@{print\+\_\+stack}!stack\+\_\+frame.\+h@{stack\+\_\+frame.\+h}}
+\subsubsection[{\texorpdfstring{print\+\_\+stack()}{print_stack()}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+\_\+stack (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{stack__frame_8h_a4bb1325b53dcb653e95a7935165c3b0e}{}\label{stack__frame_8h_a4bb1325b53dcb653e95a7935165c3b0e}
+\index{stack\+\_\+frame.\+h@{stack\+\_\+frame.\+h}!push@{push}}
+\index{push@{push}!stack\+\_\+frame.\+h@{stack\+\_\+frame.\+h}}
+\subsubsection[{\texorpdfstring{push(\+Frame $\ast$frame)}{push(Frame *frame)}}]{\setlength{\rightskip}{0pt plus 5cm}void push (
+\begin{DoxyParamCaption}
+\item[{{\bf Frame} $\ast$}]{frame}
+\end{DoxyParamCaption}
+)}\hypertarget{stack__frame_8h_a9449cf29b3fcf4b4e6d6ea496a63c61b}{}\label{stack__frame_8h_a9449cf29b3fcf4b4e6d6ea496a63c61b}
+\index{stack\+\_\+frame.\+h@{stack\+\_\+frame.\+h}!top@{top}}
+\index{top@{top}!stack\+\_\+frame.\+h@{stack\+\_\+frame.\+h}}
+\subsubsection[{\texorpdfstring{top()}{top()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Frame}$\ast$ top (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{stack__frame_8h_aab3f5154c34897bf92794a175bf6d4cb}{}\label{stack__frame_8h_aab3f5154c34897bf92794a175bf6d4cb}
+
+
+\subsection{Variable Documentation}
+\index{stack\+\_\+frame.\+h@{stack\+\_\+frame.\+h}!Jvm\+Stack@{Jvm\+Stack}}
+\index{Jvm\+Stack@{Jvm\+Stack}!stack\+\_\+frame.\+h@{stack\+\_\+frame.\+h}}
+\subsubsection[{\texorpdfstring{Jvm\+Stack}{JvmStack}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Stack\+Frame}$\ast$ Jvm\+Stack}\hypertarget{stack__frame_8h_a15f64dbdb65ef3f2f338253004e88b99}{}\label{stack__frame_8h_a15f64dbdb65ef3f2f338253004e88b99}

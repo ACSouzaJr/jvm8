@@ -30,6 +30,10 @@ char *FILE_NAME;
 StackFrame *JvmStack;
 Method Mem;
 
+/**
+* @fn      main
+* @brief   Função principal do programa
+*/
 int main(int argc, char *argv[])
 {
   // FILE *pFile;
