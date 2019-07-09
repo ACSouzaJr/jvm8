@@ -1,0 +1,113 @@
+\hypertarget{unionattribute__types}{}\section{attribute\+\_\+types Union Reference}
+\label{unionattribute__types}\index{attribute\+\_\+types@{attribute\+\_\+types}}
+
+
+Collaboration diagram for attribute\+\_\+types\+:
+% FIG 0
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>u2 {\bfseries constantvalue\_index}\\
+\} {\bfseries ConstantValue\_attribute}\hypertarget{unionattribute__types_aaecd67000fbd2536ca5290a26b0413b0}{}\label{unionattribute__types_aaecd67000fbd2536ca5290a26b0413b0}
+\\
+
+\end{tabbing}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>u2 {\bfseries line\_number\_table\_length}\\
+\>\hyperlink{structline__number__table__type}{line\_number\_table\_type} $\ast$ {\bfseries line\_number\_table}\\
+\} {\bfseries LineNumberTable\_attribute}\hypertarget{unionattribute__types_ac8d1e9ca062ca40620b53e65d67b78fd}{}\label{unionattribute__types_ac8d1e9ca062ca40620b53e65d67b78fd}
+\\
+
+\end{tabbing}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>u2 {\bfseries number\_of\_entries}\\
+\>\hyperlink{structstack__map__frame}{stack\_map\_frame} $\ast$ {\bfseries entries}\\
+\} {\bfseries StackMapTable\_attribute}\hypertarget{unionattribute__types_af40b8d96b4ed7c185e3bbe69ce26d920}{}\label{unionattribute__types_af40b8d96b4ed7c185e3bbe69ce26d920}
+\\
+
+\end{tabbing}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>u2 {\bfseries sourcefile\_index}\\
+\} {\bfseries SourceFile\_attribute}\hypertarget{unionattribute__types_a4c070f5b3468652a8d4face97c3fc4e8}{}\label{unionattribute__types_a4c070f5b3468652a8d4face97c3fc4e8}
+\\
+
+\end{tabbing}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\} {\bfseries Deprecated\_attribute}\hypertarget{unionattribute__types_a2c2fb712764e37c9caa0f7c9d83df51b}{}\label{unionattribute__types_a2c2fb712764e37c9caa0f7c9d83df51b}
+\\
+
+\end{tabbing}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>u2 {\bfseries number\_of\_exceptions}\\
+\>u2 $\ast$ {\bfseries exception\_index\_table}\\
+\} {\bfseries Exceptions\_attribute}\hypertarget{unionattribute__types_ae3da53b0d811eb70361e1328db9b59e9}{}\label{unionattribute__types_ae3da53b0d811eb70361e1328db9b59e9}
+\\
+
+\end{tabbing}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>u2 {\bfseries number\_of\_classes}\\
+\>\hyperlink{structClasses}{Classes} $\ast$ {\bfseries classes}\\
+\} {\bfseries InnerClasses\_attribute}\hypertarget{unionattribute__types_af84c3875a56f217878eec232fe8e33f3}{}\label{unionattribute__types_af84c3875a56f217878eec232fe8e33f3}
+\\
+
+\end{tabbing}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\} {\bfseries Synthetic\_attribute}\hypertarget{unionattribute__types_a04d1c36708ba372962219177169bedf1}{}\label{unionattribute__types_a04d1c36708ba372962219177169bedf1}
+\\
+
+\end{tabbing}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>u2 {\bfseries local\_variable\_table\_length}\\
+\>\hyperlink{structLocal__variable__table}{Local\_variable\_table} $\ast$ {\bfseries local\_variable\_table}\\
+\} {\bfseries LocalVariableTable\_attribute}\hypertarget{unionattribute__types_a14bd080c2d4d5c855107ac67c2c3627c}{}\label{unionattribute__types_a14bd080c2d4d5c855107ac67c2c3627c}
+\\
+
+\end{tabbing}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>u2 {\bfseries num\_bootstrap\_methods}\\
+\>\hyperlink{structBootstrap__method}{Bootstrap\_method} $\ast$ {\bfseries bootstrap\_methods}\\
+\} {\bfseries BootstrapMethods\_attribute}\hypertarget{unionattribute__types_ab7d4f09668c4f457a4a5e76d31a961e5}{}\label{unionattribute__types_ab7d4f09668c4f457a4a5e76d31a961e5}
+\\
+
+\end{tabbing}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>u2 {\bfseries max\_stack}\\
+\>u2 {\bfseries max\_locals}\\
+\>u4 {\bfseries code\_length}\\
+\>u1 $\ast$ {\bfseries code}\\
+\>u2 {\bfseries exception\_table\_length}\\
+\>\hyperlink{structexception__table__type}{exception\_table\_type} $\ast$ {\bfseries exception\_table}\\
+\>u2 {\bfseries attributes\_count}\\
+\>\hyperlink{structattribute__info}{attribute\_info} $\ast$ {\bfseries attributes}\\
+\} {\bfseries Code\_attribute}\hypertarget{unionattribute__types_a4d78dcb1862f185b0d2eff1ce96aec71}{}\label{unionattribute__types_a4d78dcb1862f185b0d2eff1ce96aec71}
+\\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+The documentation for this union was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+structures.\+h\end{DoxyCompactItemize}

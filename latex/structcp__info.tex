@@ -1,0 +1,80 @@
+\hypertarget{structcp__info}{}\section{cp\+\_\+info Struct Reference}
+\label{structcp__info}\index{cp\+\_\+info@{cp\+\_\+info}}
+
+
+{\ttfamily \#include $<$structures.\+h$>$}
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+u1 {\bfseries tag}\hypertarget{structcp__info_a045b8801a6e96a2a31d3b62ea684f141}{}\label{structcp__info_a045b8801a6e96a2a31d3b62ea684f141}
+
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>u2 {\bfseries name\_index}\\
+\>\} {\bfseries Class}\\
+\>struct \{\\
+\>\>u2 {\bfseries class\_index}\\
+\>\>u2 {\bfseries name\_and\_type\_index}\\
+\>\} {\bfseries Fieldref}\\
+\>struct \{\\
+\>\>u2 {\bfseries class\_index}\\
+\>\>u2 {\bfseries name\_and\_type\_index}\\
+\>\} {\bfseries Methodref}\\
+\>struct \{\\
+\>\>u2 {\bfseries class\_index}\\
+\>\>u2 {\bfseries name\_and\_type\_index}\\
+\>\} {\bfseries InterfaceMethodref}\\
+\>struct \{\\
+\>\>u2 {\bfseries string\_index}\\
+\>\} {\bfseries String}\\
+\>struct \{\\
+\>\>u4 {\bfseries bytes}\\
+\>\} {\bfseries Integer}\\
+\>struct \{\\
+\>\>u4 {\bfseries bytes}\\
+\>\} {\bfseries Float}\\
+\>struct \{\\
+\>\>u4 {\bfseries high\_bytes}\\
+\>\>u4 {\bfseries low\_bytes}\\
+\>\} {\bfseries Long}\\
+\>struct \{\\
+\>\>u4 {\bfseries high\_bytes}\\
+\>\>u4 {\bfseries low\_bytes}\\
+\>\} {\bfseries Double}\\
+\>struct \{\\
+\>\>u2 {\bfseries name\_index}\\
+\>\>u2 {\bfseries descriptor\_index}\\
+\>\} {\bfseries NameAndType}\\
+\>struct \{\\
+\>\>u2 {\bfseries length}\\
+\>\>u1 $\ast$ {\bfseries bytes}\\
+\>\} {\bfseries Utf8}\\
+\>struct \{\\
+\>\>u1 {\bfseries reference\_kind}\\
+\>\>u2 {\bfseries reference\_index}\\
+\>\} {\bfseries MethodHandle}\\
+\>struct \{\\
+\>\>u2 {\bfseries descriptor\_index}\\
+\>\} {\bfseries MethodType}\\
+\>struct \{\\
+\>\>u2 {\bfseries bootstrap\_method\_attr\_index}\\
+\>\>u2 {\bfseries name\_and\_type\_index}\\
+\>\} {\bfseries InvokeDynamic}\\
+\}; \hypertarget{structcp__info_a0469358e891d5c89038d59f1807d00b2}{}\label{structcp__info_a0469358e891d5c89038d59f1807d00b2}
+\\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Struct para indicar o tipo de constant\+\_\+pool (tendo uma tag associada e mais atributos em função da constante)
+
+Union\+: serve para alocar espaço pra maior struct 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+structures.\+h\end{DoxyCompactItemize}
