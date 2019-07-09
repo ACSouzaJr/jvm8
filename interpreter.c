@@ -2088,7 +2088,7 @@ void ior_eval(Frame *f)
 
 void lor_eval(Frame *f)
 {
-  uint64_t v1, v2;
+  int64_t v1, v2;
   long value1, value2, resultlong;
   LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
 
@@ -2111,6 +2111,7 @@ void lor_eval(Frame *f)
 #ifdef DEBUG
   printf("resultado_long: %ld \n", result->type_long);
 #endif
+  push_operand(result, f->operands);
 }
 
 void ixor_eval(Frame *f)
@@ -2159,6 +2160,7 @@ void lxor_eval(Frame *f)
 #ifdef DEBUG
   printf("resultado_long: %ld \n", result->type_long);
 #endif
+  push_operand(result, f->operands);
 }
 
 void iinc_eval(Frame *f)
