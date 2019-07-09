@@ -960,9 +960,9 @@ void iastore_eval(Frame *f)
   vetor = (u4 *)arrayref->type_array.array;
   // (u4 *) arrayref->type_array.array[index->value] = value;
   vetor[index->value] = value->value;
-  #ifdef DEBUG
-    printf("Referencia array: %d", ((u4 *)arrayref->type_array.array)[index->value]);
-  #endif
+#ifdef DEBUG
+  printf("Referencia array: %d", ((u4 *)arrayref->type_array.array)[index->value]);
+#endif
 }
 
 void lastore_eval(Frame *f)
@@ -2513,79 +2513,132 @@ void getstatic_eval(Frame *f)
     return;
   }
 
-  u2 nati = f->cp[index - 1].Fieldref.name_and_type_index;
+  // Fieldref Name and type
+  u2 name_n_type = f->cp[index - 1].Fieldref.name_and_type_index;
 
-  // char *field_name = readUtf8(f->cp, f->cp[nati - 1].NameAndType.name_index);
-  char *field_desc = readUtf8(f->cp, f->cp[nati - 1].NameAndType.descriptor_index);
+  char *field_name = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.name_index);
+
+  char *field_desc = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.descriptor_index);
 
 #ifdef DEBUG
   // printf("field_name: %s\n", field_name);
   printf("field_desc: %s\n", field_desc);
 #endif
 
-  LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  u2 class_index = find_class(class_name);
+  field_info *field = find_field(Mem.classes_arr[class_index], field_name, field_desc);
 
-  if (strcmp(field_desc, "[I") == 0)
-  {
-    #ifdef DEBUG
-        printf("get static_data_low: %04x\n", *(GLOBAL_CLASS->fields->staticData->low));
-    #endif
-    lv->type_array.array = (u4 *)GLOBAL_CLASS->fields->staticData->low;
-    lv->type = CONSTANT_Fieldref;
-  } else if((field_desc[0] == '[' ) && (field_desc[1] == 'L' )){
-    lv->type_array.array = (u4 *)GLOBAL_CLASS->fields->staticData->low;
-    lv->type = CONSTANT_Fieldref;
-    #ifdef DEBUG
-        printf("getstatic field_desc: %s\n", field_desc);
-    #endif
-  }
-  push_operand(lv, f->operands);
+  push_operand(field->static_data, f->operands);
+
+  // if (strcmp(field_desc, "[I") == 0)
+  // {
+  //   #ifdef DEBUG
+  //       printf("get static_data_low: %04x\n", *(GLOBAL_CLASS->fields->staticData->low));
+  //   #endif
+  //   lv->type_array.array = (u4 *)GLOBAL_CLASS->fields->staticData->low;
+  //   lv->type = CONSTANT_Fieldref;
+  // } else if((field_desc[0] == '[' ) && (field_desc[1] == 'L' )){
+  //   lv->type_array.array = (u4 *)GLOBAL_CLASS->fields->staticData->low;
+  //   lv->type = CONSTANT_Fieldref;
+  //   #ifdef DEBUG
+  //       printf("getstatic field_desc: %s\n", field_desc);
+  //   #endif
+  // }
+  // push_operand(lv, f->operands);
 }
 
 void putstatic_eval(Frame *f)
 {
   u2 index = getIndexFromb1b2(f);
-  u2 nati = f->cp[index - 1].Fieldref.name_and_type_index;
 
-  // char *field_name = readUtf8(f->cp, f->cp[nati - 1].NameAndType.name_index);
-  char *field_desc = readUtf8(f->cp, f->cp[nati - 1].NameAndType.descriptor_index);
+  char *class_name = ret_method_name(f->cp, index);
+
+  // Fieldref Name and type
+  u2 name_n_type = f->cp[index - 1].Fieldref.name_and_type_index;
+
+  char *field_name = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.name_index);
+
+  char *field_desc = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.descriptor_index);
 
 #ifdef DEBUG
-  // printf("field_name: %s\n", field_name);
+  printf("field_name: %s\n", field_name);
   printf("field_desc: %s\n", field_desc);
 #endif
 
-  LocalVariable *lv;
-
-  lv = pop_operand(f->operands);
+  LocalVariable *lv = pop_operand(f->operands);
   // lv = f->operands->top;
 
 #ifdef DEBUG
   printf("put lv_putstatic: %04x\n", lv->value);
 #endif
 
-  if (strcmp(field_desc, "[I") == 0)
-  {
-    GLOBAL_CLASS->fields->staticData = (staticData *)malloc(sizeof(staticData));
-    GLOBAL_CLASS->fields->staticData->low = (u4 *)malloc(sizeof(u4));
-    GLOBAL_CLASS->fields->staticData->high = NULL;
-    GLOBAL_CLASS->fields->staticData->low = &(lv->value);
+  u2 class_index = find_class(class_name);
+  field_info *field = find_field(Mem.classes_arr[class_index], field_name, field_desc);
 
-#ifdef DEBUG
-    printf("put static_data_low: %04x\n", *(GLOBAL_CLASS->fields->staticData->low));
-#endif
-  }
-  else if (strcmp(field_desc, "I") == 0)
-  {
-    GLOBAL_CLASS->fields->staticData = (staticData *)malloc(sizeof(staticData));
-    GLOBAL_CLASS->fields->staticData->low = (u4 *)malloc(sizeof(u4));
-    GLOBAL_CLASS->fields->staticData->high = NULL;
-    GLOBAL_CLASS->fields->staticData->low[0] = lv->value;
+  field->static_data = lv;
 
-#ifdef DEBUG
-    printf("put static_data_low: %04x\n", GLOBAL_CLASS->fields->staticData->low[0]);
-#endif
-  }
+  // if (field_desc[0] == '[') {
+  //       // field->staticValue.tag = CAT1;
+  //       // field->staticValue.type_char = frame->operandStack.top().type_char;
+  //       // frame->operandStack.pop();
+  //   }
+  //   else if (fieldDescriptor.compare("I") == 0) {
+  //       field->staticValue.tag = CAT1;
+  //       field->staticValue.type_int = frame->operandStack.top().type_int;
+  //       frame->operandStack.pop();
+  //   }
+  //   else if (fieldDescriptor.compare("F") == 0) {
+  //       field->staticValue.tag = CAT1;
+  //       field->staticValue.type_float = frame->operandStack.top().type_float;
+  //       frame->operandStack.pop();
+  //   }
+  //   else if (fieldDescriptor.compare("D") == 0) {
+  //       field->staticValue.tag = CAT2;
+  //       field->staticValue.type_double = frame->operandStack.top().type_double;
+  //       frame->operandStack.pop();
+  //   }
+  //   else if (fieldDescriptor.compare("J") == 0) {
+  //       field->staticValue.tag = CAT2;
+  //       field->staticValue.type_long = frame->operandStack.top().type_long;
+  //       frame->operandStack.pop();
+  //   }
+  //   else if (fieldDescriptor.compare("Z") == 0) {
+  //       field->staticValue.tag = CAT1;
+  //       field->staticValue.type_boolean = frame->operandStack.top().type_boolean;
+  //       frame->operandStack.pop();
+  //   }
+  //   else if (fieldDescriptor[0] == '[') {
+  //       field->staticValue.tag = CAT1;
+  //       field->staticValue.type_reference = frame->operandStack.top().type_reference;
+  //       frame->operandStack.pop();
+  //   }
+  //   else {
+  //       printf("putstatic: tipo do descritor nao reconhecido: %s\n", fieldDescriptor.c_str());
+  //       exit(0);
+  //   }
+
+  //   if (strcmp(field_desc, "[I") == 0)
+  //   {
+  //     GLOBAL_CLASS->fields->staticData = (staticData *)malloc(sizeof(staticData));
+  //     GLOBAL_CLASS->fields->staticData->low = (u4 *)malloc(sizeof(u4));
+  //     GLOBAL_CLASS->fields->staticData->high = NULL;
+  //     GLOBAL_CLASS->fields->staticData->low = &(lv->value);
+
+  // #ifdef DEBUG
+  //     printf("put static_data_low: %04x\n", *(GLOBAL_CLASS->fields->staticData->low));
+  // #endif
+  //   }
+  //   else if (strcmp(field_desc, "I") == 0)
+  //   {
+  //     GLOBAL_CLASS->fields->staticData = (staticData *)malloc(sizeof(staticData));
+  //     GLOBAL_CLASS->fields->staticData->low = (u4 *)malloc(sizeof(u4));
+  //     GLOBAL_CLASS->fields->staticData->high = NULL;
+  //     GLOBAL_CLASS->fields->staticData->low[0] = lv->value;
+
+  // #ifdef DEBUG
+  //     printf("put static_data_low: %04x\n", GLOBAL_CLASS->fields->staticData->low[0]);
+  // #endif
+  //   }
 }
 
 void getfield_eval(Frame *f)
@@ -2593,7 +2646,7 @@ void getfield_eval(Frame *f)
   u2 index = getIndexFromb1b2(f);
   LocalVariable *lv = pop_operand(f->operands);
 
-  // Method Name and type
+  // Fieldref Name and type
   u2 name_n_type = f->cp[index - 1].Fieldref.name_and_type_index;
 
   char *field_name = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.name_index);
@@ -2862,31 +2915,32 @@ void newarray_eval(Frame *f)
     {
     case T_BOOLEAN:
       rlv->type = CONSTANT_Integer;
-      arrayref = (u4 *)malloc((count + 1) * sizeof(u4));
+      arrayref = (u4 *)malloc((count) * sizeof(u4));
       // int return_array[count];
       break;
     case T_CHAR:
       rlv->type = CONSTANT_String;
-      arrayref = (u1 *)malloc((count + 1) * sizeof(u1));
+      arrayref = (u1 *)malloc((count) * sizeof(u1));
       // char return_array[count];
       break;
     case T_FLOAT:
       rlv->type = CONSTANT_Float;
-      arrayref = (u4 *)malloc((count + 1) * sizeof(u4));
+      arrayref = (u4 *)malloc((count) * sizeof(u4));
       // float return_array[count];
       break;
     case T_DOUBLE:
-      arrayref = (uint64_t *)malloc((count + 1) * sizeof(uint64_t));
+      rlv->type = CONSTANT_Double;
+      arrayref = (uint64_t *)malloc((count) * sizeof(uint64_t));
       // double return_array[count];
       break;
     case T_BYTE:
       rlv->type = CONSTANT_Integer;
-      arrayref = (u1 *)malloc((count + 1) * sizeof(u1));
+      arrayref = (u1 *)malloc((count) * sizeof(u1));
       // u1 return_array[count];
       break;
     case T_SHORT:
       rlv->type = CONSTANT_Integer;
-      arrayref = (u2 *)malloc((count + 1) * sizeof(u2));
+      arrayref = (u2 *)malloc((count) * sizeof(u2));
       // u2 return_array[count];
       break;
     case T_INT:
@@ -2895,22 +2949,20 @@ void newarray_eval(Frame *f)
 #ifdef DEBUG
       printf("array ref: %x \n", (u4)arrayref);
 #endif
-      rlv->type_array.array = (u4 *)arrayref;
-      rlv->type_array.size = count;
-#ifdef DEBUG
-      printf("array type: %x \n", (u4)(rlv->type_array.array));
-      printf("rlv type: %x \n", rlv->type);
-#endif
-      // int return_array[count];
       break;
     case T_LONG:
-      arrayref = (uint64_t *)malloc((count + 1) * sizeof(uint64_t));
+      arrayref = (uint64_t *)malloc((count) * sizeof(uint64_t));
       // long return_array[count];
       break;
     default:
       break;
     }
-    // rlv->type_array.array = arrayref;
+    rlv->type_array.array = (u4 *)arrayref;
+    rlv->type_array.size = count;
+#ifdef DEBUG
+    printf("array type: %x \n", (u4)(rlv->type_array.array));
+    printf("rlv type: %x \n", rlv->type);
+#endif
 
     push_operand(rlv, f->operands);
   }
@@ -2925,17 +2977,17 @@ void anewarray_eval(Frame *f)
   count = lv->value;
   void *arrayref = NULL;
   rlv = (LocalVariable *)malloc(sizeof(LocalVariable));
-  u2 name_index = f->cp[index-1].Class.name_index;
+  u2 name_index = f->cp[index - 1].Class.name_index;
 
   rlv->type = CONSTANT_Fieldref;
 
-  arrayref = (u4 *)malloc((count) * sizeof(u4));  
+  arrayref = (u4 *)malloc((count) * sizeof(u4));
   rlv->value = *((u4 *)(arrayref));
-  
-  #ifdef DEBUG
-    printf("arrayref: %04x\n", rlv->value);
-    printf("classname_index: %02x\n", name_index);
-  #endif
+
+#ifdef DEBUG
+  printf("arrayref: %04x\n", rlv->value);
+  printf("classname_index: %02x\n", name_index);
+#endif
 
   if (count < 0)
   {
