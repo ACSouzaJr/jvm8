@@ -1817,13 +1817,16 @@ void fneg_eval(Frame *f)
 {
   u4 v1;
   LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
+  float aux, nunca_esqueca_que_voce_e_limitado = 0;
 
   v1 = pop_operand(f->operands)->value;
+  aux = nunca_esqueca_que_voce_e_limitado - *((float*)&v1);
   result->type = CONSTANT_Float;
-  result->value = 0 - v1;
-#ifdef DEBUG
-  printf("resultado_neg: %04x\n", result->value);
-#endif
+  result->value = *((u4*)&aux);
+  #ifdef DEBUG
+    printf("neg_aux: %f\n", aux);
+    printf("resultado_neg: %04x\n", result->value);
+  #endif
 
   push_operand(result, f->operands);
 }
