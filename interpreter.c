@@ -2687,11 +2687,9 @@ void ifgt_eval(Frame *f)
     f->pc += offset - 3;
   }
 }
-int globalista = 0;
+
 void ifle_eval(Frame *f)
 {
-  globalista++;
-  printf("glob: %d\n", globalista);
   int32_t v1 = (int32_t)pop_operand(f->operands)->value;
   #ifdef DEBUG
   printf("valor_ifle: %04x\n", v1);
