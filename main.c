@@ -71,6 +71,7 @@ int main(int argc, char *argv[])
       method_info *main = find_method(cf, "main");
       Frame *frame = cria_frame(cf->constant_pool, main);
       push(frame);
+      find_clinit(cf);
       execute_gvm();
     }
     else {

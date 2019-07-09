@@ -5,8 +5,11 @@ class dOperations {
     c = a * b;
     c = a / b;
     c = a % b;
-    c = -a;
+    if(a > b){
+      c = -a;
+    }
     c = a + b;
+    System.out.println(c);
     return c;
   }
 }

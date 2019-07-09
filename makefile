@@ -1,5 +1,5 @@
 main: 
-	gcc -Wall -ggdb3 -g -std=c99 *.c
+	gcc -Wall -ggdb3 -lm -g -std=c99 *.c
 
 cppcheck:
 	cppcheck --enable=warning --suppress=missingIncludeSystem .
