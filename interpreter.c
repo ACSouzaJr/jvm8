@@ -2388,26 +2388,25 @@ void i2b_eval(Frame *f)
 
 void i2c_eval(Frame *f)
 {
-  uint8_t val = (uint8_t) pop_operand(f->operands)->value;
+  int32_t val = *((int32_t*)&pop_operand(f->operands)->value);
+  uint8_t aux;
+  LocalVariable *short_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  LocalVariable *char_value = (LocalVariable *)malloc(sizeof(LocalVariable));
-
-  memcpy(&char_value->value, &val, sizeof(uint32_t));
-
-  char_value->type = CONSTANT_Integer; // colocar o tipo CONSTANT_Char
-  push_operand(char_value, f->operands);
+  aux = *(uint8_t*)&val;
+  short_val->type = CONSTANT_Integer;
+  short_val->value = (aux << 24);
+  push_operand(short_val, f->operands);
 }
 
 void i2s_eval(Frame *f)
 {
-  uint32_t val = (uint32_t) pop_operand(f->operands)->value;
-
-  LocalVariable *string_val = (LocalVariable *)malloc(sizeof(LocalVariable));
-
-  memcpy(&string_val->value, &val, sizeof(uint32_t));
-
-  string_val->type = CONSTANT_String;
-  push_operand(string_val, f->operands);
+  int32_t val = *((int32_t*)&pop_operand(f->operands)->value);
+  uint16_t aux;
+  LocalVariable *short_val = (LocalVariable *)malloc(sizeof(LocalVariable));
+  aux = *(uint16_t*)&val;
+  short_val->type = CONSTANT_Integer;
+  short_val->value = (aux << 16);
+  push_operand(short_val, f->operands);
 }
 
 void lcmp_eval(Frame *f)
