@@ -130,7 +130,8 @@ void fconst_0_eval(Frame *f)
 {
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Float;
-  lv->value = 0.0;
+  float value = 0.0;
+  lv->value = *(u4 *)&value;
   push_operand(lv, f->operands);
 }
 
@@ -138,7 +139,8 @@ void fconst_1_eval(Frame *f)
 {
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Float;
-  lv->value = 1.0;
+  float value = 1.0;
+  lv->value = *(u4 *)&value;
   push_operand(lv, f->operands);
 }
 
@@ -146,7 +148,8 @@ void fconst_2_eval(Frame *f)
 {
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Float;
-  lv->value = 2.0;
+  float value = 2.0;
+  lv->value = *(u4 *)&value;
   push_operand(lv, f->operands);
 }
 
@@ -199,9 +202,13 @@ void sipush_eval(Frame *f)
   byte1 = bytecode[f->pc++];
   byte2 = bytecode[f->pc++];
 
-  u2 val_sipush = ((byte1 << 8) | byte2);
-  lv->value = (int32_t)val_sipush;
+  int16_t val_sipush = (((int16_t)(int8_t)byte1 << 8) | byte2);
+  lv->value = (uint32_t)val_sipush;
   lv->type = CONSTANT_Integer;
+
+  #ifdef DEBUG
+  printf("sipush: %d", val_sipush);
+  #endif
 
   push_operand(lv, f->operands);
 }
@@ -572,7 +579,9 @@ void faload_eval(Frame *f)
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
   
-  lv->value = ((u4 *)arrayref->type_array.array)[index->value];
+  u4 *vetor;
+  vetor = (u4 *)arrayref->type_array.array;
+  lv->value = vetor[index->value];
   lv->type = CONSTANT_Float;
 
   push_operand(lv, f->operands);
@@ -611,7 +620,7 @@ void baload_eval(Frame *f)
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
   
-  lv->value = ((u1 *)arrayref->type_array.array)[index->value];
+  lv->value = (int8_t)((u1 *)arrayref->type_array.array)[index->value];
   lv->type = CONSTANT_Integer;
 
   push_operand(lv, f->operands);
@@ -637,7 +646,7 @@ void saload_eval(Frame *f)
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
   
-  lv->value = ((u2 *)arrayref->type_array.array)[index->value];
+  lv->value = (int16_t) ((u2 *)arrayref->type_array.array)[index->value];
   lv->type = CONSTANT_Integer;
 
   push_operand(lv, f->operands);
@@ -1064,7 +1073,7 @@ void bastore_eval(Frame *f)
 
   u1 *vetor;
   vetor = (u1 *)arrayref->type_array.array;
-  vetor[index->value] = value->value;
+  vetor[index->value] = (int8_t) value->value;
   #ifdef DEBUG
     printf("Referencia array: %d", ((u1 *)arrayref->type_array.array)[index->value]);
   #endif
@@ -1094,7 +1103,7 @@ void sastore_eval(Frame *f)
 
   u2 *vetor;
   vetor = (u2 *)arrayref->type_array.array;
-  vetor[index->value] = value->value;
+  vetor[index->value] = (int16_t) value->value;
   #ifdef DEBUG
     printf("Referencia array: %d", ((u2 *)arrayref->type_array.array)[index->value]);
   #endif
@@ -2945,8 +2954,13 @@ void invokevirtual_eval(Frame *f)
 
   if (strcmp(class_name, "java/io/PrintStream") == 0)
   {
-    if (strcmp(method_name, "println") == 0 || strcmp(method_name, "print"))
+    if (strcmp(method_name, "println") == 0 || strcmp(method_name, "print") == 0)
     {
+      if (strcmp(method_desc, "()V") == 0) // New line
+      {
+        printf("\n");
+        return;
+      }
       LocalVariable *lv = pop_operand(f->operands);
       if (strcmp(method_desc, "(Ljava/lang/String;)V") == 0) // String
       {
@@ -2958,6 +2972,11 @@ void invokevirtual_eval(Frame *f)
         // printf("PASSEI POR AQUI DE MOTO\n");
         int32_t value = lv->value;
         printf("%d ", value);
+      }
+      else if (strcmp(method_desc, "(C)V") == 0) // Char
+      {
+        u1 value = lv->value;
+        printf("%c ", value);
       }
       else if (strcmp(method_desc, "(Z)V") == 0) // Bool
       {
@@ -2978,10 +2997,6 @@ void invokevirtual_eval(Frame *f)
       {
         int64_t value = lv->type_double;
         printf("%.4f ", *(double *)&value);
-      }
-      else if (strcmp(method_desc, "()V") == 0) // Double
-      {
-        printf("\n");
       }
       else
       {
@@ -3234,7 +3249,7 @@ void anewarray_eval(Frame *f)
   rlv = (LocalVariable *)malloc(sizeof(LocalVariable));
   u2 name_index = f->cp[index - 1].Class.name_index;
 
-  rlv->type = CONSTANT_Fieldref;
+  rlv->type = CONSTANT_Class;
 
   arrayref = (u4 *)malloc((count) * sizeof(u4));
   rlv->value = *((u4 *)(arrayref));
