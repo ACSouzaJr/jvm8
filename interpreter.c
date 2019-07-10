@@ -513,7 +513,16 @@ void lload_1_eval(Frame *f)
  */
 void lload_2_eval(Frame *f)
 {
-  push_operand(&(f->local_variables[2-1]), f->operands);
+  if (f->local_variables[2-1].type == CONSTANT_Long)
+  {
+    push_operand(&(f->local_variables[2-1]), f->operands);
+  } else if(f->local_variables[2].type == CONSTANT_Long)
+  {
+    push_operand(&(f->local_variables[2]), f->operands);
+  } else {
+    printf("javax.persistence.PersistenceException\n");
+    exit(0);
+  }
 }
 
 /**
@@ -635,15 +644,16 @@ void dload_2_eval(Frame *f)
   #if defined DEBUG
     printf("dload_2_type: %d\n", f->local_variables[2].type);
   #endif
-  // if (f->local_variables[2-1].type == CONSTANT_Double)
-  // {
+  if (f->local_variables[2-1].type == CONSTANT_Double)
+  {
     push_operand(&(f->local_variables[2-1]), f->operands);
-  // }
-  // else
-  // {
-  //   printf("javax.persistence.PersistenceException\n");
-  //   exit(0);
-  // }
+  } else if(f->local_variables[2].type == CONSTANT_Double)
+  {
+    push_operand(&(f->local_variables[2-1]), f->operands);
+  } else {
+    printf("javax.persistence.PersistenceException\n");
+    exit(0);
+  }
 }
 
 /**
@@ -768,7 +778,7 @@ void daload_eval(Frame *f)
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
   
-  lv->type_double = ((uint64_t *)arrayref->type_array.array)[index->value];
+  lv->type_double = ((uint32_t *)arrayref->type_array.array)[index->value];
   lv->type = CONSTANT_Double;
 
   push_operand(lv, f->operands);
