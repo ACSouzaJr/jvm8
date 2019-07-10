@@ -4,9 +4,21 @@
 {\ttfamily \#include \char`\"{}structures.\+h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}stack\+\_\+frame.\+h\char`\"{}}\\*
 Include dependency graph for classfile.\+h\+:
-% FIG 0
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=314pt]{classfile_8h__incl}
+\end{center}
+\end{figure}
 This graph shows which files directly or indirectly include this file\+:
-% FIG 1
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h__dep__incl}
+\end{center}
+\end{figure}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -103,6 +115,30 @@ char $\ast$ \hyperlink{classfile_8h_a9ff2c57ead44ec66c113197fa71ab268}{P\+A\+TH}
 
 Aloca espaço para o \hyperlink{structClassFile}{Class\+File} em memória e chama a função read\+\_\+class\+\_\+file para ler o \hyperlink{structClassFile}{Class\+File} recebido nas posições corretas. 
 
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_abd0631a75f72632c5606e72f6d3f00ae_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_abd0631a75f72632c5606e72f6d3f00ae_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{classfile.\+h@{classfile.\+h}!eval\+Attributes@{eval\+Attributes}}
 \index{eval\+Attributes@{eval\+Attributes}!classfile.\+h@{classfile.\+h}}
 \subsubsection[{\texorpdfstring{eval\+Attributes(attribute\+\_\+info $\ast$field, cp\+\_\+info $\ast$cp, u2 attr\+\_\+count, Class\+File $\ast$cf)}{evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile *cf)}}]{\setlength{\rightskip}{0pt plus 5cm}void eval\+Attributes (
@@ -117,6 +153,18 @@ Aloca espaço para o \hyperlink{structClassFile}{Class\+File} em memória e cham
 
 todo\+: avalia os atributos do classfile. 
 
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classfile_8h_a8d5e46a5df7dfb965306e8a277783511_cgraph}
+\end{center}
+\end{figure}
+
+
 \index{classfile.\+h@{classfile.\+h}!execute\+\_\+gvm@{execute\+\_\+gvm}}
 \index{execute\+\_\+gvm@{execute\+\_\+gvm}!classfile.\+h@{classfile.\+h}}
 \subsubsection[{\texorpdfstring{execute\+\_\+gvm()}{execute_gvm()}}]{\setlength{\rightskip}{0pt plus 5cm}void execute\+\_\+gvm (
@@ -128,6 +176,30 @@ todo\+: avalia os atributos do classfile.
 
 Função que busca pelo \hyperlink{structFrame}{Frame} no topo da pilha de frames e inicia a execução da \hyperlink{structJVM}{J\+VM}. Essa função é executada enquanto ainda há frames na pilha da \hyperlink{structJVM}{J\+VM}. 
 
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=235pt]{classfile_8h_a55c80ae86c1c6d0666108a825df64a4b_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{classfile_8h_a55c80ae86c1c6d0666108a825df64a4b_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{classfile.\+h@{classfile.\+h}!fill\+Stack\+Map\+Table@{fill\+Stack\+Map\+Table}}
 \index{fill\+Stack\+Map\+Table@{fill\+Stack\+Map\+Table}!classfile.\+h@{classfile.\+h}}
 \subsubsection[{\texorpdfstring{fill\+Stack\+Map\+Table(attribute\+\_\+info $\ast$attr, F\+I\+L\+E $\ast$fp)}{fillStackMapTable(attribute_info *attr, FILE *fp)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf stack\+\_\+map\+\_\+frame}$\ast$ fill\+Stack\+Map\+Table (
@@ -136,6 +208,18 @@ Função que busca pelo \hyperlink{structFrame}{Frame} no topo da pilha de frame
 \item[{F\+I\+LE $\ast$}]{fp}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8h_a1258b84eec00db8fee377fea434c49b1}{}\label{classfile_8h_a1258b84eec00db8fee377fea434c49b1}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_a1258b84eec00db8fee377fea434c49b1_cgraph}
+\end{center}
+\end{figure}
+
+
 \index{classfile.\+h@{classfile.\+h}!fill\+Verification\+Type\+Info@{fill\+Verification\+Type\+Info}}
 \index{fill\+Verification\+Type\+Info@{fill\+Verification\+Type\+Info}!classfile.\+h@{classfile.\+h}}
 \subsubsection[{\texorpdfstring{fill\+Verification\+Type\+Info(\+F\+I\+L\+E $\ast$fp, u2 verification\+\_\+type\+\_\+length)}{fillVerificationTypeInfo(FILE *fp, u2 verification_type_length)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf verification\+\_\+type\+\_\+info}$\ast$ fill\+Verification\+Type\+Info (
@@ -148,6 +232,30 @@ Função que busca pelo \hyperlink{structFrame}{Frame} no topo da pilha de frame
 
 Faz a leitura de 1 byre do arquivo .class fornecido no path. 
 
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=279pt]{classfile_8h_add61e24daf8356973e908b3f1cfd5a24_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=324pt]{classfile_8h_add61e24daf8356973e908b3f1cfd5a24_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{classfile.\+h@{classfile.\+h}!find\+\_\+class@{find\+\_\+class}}
 \index{find\+\_\+class@{find\+\_\+class}!classfile.\+h@{classfile.\+h}}
 \subsubsection[{\texorpdfstring{find\+\_\+class(char $\ast$class\+\_\+name)}{find_class(char *class_name)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} find\+\_\+class (
@@ -159,6 +267,30 @@ Faz a leitura de 1 byre do arquivo .class fornecido no path.
 
 Procura por cuma classe, e caso não consiga encontrá-\/la, carrega na memória usando a função Class\+Loader. 
 
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_a64bd697d9f3c3360d6c4edb38f8cdf60_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_a64bd697d9f3c3360d6c4edb38f8cdf60_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{classfile.\+h@{classfile.\+h}!find\+\_\+clinit@{find\+\_\+clinit}}
 \index{find\+\_\+clinit@{find\+\_\+clinit}!classfile.\+h@{classfile.\+h}}
 \subsubsection[{\texorpdfstring{find\+\_\+clinit(\+Class\+File $\ast$cf)}{find_clinit(ClassFile *cf)}}]{\setlength{\rightskip}{0pt plus 5cm}void find\+\_\+clinit (
@@ -169,6 +301,30 @@ Procura por cuma classe, e caso não consiga encontrá-\/la, carrega na memória
 
 
 Procura por um init dentro do Classfile. 
+
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=334pt]{classfile_8h_a39063f00cc6ccce0402e1a81f2f760af_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=212pt]{classfile_8h_a39063f00cc6ccce0402e1a81f2f760af_icgraph}
+\end{center}
+\end{figure}
+
 
 \index{classfile.\+h@{classfile.\+h}!find\+\_\+field@{find\+\_\+field}}
 \index{find\+\_\+field@{find\+\_\+field}!classfile.\+h@{classfile.\+h}}
@@ -183,6 +339,30 @@ Procura por um init dentro do Classfile.
 
 Procura por um field dentro do \hyperlink{structClassFile}{Class\+File}. 
 
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=226pt]{classfile_8h_a0688afe113144b86408f83f83685db04_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_a0688afe113144b86408f83f83685db04_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{classfile.\+h@{classfile.\+h}!find\+\_\+method@{find\+\_\+method}}
 \index{find\+\_\+method@{find\+\_\+method}!classfile.\+h@{classfile.\+h}}
 \subsubsection[{\texorpdfstring{find\+\_\+method(\+Class\+File $\ast$cf, char $\ast$method, char $\ast$method\+\_\+description)}{find_method(ClassFile *cf, char *method, char *method_description)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf method\+\_\+info}$\ast$ find\+\_\+method (
@@ -192,6 +372,30 @@ Procura por um field dentro do \hyperlink{structClassFile}{Class\+File}.
 \item[{char $\ast$}]{method\+\_\+description}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8h_a915037a0d75520090926e178259cf4bb}{}\label{classfile_8h_a915037a0d75520090926e178259cf4bb}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=240pt]{classfile_8h_a915037a0d75520090926e178259cf4bb_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_a915037a0d75520090926e178259cf4bb_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{classfile.\+h@{classfile.\+h}!find\+Name\+File@{find\+Name\+File}}
 \index{find\+Name\+File@{find\+Name\+File}!classfile.\+h@{classfile.\+h}}
 \subsubsection[{\texorpdfstring{find\+Name\+File(char $\ast$string)}{findNameFile(char *string)}}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ find\+Name\+File (
@@ -199,6 +403,18 @@ Procura por um field dentro do \hyperlink{structClassFile}{Class\+File}.
 \item[{char $\ast$}]{string}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8h_a50ab5cb2c7741908305afda2e2a0235a}{}\label{classfile_8h_a50ab5cb2c7741908305afda2e2a0235a}
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=228pt]{classfile_8h_a50ab5cb2c7741908305afda2e2a0235a_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{classfile.\+h@{classfile.\+h}!free\+\_\+class\+\_\+file@{free\+\_\+class\+\_\+file}}
 \index{free\+\_\+class\+\_\+file@{free\+\_\+class\+\_\+file}!classfile.\+h@{classfile.\+h}}
 \subsubsection[{\texorpdfstring{free\+\_\+class\+\_\+file(\+Class\+File $\ast$cf)}{free_class_file(ClassFile *cf)}}]{\setlength{\rightskip}{0pt plus 5cm}void free\+\_\+class\+\_\+file (
@@ -209,6 +425,30 @@ Procura por um field dentro do \hyperlink{structClassFile}{Class\+File}.
 
 
 Libera o classfile da memória. 
+
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_a6a7ca9bbe1c17ec34271f8c898832ee0_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=234pt]{classfile_8h_a6a7ca9bbe1c17ec34271f8c898832ee0_icgraph}
+\end{center}
+\end{figure}
+
 
 \index{classfile.\+h@{classfile.\+h}!free\+Attributes@{free\+Attributes}}
 \index{free\+Attributes@{free\+Attributes}!classfile.\+h@{classfile.\+h}}
@@ -223,6 +463,30 @@ Libera o classfile da memória.
 
 Função utilizada para liberar a memória ocupada pelo classfile. 
 
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_a3bfb911a1e769d93bb0e18492aab956b_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=345pt]{classfile_8h_a3bfb911a1e769d93bb0e18492aab956b_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{classfile.\+h@{classfile.\+h}!free\+Stack\+Map\+Table@{free\+Stack\+Map\+Table}}
 \index{free\+Stack\+Map\+Table@{free\+Stack\+Map\+Table}!classfile.\+h@{classfile.\+h}}
 \subsubsection[{\texorpdfstring{free\+Stack\+Map\+Table(stack\+\_\+map\+\_\+frame $\ast$stack\+\_\+map, attribute\+\_\+info $\ast$attr)}{freeStackMapTable(stack_map_frame *stack_map, attribute_info *attr)}}]{\setlength{\rightskip}{0pt plus 5cm}void free\+Stack\+Map\+Table (
@@ -231,6 +495,18 @@ Função utilizada para liberar a memória ocupada pelo classfile.
 \item[{{\bf attribute\+\_\+info} $\ast$}]{attr}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8h_ac72c096a138416b9909fe3e29417763e}{}\label{classfile_8h_ac72c096a138416b9909fe3e29417763e}
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_ac72c096a138416b9909fe3e29417763e_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{classfile.\+h@{classfile.\+h}!print\+\_\+class\+\_\+file@{print\+\_\+class\+\_\+file}}
 \index{print\+\_\+class\+\_\+file@{print\+\_\+class\+\_\+file}!classfile.\+h@{classfile.\+h}}
 \subsubsection[{\texorpdfstring{print\+\_\+class\+\_\+file(\+Class\+File $\ast$cf)}{print_class_file(ClassFile *cf)}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+\_\+class\+\_\+file (
@@ -241,6 +517,30 @@ Função utilizada para liberar a memória ocupada pelo classfile.
 
 
 Recebe um classfile como parâmetro e printa seu conteúdo de maneira organizada no terminal. (Utilizado pelo leitor/exibidor de bytecode). 
+
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_a67e8b211dae28d036af3a55b698da993_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=236pt]{classfile_8h_a67e8b211dae28d036af3a55b698da993_icgraph}
+\end{center}
+\end{figure}
+
 
 \index{classfile.\+h@{classfile.\+h}!print\+\_\+reference@{print\+\_\+reference}}
 \index{print\+\_\+reference@{print\+\_\+reference}!classfile.\+h@{classfile.\+h}}
@@ -253,6 +553,30 @@ Recebe um classfile como parâmetro e printa seu conteúdo de maneira organizada
 
 
 Usa um índice na constant pool para retorna uma referência no ponteiro global. 
+
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_a09f80f214aa870612fcb23597bcfb4bc_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_a09f80f214aa870612fcb23597bcfb4bc_icgraph}
+\end{center}
+\end{figure}
+
 
 \index{classfile.\+h@{classfile.\+h}!print\+Attributes@{print\+Attributes}}
 \index{print\+Attributes@{print\+Attributes}!classfile.\+h@{classfile.\+h}}
@@ -267,6 +591,30 @@ Usa um índice na constant pool para retorna uma referência no ponteiro global.
 
 Printa os atributos de um classfile. 
 
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_af82a9138759e74a734c2ba5db6077805_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=349pt]{classfile_8h_af82a9138759e74a734c2ba5db6077805_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{classfile.\+h@{classfile.\+h}!print\+Const\+Type@{print\+Const\+Type}}
 \index{print\+Const\+Type@{print\+Const\+Type}!classfile.\+h@{classfile.\+h}}
 \subsubsection[{\texorpdfstring{print\+Const\+Type(u4 high\+\_\+bytes, u4 low\+\_\+bytes, u1 type)}{printConstType(u4 high_bytes, u4 low_bytes, u1 type)}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+Const\+Type (
@@ -280,6 +628,18 @@ Printa os atributos de um classfile.
 
 Printa o tipo C\+O\+N\+S\+T\+A\+NT. 
 
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_aa73a2b8f66296e2fcdec5b6f029c1f88_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{classfile.\+h@{classfile.\+h}!print\+Flag@{print\+Flag}}
 \index{print\+Flag@{print\+Flag}!classfile.\+h@{classfile.\+h}}
 \subsubsection[{\texorpdfstring{print\+Flag(u2 type, u1 flag)}{printFlag(u2 type, u1 flag)}}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ print\+Flag (
@@ -292,6 +652,18 @@ Printa o tipo C\+O\+N\+S\+T\+A\+NT.
 
 Printa a flag correspondente ao tipo recebido. 
 
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=326pt]{classfile_8h_a5636f6173ac96d0316cd018b68b34034_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{classfile.\+h@{classfile.\+h}!print\+Stack\+Map\+Table@{print\+Stack\+Map\+Table}}
 \index{print\+Stack\+Map\+Table@{print\+Stack\+Map\+Table}!classfile.\+h@{classfile.\+h}}
 \subsubsection[{\texorpdfstring{print\+Stack\+Map\+Table(stack\+\_\+map\+\_\+frame $\ast$stack\+\_\+map, cp\+\_\+info $\ast$cp, attribute\+\_\+info $\ast$attr)}{printStackMapTable(stack_map_frame *stack_map, cp_info *cp, attribute_info *attr)}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+Stack\+Map\+Table (
@@ -301,6 +673,18 @@ Printa a flag correspondente ao tipo recebido.
 \item[{{\bf attribute\+\_\+info} $\ast$}]{attr}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8h_a08affa1a8eb0fbd41df9e468f2c02321}{}\label{classfile_8h_a08affa1a8eb0fbd41df9e468f2c02321}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_a08affa1a8eb0fbd41df9e468f2c02321_cgraph}
+\end{center}
+\end{figure}
+
+
 \index{classfile.\+h@{classfile.\+h}!print\+Verification\+Type\+Info@{print\+Verification\+Type\+Info}}
 \index{print\+Verification\+Type\+Info@{print\+Verification\+Type\+Info}!classfile.\+h@{classfile.\+h}}
 \subsubsection[{\texorpdfstring{print\+Verification\+Type\+Info(verification\+\_\+type\+\_\+info $\ast$ver\+\_\+type, cp\+\_\+info $\ast$cp, u2 verification\+\_\+type\+\_\+length)}{printVerificationTypeInfo(verification_type_info *ver_type, cp_info *cp, u2 verification_type_length)}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+Verification\+Type\+Info (
@@ -314,6 +698,30 @@ Printa a flag correspondente ao tipo recebido.
 
 Printa o tipo a partir da tag. 
 
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_ab694dc30480958e872cdf78b94b9cefa_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=342pt]{classfile_8h_ab694dc30480958e872cdf78b94b9cefa_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{classfile.\+h@{classfile.\+h}!print\+Version@{print\+Version}}
 \index{print\+Version@{print\+Version}!classfile.\+h@{classfile.\+h}}
 \subsubsection[{\texorpdfstring{print\+Version(u2 version)}{printVersion(u2 version)}}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ print\+Version (
@@ -324,6 +732,18 @@ Printa o tipo a partir da tag.
 
 
 Printa a versão do arquivo .class. 
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=340pt]{classfile_8h_abbc0a67a74cf4718872b86f0a898575b_icgraph}
+\end{center}
+\end{figure}
+
 
 \index{classfile.\+h@{classfile.\+h}!read\+\_\+class\+\_\+file@{read\+\_\+class\+\_\+file}}
 \index{read\+\_\+class\+\_\+file@{read\+\_\+class\+\_\+file}!classfile.\+h@{classfile.\+h}}
@@ -337,7 +757,31 @@ Printa a versão do arquivo .class.
 
 Faz a leitura do arquivo .class. 
 
-Função principal de leitura. Recebe um ponteiro para uma struct do tipo \hyperlink{structcp__info}{cp\+\_\+info}, uma contagem do número de atributos e um ponteiro para o arquivo bytecodee raliza a leitura, byte a byte. \index{classfile.\+h@{classfile.\+h}!read\+Attributes@{read\+Attributes}}
+Função principal de leitura. Recebe um ponteiro para uma struct do tipo \hyperlink{structcp__info}{cp\+\_\+info}, uma contagem do número de atributos e um ponteiro para o arquivo bytecodee raliza a leitura, byte a byte. 
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_a14c4d3f84dd03a43aca0a57bd530f3a2_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_a14c4d3f84dd03a43aca0a57bd530f3a2_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{classfile.\+h@{classfile.\+h}!read\+Attributes@{read\+Attributes}}
 \index{read\+Attributes@{read\+Attributes}!classfile.\+h@{classfile.\+h}}
 \subsubsection[{\texorpdfstring{read\+Attributes(cp\+\_\+info $\ast$cp, u2 attr\+\_\+count, F\+I\+L\+E $\ast$fp)}{readAttributes(cp_info *cp, u2 attr_count, FILE *fp)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf attribute\+\_\+info}$\ast$ read\+Attributes (
 \begin{DoxyParamCaption}
@@ -349,6 +793,30 @@ Função principal de leitura. Recebe um ponteiro para uma struct do tipo \hyper
 
 
 Lê os atributos do bytecode recebido. 
+
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_ab2c33d049c34b50ead32e4568387353c_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_ab2c33d049c34b50ead32e4568387353c_icgraph}
+\end{center}
+\end{figure}
+
 
 \index{classfile.\+h@{classfile.\+h}!read\+Utf8@{read\+Utf8}}
 \index{read\+Utf8@{read\+Utf8}!classfile.\+h@{classfile.\+h}}
@@ -362,6 +830,18 @@ Lê os atributos do bytecode recebido.
 
 Faz a leitua dos bytes no formato U\+T\+F-\/8. 
 
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_a77c5107c582c86dedb65853efabd9302_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{classfile.\+h@{classfile.\+h}!rec\+\_\+method\+\_\+name@{rec\+\_\+method\+\_\+name}}
 \index{rec\+\_\+method\+\_\+name@{rec\+\_\+method\+\_\+name}!classfile.\+h@{classfile.\+h}}
 \subsubsection[{\texorpdfstring{rec\+\_\+method\+\_\+name(cp\+\_\+info $\ast$cp, u2 index)}{rec_method_name(cp_info *cp, u2 index)}}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ rec\+\_\+method\+\_\+name (
@@ -373,6 +853,30 @@ Faz a leitua dos bytes no formato U\+T\+F-\/8.
 
 
 Usa um índice no constant pool para procurar o nome de um método recursivamente. 
+
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_a580d63d9a7b152364691f69863dc7a4e_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_a580d63d9a7b152364691f69863dc7a4e_icgraph}
+\end{center}
+\end{figure}
+
 
 \index{classfile.\+h@{classfile.\+h}!recursive\+\_\+print@{recursive\+\_\+print}}
 \index{recursive\+\_\+print@{recursive\+\_\+print}!classfile.\+h@{classfile.\+h}}
@@ -387,6 +891,30 @@ Usa um índice no constant pool para procurar o nome de um método recursivament
 
 Usa um índice para acessar a constant pool e printar recusrivamente os campos. 
 
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_a774f5149d9c3dadc60b2c0ca012bf51d_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_a774f5149d9c3dadc60b2c0ca012bf51d_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{classfile.\+h@{classfile.\+h}!remove\+Extension@{remove\+Extension}}
 \index{remove\+Extension@{remove\+Extension}!classfile.\+h@{classfile.\+h}}
 \subsubsection[{\texorpdfstring{remove\+Extension(char $\ast$string)}{removeExtension(char *string)}}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ remove\+Extension (
@@ -397,6 +925,18 @@ Usa um índice para acessar a constant pool e printar recusrivamente os campos.
 
 
 Remove exetensão de uma string para printar de maneira correta. 
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=246pt]{classfile_8h_af82954dceccc52fab4a547f79967244f_icgraph}
+\end{center}
+\end{figure}
+
 
 \index{classfile.\+h@{classfile.\+h}!ret\+\_\+method\+\_\+name@{ret\+\_\+method\+\_\+name}}
 \index{ret\+\_\+method\+\_\+name@{ret\+\_\+method\+\_\+name}!classfile.\+h@{classfile.\+h}}
@@ -410,6 +950,30 @@ Remove exetensão de uma string para printar de maneira correta.
 
 Retorna o nome de um método no ponteiro global. 
 
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_a627193785e98bc076b257c97ccd5892b_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_a627193785e98bc076b257c97ccd5892b_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{classfile.\+h@{classfile.\+h}!u1\+Read@{u1\+Read}}
 \index{u1\+Read@{u1\+Read}!classfile.\+h@{classfile.\+h}}
 \subsubsection[{\texorpdfstring{u1\+Read(\+F\+I\+L\+E $\ast$)}{u1Read(FILE *)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u1} u1\+Read (
@@ -420,6 +984,18 @@ Retorna o nome de um método no ponteiro global.
 
 
 Faz a leitura de 1 byte do arquivo .class fornecido no path. 
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_a39801833579e32d1d5c844229c82cef1_icgraph}
+\end{center}
+\end{figure}
+
 
 \index{classfile.\+h@{classfile.\+h}!u2\+Read@{u2\+Read}}
 \index{u2\+Read@{u2\+Read}!classfile.\+h@{classfile.\+h}}
@@ -432,6 +1008,18 @@ Faz a leitura de 1 byte do arquivo .class fornecido no path.
 
 Faz a leitura de 2 bytes do arquivo .class fornecido no path. 
 
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_a88e62d36ef0e91dda130024e0b07dff2_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{classfile.\+h@{classfile.\+h}!u4\+Read@{u4\+Read}}
 \index{u4\+Read@{u4\+Read}!classfile.\+h@{classfile.\+h}}
 \subsubsection[{\texorpdfstring{u4\+Read(\+F\+I\+L\+E $\ast$)}{u4Read(FILE *)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u4} u4\+Read (
@@ -442,6 +1030,18 @@ Faz a leitura de 2 bytes do arquivo .class fornecido no path.
 
 
 Faz a leitura de 4 bytes do arquivo .class fornecido no path. 
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfile_8h_a53b3222e2a57ce27a8ad7a04a35f8f6e_icgraph}
+\end{center}
+\end{figure}
+
 
 
 
