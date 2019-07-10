@@ -768,7 +768,7 @@ void daload_eval(Frame *f)
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
   
-  lv->type_double = ((uint64_t *)arrayref->type_array.array)[index->value];
+  lv->type_double = ((uint32_t *)arrayref->type_array.array)[index->value];
   lv->type = CONSTANT_Double;
 
   push_operand(lv, f->operands);
