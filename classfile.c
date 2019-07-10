@@ -2435,26 +2435,32 @@ void execute_gvm()
     u1 *bytecode = current_frame->method->attributes->info->Code_attribute.code;
     u2 opcode = bytecode[current_frame->pc++];
 
-#ifdef DEBUG
-    printf("\n----  Evaluando ----\n %d) %s\n-----------------------\n\n", ((current_frame->pc) - 1), op_codes_array[opcode].value);
-#endif
+    #ifdef DEBUG
+        printf("\n----  Evaluando ----\n %d) %s\n-----------------------\n\n", ((current_frame->pc) - 1), op_codes_array[opcode].value);
+    #endif
     op_codes_array[opcode].eval(current_frame);
   } while (!empty(JvmStack));
 }
 
-/**
- * @brief Procura por um método dentro do Classfile carregado em memória.
- */
-method_info *find_method(ClassFile *cf, char *method)
+method_info *find_method(ClassFile *cf, char *method, char *method_description)
 {
   // corrigir depois
   for (method_info *i = cf->methods; i < cf->methods + cf->methods_count; i++)
   {
     char *method_name = readUtf8(cf->constant_pool, i->name_index);
+    char *method_desc = readUtf8(cf->constant_pool, i->descriptor_index);
+    // printf("Metodo encontrado fora: %s\n",method_name);
+    // printf("Metodo desc fora: %s\n",method_desc);
     // char *method_desc = readUtf8(cf->constant_pool, i->descriptor_index);
     if (strcmp(method_name, method) == 0)
     {
-      return i;
+      if (strcmp(method_desc, method_description) == 0){
+        #ifdef DEBUG
+          printf("Metodo encontrado: %s\n",method_name);
+          printf("Metodo desc: %s\n",method_desc);
+        #endif
+        return i;
+      }
     }
   }
   #ifdef DEBUG
@@ -2537,7 +2543,7 @@ field_info *find_field(ClassFile *cf, char *field_name, char *field_desc)
 void find_clinit(ClassFile *cf)
 {
   method_info *method;
-  if ((method = find_method(cf, "<clinit>")) != NULL)
+  if ((method = find_method(cf, "<clinit>","()V")) != NULL)
   {
     Frame *frame = cria_frame(cf->constant_pool, method);
     push(frame);

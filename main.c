@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
     }
     else if(strcmp( argv[2], "-i") == 0) { /* para modo interpretador */
       // Execute Gvm
-      method_info *main = find_method(cf, "main");
+      method_info *main = find_method(cf, "main","([Ljava/lang/String;)V");
       Frame *frame = cria_frame(cf->constant_pool, main);
       push(frame);
       find_clinit(cf);

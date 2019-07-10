@@ -744,8 +744,8 @@ void initialize_op_codes()
 
   strcpy(op_codes_array[147].value, "i2s");
   op_codes_array[147].arguments = 0;
-  op_codes_array[146].references = 0;
-  op_codes_array[146].eval = i2s_eval;
+  op_codes_array[147].references = 0;
+  op_codes_array[147].eval = i2s_eval;
 
   strcpy(op_codes_array[148].value, "lcmp");
   op_codes_array[148].arguments = 0;

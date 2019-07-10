@@ -12,7 +12,7 @@
 #define u1 uint8_t
 #define u2 uint16_t
 #define u4 uint32_t
-// #define DEBUG
+#define DEBUG
 
 extern char *GLOBAL_ptr;
 /**
@@ -37,7 +37,8 @@ enum
   CONSTANT_Utf8 = 1,
   CONSTANT_MethodHandle = 15,
   CONSTANT_MethodType = 16,
-  CONSTANT_InvokeDynamic = 18
+  CONSTANT_InvokeDynamic = 18,
+  CONSTANT_Short = 19
 } pool_tags;
 
 /**
