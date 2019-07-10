@@ -635,15 +635,15 @@ void dload_2_eval(Frame *f)
   #ifdef DEBUG
     printf("dload_2_type: %d\n", f->local_variables[2].type);
   #endif
-  if (f->local_variables[2-1].type == CONSTANT_Double)
-  {
+  // if (f->local_variables[2-1].type == CONSTANT_Double)
+  // {
     push_operand(&(f->local_variables[2-1]), f->operands);
-  }
-  else
-  {
-    printf("javax.persistence.PersistenceException\n");
-    exit(0);
-  }
+  // }
+  // else
+  // {
+  //   printf("javax.persistence.PersistenceException\n");
+  //   exit(0);
+  // }
 }
 
 /**
