@@ -1,0 +1,69 @@
+\hypertarget{structLocalVariable}{}\section{Local\+Variable Struct Reference}
+\label{structLocalVariable}\index{Local\+Variable@{Local\+Variable}}
+
+
+Struct para representar a variável local de um \hyperlink{structFrame}{Frame}.  
+
+
+
+
+{\ttfamily \#include $<$structures.\+h$>$}
+
+
+
+Collaboration diagram for Local\+Variable\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=236pt]{structLocalVariable__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structures_8h_a64f8055b64cf2a4c299c841130c5c938}{u1} \hyperlink{structLocalVariable_a05438f40d41a69cde0a4d50a37bf9420}{type}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>\hyperlink{structures_8h_ae391a1d79bb0c8cbc283f0283e3c098b}{u4} \hyperlink{structLocalVariable_aee58138d840bf24f71cd8c4fd2f84db7}{value}\\
+\>uint64\_t \hyperlink{structLocalVariable_af14e5709d8a7c9397571316821b9171b}{type\_long}\\
+\>uint64\_t \hyperlink{structLocalVariable_a488dfde0ac92dbb3f2b4d56280771141}{type\_double}\\
+\>\hyperlink{structTypeArray}{TypeArray} \hyperlink{structLocalVariable_a6905d4b07d1ff41deaa0189ae8761850}{type\_array}\\
+\>\hyperlink{structObject}{Object} \hyperlink{structLocalVariable_ae6f28a6c3ea7313de860a8e46adf661f}{type\_object}\\
+\}; \\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Struct para representar a variável local de um \hyperlink{structFrame}{Frame}. 
+
+Utiliza uma union para decidir qual é o tipo da variável. 
+
+\subsection{Member Data Documentation}
+\subsubsection[{\texorpdfstring{"@36}{@36}}]{\setlength{\rightskip}{0pt plus 5cm}union \{ ... \} }\hypertarget{structLocalVariable_a3570d34d2fed3081d2b7a21bb07cf290}{}\label{structLocalVariable_a3570d34d2fed3081d2b7a21bb07cf290}
+\index{Local\+Variable@{Local\+Variable}!type@{type}}
+\index{type@{type}!Local\+Variable@{Local\+Variable}}
+\subsubsection[{\texorpdfstring{type}{type}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u1} Local\+Variable\+::type}\hypertarget{structLocalVariable_a05438f40d41a69cde0a4d50a37bf9420}{}\label{structLocalVariable_a05438f40d41a69cde0a4d50a37bf9420}
+\index{Local\+Variable@{Local\+Variable}!type\+\_\+array@{type\+\_\+array}}
+\index{type\+\_\+array@{type\+\_\+array}!Local\+Variable@{Local\+Variable}}
+\subsubsection[{\texorpdfstring{type\+\_\+array}{type_array}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Type\+Array} Local\+Variable\+::type\+\_\+array}\hypertarget{structLocalVariable_a6905d4b07d1ff41deaa0189ae8761850}{}\label{structLocalVariable_a6905d4b07d1ff41deaa0189ae8761850}
+\index{Local\+Variable@{Local\+Variable}!type\+\_\+double@{type\+\_\+double}}
+\index{type\+\_\+double@{type\+\_\+double}!Local\+Variable@{Local\+Variable}}
+\subsubsection[{\texorpdfstring{type\+\_\+double}{type_double}}]{\setlength{\rightskip}{0pt plus 5cm}uint64\+\_\+t Local\+Variable\+::type\+\_\+double}\hypertarget{structLocalVariable_a488dfde0ac92dbb3f2b4d56280771141}{}\label{structLocalVariable_a488dfde0ac92dbb3f2b4d56280771141}
+\index{Local\+Variable@{Local\+Variable}!type\+\_\+long@{type\+\_\+long}}
+\index{type\+\_\+long@{type\+\_\+long}!Local\+Variable@{Local\+Variable}}
+\subsubsection[{\texorpdfstring{type\+\_\+long}{type_long}}]{\setlength{\rightskip}{0pt plus 5cm}uint64\+\_\+t Local\+Variable\+::type\+\_\+long}\hypertarget{structLocalVariable_af14e5709d8a7c9397571316821b9171b}{}\label{structLocalVariable_af14e5709d8a7c9397571316821b9171b}
+\index{Local\+Variable@{Local\+Variable}!type\+\_\+object@{type\+\_\+object}}
+\index{type\+\_\+object@{type\+\_\+object}!Local\+Variable@{Local\+Variable}}
+\subsubsection[{\texorpdfstring{type\+\_\+object}{type_object}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Object} Local\+Variable\+::type\+\_\+object}\hypertarget{structLocalVariable_ae6f28a6c3ea7313de860a8e46adf661f}{}\label{structLocalVariable_ae6f28a6c3ea7313de860a8e46adf661f}
+\index{Local\+Variable@{Local\+Variable}!value@{value}}
+\index{value@{value}!Local\+Variable@{Local\+Variable}}
+\subsubsection[{\texorpdfstring{value}{value}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u4} Local\+Variable\+::value}\hypertarget{structLocalVariable_aee58138d840bf24f71cd8c4fd2f84db7}{}\label{structLocalVariable_aee58138d840bf24f71cd8c4fd2f84db7}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structures_8h}{structures.\+h}\end{DoxyCompactItemize}

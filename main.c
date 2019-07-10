@@ -29,7 +29,12 @@ u1 name_or_type;
 char *FILE_NAME;
 StackFrame *JvmStack;
 Method Mem;
+char* PATH;
 
+/**
+* @fn      main
+* @brief   Função principal do programa
+*/
 int main(int argc, char *argv[])
 {
   // FILE *pFile;
@@ -53,6 +58,7 @@ int main(int argc, char *argv[])
 
   init(); //inicia JvmStack
   GLOBAL_ptr = (char *)malloc(sizeof(char) * 100);
+  PATH = (char *)malloc(sizeof(char) * 200);
 
   // read_class_file(cf, argv[1]);
   ClassFile *cf = Mem.classes_arr[ClassLoader(argv[1])];
@@ -62,13 +68,27 @@ int main(int argc, char *argv[])
   if (strcmp(removeExtension(print_reference(cf->constant_pool, cf->attributes->info->SourceFile_attribute.sourcefile_index)), findNameFile(removeExtension(argv[1]))) == 0)
   {
     initialize_op_codes();
+    char *dash;
+    if ((dash = strrchr(argv[1],'\\')) != NULL)
+    {
+      strncpy(PATH, argv[1], dash-argv[1]);
+      #if defined DEBUG
+      printf("Path: %s \n", PATH);
+      #endif
+    }
+    else
+    {
+      strcpy(PATH, ".");
+    }
+    
+
 
     if(strcmp( argv[2], "-e") == 0) { /* para modo leitor-exibidor */
       print_class_file(cf);
     }
     else if(strcmp( argv[2], "-i") == 0) { /* para modo interpretador */
       // Execute Gvm
-      method_info *main = find_method(cf, "main");
+      method_info *main = find_method(cf, "main","([Ljava/lang/String;)V");
       Frame *frame = cria_frame(cf->constant_pool, main);
       push(frame);
       find_clinit(cf);

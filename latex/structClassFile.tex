@@ -1,0 +1,117 @@
+\hypertarget{structClassFile}{}\section{Class\+File Struct Reference}
+\label{structClassFile}\index{Class\+File@{Class\+File}}
+
+
+Struct que representa os campos do bytecode.  
+
+
+
+
+{\ttfamily \#include $<$structures.\+h$>$}
+
+
+
+Collaboration diagram for Class\+File\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structClassFile__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structures_8h_ae391a1d79bb0c8cbc283f0283e3c098b}{u4} \hyperlink{structClassFile_a09085e9db513dae2f46da6e0a26c1b59}{magic}
+\item 
+\hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} \hyperlink{structClassFile_af0db7b0ea01cb9cea2cee177ca81df09}{minor\+\_\+version}
+\item 
+\hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} \hyperlink{structClassFile_abede9cb937e65072517d0ee6e26e2757}{major\+\_\+version}
+\item 
+\hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} \hyperlink{structClassFile_ac8fdf5cccfd632da4fdb21ae63fffa7a}{constant\+\_\+pool\+\_\+count}
+\item 
+\hyperlink{structcp__info}{cp\+\_\+info} $\ast$ \hyperlink{structClassFile_a2309d843091aad79aed04ce92470a434}{constant\+\_\+pool}
+\item 
+\hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} \hyperlink{structClassFile_ae88db578147f7ee0d6fc1aeacb341854}{access\+\_\+flags}
+\item 
+\hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} \hyperlink{structClassFile_a2d33db0a560a71b94bc572dd1e4ec03a}{this\+\_\+class}
+\item 
+\hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} \hyperlink{structClassFile_a5f6c11c0ccb02fd992b5c102725253ec}{super\+\_\+class}
+\item 
+\hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} \hyperlink{structClassFile_a337fcb7da33d1b64631441115c7de305}{interfaces\+\_\+count}
+\item 
+\hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} $\ast$ \hyperlink{structClassFile_af599de97e062c98966470f1590496425}{interfaces}
+\item 
+\hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} \hyperlink{structClassFile_acea207ee523fbc16611d3cf436c390e0}{fields\+\_\+count}
+\item 
+\hyperlink{structfield__info}{field\+\_\+info} $\ast$ \hyperlink{structClassFile_aa324f88c75aa96c632f8c57d010aab0c}{fields}
+\item 
+\hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} \hyperlink{structClassFile_aacfb45d4af64216324b1ae5269c870d5}{methods\+\_\+count}
+\item 
+\hyperlink{structmethod__info}{method\+\_\+info} $\ast$ \hyperlink{structClassFile_ad061f06cd709d10dbfbf82f443e43632}{methods}
+\item 
+\hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} \hyperlink{structClassFile_a633c696fbe08e7e7906b2ab1e52f3d1b}{attributes\+\_\+count}
+\item 
+\hyperlink{structattribute__info}{attribute\+\_\+info} $\ast$ \hyperlink{structClassFile_a8bf809db8e1008f401dc3cda5e9cdb14}{attributes}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Struct que representa os campos do bytecode. 
+
+Struct que representa o \hyperlink{structClassFile}{Class\+File}, para ser alocada pelo Class\+Loader e preenchida pela função \hyperlink{classfile_8c_a14c4d3f84dd03a43aca0a57bd530f3a2}{read\+\_\+class\+\_\+file()} 
+
+\subsection{Member Data Documentation}
+\index{Class\+File@{Class\+File}!access\+\_\+flags@{access\+\_\+flags}}
+\index{access\+\_\+flags@{access\+\_\+flags}!Class\+File@{Class\+File}}
+\subsubsection[{\texorpdfstring{access\+\_\+flags}{access_flags}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} Class\+File\+::access\+\_\+flags}\hypertarget{structClassFile_ae88db578147f7ee0d6fc1aeacb341854}{}\label{structClassFile_ae88db578147f7ee0d6fc1aeacb341854}
+\index{Class\+File@{Class\+File}!attributes@{attributes}}
+\index{attributes@{attributes}!Class\+File@{Class\+File}}
+\subsubsection[{\texorpdfstring{attributes}{attributes}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf attribute\+\_\+info}$\ast$ Class\+File\+::attributes}\hypertarget{structClassFile_a8bf809db8e1008f401dc3cda5e9cdb14}{}\label{structClassFile_a8bf809db8e1008f401dc3cda5e9cdb14}
+\index{Class\+File@{Class\+File}!attributes\+\_\+count@{attributes\+\_\+count}}
+\index{attributes\+\_\+count@{attributes\+\_\+count}!Class\+File@{Class\+File}}
+\subsubsection[{\texorpdfstring{attributes\+\_\+count}{attributes_count}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} Class\+File\+::attributes\+\_\+count}\hypertarget{structClassFile_a633c696fbe08e7e7906b2ab1e52f3d1b}{}\label{structClassFile_a633c696fbe08e7e7906b2ab1e52f3d1b}
+\index{Class\+File@{Class\+File}!constant\+\_\+pool@{constant\+\_\+pool}}
+\index{constant\+\_\+pool@{constant\+\_\+pool}!Class\+File@{Class\+File}}
+\subsubsection[{\texorpdfstring{constant\+\_\+pool}{constant_pool}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf cp\+\_\+info}$\ast$ Class\+File\+::constant\+\_\+pool}\hypertarget{structClassFile_a2309d843091aad79aed04ce92470a434}{}\label{structClassFile_a2309d843091aad79aed04ce92470a434}
+\index{Class\+File@{Class\+File}!constant\+\_\+pool\+\_\+count@{constant\+\_\+pool\+\_\+count}}
+\index{constant\+\_\+pool\+\_\+count@{constant\+\_\+pool\+\_\+count}!Class\+File@{Class\+File}}
+\subsubsection[{\texorpdfstring{constant\+\_\+pool\+\_\+count}{constant_pool_count}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} Class\+File\+::constant\+\_\+pool\+\_\+count}\hypertarget{structClassFile_ac8fdf5cccfd632da4fdb21ae63fffa7a}{}\label{structClassFile_ac8fdf5cccfd632da4fdb21ae63fffa7a}
+\index{Class\+File@{Class\+File}!fields@{fields}}
+\index{fields@{fields}!Class\+File@{Class\+File}}
+\subsubsection[{\texorpdfstring{fields}{fields}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf field\+\_\+info}$\ast$ Class\+File\+::fields}\hypertarget{structClassFile_aa324f88c75aa96c632f8c57d010aab0c}{}\label{structClassFile_aa324f88c75aa96c632f8c57d010aab0c}
+\index{Class\+File@{Class\+File}!fields\+\_\+count@{fields\+\_\+count}}
+\index{fields\+\_\+count@{fields\+\_\+count}!Class\+File@{Class\+File}}
+\subsubsection[{\texorpdfstring{fields\+\_\+count}{fields_count}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} Class\+File\+::fields\+\_\+count}\hypertarget{structClassFile_acea207ee523fbc16611d3cf436c390e0}{}\label{structClassFile_acea207ee523fbc16611d3cf436c390e0}
+\index{Class\+File@{Class\+File}!interfaces@{interfaces}}
+\index{interfaces@{interfaces}!Class\+File@{Class\+File}}
+\subsubsection[{\texorpdfstring{interfaces}{interfaces}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2}$\ast$ Class\+File\+::interfaces}\hypertarget{structClassFile_af599de97e062c98966470f1590496425}{}\label{structClassFile_af599de97e062c98966470f1590496425}
+\index{Class\+File@{Class\+File}!interfaces\+\_\+count@{interfaces\+\_\+count}}
+\index{interfaces\+\_\+count@{interfaces\+\_\+count}!Class\+File@{Class\+File}}
+\subsubsection[{\texorpdfstring{interfaces\+\_\+count}{interfaces_count}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} Class\+File\+::interfaces\+\_\+count}\hypertarget{structClassFile_a337fcb7da33d1b64631441115c7de305}{}\label{structClassFile_a337fcb7da33d1b64631441115c7de305}
+\index{Class\+File@{Class\+File}!magic@{magic}}
+\index{magic@{magic}!Class\+File@{Class\+File}}
+\subsubsection[{\texorpdfstring{magic}{magic}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u4} Class\+File\+::magic}\hypertarget{structClassFile_a09085e9db513dae2f46da6e0a26c1b59}{}\label{structClassFile_a09085e9db513dae2f46da6e0a26c1b59}
+\index{Class\+File@{Class\+File}!major\+\_\+version@{major\+\_\+version}}
+\index{major\+\_\+version@{major\+\_\+version}!Class\+File@{Class\+File}}
+\subsubsection[{\texorpdfstring{major\+\_\+version}{major_version}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} Class\+File\+::major\+\_\+version}\hypertarget{structClassFile_abede9cb937e65072517d0ee6e26e2757}{}\label{structClassFile_abede9cb937e65072517d0ee6e26e2757}
+\index{Class\+File@{Class\+File}!methods@{methods}}
+\index{methods@{methods}!Class\+File@{Class\+File}}
+\subsubsection[{\texorpdfstring{methods}{methods}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf method\+\_\+info}$\ast$ Class\+File\+::methods}\hypertarget{structClassFile_ad061f06cd709d10dbfbf82f443e43632}{}\label{structClassFile_ad061f06cd709d10dbfbf82f443e43632}
+\index{Class\+File@{Class\+File}!methods\+\_\+count@{methods\+\_\+count}}
+\index{methods\+\_\+count@{methods\+\_\+count}!Class\+File@{Class\+File}}
+\subsubsection[{\texorpdfstring{methods\+\_\+count}{methods_count}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} Class\+File\+::methods\+\_\+count}\hypertarget{structClassFile_aacfb45d4af64216324b1ae5269c870d5}{}\label{structClassFile_aacfb45d4af64216324b1ae5269c870d5}
+\index{Class\+File@{Class\+File}!minor\+\_\+version@{minor\+\_\+version}}
+\index{minor\+\_\+version@{minor\+\_\+version}!Class\+File@{Class\+File}}
+\subsubsection[{\texorpdfstring{minor\+\_\+version}{minor_version}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} Class\+File\+::minor\+\_\+version}\hypertarget{structClassFile_af0db7b0ea01cb9cea2cee177ca81df09}{}\label{structClassFile_af0db7b0ea01cb9cea2cee177ca81df09}
+\index{Class\+File@{Class\+File}!super\+\_\+class@{super\+\_\+class}}
+\index{super\+\_\+class@{super\+\_\+class}!Class\+File@{Class\+File}}
+\subsubsection[{\texorpdfstring{super\+\_\+class}{super_class}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} Class\+File\+::super\+\_\+class}\hypertarget{structClassFile_a5f6c11c0ccb02fd992b5c102725253ec}{}\label{structClassFile_a5f6c11c0ccb02fd992b5c102725253ec}
+\index{Class\+File@{Class\+File}!this\+\_\+class@{this\+\_\+class}}
+\index{this\+\_\+class@{this\+\_\+class}!Class\+File@{Class\+File}}
+\subsubsection[{\texorpdfstring{this\+\_\+class}{this_class}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} Class\+File\+::this\+\_\+class}\hypertarget{structClassFile_a2d33db0a560a71b94bc572dd1e4ec03a}{}\label{structClassFile_a2d33db0a560a71b94bc572dd1e4ec03a}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structures_8h}{structures.\+h}\end{DoxyCompactItemize}

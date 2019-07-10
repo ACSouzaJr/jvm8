@@ -52,8 +52,6 @@ void initialize_op_codes()
   op_codes_array[8].references = 0;
   op_codes_array[8].eval = iconst_5_eval;
 
-  op_codes_array[8].eval = iconst_5_eval;
-
   strcpy(op_codes_array[9].value, "lconst_0");
   op_codes_array[9].arguments = 0;
   op_codes_array[9].references = 0;
@@ -231,8 +229,8 @@ void initialize_op_codes()
 
   strcpy(op_codes_array[44].value, "aload_2");
   op_codes_array[44].arguments = 0;
-  op_codes_array[40].references = 0;
-  op_codes_array[40].eval = aload_2_eval;
+  op_codes_array[44].references = 0;
+  op_codes_array[44].eval = aload_2_eval;
 
   strcpy(op_codes_array[45].value, "aload_3");
   op_codes_array[45].arguments = 0;
@@ -746,8 +744,8 @@ void initialize_op_codes()
 
   strcpy(op_codes_array[147].value, "i2s");
   op_codes_array[147].arguments = 0;
-  op_codes_array[146].references = 0;
-  op_codes_array[146].eval = i2s_eval;
+  op_codes_array[147].references = 0;
+  op_codes_array[147].eval = i2s_eval;
 
   strcpy(op_codes_array[148].value, "lcmp");
   op_codes_array[148].arguments = 0;

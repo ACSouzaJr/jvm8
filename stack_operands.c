@@ -1,9 +1,19 @@
+/**
+* @file         stack_operands.c
+* @brief        Funções de gerenciamento da pilha de operandos.
+* @detail       Contém as implementações das funções de gerenciamento para a pilha de operandos da JVM.
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "structures.h"
 #include "stack_operands.h"
 
-void push_operand(LocalVariable * operand, StackOperand *stack_operand){
+/**
+ * @brief Adiciona um novo operando dentro da pilha de operandos do Frame.
+ */
+void push_operand(LocalVariable *operand, StackOperand *stack_operand)
+{
     Operand *ptr = (Operand *)malloc(sizeof(Operand));
     if (ptr == NULL)
     {
@@ -21,17 +31,37 @@ void push_operand(LocalVariable * operand, StackOperand *stack_operand){
             stack_operand->top = ptr;
         }
     }
-    #ifdef DEBUG
-    if(stack_operand->top->f->type == CONSTANT_Double){
-        printf("Acabou de ser empilhado doublemente: %f\n", *(double*)&stack_operand->top->f->type_double);
-    } else {
-        printf("Acabou de ser empilhado: %04x\n", stack_operand->top->f->value);
+#if defined DEBUG
+    if (operand != NULL)
+    {
+
+        if (stack_operand->top->f->type == CONSTANT_Double)
+        {
+            printf("Acabou de ser empilhado doublemente: %f\n", *(double *)&(stack_operand->top->f->type_double));
+        }
+        else if (stack_operand->top->f->type == CONSTANT_Float)
+        {
+            printf("Acabou de ser empilhado floatmente: %f\n", *(float *)&stack_operand->top->f->value);
+        }
+        else if (stack_operand->top->f->type == CONSTANT_Long)
+        {
+            printf("Acabou de ser empilhado longmente: %ld\n", *(long *)&stack_operand->top->f->type_long);
+        }
+        else
+        {
+            printf("Acabou de ser empilhado: %04x\n", stack_operand->top->f->value);
+        }
     }
-    #endif
+#endif
+
     // return *stack_operand;
 }
 
-LocalVariable* pop_operand(StackOperand *stack_operand){
+/**
+ * @brief Retira o topo da pilha de operandos e retorna para o chamador.
+ */
+LocalVariable *pop_operand(StackOperand *stack_operand)
+{
     LocalVariable *aux;
     Operand *ptr;
     // Se o ponteiro for nulo faz nada
@@ -57,6 +87,10 @@ LocalVariable* pop_operand(StackOperand *stack_operand){
     return aux;
 }
 
-LocalVariable* top_operand(StackOperand *stack_operand){
+/**
+ * @brief Retorna o topo da pilha de operandos.
+ */
+LocalVariable *top_operand(StackOperand *stack_operand)
+{
     return stack_operand->top->f;
 }

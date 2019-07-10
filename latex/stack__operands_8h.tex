@@ -1,0 +1,143 @@
+\hypertarget{stack__operands_8h}{}\section{stack\+\_\+operands.\+h File Reference}
+\label{stack__operands_8h}\index{stack\+\_\+operands.\+h@{stack\+\_\+operands.\+h}}
+
+
+Implementação das structs de pilha de operandos.  Contém as implementações das estruturas de pilha que serão usadas pela \hyperlink{structJVM}{J\+VM}.  
+
+
+{\ttfamily \#include \char`\"{}structures.\+h\char`\"{}}\\*
+Include dependency graph for stack\+\_\+operands.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=174pt]{stack__operands_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{stack__operands_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structStackOperand}{Stack\+Operand}
+\begin{DoxyCompactList}\small\item\em Estrutura que representa um operando da pilha. \end{DoxyCompactList}\item 
+struct \hyperlink{structStackOperand}{Stack\+Operand}
+\begin{DoxyCompactList}\small\item\em Estrutura que representa um operando da pilha. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{structStackOperand}{Stack\+Operand} \hyperlink{stack__operands_8h_a414156d7562d42dfe1ad10aa2733731b}{Operand}
+\begin{DoxyCompactList}\small\item\em Estrutura que representa um operando da pilha. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structLocalVariable}{Local\+Variable} $\ast$ \hyperlink{stack__operands_8h_ad25a96b2568a831e2358b36ffd9badfa}{pop\+\_\+operand} (\hyperlink{structStackOperand}{Stack\+Operand} $\ast$stack\+\_\+operand)
+\begin{DoxyCompactList}\small\item\em Retira o topo da pilha de operandos e retorna para o chamador. \end{DoxyCompactList}\item 
+void \hyperlink{stack__operands_8h_a9b8fdbdd132ce76d3351627cc4c4a0c4}{push\+\_\+operand} (\hyperlink{structLocalVariable}{Local\+Variable} $\ast$operand, \hyperlink{structStackOperand}{Stack\+Operand} $\ast$operands)
+\begin{DoxyCompactList}\small\item\em Adiciona um novo operando dentro da pilha de operandos do \hyperlink{structFrame}{Frame}. \end{DoxyCompactList}\item 
+\hyperlink{structLocalVariable}{Local\+Variable} $\ast$ \hyperlink{stack__operands_8h_a93503085017543eef1171f1d98fe24d8}{top\+\_\+operand} (\hyperlink{structStackOperand}{Stack\+Operand} $\ast$stack\+\_\+operand)
+\begin{DoxyCompactList}\small\item\em Retorna o topo da pilha de operandos. \end{DoxyCompactList}\item 
+void \hyperlink{stack__operands_8h_a02fd73d861ef2e4aabb38c0c9ff82947}{init} ()
+\begin{DoxyCompactList}\small\item\em Aloca espaço para a pilha de frames. \end{DoxyCompactList}\item 
+void \hyperlink{stack__operands_8h_a4bb1325b53dcb653e95a7935165c3b0e}{print\+\_\+stack} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Implementação das structs de pilha de operandos.  Contém as implementações das estruturas de pilha que serão usadas pela \hyperlink{structJVM}{J\+VM}. 
+
+
+
+\subsection{Typedef Documentation}
+\index{stack\+\_\+operands.\+h@{stack\+\_\+operands.\+h}!Operand@{Operand}}
+\index{Operand@{Operand}!stack\+\_\+operands.\+h@{stack\+\_\+operands.\+h}}
+\subsubsection[{\texorpdfstring{Operand}{Operand}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Stack\+Operand}  {\bf Operand}}\hypertarget{stack__operands_8h_a414156d7562d42dfe1ad10aa2733731b}{}\label{stack__operands_8h_a414156d7562d42dfe1ad10aa2733731b}
+
+
+Estrutura que representa um operando da pilha. 
+
+Possui um ponteiro para uma \hyperlink{structLocalVariable}{Local\+Variable} e um pointeiro para uma pilha de operandos. 
+
+\subsection{Function Documentation}
+\index{stack\+\_\+operands.\+h@{stack\+\_\+operands.\+h}!init@{init}}
+\index{init@{init}!stack\+\_\+operands.\+h@{stack\+\_\+operands.\+h}}
+\subsubsection[{\texorpdfstring{init()}{init()}}]{\setlength{\rightskip}{0pt plus 5cm}void init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{stack__operands_8h_a02fd73d861ef2e4aabb38c0c9ff82947}{}\label{stack__operands_8h_a02fd73d861ef2e4aabb38c0c9ff82947}
+
+
+Aloca espaço para a pilha de frames. 
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=183pt]{stack__operands_8h_a02fd73d861ef2e4aabb38c0c9ff82947_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{stack\+\_\+operands.\+h@{stack\+\_\+operands.\+h}!pop\+\_\+operand@{pop\+\_\+operand}}
+\index{pop\+\_\+operand@{pop\+\_\+operand}!stack\+\_\+operands.\+h@{stack\+\_\+operands.\+h}}
+\subsubsection[{\texorpdfstring{pop\+\_\+operand(\+Stack\+Operand $\ast$stack\+\_\+operand)}{pop_operand(StackOperand *stack_operand)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Local\+Variable}$\ast$ pop\+\_\+operand (
+\begin{DoxyParamCaption}
+\item[{{\bf Stack\+Operand} $\ast$}]{stack\+\_\+operand}
+\end{DoxyParamCaption}
+)}\hypertarget{stack__operands_8h_ad25a96b2568a831e2358b36ffd9badfa}{}\label{stack__operands_8h_ad25a96b2568a831e2358b36ffd9badfa}
+
+
+Retira o topo da pilha de operandos e retorna para o chamador. 
+
+\index{stack\+\_\+operands.\+h@{stack\+\_\+operands.\+h}!print\+\_\+stack@{print\+\_\+stack}}
+\index{print\+\_\+stack@{print\+\_\+stack}!stack\+\_\+operands.\+h@{stack\+\_\+operands.\+h}}
+\subsubsection[{\texorpdfstring{print\+\_\+stack()}{print_stack()}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+\_\+stack (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{stack__operands_8h_a4bb1325b53dcb653e95a7935165c3b0e}{}\label{stack__operands_8h_a4bb1325b53dcb653e95a7935165c3b0e}
+\index{stack\+\_\+operands.\+h@{stack\+\_\+operands.\+h}!push\+\_\+operand@{push\+\_\+operand}}
+\index{push\+\_\+operand@{push\+\_\+operand}!stack\+\_\+operands.\+h@{stack\+\_\+operands.\+h}}
+\subsubsection[{\texorpdfstring{push\+\_\+operand(\+Local\+Variable $\ast$operand, Stack\+Operand $\ast$operands)}{push_operand(LocalVariable *operand, StackOperand *operands)}}]{\setlength{\rightskip}{0pt plus 5cm}void push\+\_\+operand (
+\begin{DoxyParamCaption}
+\item[{{\bf Local\+Variable} $\ast$}]{operand, }
+\item[{{\bf Stack\+Operand} $\ast$}]{operands}
+\end{DoxyParamCaption}
+)}\hypertarget{stack__operands_8h_a9b8fdbdd132ce76d3351627cc4c4a0c4}{}\label{stack__operands_8h_a9b8fdbdd132ce76d3351627cc4c4a0c4}
+
+
+Adiciona um novo operando dentro da pilha de operandos do \hyperlink{structFrame}{Frame}. 
+
+\index{stack\+\_\+operands.\+h@{stack\+\_\+operands.\+h}!top\+\_\+operand@{top\+\_\+operand}}
+\index{top\+\_\+operand@{top\+\_\+operand}!stack\+\_\+operands.\+h@{stack\+\_\+operands.\+h}}
+\subsubsection[{\texorpdfstring{top\+\_\+operand(\+Stack\+Operand $\ast$stack\+\_\+operand)}{top_operand(StackOperand *stack_operand)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Local\+Variable}$\ast$ top\+\_\+operand (
+\begin{DoxyParamCaption}
+\item[{{\bf Stack\+Operand} $\ast$}]{stack\+\_\+operand}
+\end{DoxyParamCaption}
+)}\hypertarget{stack__operands_8h_a93503085017543eef1171f1d98fe24d8}{}\label{stack__operands_8h_a93503085017543eef1171f1d98fe24d8}
+
+
+Retorna o topo da pilha de operandos. 
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=263pt]{stack__operands_8h_a93503085017543eef1171f1d98fe24d8_icgraph}
+\end{center}
+\end{figure}
+
+

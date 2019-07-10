@@ -1,0 +1,69 @@
+\hypertarget{frame_8h}{}\section{frame.\+h File Reference}
+\label{frame_8h}\index{frame.\+h@{frame.\+h}}
+{\ttfamily \#include \char`\"{}structures.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}stack\+\_\+operands.\+h\char`\"{}}\\*
+Include dependency graph for frame.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=199pt]{frame_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{frame_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structFrame}{Frame}
+\begin{DoxyCompactList}\small\item\em Struct que representa um \hyperlink{structFrame}{Frame} da \hyperlink{structJVM}{J\+VM}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structFrame}{Frame} $\ast$ \hyperlink{frame_8h_a3def2e70c9f5507f4be53e969bd5c4b1}{cria\+\_\+frame} (\hyperlink{structcp__info}{cp\+\_\+info} $\ast$cp, \hyperlink{structmethod__info}{method\+\_\+info} $\ast$mi)
+\begin{DoxyCompactList}\small\item\em Cria um novo \hyperlink{structFrame}{Frame} para ser colocado na pilha de frames da \hyperlink{structJVM}{J\+VM}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{frame.\+h@{frame.\+h}!cria\+\_\+frame@{cria\+\_\+frame}}
+\index{cria\+\_\+frame@{cria\+\_\+frame}!frame.\+h@{frame.\+h}}
+\subsubsection[{\texorpdfstring{cria\+\_\+frame(cp\+\_\+info $\ast$cp, method\+\_\+info $\ast$mi)}{cria_frame(cp_info *cp, method_info *mi)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Frame}$\ast$ cria\+\_\+frame (
+\begin{DoxyParamCaption}
+\item[{{\bf cp\+\_\+info} $\ast$}]{cp, }
+\item[{{\bf method\+\_\+info} $\ast$}]{mi}
+\end{DoxyParamCaption}
+)}\hypertarget{frame_8h_a3def2e70c9f5507f4be53e969bd5c4b1}{}\label{frame_8h_a3def2e70c9f5507f4be53e969bd5c4b1}
+
+
+Cria um novo \hyperlink{structFrame}{Frame} para ser colocado na pilha de frames da \hyperlink{structJVM}{J\+VM}. 
+
+Usa o constant pool e a informação do método para alocar espaço na memória para um novo frame de execução. 
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=232pt]{frame_8h_a3def2e70c9f5507f4be53e969bd5c4b1_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{frame_8h_a3def2e70c9f5507f4be53e969bd5c4b1_icgraph}
+\end{center}
+\end{figure}
+
+

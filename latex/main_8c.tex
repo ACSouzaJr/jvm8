@@ -1,0 +1,94 @@
+\hypertarget{main_8c}{}\section{main.\+c File Reference}
+\label{main_8c}\index{main.\+c@{main.\+c}}
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}structures.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}instructions.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}stack\+\_\+frame.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}interpreter.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}frame.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}classfile.\+h\char`\"{}}\\*
+Include dependency graph for main.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{main_8c_a0ddf1224851353fc92bfbff6f499fa97}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \hyperlink{main_8c_a17dd988cd7a015cb95f53b4dcfd5842a}{G\+L\+O\+B\+A\+L\+\_\+ptr}
+\item 
+\hyperlink{structClassFile}{Class\+File} $\ast$ \hyperlink{main_8c_ae33e7c4068cbc1cc6d0ce68a87642485}{G\+L\+O\+B\+A\+L\+\_\+\+C\+L\+A\+SS}
+\item 
+\hyperlink{structures_8h_a64f8055b64cf2a4c299c841130c5c938}{u1} \hyperlink{main_8c_aa38db19f7894f13a48f3f8c0b062549b}{code\+\_\+sep} = 0
+\item 
+\hyperlink{structures_8h_a64f8055b64cf2a4c299c841130c5c938}{u1} \hyperlink{main_8c_a1aeea90933b6eec3bb962639e5e0b3fa}{name\+\_\+or\+\_\+type}
+\item 
+char $\ast$ \hyperlink{main_8c_a5ba9132e7f1a55a732182a4ae2b80cf7}{F\+I\+L\+E\+\_\+\+N\+A\+ME}
+\item 
+\hyperlink{structStackFrame}{Stack\+Frame} $\ast$ \hyperlink{main_8c_a15f64dbdb65ef3f2f338253004e88b99}{Jvm\+Stack}
+\item 
+\hyperlink{structMethod}{Method} \hyperlink{main_8c_aacaf45a8478861c2788165e9f0d24a3c}{Mem}
+\item 
+char $\ast$ \hyperlink{main_8c_a9ff2c57ead44ec66c113197fa71ab268}{P\+A\+TH}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{main.\+c@{main.\+c}!main@{main}}
+\index{main@{main}!main.\+c@{main.\+c}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$argv[])}{main(int argc, char *argv[])}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8c_a0ddf1224851353fc92bfbff6f499fa97}{}\label{main_8c_a0ddf1224851353fc92bfbff6f499fa97}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{main_8c_a0ddf1224851353fc92bfbff6f499fa97_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Variable Documentation}
+\index{main.\+c@{main.\+c}!code\+\_\+sep@{code\+\_\+sep}}
+\index{code\+\_\+sep@{code\+\_\+sep}!main.\+c@{main.\+c}}
+\subsubsection[{\texorpdfstring{code\+\_\+sep}{code_sep}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u1} code\+\_\+sep = 0}\hypertarget{main_8c_aa38db19f7894f13a48f3f8c0b062549b}{}\label{main_8c_aa38db19f7894f13a48f3f8c0b062549b}
+\index{main.\+c@{main.\+c}!F\+I\+L\+E\+\_\+\+N\+A\+ME@{F\+I\+L\+E\+\_\+\+N\+A\+ME}}
+\index{F\+I\+L\+E\+\_\+\+N\+A\+ME@{F\+I\+L\+E\+\_\+\+N\+A\+ME}!main.\+c@{main.\+c}}
+\subsubsection[{\texorpdfstring{F\+I\+L\+E\+\_\+\+N\+A\+ME}{FILE_NAME}}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ F\+I\+L\+E\+\_\+\+N\+A\+ME}\hypertarget{main_8c_a5ba9132e7f1a55a732182a4ae2b80cf7}{}\label{main_8c_a5ba9132e7f1a55a732182a4ae2b80cf7}
+\index{main.\+c@{main.\+c}!G\+L\+O\+B\+A\+L\+\_\+\+C\+L\+A\+SS@{G\+L\+O\+B\+A\+L\+\_\+\+C\+L\+A\+SS}}
+\index{G\+L\+O\+B\+A\+L\+\_\+\+C\+L\+A\+SS@{G\+L\+O\+B\+A\+L\+\_\+\+C\+L\+A\+SS}!main.\+c@{main.\+c}}
+\subsubsection[{\texorpdfstring{G\+L\+O\+B\+A\+L\+\_\+\+C\+L\+A\+SS}{GLOBAL_CLASS}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Class\+File}$\ast$ G\+L\+O\+B\+A\+L\+\_\+\+C\+L\+A\+SS}\hypertarget{main_8c_ae33e7c4068cbc1cc6d0ce68a87642485}{}\label{main_8c_ae33e7c4068cbc1cc6d0ce68a87642485}
+\index{main.\+c@{main.\+c}!G\+L\+O\+B\+A\+L\+\_\+ptr@{G\+L\+O\+B\+A\+L\+\_\+ptr}}
+\index{G\+L\+O\+B\+A\+L\+\_\+ptr@{G\+L\+O\+B\+A\+L\+\_\+ptr}!main.\+c@{main.\+c}}
+\subsubsection[{\texorpdfstring{G\+L\+O\+B\+A\+L\+\_\+ptr}{GLOBAL_ptr}}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ G\+L\+O\+B\+A\+L\+\_\+ptr}\hypertarget{main_8c_a17dd988cd7a015cb95f53b4dcfd5842a}{}\label{main_8c_a17dd988cd7a015cb95f53b4dcfd5842a}
+\index{main.\+c@{main.\+c}!Jvm\+Stack@{Jvm\+Stack}}
+\index{Jvm\+Stack@{Jvm\+Stack}!main.\+c@{main.\+c}}
+\subsubsection[{\texorpdfstring{Jvm\+Stack}{JvmStack}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Stack\+Frame}$\ast$ Jvm\+Stack}\hypertarget{main_8c_a15f64dbdb65ef3f2f338253004e88b99}{}\label{main_8c_a15f64dbdb65ef3f2f338253004e88b99}
+\index{main.\+c@{main.\+c}!Mem@{Mem}}
+\index{Mem@{Mem}!main.\+c@{main.\+c}}
+\subsubsection[{\texorpdfstring{Mem}{Mem}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Method} Mem}\hypertarget{main_8c_aacaf45a8478861c2788165e9f0d24a3c}{}\label{main_8c_aacaf45a8478861c2788165e9f0d24a3c}
+\index{main.\+c@{main.\+c}!name\+\_\+or\+\_\+type@{name\+\_\+or\+\_\+type}}
+\index{name\+\_\+or\+\_\+type@{name\+\_\+or\+\_\+type}!main.\+c@{main.\+c}}
+\subsubsection[{\texorpdfstring{name\+\_\+or\+\_\+type}{name_or_type}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u1} name\+\_\+or\+\_\+type}\hypertarget{main_8c_a1aeea90933b6eec3bb962639e5e0b3fa}{}\label{main_8c_a1aeea90933b6eec3bb962639e5e0b3fa}
+\index{main.\+c@{main.\+c}!P\+A\+TH@{P\+A\+TH}}
+\index{P\+A\+TH@{P\+A\+TH}!main.\+c@{main.\+c}}
+\subsubsection[{\texorpdfstring{P\+A\+TH}{PATH}}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ P\+A\+TH}\hypertarget{main_8c_a9ff2c57ead44ec66c113197fa71ab268}{}\label{main_8c_a9ff2c57ead44ec66c113197fa71ab268}
