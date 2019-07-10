@@ -404,7 +404,7 @@ void lload_1_eval(Frame *f)
 
 void lload_2_eval(Frame *f)
 {
-  push_operand(&(f->local_variables[2]), f->operands);
+  push_operand(&(f->local_variables[2-1]), f->operands);
 }
 
 void lload_3_eval(Frame *f)
@@ -499,9 +499,12 @@ void dload_1_eval(Frame *f)
 
 void dload_2_eval(Frame *f)
 {
-  if (f->local_variables[2].type == CONSTANT_Double)
+  #ifdef DEBUG
+    printf("dload_2_type: %d\n", f->local_variables[2].type);
+  #endif
+  if (f->local_variables[2-1].type == CONSTANT_Double)
   {
-    push_operand(&(f->local_variables[2]), f->operands);
+    push_operand(&(f->local_variables[2-1]), f->operands);
   }
   else
   {
@@ -3379,7 +3382,7 @@ void invokevirtual_eval(Frame *f)
   {
     u2 args = count_args(method_desc);
     u2 class_index = find_class(class_name);
-    method_info *method = find_method(Mem.classes_arr[class_index], method_name);
+    method_info *method = find_method(Mem.classes_arr[class_index], method_name, method_desc);
     Frame *frame = cria_frame(f->cp, method);
     // Adiciona argumestos comeca de 1
     // 0 é uma referencia
@@ -3446,7 +3449,7 @@ void invokespecial_eval(Frame *f)
   char *method_desc = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.descriptor_index);
 
   u2 args = count_args(method_desc);
-  method_info *method = find_method(Mem.classes_arr[class_index], method_name);
+  method_info *method = find_method(Mem.classes_arr[class_index], method_name, method_desc);
   Frame *frame = cria_frame(f->cp, method);
   // Adiciona argumestos
   // for (size_t i = args - 1; i >= 0; i--)
@@ -3482,12 +3485,12 @@ void invokestatic_eval(Frame *f)
 
   u2 args = count_args(method_desc);
 
-#ifdef DEBUG
-  printf("Argumentos %d", args);
-#endif
+  #ifdef DEBUG
+    printf("Argumentos %d", args);
+  #endif
 
   u2 class_index = find_class(class_name);
-  method_info *method = find_method(Mem.classes_arr[class_index], method_name);
+  method_info *method = find_method(Mem.classes_arr[class_index], method_name, method_desc);
   Frame *frame = cria_frame(f->cp, method);
   // Adiciona argumestos
   // for (size_t i = 0; i < args - 1; i++)
