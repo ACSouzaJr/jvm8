@@ -4490,7 +4490,7 @@ void ifnull_eval(Frame *f)
   branchbyte2 = f->bytecode[f->pc++];
 
   int16_t offset = ((branchbyte1 << 8) | branchbyte2);
-  if (!lv->value)
+  if (lv == NULL)
   {
     f->pc += offset - 3;
   }
@@ -4507,7 +4507,7 @@ void ifnonnull_eval(Frame *f)
   branchbyte2 = f->bytecode[f->pc++];
 
   int16_t offset = ((branchbyte1 << 8) | branchbyte2);
-  if (lv->value)
+  if (lv != NULL)
   {
     f->pc += offset - 3;
   }
