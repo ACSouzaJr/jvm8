@@ -377,7 +377,7 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp)
     }
     else // caso o atributo não esteja implementado ele é ignorado.
     {
-#ifdef DEBUG
+#if defined DEBUG
       printf("Attributo Ignorado! \n");
 #endif
       fseek(fp, attr->attribute_length, SEEK_CUR);
@@ -2388,7 +2388,7 @@ char *findNameFile(char *string)
   char aux_string[100];
   for (i = 0; i < strlen(string); i++)
   {
-    if (string[i] == '/')
+    if (string[i] == '\\')
     {
       count++;
     }
@@ -2396,7 +2396,7 @@ char *findNameFile(char *string)
 
   for (i = 0; i < strlen(string); i++)
   {
-    if (string[i] == '/')
+    if (string[i] == '\\')
     {
       count--;
       if (count == 0)
@@ -2435,7 +2435,7 @@ void execute_gvm()
     u1 *bytecode = current_frame->method->attributes->info->Code_attribute.code;
     u2 opcode = bytecode[current_frame->pc++];
 
-    #ifdef DEBUG
+    #if defined DEBUG
         printf("\n----  Evaluando ----\n %d) %s\n-----------------------\n\n", ((current_frame->pc) - 1), op_codes_array[opcode].value);
     #endif
     op_codes_array[opcode].eval(current_frame);
@@ -2455,7 +2455,7 @@ method_info *find_method(ClassFile *cf, char *method, char *method_description)
     if (strcmp(method_name, method) == 0)
     {
       if (strcmp(method_desc, method_description) == 0){
-        #ifdef DEBUG
+        #if defined DEBUG
           printf("Metodo encontrado: %s\n",method_name);
           printf("Metodo desc: %s\n",method_desc);
         #endif
@@ -2463,7 +2463,7 @@ method_info *find_method(ClassFile *cf, char *method, char *method_description)
       }
     }
   }
-  #ifdef DEBUG
+  #if defined DEBUG
     printf("Nao achou o methodo! \n");
   #endif
   return NULL;
@@ -2484,7 +2484,7 @@ u4 ClassLoader(char *class_name)
   {
     sprintf(GLOBAL_ptr, "%s/%s.class", PATH, class_name);
   }
-#ifdef DEBUG
+#if defined DEBUG
   printf("Loaded class: %s \n", GLOBAL_ptr);
 #endif
   read_class_file(cf, GLOBAL_ptr);
@@ -2507,7 +2507,7 @@ u2 find_class(char *class_name)
   for (size_t i = 0; i < Mem.num_classes; i++)
   {
     this_class = ret_method_name(Mem.classes_arr[i]->constant_pool, Mem.classes_arr[i]->this_class);
-#ifdef DEBUG
+#if defined DEBUG
     printf("This class: %s \n", this_class);
 #endif
     if (strcmp(this_class, class_name) == 0)
@@ -2548,7 +2548,7 @@ void find_clinit(ClassFile *cf)
     Frame *frame = cria_frame(cf->constant_pool, method);
     push(frame);
   }
-#ifdef DEBUG
+#if defined DEBUG
     printf("Nao possui init !\n");
 #endif
 }

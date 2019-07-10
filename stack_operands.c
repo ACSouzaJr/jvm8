@@ -31,7 +31,7 @@ void push_operand(LocalVariable *operand, StackOperand *stack_operand)
             stack_operand->top = ptr;
         }
     }
-#ifdef DEBUG
+#if defined DEBUG
     if (operand != NULL)
     {
 

@@ -82,7 +82,7 @@ void iconst_0_eval(Frame *f)
   lv->type = CONSTANT_Integer;
   lv->value = 0;
   push_operand(lv, f->operands);
-#ifdef DEBUG
+#if defined DEBUG
   printf("Iconst_0");
 #endif
 }
@@ -96,7 +96,7 @@ void iconst_1_eval(Frame *f)
   lv->type = CONSTANT_Integer;
   lv->value = 1;
   push_operand(lv, f->operands);
-#ifdef DEBUG
+#if defined DEBUG
   printf("Iconst_1");
 #endif
 }
@@ -215,7 +215,7 @@ void dconst_0_eval(Frame *f)
   lv->type = CONSTANT_Double;
   lv->type_double = *(uint64_t *)&(aux);
   push_operand(lv, f->operands);
-#ifdef DEBUG
+#if defined DEBUG
   printf("dconst_0: %f\n", *(double *)&(lv->type_double));
 #endif
 }
@@ -230,7 +230,7 @@ void dconst_1_eval(Frame *f)
   lv->type = CONSTANT_Double;
   lv->type_double = *(uint64_t *)&(aux);
   push_operand(lv, f->operands);
-#ifdef DEBUG
+#if defined DEBUG
   printf("dconst_1: %f\n", *(double *)&(lv->type_double));
 #endif
 }
@@ -246,7 +246,7 @@ void bipush_eval(Frame *f)
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Integer;
   lv->value = (int32_t)((int8_t)(f->bytecode[f->pc++]));
-#ifdef DEBUG
+#if defined DEBUG
   printf("bipush: %d \n", lv->value);
 #endif
   push_operand(lv, f->operands);
@@ -271,7 +271,7 @@ void sipush_eval(Frame *f)
   lv->value = (uint32_t)val_sipush;
   lv->type = CONSTANT_Integer;
 
-  #ifdef DEBUG
+  #if defined DEBUG
   printf("sipush: %d", val_sipush);
   #endif
 
@@ -292,7 +292,7 @@ void ldc_eval(Frame *f)
 
   cp_info *item = &(f->cp[index - 1]);
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
-#ifdef DEBUG
+#if defined DEBUG
   printf("tag: %01x\n", item->tag);
 #endif
   switch (item->tag)
@@ -344,11 +344,11 @@ void ldc2_w_eval(Frame *f)
   case CONSTANT_Double:
     low = f->cp[index - 1].Double.low_bytes;
     high = f->cp[index - 1].Double.high_bytes;
-#ifdef DEBUG
+#if defined DEBUG
     printf("low: %04x, high: %04x\n", low, high);
 #endif
     total = (int64_t)high << 32 | (int64_t)low;
-#ifdef DEBUG
+#if defined DEBUG
     printf("total: %04x \n", total);
     printf("total: %f \n", *(double *)&total);
 #endif
@@ -358,11 +358,11 @@ void ldc2_w_eval(Frame *f)
   case CONSTANT_Long:
     low = f->cp[index - 1].Long.low_bytes;
     high = f->cp[index - 1].Long.high_bytes;
-#ifdef DEBUG
+#if defined DEBUG
     printf("low: %04x, high: %04x\n", low, high);
 #endif
     total = (int64_t)high << 32 | (int64_t)low;
-#ifdef DEBUG
+#if defined DEBUG
     printf("total: %04x \n", total);
     printf("total: %ld \n", *(long *)&total);
 #endif
@@ -396,7 +396,7 @@ void iload_eval(Frame *f)
 {
   u1 index = f->bytecode[f->pc++];
   push_operand(&(f->local_variables[index]), f->operands);
-#ifdef DEBUG
+#if defined DEBUG
   printf("iload %d", f->local_variables[index].value);
 #endif
 }
@@ -456,7 +456,7 @@ void aload_eval(Frame *f)
 {
   u1 index = f->bytecode[f->pc++];
   push_operand(&(f->local_variables[index]), f->operands);
-#ifdef DEBUG
+#if defined DEBUG
   printf("aload %d", f->local_variables[index].value);
 #endif
 }
@@ -475,7 +475,7 @@ void iload_0_eval(Frame *f)
 void iload_1_eval(Frame *f)
 {
   push_operand(&(f->local_variables[1]), f->operands);
-#ifdef DEBUG
+#if defined DEBUG
   printf("iload_1");
 #endif
 }
@@ -543,7 +543,7 @@ void lload_3_eval(Frame *f)
  */
 void fload_0_eval(Frame *f)
 {
-  #ifdef DEBUG
+  #if defined DEBUG
     printf("fload_0 type: %01x\n",f->local_variables[0].type);
   #endif
   if (f->local_variables[0].type == CONSTANT_Float)
@@ -629,7 +629,7 @@ void dload_1_eval(Frame *f)
 {
   if (f->local_variables[1].type == CONSTANT_Double)
   {
-    #ifdef DEBUG
+    #if defined DEBUG
         printf("DOUBLE TYPE\n");
     #endif
     push_operand(&(f->local_variables[1]), f->operands);
@@ -646,7 +646,7 @@ void dload_1_eval(Frame *f)
  */
 void dload_2_eval(Frame *f)
 {
-  #ifdef DEBUG
+  #if defined DEBUG
     printf("dload_2_type: %d\n", f->local_variables[2].type);
   #endif
   // if (f->local_variables[2-1].type == CONSTANT_Double)
@@ -683,7 +683,7 @@ void dload_3_eval(Frame *f)
  */
 void aload_0_eval(Frame *f)
 {
-#ifdef DEBUG
+#if defined DEBUG
 // printf("lvv: %02x\n", f->local_variables[0].value);
 #endif
   push_operand(&(f->local_variables[0]), f->operands);
@@ -874,7 +874,7 @@ void istore_eval(Frame *f)
   u1 index = f->bytecode[f->pc++];
   LocalVariable *aux = pop_operand(f->operands);
   f->local_variables[index] = *aux;
-#ifdef DEBUG
+#if defined DEBUG
   printf("istore %d val: %04x\n", index, f->local_variables[index].value);
 #endif
 }
@@ -888,7 +888,7 @@ void lstore_eval(Frame *f)
   u1 index = f->bytecode[f->pc++];
   LocalVariable *lv = pop_operand(f->operands);
   f->local_variables[index] = *lv;
-#ifdef DEBUG
+#if defined DEBUG
   printf("lstore val: %04lx\n", f->local_variables[index].type_long);
 #endif
 }
@@ -902,7 +902,7 @@ void fstore_eval(Frame *f)
 
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
-#ifdef DEBUG
+#if defined DEBUG
   printf("aux: %04x\n", aux->value);
 #endif
   aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -910,7 +910,7 @@ void fstore_eval(Frame *f)
   aux_linha->value = aux->value;
   aux_linha->type = CONSTANT_Float;
   f->local_variables[index] = *aux_linha;
-#ifdef DEBUG
+#if defined DEBUG
   printf("fstore_0 val: %04x\n", f->local_variables[index].value);
 #endif
 }
@@ -924,11 +924,11 @@ void dstore_eval(Frame *f)
 
   LocalVariable *aux;
   aux = pop_operand(f->operands);
-#ifdef DEBUG
+#if defined DEBUG
   printf("aux: %04x\n", aux->type_double);
 #endif
   f->local_variables[index] = *aux;
-#ifdef DEBUG
+#if defined DEBUG
   printf("dstore val: %f\n", f->local_variables[index].type_double);
 #endif
 }
@@ -941,11 +941,11 @@ void astore_eval(Frame *f)
   LocalVariable *aux;
   aux = pop_operand(f->operands);
   u1 index = f->bytecode[f->pc++];
-#ifdef DEBUG
+#if defined DEBUG
   printf("aux: %04x\n", aux->value);
 #endif
   f->local_variables[index] = *aux;
-#ifdef DEBUG
+#if defined DEBUG
   printf("astore val: %04x\n", f->local_variables[index].value);
 #endif
 }
@@ -958,7 +958,7 @@ void istore_0_eval(Frame *f)
   LocalVariable *aux;
   aux = pop_operand(f->operands);
   f->local_variables[0] = *aux;
-#ifdef DEBUG
+#if defined DEBUG
   printf("istore_0 val: %04x\n", f->local_variables[0].value);
 #endif
 }
@@ -970,11 +970,11 @@ void istore_1_eval(Frame *f)
 {
   LocalVariable *aux;
   aux = pop_operand(f->operands);
-#ifdef DEBUG
+#if defined DEBUG
   printf("aux: %04x\n", aux->value);
 #endif
   f->local_variables[1] = *aux;
-#ifdef DEBUG
+#if defined DEBUG
   printf("istore_1 val: %04x\n", f->local_variables[1].value);
 #endif
 }
@@ -987,7 +987,7 @@ void istore_2_eval(Frame *f)
   LocalVariable *aux;
   aux = pop_operand(f->operands);
   f->local_variables[2] = *aux;
-#ifdef DEBUG
+#if defined DEBUG
   printf("istore_2 val: %04x\n", f->local_variables[2].value);
 #endif
 }
@@ -1000,7 +1000,7 @@ void istore_3_eval(Frame *f)
   LocalVariable *aux;
   aux = pop_operand(f->operands);
   f->local_variables[3] = *aux;
-#ifdef DEBUG
+#if defined DEBUG
   printf("istore_3 val: %04x\n", f->local_variables[3].value);
 #endif
 }
@@ -1012,7 +1012,7 @@ void lstore_0_eval(Frame *f)
 {
   LocalVariable *lv = pop_operand(f->operands);
   f->local_variables[0] = *lv;
-#ifdef DEBUG
+#if defined DEBUG
   printf("lstore_0 val: %04llx\n", f->local_variables[0].type_long);
 #endif
 }
@@ -1024,7 +1024,7 @@ void lstore_1_eval(Frame *f)
 {
   LocalVariable *lv = pop_operand(f->operands);
   f->local_variables[1] = *lv;
-#ifdef DEBUG
+#if defined DEBUG
   printf("lstore_1 val: %04llx\n", f->local_variables[1].type_long);
 #endif
 }
@@ -1036,7 +1036,7 @@ void lstore_2_eval(Frame *f)
 {
   LocalVariable *lv = pop_operand(f->operands);
   f->local_variables[2] = *lv;
-#ifdef DEBUG
+#if defined DEBUG
   printf("lstore_2 val: %04llx\n", f->local_variables[2].type_long);
 #endif
 }
@@ -1048,7 +1048,7 @@ void lstore_3_eval(Frame *f)
 {
   LocalVariable *lv = pop_operand(f->operands);
   f->local_variables[3] = *lv;
-#ifdef DEBUG
+#if defined DEBUG
   printf("lstore_3 val: %04llx\n", f->local_variables[3].type_long);
 #endif
 }
@@ -1060,7 +1060,7 @@ void fstore_0_eval(Frame *f)
 {
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
-#ifdef DEBUG
+#if defined DEBUG
   printf("aux: %04x\n", aux->value);
 #endif
   aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -1068,7 +1068,7 @@ void fstore_0_eval(Frame *f)
   aux_linha->value = aux->value;
   aux_linha->type = CONSTANT_Float;
   f->local_variables[0] = *aux_linha;
-#ifdef DEBUG
+#if defined DEBUG
   printf("fstore_0 val: %04x\n", f->local_variables[0].value);
 #endif
 }
@@ -1080,14 +1080,14 @@ void fstore_1_eval(Frame *f)
 {
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
-#ifdef DEBUG
+#if defined DEBUG
   printf("aux: %04x\n", aux->value);
 #endif
   aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
   aux_linha->value = aux->value;
   aux_linha->type = CONSTANT_Float;
   f->local_variables[1] = *aux_linha;
-#ifdef DEBUG
+#if defined DEBUG
   printf("fstore_1 val: %04x\n", f->local_variables[1].value);
 #endif
 }
@@ -1099,14 +1099,14 @@ void fstore_2_eval(Frame *f)
 {
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
-#ifdef DEBUG
+#if defined DEBUG
   printf("aux: %04x\n", aux->value);
 #endif
   aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
   aux_linha->value = aux->value;
   aux_linha->type = CONSTANT_Float;
   f->local_variables[2] = *aux_linha;
-#ifdef DEBUG
+#if defined DEBUG
   printf("fstore_2 val: %04x\n", f->local_variables[2].value);
 #endif
 }
@@ -1118,14 +1118,14 @@ void fstore_3_eval(Frame *f)
 {
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
-#ifdef DEBUG
+#if defined DEBUG
   printf("aux: %04x\n", aux->value);
 #endif
   aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
   aux_linha->value = aux->value;
   aux_linha->type = CONSTANT_Float;
   f->local_variables[3] = *aux_linha;
-#ifdef DEBUG
+#if defined DEBUG
   printf("fstore_3 val: %04x\n", f->local_variables[3].value);
 #endif
 }
@@ -1137,7 +1137,7 @@ void dstore_0_eval(Frame *f)
 {
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
-#ifdef DEBUG
+#if defined DEBUG
   printf("aux: %08x\n", aux->type_double);
 #endif
   aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -1145,7 +1145,7 @@ void dstore_0_eval(Frame *f)
   aux_linha->type_double = aux->type_double;
   aux_linha->type = CONSTANT_Double;
   f->local_variables[0] = *aux_linha;
-#ifdef DEBUG
+#if defined DEBUG
   printf("dstore_0 val: %08x\n", f->local_variables[0].type_double);
 #endif
 }
@@ -1157,7 +1157,7 @@ void dstore_1_eval(Frame *f)
 {
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
-#ifdef DEBUG
+#if defined DEBUG
   printf("aux: %08x\n", aux->type_double);
 #endif
   aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -1165,7 +1165,7 @@ void dstore_1_eval(Frame *f)
   aux_linha->type_double = aux->type_double;
   aux_linha->type = CONSTANT_Double;
   f->local_variables[1] = *aux_linha;
-#ifdef DEBUG
+#if defined DEBUG
   printf("dstore_1 val: %08x\n", f->local_variables[1].type_double);
 #endif
 }
@@ -1177,7 +1177,7 @@ void dstore_2_eval(Frame *f)
 {
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
-#ifdef DEBUG
+#if defined DEBUG
   printf("aux: %08x\n", aux->type_double);
 #endif
   aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -1185,7 +1185,7 @@ void dstore_2_eval(Frame *f)
   aux_linha->type_double = aux->type_double;
   aux_linha->type = CONSTANT_Double;
   f->local_variables[2] = *aux_linha;
-#ifdef DEBUG
+#if defined DEBUG
   printf("dstore_2 val: %08x\n", f->local_variables[2].type_double);
 #endif
 }
@@ -1197,7 +1197,7 @@ void dstore_3_eval(Frame *f)
 {
   LocalVariable *aux, *aux_linha;
   aux = pop_operand(f->operands);
-#ifdef DEBUG
+#if defined DEBUG
   printf("aux: %08x\n", aux->type_double);
 #endif
   aux_linha = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -1205,7 +1205,7 @@ void dstore_3_eval(Frame *f)
   aux_linha->type_double = aux->type_double;
   aux_linha->type = CONSTANT_Double;
   f->local_variables[3] = *aux_linha;
-#ifdef DEBUG
+#if defined DEBUG
   printf("dstore_3 val: %08x\n", f->local_variables[3].type_double);
 #endif
 }
@@ -1217,11 +1217,11 @@ void astore_0_eval(Frame *f)
 {
   LocalVariable *aux;
   aux = pop_operand(f->operands);
-#ifdef DEBUG
+#if defined DEBUG
   printf("aux: %04x\n", aux->value);
 #endif
   f->local_variables[0] = *aux;
-#ifdef DEBUG
+#if defined DEBUG
   printf("astore_0 val: %04x\n", f->local_variables[0].value);
 #endif
 }
@@ -1233,11 +1233,11 @@ void astore_1_eval(Frame *f)
 {
   LocalVariable *aux;
   aux = pop_operand(f->operands);
-#ifdef DEBUG
+#if defined DEBUG
   printf("aux: %04x\n", aux->value);
 #endif
   f->local_variables[1] = *aux;
-#ifdef DEBUG
+#if defined DEBUG
   printf("astore_1 val: %04x\n", f->local_variables[1].value);
 #endif
 }
@@ -1249,11 +1249,11 @@ void astore_2_eval(Frame *f)
 {
   LocalVariable *aux;
   aux = pop_operand(f->operands);
-#ifdef DEBUG
+#if defined DEBUG
   printf("aux: %04x\n", aux->value);
 #endif
   f->local_variables[2] = *aux;
-#ifdef DEBUG
+#if defined DEBUG
   printf("astore_2 val: %04x\n", f->local_variables[2].value);
 #endif
 }
@@ -1265,11 +1265,11 @@ void astore_3_eval(Frame *f)
 {
   LocalVariable *aux;
   aux = pop_operand(f->operands);
-#ifdef DEBUG
+#if defined DEBUG
   printf("aux: %04x\n", aux->value);
 #endif
   f->local_variables[3] = *aux;
-#ifdef DEBUG
+#if defined DEBUG
   printf("astore_3 val: %04x\n", f->local_variables[3].value);
 #endif
 }
@@ -1288,7 +1288,7 @@ void iastore_eval(Frame *f)
   vetor = (u4 *)arrayref->type_array.array;
   // (u4 *) arrayref->type_array.array[index->value] = value;
   vetor[index->value] = value->value;
-#ifdef DEBUG
+#if defined DEBUG
   printf("Referencia array: %d", ((u4 *)arrayref->type_array.array)[index->value]);
 #endif
 }
@@ -1309,7 +1309,7 @@ void lastore_eval(Frame *f)
   vetor = (uint64_t *)arrayref->type_array.array;
   // (u4 *) arrayref->type_array.array[index->value] = value;
   vetor[index->value] = value->type_long;
-#ifdef DEBUG
+#if defined DEBUG
   printf("Referencia array: %d", ((u4 *)arrayref->type_array.array)[index->value]);
 #endif
 }
@@ -1330,7 +1330,7 @@ void fastore_eval(Frame *f)
   vetor = (u4 *)arrayref->type_array.array;
   // (u4 *) arrayref->type_array.array[index->value] = value;
   vetor[index->value] = value->value;
-#ifdef DEBUG
+#if defined DEBUG
   printf("Referencia array: %d", ((u4 *)arrayref->type_array.array)[index->value]);
 #endif
 }
@@ -1351,7 +1351,7 @@ void dastore_eval(Frame *f)
   vetor = (uint64_t *)arrayref->type_array.array;
   // (u4 *) arrayref->type_array.array[index->value] = value;
   vetor[index->value] = value->type_double;
-#ifdef DEBUG
+#if defined DEBUG
   printf("Referencia array: %d", ((uint64_t *)arrayref->type_array.array)[index->value]);
 #endif
 }
@@ -1371,7 +1371,7 @@ void aastore_eval(Frame *f)
   Object *vetor;
   vetor = (Object *)arrayref->type_array.array;
   vetor[index->value] = value->type_object;
-#ifdef DEBUG
+#if defined DEBUG
   printf("Referencia array: %d", ((u4 *)arrayref->type_array.array)[index->value]);
 #endif
 }
@@ -1391,7 +1391,7 @@ void bastore_eval(Frame *f)
   u1 *vetor;
   vetor = (u1 *)arrayref->type_array.array;
   vetor[index->value] = (int8_t) value->value;
-  #ifdef DEBUG
+  #if defined DEBUG
     printf("Referencia array: %d", ((u1 *)arrayref->type_array.array)[index->value]);
   #endif
 }
@@ -1411,7 +1411,7 @@ void castore_eval(Frame *f)
   u1 *vetor;
   vetor = (u1 *)arrayref->type_array.array;
   vetor[index->value] = value->value;
-  #ifdef DEBUG
+  #if defined DEBUG
     printf("Referencia array: %d", ((u1 *)arrayref->type_array.array)[index->value]);
   #endif
 }
@@ -1431,7 +1431,7 @@ void sastore_eval(Frame *f)
   u2 *vetor;
   vetor = (u2 *)arrayref->type_array.array;
   vetor[index->value] = (int16_t) value->value;
-  #ifdef DEBUG
+  #if defined DEBUG
     printf("Referencia array: %d", ((u2 *)arrayref->type_array.array)[index->value]);
   #endif
 }
@@ -1630,13 +1630,13 @@ void iadd_eval(Frame *f)
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Integer;
   result->value = v1 + v2;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1: %04x\n", v1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2: %04x\n", v2);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado: %04x\n", result->value);
 #endif
   push_operand(result, f->operands);
@@ -1662,14 +1662,14 @@ void ladd_eval(Frame *f)
   result->type = CONSTANT_Long;
 
   result->type_long = *(uint64_t *)&resultlong;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1_long: %ld \n", value1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2_long: %ld \n", value2);
   printf("result: %ld \n", resultlong);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado_long: %ld \n", result->type_long);
 #endif
   push_operand(result, f->operands);
@@ -1697,13 +1697,13 @@ void fadd_eval(Frame *f)
   r1 = *(u4 *)&res;
 
   result->value = r1;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1_float: %04x\n", v1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2_float: %04x\n", v2);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado_float: %04x\n", result->value);
 #endif
   push_operand(result, f->operands);
@@ -1729,14 +1729,14 @@ void dadd_eval(Frame *f)
   result->type = CONSTANT_Double;
 
   result->type_double = *(uint64_t *)&resultdouble;
-  #ifdef DEBUG
+  #if defined DEBUG
     printf("v1_double: %f \n", value1);
   #endif
-  #ifdef DEBUG
+  #if defined DEBUG
     printf("v2_double: %f \n", value2);
     printf("result: %f \n", resultdouble);
   #endif
-  #ifdef DEBUG
+  #if defined DEBUG
     printf("resultado_double: %f\n", result->type_double);
   #endif
   push_operand(result, f->operands);
@@ -1756,13 +1756,13 @@ void isub_eval(Frame *f)
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Integer;
   result->value = v1 - v2;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1: %04x\n", v1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2: %04x\n", v2);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado: %04x\n", result->value);
 #endif
   push_operand(result, f->operands);
@@ -1788,14 +1788,14 @@ void lsub_eval(Frame *f)
   result->type = CONSTANT_Long;
 
   result->type_long = *(uint64_t *)&resultlong;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1_long: %ld \n", value1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2_long: %ld \n", value2);
   printf("result: %ld \n", resultlong);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado_long: %ld \n", result->type_long);
 #endif
   push_operand(result, f->operands);
@@ -1821,13 +1821,13 @@ void fsub_eval(Frame *f)
 
   result->type = CONSTANT_Float;
   result->value = *(uint64_t *)&resultfloat;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1: %04f\n", value1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2: %04f\n", value2);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado: %04x\n", result->value);
 #endif
   push_operand(result, f->operands);
@@ -1857,14 +1857,14 @@ void dsub_eval(Frame *f)
   // result->type_double = *(uint64_t *)&resultdouble;
   // result->type_double = *(uint64_t*)&((*(double *)&v1) + (*(double *)&v2));
   result->type_double = *(uint64_t *)&resultdouble;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1_double: %f \n", value1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2_double: %f \n", value2);
   printf("result: %f \n", resultdouble);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado_double: %f\n", result->type_double);
 #endif
   push_operand(result, f->operands);
@@ -1884,13 +1884,13 @@ void imul_eval(Frame *f)
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Integer;
   result->value = v1 * v2;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1: %04x\n", v1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2: %04x\n", v2);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado: %04x\n", result->value);
 #endif
   push_operand(result, f->operands);
@@ -1916,14 +1916,14 @@ void lmul_eval(Frame *f)
   result->type = CONSTANT_Long;
 
   result->type_long = *(uint64_t *)&resultlong;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1_long: %ld \n", value1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2_long: %ld \n", value2);
   printf("result: %ld \n", resultlong);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado_long: %ld \n", result->type_long);
 #endif
   push_operand(result, f->operands);
@@ -1949,13 +1949,13 @@ void fmul_eval(Frame *f)
 
   result->type = CONSTANT_Float;
   result->value = *(uint64_t *)&resultfloat;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1: %04f\n", value1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2: %04f\n", value2);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado: %04x\n", result->value);
 #endif
   push_operand(result, f->operands);
@@ -1985,14 +1985,14 @@ void dmul_eval(Frame *f)
   // result->type_double = *(uint64_t *)&resultdouble;
   // result->type_double = *(uint64_t*)&((*(double *)&v1) + (*(double *)&v2));
   result->type_double = *(uint64_t *)&resultdouble;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1_double: %f \n", value1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2_double: %f \n", value2);
   printf("result: %f \n", resultdouble);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado_double: %f\n", result->type_double);
 #endif
   push_operand(result, f->operands);
@@ -2012,13 +2012,13 @@ void idiv_eval(Frame *f)
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Integer;
   result->value = v1 / v2;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1: %04x\n", v1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2: %04x\n", v2);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado: %04x\n", result->value);
 #endif
   push_operand(result, f->operands);
@@ -2044,14 +2044,14 @@ void ldiv_eval(Frame *f)
   result->type = CONSTANT_Long;
 
   result->type_long = *(uint64_t *)&resultlong;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1_long: %ld \n", value1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2_long: %ld \n", value2);
   printf("result: %ld \n", resultlong);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado_long: %ld \n", result->type_long);
 #endif
   push_operand(result, f->operands);
@@ -2077,13 +2077,13 @@ void fdiv_eval(Frame *f)
 
   result->type = CONSTANT_Float;
   result->value = *(uint64_t *)&resultfloat;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1: %04f\n", value1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2: %04f\n", value2);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado: %04x\n", result->value);
 #endif
   push_operand(result, f->operands);
@@ -2113,14 +2113,14 @@ void ddiv_eval(Frame *f)
   // result->type_double = *(uint64_t *)&resultdouble;
   // result->type_double = *(uint64_t*)&((*(double *)&v1) + (*(double *)&v2));
   result->type_double = *(uint64_t *)&resultdouble;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1_double: %f \n", value1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2_double: %f \n", value2);
   printf("result: %f \n", resultdouble);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado_double: %f\n", result->type_double);
 #endif
   push_operand(result, f->operands);
@@ -2138,13 +2138,13 @@ void irem_eval(Frame *f)
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Integer;
   result->value = v1 - (v1 / v2) * v2;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1: %04x\n", v1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2: %04x\n", v2);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado: %04x\n", result->value);
 #endif
   push_operand(result, f->operands);
@@ -2168,14 +2168,14 @@ void lrem_eval(Frame *f)
   result->type = CONSTANT_Long;
 
   result->type_long = *(uint64_t *)&resultlong;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1_long: %ld \n", value1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2_long: %ld \n", value2);
   printf("result: %ld \n", resultlong);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado_long: %ld \n", result->type_long);
 #endif
   push_operand(result, f->operands);
@@ -2199,13 +2199,13 @@ void frem_eval(Frame *f)
 
   result->type = CONSTANT_Float;
   result->value = *(uint64_t *)&resultfloat;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1: %04f\n", value1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2: %04f\n", value2);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado: %04x\n", result->value);
 #endif
   push_operand(result, f->operands);
@@ -2233,14 +2233,14 @@ void drem_eval(Frame *f)
   // result->type_double = *(uint64_t *)&resultdouble;
   // result->type_double = *(uint64_t*)&((*(double *)&v1) + (*(double *)&v2));
   result->type_double = *(uint64_t *)&resultdouble;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1_double: %f \n", value1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2_double: %f \n", value2);
   printf("result: %f \n", resultdouble);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado_double: %f\n", result->type_double);
 #endif
   push_operand(result, f->operands);
@@ -2255,7 +2255,7 @@ void ineg_eval(Frame *f)
   LocalVariable *result = (LocalVariable *)malloc(sizeof(LocalVariable));
   result->type = CONSTANT_Integer;
   result->value = -value->value;
-#ifdef DEBUG
+#if defined DEBUG
   printf("value: %04x\n", result->value);
 #endif
   push_operand(result, f->operands);
@@ -2273,7 +2273,7 @@ void lneg_eval(Frame *f)
   result_long = -result_long;
   result->type = CONSTANT_Long;
   result->type_long = *(uint64_t *)&result_long;
-#ifdef DEBUG
+#if defined DEBUG
   printf("type_long: %ld\n", result->type_long);
 #endif
   push_operand(result, f->operands);
@@ -2292,7 +2292,7 @@ void fneg_eval(Frame *f)
   aux = nunca_esqueca_que_voce_e_limitado - *((float*)&v1);
   result->type = CONSTANT_Float;
   result->value = *((u4*)&aux);
-  #ifdef DEBUG
+  #if defined DEBUG
     printf("neg_aux: %f\n", aux);
     printf("resultado_neg: %04x\n", result->value);
   #endif
@@ -2322,14 +2322,14 @@ void dneg_eval(Frame *f)
   // result->type_double = *(uint64_t *)&resultdouble;
   // result->type_double = *(uint64_t*)&((*(double *)&v1) + (*(double *)&v2));
   result->type_double = *(uint64_t *)&resultdouble;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1_double: %f \n", value1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2_double: %f \n", value2);
   printf("result_neg: %f \n", resultdouble);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado_double_neg: %f\n", result->type_double);
 #endif
   push_operand(result, f->operands);
@@ -2347,13 +2347,13 @@ void ishl_eval(Frame *f)
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Integer;
   result->value = v1 << (v2 & 0x1F);
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1: %04x\n", v1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2: %04x\n", (v2 & 0x1F));
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado: %04x\n", result->value);
 #endif
   push_operand(result, f->operands);
@@ -2377,13 +2377,13 @@ void lshl_eval(Frame *f)
 
   result->type = CONSTANT_Long;
   result->type_long = *(uint64_t *)&resultlong;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1: %ld \n", value1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2: %ld \n", (value2 & 0x1F));
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado: %04x \n", result->type_long);
 #endif
   push_operand(result, f->operands);
@@ -2401,13 +2401,13 @@ void ishr_eval(Frame *f)
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Integer;
   result->value = v1 >> (v2 & 0x1F);
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1: %04x\n", v1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2: %04x\n", (v2 & 0x1F));
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado: %04x\n", result->value);
 #endif
   push_operand(result, f->operands);
@@ -2431,13 +2431,13 @@ void lshr_eval(Frame *f)
 
   result->type = CONSTANT_Long;
   result->type_long = *(uint64_t *)&resultlong;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1: %ld \n", value1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2: %ld \n", (value2 & 0x1F));
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado: %04x \n", result->type_long);
 #endif
   push_operand(result, f->operands);
@@ -2455,13 +2455,13 @@ void iushr_eval(Frame *f)
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Integer;
   result->value = v1 >> (v2 & 0x1F);
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1: %04x\n", v1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2: %04x\n", (v2 & 0x1F));
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado: %04x\n", result->value);
 #endif
   push_operand(result, f->operands);
@@ -2485,13 +2485,13 @@ void lushr_eval(Frame *f)
 
   result->type = CONSTANT_Long;
   result->type_long = *(uint64_t *)&resultlong;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1: %ld \n", value1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2: %ld \n", (value2 & 0x1F));
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado: %04x \n", result->type_long);
 #endif
   push_operand(result, f->operands);
@@ -2509,13 +2509,13 @@ void iand_eval(Frame *f)
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Integer;
   result->value = v1 & v2;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1: %04x\n", v1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2: %04x\n", v2);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado: %04x\n", result->value);
 #endif
   push_operand(result, f->operands);
@@ -2539,14 +2539,14 @@ void land_eval(Frame *f)
   result->type = CONSTANT_Long;
 
   result->type_long = *(uint64_t *)&resultlong;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1_long: %ld \n", value1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2_long: %ld \n", value2);
   printf("result: %ld \n", resultlong);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado_long: %ld \n", result->type_long);
 #endif
   push_operand(result, f->operands);
@@ -2564,13 +2564,13 @@ void ior_eval(Frame *f)
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Integer;
   result->value = v1 | v2;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1: %04x\n", v1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2: %04x\n", v2);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado: %04x\n", result->value);
 #endif
   push_operand(result, f->operands);
@@ -2594,7 +2594,7 @@ void lor_eval(Frame *f)
   result->type = CONSTANT_Long;
 
   result->type_long = *(uint64_t *)&resultlong;
-  #ifdef DEBUG
+  #if defined DEBUG
     printf("v1_long: %ld \n", value1);
     printf("v2_long: %ld \n", value2);
     printf("result: %ld \n", resultlong);
@@ -2615,13 +2615,13 @@ void ixor_eval(Frame *f)
   v1 = pop_operand(f->operands)->value;
   result->type = CONSTANT_Integer;
   result->value = v1 ^ v2;
-#ifdef DEBUG
+#if defined DEBUG
   printf("v1: %04x\n", v1);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("v2: %04x\n", v2);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
   printf("resultado: %04x\n", result->value);
 #endif
   push_operand(result, f->operands);
@@ -2645,7 +2645,7 @@ void lxor_eval(Frame *f)
   result->type = CONSTANT_Long;
 
   result->type_long = *(uint64_t *)&resultlong;
-  #ifdef DEBUG
+  #if defined DEBUG
     printf("v1_long: %ld \n", value1);
     printf("v2_long: %ld \n", value2);
     printf("result: %ld \n", resultlong);
@@ -2661,7 +2661,7 @@ void iinc_eval(Frame *f)
 {
   u1 index = f->bytecode[f->pc++];
   int32_t value = ((int32_t)((int8_t)f->bytecode[f->pc++]));
-  #ifdef DEBUG
+  #if defined DEBUG
     printf("iinc Index: %d\n", index);
     printf("iinc Value: %d\n", value);
   #endif
@@ -2683,7 +2683,7 @@ void i2l_eval(Frame *f)
   long_val->type_long = *((uint64_t*)&aux);
   long_val->type = CONSTANT_Long;
   push_operand(long_val, f->operands);
-  #ifdef DEBUG
+  #if defined DEBUG
     printf("VALOR CONVERTIDO EM LONG ====> %d\n", *(int *)&long_val->type_long);
   #endif
 }
@@ -2750,7 +2750,7 @@ void l2f_eval(Frame *f)
   aux = *(long *)(&val);
   aux_float = (float)aux;
   
-  #ifdef DEBUG
+  #if defined DEBUG
     printf("l2d_val: %f\n", aux_float);
   #endif
   LocalVariable *float_val = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -2776,7 +2776,7 @@ void l2d_eval(Frame *f)
   aux = *(long *)(&val);
   aux_double = (double)aux;
   
-  #ifdef DEBUG
+  #if defined DEBUG
     printf("l2d_val: %f\n", aux_double);
   #endif
   LocalVariable *double_val = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -2801,7 +2801,7 @@ void f2i_eval(Frame *f)
   aux = *(float *)(&val);
   aux_int = (int)aux;
   
-  #ifdef DEBUG
+  #if defined DEBUG
     printf("f2i_val: %d\n", aux_int);
   #endif
   LocalVariable *int_val = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -2825,7 +2825,7 @@ void f2l_eval(Frame *f)
   aux = *(float *)(&val);
   aux_long = (long)aux;
   
-  #ifdef DEBUG
+  #if defined DEBUG
     printf("f2l_val: %ld\n", aux_long);
   #endif
   LocalVariable *long_val = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -2847,7 +2847,7 @@ void f2d_eval(Frame *f)
   double aux_double;
   aux_double = (double)val;
   
-  #ifdef DEBUG
+  #if defined DEBUG
     printf("f2d_val: %f\n", aux_double);
   #endif
   // printf("f2d_val: %f\n", aux_double);
@@ -2873,7 +2873,7 @@ void d2i_eval(Frame *f)
   aux = *(double *)(&val);
   aux_int = (int)aux;
   
-  #ifdef DEBUG
+  #if defined DEBUG
     printf("d2f_val: %d\n", aux_int);
   #endif
   LocalVariable *float_val = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -2898,7 +2898,7 @@ void d2l_eval(Frame *f)
   aux = *(double *)(&val);
   aux_long = (long)aux;
   
-  #ifdef DEBUG
+  #if defined DEBUG
     printf("d2l_val: %ld\n", aux_long);
   #endif
   LocalVariable *long_val = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -2923,7 +2923,7 @@ void d2f_eval(Frame *f)
   aux = *(double *)(&val);
   aux_float = (float)aux;
   
-  #ifdef DEBUG
+  #if defined DEBUG
     printf("d2f_val: %f\n", aux_float);
   #endif
   LocalVariable *float_val = (LocalVariable *)malloc(sizeof(LocalVariable));
@@ -3153,11 +3153,11 @@ void dcmpg_eval(Frame *f)
 void ifeq_eval(Frame *f)
 {
   int32_t v1 = pop_operand(f->operands)->value;
-  #ifdef DEBUG
+  #if defined DEBUG
   printf("valor_ifeq: %04x\n", v1);
   #endif
   int value = *(int *)&(v1);
-  #ifdef DEBUG
+  #if defined DEBUG
   printf("valor_ifeq_value: %d\n", value);
   #endif
   u1 branchbyte1, branchbyte2;
@@ -3168,7 +3168,7 @@ void ifeq_eval(Frame *f)
 
     int16_t offset = (((int16_t)branchbyte1 << 8) | (int16_t)branchbyte2);
 
-#ifdef DEBUG
+#if defined DEBUG
     printf("ifeq: vou pular %d\n", (offset - 3));
 #endif
 
@@ -3185,10 +3185,10 @@ void ifne_eval(Frame *f)
   u1 branchbyte1, branchbyte2;
   branchbyte1 = f->bytecode[f->pc++];
   branchbyte2 = f->bytecode[f->pc++];
-  #ifdef DEBUG
+  #if defined DEBUG
   printf("valor_ifne: %04x\n", v1);
   #endif
-  #ifdef DEBUG
+  #if defined DEBUG
   printf("valor_ifne_value: %d\n", value);
   #endif
   if (value != 0)
@@ -3196,7 +3196,7 @@ void ifne_eval(Frame *f)
 
     int16_t offset = (((int16_t)branchbyte1 << 8) | (int16_t)branchbyte2);
 
-#ifdef DEBUG
+#if defined DEBUG
     printf("ifne: vou pular %d\n", (offset - 3));
 #endif
 
@@ -3213,11 +3213,11 @@ void iflt_eval(Frame *f)
   u1 branchbyte1, branchbyte2;
   branchbyte1 = f->bytecode[f->pc++];
   branchbyte2 = f->bytecode[f->pc++];
-  #ifdef DEBUG
+  #if defined DEBUG
   printf("valor_iflt: %04x\n", v1);
   #endif
 
-  #ifdef DEBUG
+  #if defined DEBUG
   printf("valor_iflt_value: %d\n", value);
   #endif
   if (value < 0)
@@ -3225,7 +3225,7 @@ void iflt_eval(Frame *f)
 
     int16_t offset = (((int16_t)branchbyte1 << 8) | (int16_t)branchbyte2);
 
-#ifdef DEBUG
+#if defined DEBUG
     printf("iflt: vou pular %d\n", (offset - 3));
 #endif
 
@@ -3242,11 +3242,11 @@ void ifge_eval(Frame *f)
   u1 branchbyte1, branchbyte2;
   branchbyte1 = f->bytecode[f->pc++];
   branchbyte2 = f->bytecode[f->pc++];
-  #ifdef DEBUG
+  #if defined DEBUG
   printf("valor_ifge: %04x\n", v1);
   #endif
   int value = *(int *)&(v1);
-  #ifdef DEBUG
+  #if defined DEBUG
   printf("valor_ifge_value: %d\n", value);
   #endif
   if (value >= 0)
@@ -3254,7 +3254,7 @@ void ifge_eval(Frame *f)
 
     int16_t offset = (((int16_t)branchbyte1 << 8) | (int16_t)branchbyte2);
 
-#ifdef DEBUG
+#if defined DEBUG
     printf("ifge: vou pular %d\n", (offset - 3));
 #endif
 
@@ -3271,10 +3271,10 @@ void ifgt_eval(Frame *f)
   u1 branchbyte1, branchbyte2;
   branchbyte1 = f->bytecode[f->pc++];
   branchbyte2 = f->bytecode[f->pc++];
-  #ifdef DEBUG
+  #if defined DEBUG
   printf("valor_ifgt: %04x\n", v1);
   #endif
-  #ifdef DEBUG
+  #if defined DEBUG
   printf("valor_ifgt_value: %d\n", value);
   #endif
   if (value > 0)
@@ -3282,7 +3282,7 @@ void ifgt_eval(Frame *f)
 
     int16_t offset = (((int16_t)branchbyte1 << 8) | (int16_t)branchbyte2);
 
-#ifdef DEBUG
+#if defined DEBUG
     printf("ifgt: vou pular %d\n", (offset - 3));
 #endif
 
@@ -3296,11 +3296,11 @@ void ifgt_eval(Frame *f)
 void ifle_eval(Frame *f)
 {
   int32_t v1 = (int32_t)pop_operand(f->operands)->value;
-  #ifdef DEBUG
+  #if defined DEBUG
   printf("valor_ifle: %04x\n", v1);
   #endif
   int32_t value = *(int32_t *)&(v1);
-  #ifdef DEBUG
+  #if defined DEBUG
   printf("valor_ifle_value: %d\n", value);
   #endif
   u1 branchbyte1, branchbyte2;
@@ -3311,7 +3311,7 @@ void ifle_eval(Frame *f)
 
     int16_t offset = ((int16_t)(branchbyte1 << 8) | (int16_t)branchbyte2);
 
-    #ifdef DEBUG
+    #if defined DEBUG
         printf("ifle: vou pular %d\n", (offset - 3));
     #endif
 
@@ -3757,7 +3757,7 @@ void areturn_eval(Frame *f)
 void return_eval(Frame *f)
 {
   pop(JvmStack);
-#ifdef DEBUG
+#if defined DEBUG
 // printf("%02x", JvmStack->f->pc);
 #endif
 }
@@ -3775,10 +3775,10 @@ void getstatic_eval(Frame *f)
   // recupera Utf8 da referencia
   char *class_name = ret_method_name(f->cp, index);
 
-#ifdef DEBUG
+#if defined DEBUG
   printf("nome da classe: %s\n", class_name);
 #endif
-#ifdef DEBUG
+#if defined DEBUG
 // printf("local_variable_to_empilhar: %04x\n", f->local_variables[index].value);
 #endif
   if (strcmp(class_name, "java/lang/System") == 0)
@@ -3794,7 +3794,7 @@ void getstatic_eval(Frame *f)
 
   char *field_desc = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.descriptor_index);
 
-#ifdef DEBUG
+#if defined DEBUG
   // printf("field_name: %s\n", field_name);
   printf("field_desc: %s\n", field_desc);
 #endif
@@ -3806,7 +3806,7 @@ void getstatic_eval(Frame *f)
 
   // if (strcmp(field_desc, "[I") == 0)
   // {
-  //   #ifdef DEBUG
+  //   #if defined DEBUG
   //       printf("get static_data_low: %04x\n", *(GLOBAL_CLASS->fields->staticData->low));
   //   #endif
   //   lv->type_array.array = (u4 *)GLOBAL_CLASS->fields->staticData->low;
@@ -3814,7 +3814,7 @@ void getstatic_eval(Frame *f)
   // } else if((field_desc[0] == '[' ) && (field_desc[1] == 'L' )){
   //   lv->type_array.array = (u4 *)GLOBAL_CLASS->fields->staticData->low;
   //   lv->type = CONSTANT_Fieldref;
-  //   #ifdef DEBUG
+  //   #if defined DEBUG
   //       printf("getstatic field_desc: %s\n", field_desc);
   //   #endif
   // }
@@ -3840,7 +3840,7 @@ void putstatic_eval(Frame *f)
 
   char *field_desc = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.descriptor_index);
 
-#ifdef DEBUG
+#if defined DEBUG
   printf("field_name: %s\n", field_name);
   printf("field_desc: %s\n", field_desc);
 #endif
@@ -3848,7 +3848,7 @@ void putstatic_eval(Frame *f)
   LocalVariable *lv = pop_operand(f->operands);
   // lv = f->operands->top;
 
-#ifdef DEBUG
+#if defined DEBUG
   printf("put lv_putstatic: %04x\n", lv->value);
 #endif
 
@@ -3904,7 +3904,7 @@ void putstatic_eval(Frame *f)
   //     GLOBAL_CLASS->fields->staticData->high = NULL;
   //     GLOBAL_CLASS->fields->staticData->low = &(lv->value);
 
-  // #ifdef DEBUG
+  // #if defined DEBUG
   //     printf("put static_data_low: %04x\n", *(GLOBAL_CLASS->fields->staticData->low));
   // #endif
   //   }
@@ -3915,7 +3915,7 @@ void putstatic_eval(Frame *f)
   //     GLOBAL_CLASS->fields->staticData->high = NULL;
   //     GLOBAL_CLASS->fields->staticData->low[0] = lv->value;
 
-  // #ifdef DEBUG
+  // #if defined DEBUG
   //     printf("put static_data_low: %04x\n", GLOBAL_CLASS->fields->staticData->low[0]);
   // #endif
   //   }
@@ -3940,7 +3940,7 @@ void getfield_eval(Frame *f)
 
   char *field_desc = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.descriptor_index);
 
-#ifdef DEBUG
+#if defined DEBUG
   printf("get field name: %s\n", field_name);
   printf("get field desc: %s\n", field_desc);
 #endif
@@ -3984,7 +3984,7 @@ void putfield_eval(Frame *f)
 
   char *field_desc = readUtf8(f->cp, f->cp[name_n_type - 1].NameAndType.descriptor_index);
 
-#ifdef DEBUG
+#if defined DEBUG
   printf("get field name: %s\n", field_name);
   printf("get field desc: %s\n", field_desc);
 #endif
@@ -4107,7 +4107,7 @@ void invokevirtual_eval(Frame *f)
   	{
   		frame->local_variables[i] = *lv;
   	}
-#ifdef DEBUG
+#if defined DEBUG
       printf("DEBUG DE VERDADE:  ==== %04x\n", frame->local_variables[i].value);
 #endif
     }
@@ -4121,20 +4121,20 @@ void invokevirtual_eval(Frame *f)
  */
 void invokespecial_eval(Frame *f)
 {
-#ifdef DEBUG
+#if defined DEBUG
   printf("Invocando satanás...\n");
 #endif
   // recupera Utf8 da referencia
   u2 index = getIndexFromb1b2(f);
-#ifdef DEBUG
+#if defined DEBUG
 // printf("%d", index);
 #endif
 //algo
-#ifdef DEBUG
+#if defined DEBUG
 // printf("index: %02x\n",f->cp[index].Class.name_index);
 #endif
   char *class_name = ret_method_name(f->cp, index);
-#ifdef DEBUG
+#if defined DEBUG
   printf("class_name: %s\n", class_name);
 #endif
 
@@ -4188,7 +4188,7 @@ void invokespecial_eval(Frame *f)
   	{
   		frame->local_variables[i] = *lv;
   	}
-#ifdef DEBUG
+#if defined DEBUG
     printf("DEBUG DE VERDADE:  ==== %04x\n", frame->local_variables[i].value);
 #endif
   }
@@ -4219,7 +4219,7 @@ void invokestatic_eval(Frame *f)
 
   u2 args = count_args(method_desc);
 
-  #ifdef DEBUG
+  #if defined DEBUG
     printf("Argumentos %d", args);
   #endif
 
@@ -4242,7 +4242,7 @@ void invokestatic_eval(Frame *f)
   	{
   		frame->local_variables[i] = *lv;
   	}
-    #ifdef DEBUG
+    #if defined DEBUG
         printf("DEBUG DE VERDADE:  ==== %04x\n", frame->local_variables[i].value);
     #endif
   }
@@ -4314,7 +4314,7 @@ void newarray_eval(Frame *f)
 
   if (count < 0)
   {
-#ifdef DEBUG
+#if defined DEBUG
     printf("NegativeArraySizeException.\n");
 #endif
   }
@@ -4355,7 +4355,7 @@ void newarray_eval(Frame *f)
     case T_INT:
       rlv->type = CONSTANT_Integer;
       arrayref = (u4 *)malloc((count) * sizeof(u4));
-#ifdef DEBUG
+#if defined DEBUG
       printf("array ref: %x \n", (u4)arrayref);
 #endif
       break;
@@ -4368,7 +4368,7 @@ void newarray_eval(Frame *f)
     }
     rlv->type_array.array = (u4 *)arrayref;
     rlv->type_array.size = count;
-#ifdef DEBUG
+#if defined DEBUG
     printf("array type: %x \n", (u4)(rlv->type_array.array));
     printf("rlv type: %x \n", rlv->type);
 #endif
@@ -4396,7 +4396,7 @@ void anewarray_eval(Frame *f)
   rlv->type_array.array = (Object *)arrayref;
   rlv->type_array.size = count;
 
-#ifdef DEBUG
+#if defined DEBUG
   printf("arrayref: %04x\n", rlv->type_array.array);
 #endif
 

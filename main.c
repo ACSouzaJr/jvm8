@@ -69,10 +69,10 @@ int main(int argc, char *argv[])
   {
     initialize_op_codes();
     char *dash;
-    if ((dash = strrchr(argv[1],'/')) != NULL)
+    if ((dash = strrchr(argv[1],'\\')) != NULL)
     {
       strncpy(PATH, argv[1], dash-argv[1]);
-      #ifdef DEBUG
+      #if defined DEBUG
       printf("Path: %s \n", PATH);
       #endif
     }
