@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
   {
     initialize_op_codes();
     char *dash;
-    dash = strrchr(argv[1],'/');
+    dash = strrchr(argv[1],'\\');
     strncpy(PATH, argv[1], dash-argv[1]);
 
     printf("Path: %s \n", PATH);

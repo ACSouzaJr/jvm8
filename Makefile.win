@@ -1,0 +1,49 @@
+# Project: jvm8.1
+# Makefile created by Dev-C++ 5.11
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+OBJ      = classfile.o frame.o helpers.o interpreter.o main.o op_codes_initializer.o stack_frame.o stack_operands.o
+LINKOBJ  = classfile.o frame.o helpers.o interpreter.o main.o op_codes_initializer.o stack_frame.o stack_operands.o
+LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc
+INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
+CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
+BIN      = jvm8.1.exe
+CXXFLAGS = $(CXXINCS) -ansi -std=c99
+CFLAGS   = $(INCS) -ansi -std=c99
+RM       = rm.exe -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CC) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+classfile.o: classfile.c
+	$(CC) -c classfile.c -o classfile.o $(CFLAGS)
+
+frame.o: frame.c
+	$(CC) -c frame.c -o frame.o $(CFLAGS)
+
+helpers.o: helpers.c
+	$(CC) -c helpers.c -o helpers.o $(CFLAGS)
+
+interpreter.o: interpreter.c
+	$(CC) -c interpreter.c -o interpreter.o $(CFLAGS)
+
+main.o: main.c
+	$(CC) -c main.c -o main.o $(CFLAGS)
+
+op_codes_initializer.o: op_codes_initializer.c
+	$(CC) -c op_codes_initializer.c -o op_codes_initializer.o $(CFLAGS)
+
+stack_frame.o: stack_frame.c
+	$(CC) -c stack_frame.c -o stack_frame.o $(CFLAGS)
+
+stack_operands.o: stack_operands.c
+	$(CC) -c stack_operands.c -o stack_operands.o $(CFLAGS)
