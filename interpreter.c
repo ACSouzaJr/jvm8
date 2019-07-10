@@ -3395,8 +3395,8 @@ void if_icmpgt_eval(Frame *f)
   branchbyte2 = f->bytecode[f->pc++];
 
   int16_t offset = ((branchbyte1 << 8) | branchbyte2);
-  int32_t value2 = pop_operand(f->operands)->value;
-  int32_t value1 = pop_operand(f->operands)->value;
+  int32_t value2 = (int32_t)pop_operand(f->operands)->value;
+  int32_t value1 = (int32_t)pop_operand(f->operands)->value;
   if (value1 > value2)
   {
     f->pc += offset - 3;
