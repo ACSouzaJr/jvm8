@@ -3144,11 +3144,11 @@ void ifeq_eval(Frame *f)
   #ifdef DEBUG
   printf("valor_ifeq_value: %d\n", value);
   #endif
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
   if (value == 0)
   {
-    u1 branchbyte1, branchbyte2;
-    branchbyte1 = f->bytecode[f->pc++];
-    branchbyte2 = f->bytecode[f->pc++];
 
     int16_t offset = ((branchbyte1 << 8) | branchbyte2);
 
@@ -3173,11 +3173,11 @@ void ifne_eval(Frame *f)
   #ifdef DEBUG
   printf("valor_ifne_value: %d\n", value);
   #endif
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
   if (value != 0)
   {
-    u1 branchbyte1, branchbyte2;
-    branchbyte1 = f->bytecode[f->pc++];
-    branchbyte2 = f->bytecode[f->pc++];
 
     int16_t offset = ((branchbyte1 << 8) | branchbyte2);
 
@@ -3202,11 +3202,11 @@ void iflt_eval(Frame *f)
   #ifdef DEBUG
   printf("valor_iflt_value: %d\n", value);
   #endif
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
   if (value < 0)
   {
-    u1 branchbyte1, branchbyte2;
-    branchbyte1 = f->bytecode[f->pc++];
-    branchbyte2 = f->bytecode[f->pc++];
 
     int16_t offset = ((branchbyte1 << 8) | branchbyte2);
 
@@ -3231,11 +3231,11 @@ void ifge_eval(Frame *f)
   #ifdef DEBUG
   printf("valor_ifge_value: %d\n", value);
   #endif
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
   if (value >= 0)
   {
-    u1 branchbyte1, branchbyte2;
-    branchbyte1 = f->bytecode[f->pc++];
-    branchbyte2 = f->bytecode[f->pc++];
 
     int16_t offset = ((branchbyte1 << 8) | branchbyte2);
 
@@ -3260,11 +3260,11 @@ void ifgt_eval(Frame *f)
   #ifdef DEBUG
   printf("valor_ifgt_value: %d\n", value);
   #endif
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
   if (value > 0)
   {
-    u1 branchbyte1, branchbyte2;
-    branchbyte1 = f->bytecode[f->pc++];
-    branchbyte2 = f->bytecode[f->pc++];
 
     int16_t offset = ((branchbyte1 << 8) | branchbyte2);
 
