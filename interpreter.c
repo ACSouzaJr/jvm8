@@ -3919,7 +3919,7 @@ void putstatic_eval(Frame *f)
 void getfield_eval(Frame *f)
 {
   u2 index = getIndexFromb1b2(f);
-  LocalVariable *lv = pop_operand(f->operands);
+  LocalVariable *obj_ref = pop_operand(f->operands);
 
   // Fieldref Name and type
   u2 name_n_type = f->cp[index - 1].Fieldref.name_and_type_index;
@@ -3933,15 +3933,25 @@ void getfield_eval(Frame *f)
   printf("get field desc: %s\n", field_desc);
 #endif
 
-  ClassFile *cf = Mem.classes_arr[lv->value];
+  ClassFile *cf = Mem.classes_arr[(u4)obj_ref->type_object.class_index];
 
-  field_info *field = find_field(cf, field_name, field_desc);
+  LocalVariable *lv;
 
-  // lv->type = CONSTANT_Fieldref;
-  // lv->value = *(u4 *)&field;
+  // field_info *field = find_field(cf, field_name, field_desc);
 
-  // // EMpilha referencia para o field
-  push_operand(field->static_data, f->operands);
+  for (size_t i = 0; i < cf->fields_count; i++)
+  {
+    
+    if (strcmp(field_name, obj_ref->type_object.fields[i].field_name) == 0 || strcmp(field_desc, obj_ref->type_object.fields[i].field_desc) == 0)
+    {
+      lv = obj_ref->type_object.fields[i].value;
+      break;
+    }
+    
+  }
+
+  // EMpilha referencia para o field
+  push_operand(lv, f->operands);
 }
 
 /**
@@ -3970,10 +3980,17 @@ void putfield_eval(Frame *f)
   LocalVariable *value = pop_operand(f->operands);
   LocalVariable *obj_ref = pop_operand(f->operands);
 
-  ClassFile *cf = Mem.classes_arr[obj_ref->value];
-  field_info *field = find_field(cf, field_name, field_desc);
+  ClassFile *cf = Mem.classes_arr[(u4)obj_ref->type_object.class_index];
+  // field_info *field = find_field(cf, field_name, field_desc);
 
-  field->static_data = value;
+  for (size_t i = 0; i < cf->fields_count; i++) 
+  {
+    if (strcmp(field_name, obj_ref->type_object.fields[i].field_name) == 0 || strcmp(field_desc, obj_ref->type_object.fields[i].field_desc) == 0)
+    {
+      obj_ref->type_object.fields[i].value = value;
+      break;
+    }
+  }
 }
 
 /**
@@ -4217,7 +4234,24 @@ void new_eval(Frame *f)
   u2 class_index = find_class(class_name);
   LocalVariable *lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   lv->type = CONSTANT_Class;
-  lv->value = class_index;
+  lv->type_object.class_index = class_index;
+  ClassFile *cf = Mem.classes_arr[class_index];
+
+  lv->type_object.fields = (InstanceField*) malloc(sizeof(InstanceField) * cf->fields_count);
+
+  for (size_t i = 0; i < cf->fields_count; i++)
+  {
+    char *field_name = readUtf8(cf->constant_pool, cf->fields[i].name_index);
+    char *field_desc = readUtf8(cf->constant_pool, cf->fields[i].descriptor_index);
+
+    lv->type_object.fields[i].field_name = field_name;
+
+    lv->type_object.fields[i].field_desc = field_desc;
+
+    lv->type_object.fields[i].value = (LocalVariable*) malloc(sizeof(LocalVariable));
+
+  }
+
   // Empilha referencia para a classe no array de classes;
   push_operand(lv, f->operands);
 }
