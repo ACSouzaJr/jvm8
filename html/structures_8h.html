@@ -91,6 +91,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">structures.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Implementação das estruturas de dados da <a class="el" href="structJVM.html">JVM</a>.  Contém as implementações das principais estruturas de dados usadas pela <a class="el" href="structJVM.html">JVM</a>.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for structures.h:</div>
@@ -110,10 +113,13 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcp__info.html">cp_info</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct para indicar o tipo de constant_pool.  <a href="structcp__info.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structline__number__table__type.html">line_number_table_type</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct para representar a estrutura LIneNumberTable.  <a href="structline__number__table__type.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structexception__table__type.html">exception_table_type</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct para representar a estrutura ExceptionTableType.  <a href="structexception__table__type.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTop__variable__info.html">Top_variable_info</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -170,8 +176,10 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLocalVariable.html">LocalVariable</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structClassFile.html">ClassFile</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct que representa os campos do bytecode.  <a href="structClassFile.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMethod.html">Method</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct que contém o array de classfiles e o número de classes já carregadas em memória.  <a href="structMethod.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -182,8 +190,6 @@ Macros</h2></td></tr>
 <tr class="separator:a55ef8d87fd202b8417704c089899c5b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae391a1d79bb0c8cbc283f0283e3c098b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structures_8h.html#ae391a1d79bb0c8cbc283f0283e3c098b">u4</a>&#160;&#160;&#160;uint32_t</td></tr>
 <tr class="separator:ae391a1d79bb0c8cbc283f0283e3c098b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad72dbcf6d0153db1b8d8a58001feed83"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structures_8h.html#ad72dbcf6d0153db1b8d8a58001feed83">DEBUG</a></td></tr>
-<tr class="separator:ad72dbcf6d0153db1b8d8a58001feed83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -213,7 +219,8 @@ Enumerations</h2></td></tr>
 &#160;&#160;<a class="el" href="structures_8h.html#adf764cbdea00d65edcd07bb9953ad2b7a52dbe317b7b19ea9d13a8b185842d245">CONSTANT_MethodType</a> = 16, 
 <a class="el" href="structures_8h.html#adf764cbdea00d65edcd07bb9953ad2b7a914abae8d35d480c7856e97ca4fc00e0">CONSTANT_InvokeDynamic</a> = 18
 <br />
- }</td></tr>
+ }<tr class="memdesc:adf764cbdea00d65edcd07bb9953ad2b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum das tags CONSTANT.  <a href="structures_8h.html#adf764cbdea00d65edcd07bb9953ad2b7">More...</a><br /></td></tr>
+</td></tr>
 <tr class="separator:adf764cbdea00d65edcd07bb9953ad2b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99fb83031ce9923c84392b4e92f956b5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br />
 &#160;&#160;<a class="el" href="structures_8h.html#a99fb83031ce9923c84392b4e92f956b5abb2e4660927970307626910bc6f3a8cd">ITEM_Top</a>, 
@@ -249,23 +256,14 @@ Variables</h2></td></tr>
 <tr class="memitem:a17dd988cd7a015cb95f53b4dcfd5842a"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structures_8h.html#a17dd988cd7a015cb95f53b4dcfd5842a">GLOBAL_ptr</a></td></tr>
 <tr class="separator:a17dd988cd7a015cb95f53b4dcfd5842a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a114eb3fd8a0627af63075745a5e5d765"><td class="memItemLeft" align="right" valign="top">enum  { ... } &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structures_8h.html#a114eb3fd8a0627af63075745a5e5d765">pool_tags</a></td></tr>
+<tr class="memdesc:a114eb3fd8a0627af63075745a5e5d765"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum das tags CONSTANT.  <a href="#a114eb3fd8a0627af63075745a5e5d765">More...</a><br /></td></tr>
 <tr class="separator:a114eb3fd8a0627af63075745a5e5d765"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae33e7c4068cbc1cc6d0ce68a87642485"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structClassFile.html">ClassFile</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structures_8h.html#ae33e7c4068cbc1cc6d0ce68a87642485">GLOBAL_CLASS</a></td></tr>
 <tr class="separator:ae33e7c4068cbc1cc6d0ce68a87642485"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ad72dbcf6d0153db1b8d8a58001feed83"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DEBUG</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Implementação das estruturas de dados da <a class="el" href="structJVM.html">JVM</a>.  Contém as implementações das principais estruturas de dados usadas pela <a class="el" href="structJVM.html">JVM</a>. </p>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="a64f8055b64cf2a4c299c841130c5c938"></a>
 <div class="memitem">
 <div class="memproto">
@@ -337,6 +335,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Enum das tags CONSTANT. </p>
 <p>Tabela contendo o valor para cada tag da constante (tipo id) </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="adf764cbdea00d65edcd07bb9953ad2b7a0c47012a59af298b394855447822a7e3"></a>CONSTANT_Class&#160;</td><td class="fielddoc">
@@ -467,6 +467,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Enum das tags CONSTANT. </p>
 <p>Tabela contendo o valor para cada tag da constante (tipo id) </p>
 
 </div>

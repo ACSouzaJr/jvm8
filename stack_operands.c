@@ -1,8 +1,17 @@
+/**
+* @file         stack_operands.c
+* @brief        Funções de gerenciamento da pilha de operandos.
+* @detail       Contém as implementações das funções de gerenciamento para a pilha de operandos da JVM.
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "structures.h"
 #include "stack_operands.h"
 
+/**
+ * @brief Adiciona um novo operando dentro da pilha de operandos do Frame.
+ */
 void push_operand(LocalVariable * operand, StackOperand *stack_operand){
     Operand *ptr = (Operand *)malloc(sizeof(Operand));
     if (ptr == NULL)
@@ -35,6 +44,9 @@ void push_operand(LocalVariable * operand, StackOperand *stack_operand){
     // return *stack_operand;
 }
 
+/**
+ * @brief Retira o topo da pilha de operandos e retorna para o chamador.
+ */
 LocalVariable* pop_operand(StackOperand *stack_operand){
     LocalVariable *aux;
     Operand *ptr;
@@ -61,6 +73,9 @@ LocalVariable* pop_operand(StackOperand *stack_operand){
     return aux;
 }
 
+/**
+ * @brief Retorna o topo da pilha de operandos.
+ */
 LocalVariable* top_operand(StackOperand *stack_operand){
     return stack_operand->top->f;
 }

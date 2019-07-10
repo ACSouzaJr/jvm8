@@ -87,6 +87,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">frame.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Criação do <a class="el" href="structFrame.html">Frame</a> da <a class="el" href="structJVM.html">JVM</a>.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
 <code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;string.h&gt;</code><br />
@@ -103,9 +106,12 @@ Include dependency graph for frame.c:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a3def2e70c9f5507f4be53e969bd5c4b1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structFrame.html">Frame</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frame_8c.html#a3def2e70c9f5507f4be53e969bd5c4b1">cria_frame</a> (<a class="el" href="structcp__info.html">cp_info</a> *cp, <a class="el" href="structmethod__info.html">method_info</a> *mi)</td></tr>
+<tr class="memdesc:a3def2e70c9f5507f4be53e969bd5c4b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cria um novo <a class="el" href="structFrame.html">Frame</a> para ser colocado na pilha de frames da <a class="el" href="structJVM.html">JVM</a>.  <a href="#a3def2e70c9f5507f4be53e969bd5c4b1">More...</a><br /></td></tr>
 <tr class="separator:a3def2e70c9f5507f4be53e969bd5c4b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Criação do <a class="el" href="structFrame.html">Frame</a> da <a class="el" href="structJVM.html">JVM</a>. </p>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="a3def2e70c9f5507f4be53e969bd5c4b1"></a>
 <div class="memitem">
 <div class="memproto">
@@ -129,6 +135,9 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Cria um novo <a class="el" href="structFrame.html">Frame</a> para ser colocado na pilha de frames da <a class="el" href="structJVM.html">JVM</a>. </p>
+<p>Usa o constant pool e a informação do método para alocar espaço na memória para um novo frame de execução. </p>
 
 </div>
 </div>

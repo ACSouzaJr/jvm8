@@ -12,7 +12,7 @@ digraph "interpreter.c"
   Node1 -> Node5 [color="midnightblue",fontsize="10",style="solid"];
   Node5 [label="math.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node1 -> Node6 [color="midnightblue",fontsize="10",style="solid"];
-  Node6 [label="structures.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structures_8h.html"];
+  Node6 [label="structures.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structures_8h.html",tooltip="Implementação das estruturas de dados da JVM.  Contém as implementações das principais estruturas de ..."];
   Node6 -> Node7 [color="midnightblue",fontsize="10",style="solid"];
   Node7 [label="stdint.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node1 -> Node8 [color="midnightblue",fontsize="10",style="solid"];

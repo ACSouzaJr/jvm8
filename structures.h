@@ -1,3 +1,9 @@
+/**
+* @file         structures.h
+* @brief        Implementação das estruturas de dados da JVM.
+* @detail       Contém as implementações das principais estruturas de dados usadas pela JVM.
+*/
+
 #ifndef STRUCTURES_H
 #define STRUCTURES_H
 
@@ -6,13 +12,17 @@
 #define u1 uint8_t
 #define u2 uint16_t
 #define u4 uint32_t
-// #define DEBUG
+#define DEBUG
 
 extern char *GLOBAL_ptr;
 /**
   Tabela contendo o valor para cada tag da constante (tipo id)
 */
 
+
+/**
+ * @brief Enum das tags CONSTANT.
+ */
 enum
 {
   CONSTANT_Class = 7,
@@ -33,11 +43,11 @@ enum
 } pool_tags;
 
 /**
-  Struct para indicar o tipo de constant_pool
-  (tendo uma tag associada e mais atributos em função da constante)
-  
-  Union: serve para alocar espaço pra maior struct
-*/
+ * @brief Struct para indicar o tipo de constant_pool
+ *
+ * Indica o tipo de constant_pool (tendo uma tag associada e mais atributos em função da constante)
+ * Union: serve para alocar espaço para a maior struct.
+ */
 typedef struct
 {
   u1 tag;
@@ -126,12 +136,19 @@ typedef struct
 
 typedef struct attribute_info attribute_info;
 
+/**
+ * @brief Struct para representar a estrutura LIneNumberTable
+ */
 typedef struct
 {
   u2 start_pc;
   u2 line_number;
 } line_number_table_type;
 
+
+/**
+ * @brief Struct para representar a estrutura ExceptionTableType.
+ */
 typedef struct
 {
   u2 start_pc;
@@ -438,7 +455,13 @@ struct LocalVariable
   
 };
 
-// class type
+
+/**
+ * @brief Struct que representa os campos do bytecode
+ * 
+ * Struct que representa o ClassFile, para ser alocada pelo ClassLoader e preenchida pela função
+ * read_class_file()
+ */
 typedef struct
 {
   u4 magic;         // 0xCAFEBABE
@@ -459,6 +482,10 @@ typedef struct
   attribute_info *attributes; //[attributes_count];
 } ClassFile;
 
+
+/**
+ * @brief Struct que contém o array de classfiles e o número de classes já carregadas em memória.
+ */
 typedef struct
 {
   // array de classfiles, contem as classes ja carregadas

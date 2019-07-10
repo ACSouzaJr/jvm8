@@ -1,3 +1,7 @@
+/**
+* @file         frame.c
+* @brief        Criação do Frame da JVM.
+*/
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -5,6 +9,11 @@
 #include "classfile.h"
 #include "frame.h"
 
+/**
+ * @brief Cria um novo Frame para ser colocado na pilha de frames da JVM.
+ *
+ * Usa o constant pool e a informação do método para alocar espaço na memória para um novo frame de execução. 
+ */
 Frame* cria_frame(cp_info *cp, method_info *mi){
   Frame * frame = (Frame *) malloc(sizeof(Frame));
   frame->pc = 0;

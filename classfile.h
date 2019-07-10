@@ -8,6 +8,7 @@ extern u1 name_or_type;
 extern char *FILE_NAME;
 extern StackFrame *JvmStack;
 extern Method Mem;
+extern char* PATH;
 
 u1 u1Read(FILE *);
 u2 u2Read(FILE *);
@@ -21,7 +22,7 @@ attribute_info *readAttributes(cp_info *cp, u2 attr_count, FILE *fp);
 void printAttributes(attribute_info *field, cp_info *cp, u2 attr_count);
 void evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile * cf);
 void recursive_print(cp_info *cp, u2 index, char *str);
-void rec_method_name(cp_info *cp, u2 index, char *str);
+char* rec_method_name(cp_info *cp, u2 index);
 char *ret_method_name(cp_info *cp, u2 index);
 char *print_reference(cp_info *cp, u2 index);
 verification_type_info *fillVerificationTypeInfo(FILE *fp, u2 verification_type_length);

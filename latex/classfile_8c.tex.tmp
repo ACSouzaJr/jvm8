@@ -1,5 +1,10 @@
 \hypertarget{classfile_8c}{}\section{classfile.\+c File Reference}
 \label{classfile_8c}\index{classfile.\+c@{classfile.\+c}}
+
+
+Classfile functions  Funções de apoio e leitura do \hyperlink{structClassFile}{Class\+File} (bytecode)  
+
+
 {\ttfamily \#include $<$stdio.\+h$>$}\\*
 {\ttfamily \#include $<$stdlib.\+h$>$}\\*
 {\ttfamily \#include \char`\"{}structures.\+h\char`\"{}}\\*
@@ -13,27 +18,27 @@ Include dependency graph for classfile.\+c\+:
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{structures_8h_a64f8055b64cf2a4c299c841130c5c938}{u1} \hyperlink{classfile_8c_a13b463381f7cf580d002e6631c0c4ea8}{u1\+Read} (F\+I\+LE $\ast$file)
-\item 
+\begin{DoxyCompactList}\small\item\em Faz a leitura de 1 byte do arquivo .class fornecido no path. \end{DoxyCompactList}\item 
 \hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} \hyperlink{classfile_8c_aae51575c6f1d6ce808fbc88a3037c4ed}{u2\+Read} (F\+I\+LE $\ast$file)
-\item 
+\begin{DoxyCompactList}\small\item\em Faz a leitura de 2 bytes do arquivo .class fornecido no path. \end{DoxyCompactList}\item 
 \hyperlink{structures_8h_ae391a1d79bb0c8cbc283f0283e3c098b}{u4} \hyperlink{classfile_8c_aad8c26a8aaff63010bb790df878f0950}{u4\+Read} (F\+I\+LE $\ast$file)
-\item 
+\begin{DoxyCompactList}\small\item\em Faz a leitura de 4 bytes do arquivo .class fornecido no path. \end{DoxyCompactList}\item 
 char $\ast$ \hyperlink{classfile_8c_abbc0a67a74cf4718872b86f0a898575b}{print\+Version} (\hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} version)
-\item 
+\begin{DoxyCompactList}\small\item\em Printa a versão do arquivo .class. \end{DoxyCompactList}\item 
 char $\ast$ \hyperlink{classfile_8c_a77c5107c582c86dedb65853efabd9302}{read\+Utf8} (\hyperlink{structcp__info}{cp\+\_\+info} $\ast$cp, \hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} index)
-\item 
+\begin{DoxyCompactList}\small\item\em Faz a leitua dos bytes no formato U\+T\+F-\/8. \end{DoxyCompactList}\item 
 void \hyperlink{classfile_8c_aa73a2b8f66296e2fcdec5b6f029c1f88}{print\+Const\+Type} (\hyperlink{structures_8h_ae391a1d79bb0c8cbc283f0283e3c098b}{u4} high\+\_\+bytes, \hyperlink{structures_8h_ae391a1d79bb0c8cbc283f0283e3c098b}{u4} low\+\_\+bytes, \hyperlink{structures_8h_a64f8055b64cf2a4c299c841130c5c938}{u1} type)
-\item 
+\begin{DoxyCompactList}\small\item\em Printa o tipo C\+O\+N\+S\+T\+A\+NT. \end{DoxyCompactList}\item 
 char $\ast$ \hyperlink{classfile_8c_aae8cbe5dd2db133b98988d9da5c5efe7}{print\+Type} (\hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} type)
-\item 
+\begin{DoxyCompactList}\small\item\em Printa o tipo do objeto. \end{DoxyCompactList}\item 
 char $\ast$ \hyperlink{classfile_8c_a5636f6173ac96d0316cd018b68b34034}{print\+Flag} (\hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} type, \hyperlink{structures_8h_a64f8055b64cf2a4c299c841130c5c938}{u1} flag)
-\item 
+\begin{DoxyCompactList}\small\item\em Printa a flag correspondente ao tipo recebido. \end{DoxyCompactList}\item 
 \hyperlink{structattribute__info}{attribute\+\_\+info} $\ast$ \hyperlink{classfile_8c_ab2c33d049c34b50ead32e4568387353c}{read\+Attributes} (\hyperlink{structcp__info}{cp\+\_\+info} $\ast$cp, \hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} attr\+\_\+count, F\+I\+LE $\ast$fp)
-\item 
+\begin{DoxyCompactList}\small\item\em Lê os atributos do bytecode recebido. \end{DoxyCompactList}\item 
 void \hyperlink{classfile_8c_ab694dc30480958e872cdf78b94b9cefa}{print\+Verification\+Type\+Info} (\hyperlink{structverification__type__info}{verification\+\_\+type\+\_\+info} $\ast$ver\+\_\+type, \hyperlink{structcp__info}{cp\+\_\+info} $\ast$cp, \hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} verification\+\_\+type\+\_\+length)
-\item 
+\begin{DoxyCompactList}\small\item\em Printa o tipo a partir da tag. \end{DoxyCompactList}\item 
 \hyperlink{structverification__type__info}{verification\+\_\+type\+\_\+info} $\ast$ \hyperlink{classfile_8c_add61e24daf8356973e908b3f1cfd5a24}{fill\+Verification\+Type\+Info} (F\+I\+LE $\ast$fp, \hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} verification\+\_\+type\+\_\+length)
-\item 
+\begin{DoxyCompactList}\small\item\em Faz a leitura de 1 byre do arquivo .class fornecido no path. \end{DoxyCompactList}\item 
 void \hyperlink{classfile_8c_a08affa1a8eb0fbd41df9e468f2c02321}{print\+Stack\+Map\+Table} (\hyperlink{structstack__map__frame}{stack\+\_\+map\+\_\+frame} $\ast$stack\+\_\+map, \hyperlink{structcp__info}{cp\+\_\+info} $\ast$cp, \hyperlink{structattribute__info}{attribute\+\_\+info} $\ast$attr)
 \item 
 \hyperlink{structstack__map__frame}{stack\+\_\+map\+\_\+frame} $\ast$ \hyperlink{classfile_8c_a1258b84eec00db8fee377fea434c49b1}{fill\+Stack\+Map\+Table} (\hyperlink{structattribute__info}{attribute\+\_\+info} $\ast$attr, F\+I\+LE $\ast$fp)
@@ -41,41 +46,46 @@ void \hyperlink{classfile_8c_a08affa1a8eb0fbd41df9e468f2c02321}{print\+Stack\+Ma
 void \hyperlink{classfile_8c_ac72c096a138416b9909fe3e29417763e}{free\+Stack\+Map\+Table} (\hyperlink{structstack__map__frame}{stack\+\_\+map\+\_\+frame} $\ast$stack\+\_\+map, \hyperlink{structattribute__info}{attribute\+\_\+info} $\ast$attr)
 \item 
 void \hyperlink{classfile_8c_a3bfb911a1e769d93bb0e18492aab956b}{free\+Attributes} (\hyperlink{structattribute__info}{attribute\+\_\+info} $\ast$field, \hyperlink{structcp__info}{cp\+\_\+info} $\ast$cp, \hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} attr\+\_\+count)
-\item 
+\begin{DoxyCompactList}\small\item\em Função utilizada para liberar a memória ocupada pelo classfile. \end{DoxyCompactList}\item 
 void \hyperlink{classfile_8c_af82a9138759e74a734c2ba5db6077805}{print\+Attributes} (\hyperlink{structattribute__info}{attribute\+\_\+info} $\ast$field, \hyperlink{structcp__info}{cp\+\_\+info} $\ast$cp, \hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} attr\+\_\+count)
-\item 
+\begin{DoxyCompactList}\small\item\em Printa os atributos de um classfile. \end{DoxyCompactList}\item 
 void \hyperlink{classfile_8c_a8d5e46a5df7dfb965306e8a277783511}{eval\+Attributes} (\hyperlink{structattribute__info}{attribute\+\_\+info} $\ast$field, \hyperlink{structcp__info}{cp\+\_\+info} $\ast$cp, \hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} attr\+\_\+count, \hyperlink{structClassFile}{Class\+File} $\ast$cf)
-\item 
+\begin{DoxyCompactList}\small\item\em todo\+: avalia os atributos do classfile. \end{DoxyCompactList}\item 
 void \hyperlink{classfile_8c_a14c4d3f84dd03a43aca0a57bd530f3a2}{read\+\_\+class\+\_\+file} (\hyperlink{structClassFile}{Class\+File} $\ast$cf, char $\ast$file\+\_\+name)
-\item 
+\begin{DoxyCompactList}\small\item\em Faz a leitura do arquivo .class. \end{DoxyCompactList}\item 
 void \hyperlink{classfile_8c_a774f5149d9c3dadc60b2c0ca012bf51d}{recursive\+\_\+print} (\hyperlink{structcp__info}{cp\+\_\+info} $\ast$cp, \hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} index, char $\ast$str)
-\item 
+\begin{DoxyCompactList}\small\item\em Usa um índice para acessar a constant pool e printar recusrivamente os campos. \end{DoxyCompactList}\item 
 void \hyperlink{classfile_8c_aa368bab42b5e8b5415b68d6910982ea2}{rec\+\_\+method\+\_\+name} (\hyperlink{structcp__info}{cp\+\_\+info} $\ast$cp, \hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} index, char $\ast$str)
-\item 
+\begin{DoxyCompactList}\small\item\em Usa um índice no constant pool para procurar o nome de um método recursivamente. \end{DoxyCompactList}\item 
 char $\ast$ \hyperlink{classfile_8c_a09f80f214aa870612fcb23597bcfb4bc}{print\+\_\+reference} (\hyperlink{structcp__info}{cp\+\_\+info} $\ast$cp, \hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} index)
-\item 
+\begin{DoxyCompactList}\small\item\em Usa um índice na constant pool para retorna uma referência no ponteiro global. \end{DoxyCompactList}\item 
 char $\ast$ \hyperlink{classfile_8c_a627193785e98bc076b257c97ccd5892b}{ret\+\_\+method\+\_\+name} (\hyperlink{structcp__info}{cp\+\_\+info} $\ast$cp, \hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} index)
-\item 
+\begin{DoxyCompactList}\small\item\em Retorna o nome de um método no ponteiro global. \end{DoxyCompactList}\item 
 void \hyperlink{classfile_8c_a67e8b211dae28d036af3a55b698da993}{print\+\_\+class\+\_\+file} (\hyperlink{structClassFile}{Class\+File} $\ast$cf)
-\item 
+\begin{DoxyCompactList}\small\item\em Recebe um classfile como parâmetro e printa seu conteúdo de maneira organizada no terminal. (Utilizado pelo leitor/exibidor de bytecode). \end{DoxyCompactList}\item 
 void \hyperlink{classfile_8c_a6a7ca9bbe1c17ec34271f8c898832ee0}{free\+\_\+class\+\_\+file} (\hyperlink{structClassFile}{Class\+File} $\ast$cf)
-\item 
+\begin{DoxyCompactList}\small\item\em Libera o classfile da memória. \end{DoxyCompactList}\item 
 char $\ast$ \hyperlink{classfile_8c_af82954dceccc52fab4a547f79967244f}{remove\+Extension} (char $\ast$string)
-\item 
+\begin{DoxyCompactList}\small\item\em Remove exetensão de uma string para printar de maneira correta. \end{DoxyCompactList}\item 
 char $\ast$ \hyperlink{classfile_8c_a50ab5cb2c7741908305afda2e2a0235a}{find\+Name\+File} (char $\ast$string)
 \item 
 void \hyperlink{classfile_8c_a55c80ae86c1c6d0666108a825df64a4b}{execute\+\_\+gvm} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Função que busca pelo \hyperlink{structFrame}{Frame} no topo da pilha de frames e inicia a execução da \hyperlink{structJVM}{J\+VM}. Essa função é executada enquanto ainda há frames na pilha da \hyperlink{structJVM}{J\+VM}. \end{DoxyCompactList}\item 
 \hyperlink{structmethod__info}{method\+\_\+info} $\ast$ \hyperlink{classfile_8c_acaf2255d12202a819c765194e5e51dba}{find\+\_\+method} (\hyperlink{structClassFile}{Class\+File} $\ast$cf, char $\ast$method)
-\item 
+\begin{DoxyCompactList}\small\item\em Procura por um método dentro do Classfile carregado em memória. \end{DoxyCompactList}\item 
 \hyperlink{structures_8h_ae391a1d79bb0c8cbc283f0283e3c098b}{u4} \hyperlink{classfile_8c_abd0631a75f72632c5606e72f6d3f00ae}{Class\+Loader} (char $\ast$class\+\_\+name)
-\item 
+\begin{DoxyCompactList}\small\item\em Aloca espaço para o \hyperlink{structClassFile}{Class\+File} em memória e chama a função read\+\_\+class\+\_\+file para ler o \hyperlink{structClassFile}{Class\+File} recebido nas posições corretas. \end{DoxyCompactList}\item 
 \hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} \hyperlink{classfile_8c_a64bd697d9f3c3360d6c4edb38f8cdf60}{find\+\_\+class} (char $\ast$class\+\_\+name)
-\item 
+\begin{DoxyCompactList}\small\item\em Procura por cuma classe, e caso não consiga encontrá-\/la, carrega na memória usando a função Class\+Loader. \end{DoxyCompactList}\item 
 \hyperlink{structfield__info}{field\+\_\+info} $\ast$ \hyperlink{classfile_8c_a0688afe113144b86408f83f83685db04}{find\+\_\+field} (\hyperlink{structClassFile}{Class\+File} $\ast$cf, char $\ast$field\+\_\+name, char $\ast$field\+\_\+desc)
-\item 
+\begin{DoxyCompactList}\small\item\em Procura por um field dentro do \hyperlink{structClassFile}{Class\+File}. \end{DoxyCompactList}\item 
 void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit} (\hyperlink{structClassFile}{Class\+File} $\ast$cf)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Procura por um init dentro do Classfile. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Classfile functions  Funções de apoio e leitura do \hyperlink{structClassFile}{Class\+File} (bytecode) 
+
 
 
 \subsection{Function Documentation}
@@ -86,6 +96,10 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{char $\ast$}]{class\+\_\+name}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_abd0631a75f72632c5606e72f6d3f00ae}{}\label{classfile_8c_abd0631a75f72632c5606e72f6d3f00ae}
+
+
+Aloca espaço para o \hyperlink{structClassFile}{Class\+File} em memória e chama a função read\+\_\+class\+\_\+file para ler o \hyperlink{structClassFile}{Class\+File} recebido nas posições corretas. 
+
 \index{classfile.\+c@{classfile.\+c}!eval\+Attributes@{eval\+Attributes}}
 \index{eval\+Attributes@{eval\+Attributes}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{eval\+Attributes(attribute\+\_\+info $\ast$field, cp\+\_\+info $\ast$cp, u2 attr\+\_\+count, Class\+File $\ast$cf)}{evalAttributes(attribute_info *field, cp_info *cp, u2 attr_count, ClassFile *cf)}}]{\setlength{\rightskip}{0pt plus 5cm}void eval\+Attributes (
@@ -96,6 +110,10 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{{\bf Class\+File} $\ast$}]{cf}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_a8d5e46a5df7dfb965306e8a277783511}{}\label{classfile_8c_a8d5e46a5df7dfb965306e8a277783511}
+
+
+todo\+: avalia os atributos do classfile. 
+
 \index{classfile.\+c@{classfile.\+c}!execute\+\_\+gvm@{execute\+\_\+gvm}}
 \index{execute\+\_\+gvm@{execute\+\_\+gvm}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{execute\+\_\+gvm()}{execute_gvm()}}]{\setlength{\rightskip}{0pt plus 5cm}void execute\+\_\+gvm (
@@ -103,6 +121,10 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 {}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_a55c80ae86c1c6d0666108a825df64a4b}{}\label{classfile_8c_a55c80ae86c1c6d0666108a825df64a4b}
+
+
+Função que busca pelo \hyperlink{structFrame}{Frame} no topo da pilha de frames e inicia a execução da \hyperlink{structJVM}{J\+VM}. Essa função é executada enquanto ainda há frames na pilha da \hyperlink{structJVM}{J\+VM}. 
+
 \index{classfile.\+c@{classfile.\+c}!fill\+Stack\+Map\+Table@{fill\+Stack\+Map\+Table}}
 \index{fill\+Stack\+Map\+Table@{fill\+Stack\+Map\+Table}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{fill\+Stack\+Map\+Table(attribute\+\_\+info $\ast$attr, F\+I\+L\+E $\ast$fp)}{fillStackMapTable(attribute_info *attr, FILE *fp)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf stack\+\_\+map\+\_\+frame}$\ast$ fill\+Stack\+Map\+Table (
@@ -119,6 +141,10 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{{\bf u2}}]{verification\+\_\+type\+\_\+length}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_add61e24daf8356973e908b3f1cfd5a24}{}\label{classfile_8c_add61e24daf8356973e908b3f1cfd5a24}
+
+
+Faz a leitura de 1 byre do arquivo .class fornecido no path. 
+
 \index{classfile.\+c@{classfile.\+c}!find\+\_\+class@{find\+\_\+class}}
 \index{find\+\_\+class@{find\+\_\+class}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{find\+\_\+class(char $\ast$class\+\_\+name)}{find_class(char *class_name)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} find\+\_\+class (
@@ -126,6 +152,10 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{char $\ast$}]{class\+\_\+name}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_a64bd697d9f3c3360d6c4edb38f8cdf60}{}\label{classfile_8c_a64bd697d9f3c3360d6c4edb38f8cdf60}
+
+
+Procura por cuma classe, e caso não consiga encontrá-\/la, carrega na memória usando a função Class\+Loader. 
+
 \index{classfile.\+c@{classfile.\+c}!find\+\_\+clinit@{find\+\_\+clinit}}
 \index{find\+\_\+clinit@{find\+\_\+clinit}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{find\+\_\+clinit(\+Class\+File $\ast$cf)}{find_clinit(ClassFile *cf)}}]{\setlength{\rightskip}{0pt plus 5cm}void find\+\_\+clinit (
@@ -133,6 +163,10 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{{\bf Class\+File} $\ast$}]{cf}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{}\label{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}
+
+
+Procura por um init dentro do Classfile. 
+
 \index{classfile.\+c@{classfile.\+c}!find\+\_\+field@{find\+\_\+field}}
 \index{find\+\_\+field@{find\+\_\+field}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{find\+\_\+field(\+Class\+File $\ast$cf, char $\ast$field\+\_\+name, char $\ast$field\+\_\+desc)}{find_field(ClassFile *cf, char *field_name, char *field_desc)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf field\+\_\+info}$\ast$ find\+\_\+field (
@@ -142,6 +176,10 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{char $\ast$}]{field\+\_\+desc}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_a0688afe113144b86408f83f83685db04}{}\label{classfile_8c_a0688afe113144b86408f83f83685db04}
+
+
+Procura por um field dentro do \hyperlink{structClassFile}{Class\+File}. 
+
 \index{classfile.\+c@{classfile.\+c}!find\+\_\+method@{find\+\_\+method}}
 \index{find\+\_\+method@{find\+\_\+method}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{find\+\_\+method(\+Class\+File $\ast$cf, char $\ast$method)}{find_method(ClassFile *cf, char *method)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf method\+\_\+info}$\ast$ find\+\_\+method (
@@ -150,6 +188,10 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{char $\ast$}]{method}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_acaf2255d12202a819c765194e5e51dba}{}\label{classfile_8c_acaf2255d12202a819c765194e5e51dba}
+
+
+Procura por um método dentro do Classfile carregado em memória. 
+
 \index{classfile.\+c@{classfile.\+c}!find\+Name\+File@{find\+Name\+File}}
 \index{find\+Name\+File@{find\+Name\+File}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{find\+Name\+File(char $\ast$string)}{findNameFile(char *string)}}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ find\+Name\+File (
@@ -164,6 +206,10 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{{\bf Class\+File} $\ast$}]{cf}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_a6a7ca9bbe1c17ec34271f8c898832ee0}{}\label{classfile_8c_a6a7ca9bbe1c17ec34271f8c898832ee0}
+
+
+Libera o classfile da memória. 
+
 \index{classfile.\+c@{classfile.\+c}!free\+Attributes@{free\+Attributes}}
 \index{free\+Attributes@{free\+Attributes}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{free\+Attributes(attribute\+\_\+info $\ast$field, cp\+\_\+info $\ast$cp, u2 attr\+\_\+count)}{freeAttributes(attribute_info *field, cp_info *cp, u2 attr_count)}}]{\setlength{\rightskip}{0pt plus 5cm}void free\+Attributes (
@@ -173,6 +219,10 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{{\bf u2}}]{attr\+\_\+count}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_a3bfb911a1e769d93bb0e18492aab956b}{}\label{classfile_8c_a3bfb911a1e769d93bb0e18492aab956b}
+
+
+Função utilizada para liberar a memória ocupada pelo classfile. 
+
 \index{classfile.\+c@{classfile.\+c}!free\+Stack\+Map\+Table@{free\+Stack\+Map\+Table}}
 \index{free\+Stack\+Map\+Table@{free\+Stack\+Map\+Table}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{free\+Stack\+Map\+Table(stack\+\_\+map\+\_\+frame $\ast$stack\+\_\+map, attribute\+\_\+info $\ast$attr)}{freeStackMapTable(stack_map_frame *stack_map, attribute_info *attr)}}]{\setlength{\rightskip}{0pt plus 5cm}void free\+Stack\+Map\+Table (
@@ -188,6 +238,10 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{{\bf Class\+File} $\ast$}]{cf}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_a67e8b211dae28d036af3a55b698da993}{}\label{classfile_8c_a67e8b211dae28d036af3a55b698da993}
+
+
+Recebe um classfile como parâmetro e printa seu conteúdo de maneira organizada no terminal. (Utilizado pelo leitor/exibidor de bytecode). 
+
 \index{classfile.\+c@{classfile.\+c}!print\+\_\+reference@{print\+\_\+reference}}
 \index{print\+\_\+reference@{print\+\_\+reference}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{print\+\_\+reference(cp\+\_\+info $\ast$cp, u2 index)}{print_reference(cp_info *cp, u2 index)}}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ print\+\_\+reference (
@@ -196,6 +250,10 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{{\bf u2}}]{index}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_a09f80f214aa870612fcb23597bcfb4bc}{}\label{classfile_8c_a09f80f214aa870612fcb23597bcfb4bc}
+
+
+Usa um índice na constant pool para retorna uma referência no ponteiro global. 
+
 \index{classfile.\+c@{classfile.\+c}!print\+Attributes@{print\+Attributes}}
 \index{print\+Attributes@{print\+Attributes}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{print\+Attributes(attribute\+\_\+info $\ast$field, cp\+\_\+info $\ast$cp, u2 attr\+\_\+count)}{printAttributes(attribute_info *field, cp_info *cp, u2 attr_count)}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+Attributes (
@@ -205,6 +263,10 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{{\bf u2}}]{attr\+\_\+count}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_af82a9138759e74a734c2ba5db6077805}{}\label{classfile_8c_af82a9138759e74a734c2ba5db6077805}
+
+
+Printa os atributos de um classfile. 
+
 \index{classfile.\+c@{classfile.\+c}!print\+Const\+Type@{print\+Const\+Type}}
 \index{print\+Const\+Type@{print\+Const\+Type}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{print\+Const\+Type(u4 high\+\_\+bytes, u4 low\+\_\+bytes, u1 type)}{printConstType(u4 high_bytes, u4 low_bytes, u1 type)}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+Const\+Type (
@@ -214,6 +276,10 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{{\bf u1}}]{type}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_aa73a2b8f66296e2fcdec5b6f029c1f88}{}\label{classfile_8c_aa73a2b8f66296e2fcdec5b6f029c1f88}
+
+
+Printa o tipo C\+O\+N\+S\+T\+A\+NT. 
+
 \index{classfile.\+c@{classfile.\+c}!print\+Flag@{print\+Flag}}
 \index{print\+Flag@{print\+Flag}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{print\+Flag(u2 type, u1 flag)}{printFlag(u2 type, u1 flag)}}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ print\+Flag (
@@ -222,6 +288,10 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{{\bf u1}}]{flag}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_a5636f6173ac96d0316cd018b68b34034}{}\label{classfile_8c_a5636f6173ac96d0316cd018b68b34034}
+
+
+Printa a flag correspondente ao tipo recebido. 
+
 \index{classfile.\+c@{classfile.\+c}!print\+Stack\+Map\+Table@{print\+Stack\+Map\+Table}}
 \index{print\+Stack\+Map\+Table@{print\+Stack\+Map\+Table}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{print\+Stack\+Map\+Table(stack\+\_\+map\+\_\+frame $\ast$stack\+\_\+map, cp\+\_\+info $\ast$cp, attribute\+\_\+info $\ast$attr)}{printStackMapTable(stack_map_frame *stack_map, cp_info *cp, attribute_info *attr)}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+Stack\+Map\+Table (
@@ -238,6 +308,10 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{{\bf u2}}]{type}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_aae8cbe5dd2db133b98988d9da5c5efe7}{}\label{classfile_8c_aae8cbe5dd2db133b98988d9da5c5efe7}
+
+
+Printa o tipo do objeto. 
+
 \index{classfile.\+c@{classfile.\+c}!print\+Verification\+Type\+Info@{print\+Verification\+Type\+Info}}
 \index{print\+Verification\+Type\+Info@{print\+Verification\+Type\+Info}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{print\+Verification\+Type\+Info(verification\+\_\+type\+\_\+info $\ast$ver\+\_\+type, cp\+\_\+info $\ast$cp, u2 verification\+\_\+type\+\_\+length)}{printVerificationTypeInfo(verification_type_info *ver_type, cp_info *cp, u2 verification_type_length)}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+Verification\+Type\+Info (
@@ -247,6 +321,10 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{{\bf u2}}]{verification\+\_\+type\+\_\+length}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_ab694dc30480958e872cdf78b94b9cefa}{}\label{classfile_8c_ab694dc30480958e872cdf78b94b9cefa}
+
+
+Printa o tipo a partir da tag. 
+
 \index{classfile.\+c@{classfile.\+c}!print\+Version@{print\+Version}}
 \index{print\+Version@{print\+Version}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{print\+Version(u2 version)}{printVersion(u2 version)}}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ print\+Version (
@@ -254,6 +332,10 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{{\bf u2}}]{version}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_abbc0a67a74cf4718872b86f0a898575b}{}\label{classfile_8c_abbc0a67a74cf4718872b86f0a898575b}
+
+
+Printa a versão do arquivo .class. 
+
 \index{classfile.\+c@{classfile.\+c}!read\+\_\+class\+\_\+file@{read\+\_\+class\+\_\+file}}
 \index{read\+\_\+class\+\_\+file@{read\+\_\+class\+\_\+file}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{read\+\_\+class\+\_\+file(\+Class\+File $\ast$cf, char $\ast$file\+\_\+name)}{read_class_file(ClassFile *cf, char *file_name)}}]{\setlength{\rightskip}{0pt plus 5cm}void read\+\_\+class\+\_\+file (
@@ -262,7 +344,11 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{char $\ast$}]{file\+\_\+name}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_a14c4d3f84dd03a43aca0a57bd530f3a2}{}\label{classfile_8c_a14c4d3f84dd03a43aca0a57bd530f3a2}
-\index{classfile.\+c@{classfile.\+c}!read\+Attributes@{read\+Attributes}}
+
+
+Faz a leitura do arquivo .class. 
+
+Função principal de leitura. Recebe um ponteiro para uma struct do tipo \hyperlink{structcp__info}{cp\+\_\+info}, uma contagem do número de atributos e um ponteiro para o arquivo bytecodee raliza a leitura, byte a byte. \index{classfile.\+c@{classfile.\+c}!read\+Attributes@{read\+Attributes}}
 \index{read\+Attributes@{read\+Attributes}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{read\+Attributes(cp\+\_\+info $\ast$cp, u2 attr\+\_\+count, F\+I\+L\+E $\ast$fp)}{readAttributes(cp_info *cp, u2 attr_count, FILE *fp)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf attribute\+\_\+info}$\ast$ read\+Attributes (
 \begin{DoxyParamCaption}
@@ -271,6 +357,10 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{F\+I\+LE $\ast$}]{fp}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_ab2c33d049c34b50ead32e4568387353c}{}\label{classfile_8c_ab2c33d049c34b50ead32e4568387353c}
+
+
+Lê os atributos do bytecode recebido. 
+
 \index{classfile.\+c@{classfile.\+c}!read\+Utf8@{read\+Utf8}}
 \index{read\+Utf8@{read\+Utf8}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{read\+Utf8(cp\+\_\+info $\ast$cp, u2 index)}{readUtf8(cp_info *cp, u2 index)}}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ read\+Utf8 (
@@ -279,6 +369,10 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{{\bf u2}}]{index}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_a77c5107c582c86dedb65853efabd9302}{}\label{classfile_8c_a77c5107c582c86dedb65853efabd9302}
+
+
+Faz a leitua dos bytes no formato U\+T\+F-\/8. 
+
 \index{classfile.\+c@{classfile.\+c}!rec\+\_\+method\+\_\+name@{rec\+\_\+method\+\_\+name}}
 \index{rec\+\_\+method\+\_\+name@{rec\+\_\+method\+\_\+name}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{rec\+\_\+method\+\_\+name(cp\+\_\+info $\ast$cp, u2 index, char $\ast$str)}{rec_method_name(cp_info *cp, u2 index, char *str)}}]{\setlength{\rightskip}{0pt plus 5cm}void rec\+\_\+method\+\_\+name (
@@ -288,6 +382,10 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{char $\ast$}]{str}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_aa368bab42b5e8b5415b68d6910982ea2}{}\label{classfile_8c_aa368bab42b5e8b5415b68d6910982ea2}
+
+
+Usa um índice no constant pool para procurar o nome de um método recursivamente. 
+
 \index{classfile.\+c@{classfile.\+c}!recursive\+\_\+print@{recursive\+\_\+print}}
 \index{recursive\+\_\+print@{recursive\+\_\+print}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{recursive\+\_\+print(cp\+\_\+info $\ast$cp, u2 index, char $\ast$str)}{recursive_print(cp_info *cp, u2 index, char *str)}}]{\setlength{\rightskip}{0pt plus 5cm}void recursive\+\_\+print (
@@ -297,6 +395,10 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{char $\ast$}]{str}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_a774f5149d9c3dadc60b2c0ca012bf51d}{}\label{classfile_8c_a774f5149d9c3dadc60b2c0ca012bf51d}
+
+
+Usa um índice para acessar a constant pool e printar recusrivamente os campos. 
+
 \index{classfile.\+c@{classfile.\+c}!remove\+Extension@{remove\+Extension}}
 \index{remove\+Extension@{remove\+Extension}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{remove\+Extension(char $\ast$string)}{removeExtension(char *string)}}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ remove\+Extension (
@@ -304,6 +406,10 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{char $\ast$}]{string}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_af82954dceccc52fab4a547f79967244f}{}\label{classfile_8c_af82954dceccc52fab4a547f79967244f}
+
+
+Remove exetensão de uma string para printar de maneira correta. 
+
 \index{classfile.\+c@{classfile.\+c}!ret\+\_\+method\+\_\+name@{ret\+\_\+method\+\_\+name}}
 \index{ret\+\_\+method\+\_\+name@{ret\+\_\+method\+\_\+name}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{ret\+\_\+method\+\_\+name(cp\+\_\+info $\ast$cp, u2 index)}{ret_method_name(cp_info *cp, u2 index)}}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ ret\+\_\+method\+\_\+name (
@@ -312,6 +418,10 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{{\bf u2}}]{index}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_a627193785e98bc076b257c97ccd5892b}{}\label{classfile_8c_a627193785e98bc076b257c97ccd5892b}
+
+
+Retorna o nome de um método no ponteiro global. 
+
 \index{classfile.\+c@{classfile.\+c}!u1\+Read@{u1\+Read}}
 \index{u1\+Read@{u1\+Read}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{u1\+Read(\+F\+I\+L\+E $\ast$file)}{u1Read(FILE *file)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u1} u1\+Read (
@@ -319,6 +429,10 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{F\+I\+LE $\ast$}]{file}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_a13b463381f7cf580d002e6631c0c4ea8}{}\label{classfile_8c_a13b463381f7cf580d002e6631c0c4ea8}
+
+
+Faz a leitura de 1 byte do arquivo .class fornecido no path. 
+
 \index{classfile.\+c@{classfile.\+c}!u2\+Read@{u2\+Read}}
 \index{u2\+Read@{u2\+Read}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{u2\+Read(\+F\+I\+L\+E $\ast$file)}{u2Read(FILE *file)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} u2\+Read (
@@ -326,6 +440,10 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{F\+I\+LE $\ast$}]{file}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_aae51575c6f1d6ce808fbc88a3037c4ed}{}\label{classfile_8c_aae51575c6f1d6ce808fbc88a3037c4ed}
+
+
+Faz a leitura de 2 bytes do arquivo .class fornecido no path. 
+
 \index{classfile.\+c@{classfile.\+c}!u4\+Read@{u4\+Read}}
 \index{u4\+Read@{u4\+Read}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{u4\+Read(\+F\+I\+L\+E $\ast$file)}{u4Read(FILE *file)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u4} u4\+Read (
@@ -333,3 +451,7 @@ void \hyperlink{classfile_8c_a39063f00cc6ccce0402e1a81f2f760af}{find\+\_\+clinit
 \item[{F\+I\+LE $\ast$}]{file}
 \end{DoxyParamCaption}
 )}\hypertarget{classfile_8c_aad8c26a8aaff63010bb790df878f0950}{}\label{classfile_8c_aad8c26a8aaff63010bb790df878f0950}
+
+
+Faz a leitura de 4 bytes do arquivo .class fornecido no path. 
+
