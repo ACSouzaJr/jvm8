@@ -30,7 +30,7 @@ void push_operand(LocalVariable * operand, StackOperand *stack_operand){
             stack_operand->top = ptr;
         }
     }
-    #ifdef DEBUG
+    #if defined DEBUG
     if(stack_operand->top->f->type == CONSTANT_Double){
         printf("Acabou de ser empilhado doublemente: %f\n", *(double*)&(stack_operand->top->f->type_double));
     } else if(stack_operand->top->f->type == CONSTANT_Float){
