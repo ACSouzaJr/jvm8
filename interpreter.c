@@ -38,6 +38,10 @@ u2 count_args(char *method_desc)
       while (method_desc[++i] != ';')
         ;
     }
+    if (method_desc[i] == 'D' || method_desc[i] == 'J')
+    {
+    	args++;
+    }
     args++;
   }
   return args;
@@ -513,10 +517,11 @@ void lload_1_eval(Frame *f)
  */
 void lload_2_eval(Frame *f)
 {
-  if (f->local_variables[2-1].type == CONSTANT_Long)
-  {
-    push_operand(&(f->local_variables[2-1]), f->operands);
-  } else if(f->local_variables[2].type == CONSTANT_Long)
+  // if (f->local_variables[2-1].type == CONSTANT_Long)
+  // {
+  //   push_operand(&(f->local_variables[2-1]), f->operands);
+  // } else 
+  if(f->local_variables[2].type == CONSTANT_Long)
   {
     push_operand(&(f->local_variables[2]), f->operands);
   } else {
@@ -644,12 +649,13 @@ void dload_2_eval(Frame *f)
   #ifdef DEBUG
     printf("dload_2_type: %d\n", f->local_variables[2].type);
   #endif
-  if (f->local_variables[2-1].type == CONSTANT_Double)
+  // if (f->local_variables[2-1].type == CONSTANT_Double)
+  // {
+  //   push_operand(&(f->local_variables[2-1]), f->operands);
+  // } else 
+  if(f->local_variables[2].type == CONSTANT_Double)
   {
-    push_operand(&(f->local_variables[2-1]), f->operands);
-  } else if(f->local_variables[2].type == CONSTANT_Double)
-  {
-    push_operand(&(f->local_variables[2-1]), f->operands);
+    push_operand(&(f->local_variables[2]), f->operands);
   } else {
     printf("javax.persistence.PersistenceException\n");
     exit(0);
@@ -797,7 +803,7 @@ void aaload_eval(Frame *f)
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
 
-  lv->type_object = ((Object *)arrayref->type_array.array)[index->value];
+  lv->value = ((u4 *)arrayref->type_array.array)[index->value];
   lv->type = CONSTANT_Class;
 
   push_operand(lv, f->operands);
@@ -1362,9 +1368,9 @@ void aastore_eval(Frame *f)
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
 
-  Object *vetor;
-  vetor = (Object *)arrayref->type_array.array;
-  vetor[index->value] = value->type_object;
+  u4 *vetor;
+  vetor = (u4 *)arrayref->type_array.array;
+  vetor[index->value] = value->value;
   #ifdef DEBUG
     printf("Referencia array: %d", ((u4 *)arrayref->type_array.array)[index->value]);
   #endif
@@ -3154,11 +3160,11 @@ void ifeq_eval(Frame *f)
   #ifdef DEBUG
   printf("valor_ifeq_value: %d\n", value);
   #endif
-  u1 branchbyte1, branchbyte2;
-  branchbyte1 = f->bytecode[f->pc++];
-  branchbyte2 = f->bytecode[f->pc++];
   if (value == 0)
   {
+    u1 branchbyte1, branchbyte2;
+    branchbyte1 = f->bytecode[f->pc++];
+    branchbyte2 = f->bytecode[f->pc++];
 
     int16_t offset = ((branchbyte1 << 8) | branchbyte2);
 
@@ -3183,11 +3189,11 @@ void ifne_eval(Frame *f)
   #ifdef DEBUG
   printf("valor_ifne_value: %d\n", value);
   #endif
-  u1 branchbyte1, branchbyte2;
-  branchbyte1 = f->bytecode[f->pc++];
-  branchbyte2 = f->bytecode[f->pc++];
   if (value != 0)
   {
+    u1 branchbyte1, branchbyte2;
+    branchbyte1 = f->bytecode[f->pc++];
+    branchbyte2 = f->bytecode[f->pc++];
 
     int16_t offset = ((branchbyte1 << 8) | branchbyte2);
 
@@ -3212,11 +3218,11 @@ void iflt_eval(Frame *f)
   #ifdef DEBUG
   printf("valor_iflt_value: %d\n", value);
   #endif
-  u1 branchbyte1, branchbyte2;
-  branchbyte1 = f->bytecode[f->pc++];
-  branchbyte2 = f->bytecode[f->pc++];
   if (value < 0)
   {
+    u1 branchbyte1, branchbyte2;
+    branchbyte1 = f->bytecode[f->pc++];
+    branchbyte2 = f->bytecode[f->pc++];
 
     int16_t offset = ((branchbyte1 << 8) | branchbyte2);
 
@@ -3241,11 +3247,11 @@ void ifge_eval(Frame *f)
   #ifdef DEBUG
   printf("valor_ifge_value: %d\n", value);
   #endif
-  u1 branchbyte1, branchbyte2;
-  branchbyte1 = f->bytecode[f->pc++];
-  branchbyte2 = f->bytecode[f->pc++];
   if (value >= 0)
   {
+    u1 branchbyte1, branchbyte2;
+    branchbyte1 = f->bytecode[f->pc++];
+    branchbyte2 = f->bytecode[f->pc++];
 
     int16_t offset = ((branchbyte1 << 8) | branchbyte2);
 
@@ -3270,11 +3276,11 @@ void ifgt_eval(Frame *f)
   #ifdef DEBUG
   printf("valor_ifgt_value: %d\n", value);
   #endif
-  u1 branchbyte1, branchbyte2;
-  branchbyte1 = f->bytecode[f->pc++];
-  branchbyte2 = f->bytecode[f->pc++];
   if (value > 0)
   {
+    u1 branchbyte1, branchbyte2;
+    branchbyte1 = f->bytecode[f->pc++];
+    branchbyte2 = f->bytecode[f->pc++];
 
     int16_t offset = ((branchbyte1 << 8) | branchbyte2);
 
@@ -4095,7 +4101,16 @@ void invokevirtual_eval(Frame *f)
     // for (size_t i = 0; i <= args; i++)
     for (int8_t i = args; i >= 0; i--)
     {
-      frame->local_variables[i] = *(pop_operand(f->operands));
+      LocalVariable *lv = pop_operand(f->operands);
+  	if (lv->type == CONSTANT_Double || lv->type == CONSTANT_Long)
+  	{
+  		i--;
+    	frame->local_variables[i] = *lv;
+  	}
+  	else
+  	{
+  		frame->local_variables[i] = *lv;
+  	}
 #ifdef DEBUG
       printf("DEBUG DE VERDADE:  ==== %04x\n", frame->local_variables[i].value);
 #endif
@@ -4167,7 +4182,16 @@ void invokespecial_eval(Frame *f)
   // for (size_t i = 0; i < args; i++)
   for (int8_t i = args; i >= 0; i--)
   {
-    frame->local_variables[i] = *(pop_operand(f->operands));
+    LocalVariable *lv = pop_operand(f->operands);
+  	if (lv->type == CONSTANT_Double || lv->type == CONSTANT_Long)
+  	{
+  		i--;
+    	frame->local_variables[i] = *lv;
+  	}
+  	else
+  	{
+  		frame->local_variables[i] = *lv;
+  	}
 #ifdef DEBUG
     printf("DEBUG DE VERDADE:  ==== %04x\n", frame->local_variables[i].value);
 #endif
@@ -4212,7 +4236,16 @@ void invokestatic_eval(Frame *f)
   // for (size_t i = 0; i < args - 1; i++)
   for (int8_t i = args - 1; i >= 0; i--)
   {
-    frame->local_variables[i] = *(pop_operand(f->operands));
+  	LocalVariable *lv = pop_operand(f->operands);
+  	if (lv->type == CONSTANT_Double || lv->type == CONSTANT_Long)
+  	{
+  		i--;
+    	frame->local_variables[i] = *lv;
+  	}
+  	else
+  	{
+  		frame->local_variables[i] = *lv;
+  	}
     #ifdef DEBUG
         printf("DEBUG DE VERDADE:  ==== %04x\n", frame->local_variables[i].value);
     #endif
@@ -4360,15 +4393,16 @@ void anewarray_eval(Frame *f)
   count = lv->value;
   void *arrayref = NULL;
   rlv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  u2 name_index = f->cp[index - 1].Class.name_index;
 
   rlv->type = CONSTANT_Class;
 
-  arrayref = (Object *)malloc((count) * sizeof(Object));
-  rlv->type_array.array = (Object*) arrayref;
-  rlv->type_array.size = count;
+  arrayref = (u4 *)malloc((count) * sizeof(u4));
+  rlv->value = *((u4 *)(arrayref));
 
 #ifdef DEBUG
-  printf("arrayref: %04x\n", rlv->type_array.array);
+  printf("arrayref: %04x\n", rlv->value);
+  printf("classname_index: %02x\n", name_index);
 #endif
 
   if (count < 0)
@@ -4377,6 +4411,7 @@ void anewarray_eval(Frame *f)
   }
   else
   {
+    // rlv->type_array.array = arrayref;
 
     push_operand(rlv, f->operands);
   }
