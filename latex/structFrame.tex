@@ -2,12 +2,23 @@
 \label{structFrame}\index{Frame@{Frame}}
 
 
+Struct que representa um \hyperlink{structFrame}{Frame} da \hyperlink{structJVM}{J\+VM}.  
+
+
+
+
 {\ttfamily \#include $<$frame.\+h$>$}
 
 
 
 Collaboration diagram for Frame\+:
-% FIG 0
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structFrame__coll__graph}
+\end{center}
+\end{figure}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -24,6 +35,11 @@ Collaboration diagram for Frame\+:
 \hyperlink{structures_8h_a64f8055b64cf2a4c299c841130c5c938}{u1} $\ast$ \hyperlink{structFrame_ad3bdd8cc30352e62af5898b699d54c16}{bytecode}
 \end{DoxyCompactItemize}
 
+
+\subsection{Detailed Description}
+Struct que representa um \hyperlink{structFrame}{Frame} da \hyperlink{structJVM}{J\+VM}. 
+
+Possui um PC, um \hyperlink{structmethod__info}{method\+\_\+info}, um ponteiro para a constant pol, para o array de variáveis locais, para a pilha de operandos e para o bytecode. 
 
 \subsection{Member Data Documentation}
 \index{Frame@{Frame}!bytecode@{bytecode}}

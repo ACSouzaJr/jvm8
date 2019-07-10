@@ -3,7 +3,7 @@ var searchData=
   ['catch_5ftype',['catch_type',['../structexception__table__type.html#a663fa7b2d1a468b29913fd92e006a5dc',1,'exception_table_type']]],
   ['chop_5fframe',['chop_frame',['../structstack__map__frame.html#a5240372d8b1af1775ee49050a515b9f2',1,'stack_map_frame']]],
   ['class',['Class',['../structcp__info.html#a322117cc9b35710232212d96443b9c46',1,'cp_info']]],
-  ['class_5findex',['class_index',['../structcp__info.html#a1c7c3f3e2f9a620669b5f5cc51249ef8',1,'cp_info']]],
+  ['class_5findex',['class_index',['../structcp__info.html#a1c7c3f3e2f9a620669b5f5cc51249ef8',1,'cp_info::class_index()'],['../structObject.html#a01bbcbf2d8f45a2ee870d1957940a6d7',1,'Object::class_index()']]],
   ['classes',['classes',['../unionattribute__types.html#a8d9fb2d6b28b3da9923deae9e56cf807',1,'attribute_types']]],
   ['classes_5farr',['classes_arr',['../structMethod.html#ace741cd234df7db5849ee2af75870b8c',1,'Method']]],
   ['code',['code',['../unionattribute__types.html#a95ba29f957b7294764f797a396bed627',1,'attribute_types']]],

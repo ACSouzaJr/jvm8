@@ -3,7 +3,12 @@
 #include "structures.h"
 #include "stack_operands.h"
 
-
+/**
+ * @brief Struct que representa um Frame da JVM.
+ *
+ * Possui um PC, um method_info, um ponteiro para a constant pol, para o array
+ * de variáveis locais, para a pilha de operandos e para o bytecode.
+ */
 typedef struct 
 {
   u4 pc;

@@ -12,7 +12,7 @@
 #define u1 uint8_t
 #define u2 uint16_t
 #define u4 uint32_t
-// #define DEBUG
+#define DEBUG
 
 extern char *GLOBAL_ptr;
 /**
@@ -319,6 +319,11 @@ typedef struct
   u2 inner_class_access_flags;
 } Classes;
 
+/**
+ * @brief Representação da tabela de variáveis locais.
+ *
+ * Possui um PC, um length, o indice do nome, um descriptor e um indice.
+ */
 typedef struct
 {
   u2 start_pc;
@@ -328,6 +333,9 @@ typedef struct
   u2 index;
 } Local_variable_table;
 
+/**
+ * @brief Implementação dos atributos da JVM usando uma union.
+ */
 typedef union {
   struct
   {
@@ -396,6 +404,11 @@ typedef union {
   } Code_attribute;
 } attribute_types;
 
+/**
+ * @brief Representa as informações dos atributos.
+ *
+ * Possui o índice para o nome do atributo, seu comprimento e um ponteiro para o tipo.
+ */
 struct attribute_info
 {
   u2 attribute_name_index;
@@ -435,6 +448,11 @@ typedef struct
   // staticData * staticData;
 } field_info;
 
+/**
+ * @brief Representa uma estrutura de dados tipo array dentro da JVM.
+ *
+ * Possui um ponteiro para um array e informações sobre o seu tamanho.
+ */
 typedef struct
 {
   void *array;
@@ -456,6 +474,11 @@ typedef struct
   InstanceField *fields;
 } Object;
 
+/**
+ * @brief Struct para representar a variável local de um Frame.
+ *
+ * Utiliza uma union para decidir qual é o tipo da variável.
+ */
 struct LocalVariable
 {
   u1 type;
