@@ -7,5 +7,6 @@ var searchData=
   ['type',['type',['../structLocalVariable.html#a05438f40d41a69cde0a4d50a37bf9420',1,'LocalVariable']]],
   ['type_5farray',['type_array',['../structLocalVariable.html#a6905d4b07d1ff41deaa0189ae8761850',1,'LocalVariable']]],
   ['type_5fdouble',['type_double',['../structLocalVariable.html#a488dfde0ac92dbb3f2b4d56280771141',1,'LocalVariable']]],
-  ['type_5flong',['type_long',['../structLocalVariable.html#af14e5709d8a7c9397571316821b9171b',1,'LocalVariable']]]
+  ['type_5flong',['type_long',['../structLocalVariable.html#af14e5709d8a7c9397571316821b9171b',1,'LocalVariable']]],
+  ['type_5fobject',['type_object',['../structLocalVariable.html#ae6f28a6c3ea7313de860a8e46adf661f',1,'LocalVariable']]]
 ];

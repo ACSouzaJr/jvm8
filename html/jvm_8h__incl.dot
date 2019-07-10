@@ -13,6 +13,6 @@ digraph "jvm.h"
   Node5 [label="frame.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$frame_8h.html"];
   Node5 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node5 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6 [label="stack_operands.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$stack__operands_8h.html"];
+  Node6 [label="stack_operands.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$stack__operands_8h.html",tooltip="Implementação das structs de pilha de operandos.  Contém as implementações das estruturas de pilha qu..."];
   Node6 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

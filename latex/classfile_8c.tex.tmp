@@ -55,7 +55,7 @@ void \hyperlink{classfile_8c_a14c4d3f84dd03a43aca0a57bd530f3a2}{read\+\_\+class\
 \begin{DoxyCompactList}\small\item\em Faz a leitura do arquivo .class. \end{DoxyCompactList}\item 
 void \hyperlink{classfile_8c_a774f5149d9c3dadc60b2c0ca012bf51d}{recursive\+\_\+print} (\hyperlink{structcp__info}{cp\+\_\+info} $\ast$cp, \hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} index, char $\ast$str)
 \begin{DoxyCompactList}\small\item\em Usa um índice para acessar a constant pool e printar recusrivamente os campos. \end{DoxyCompactList}\item 
-void \hyperlink{classfile_8c_aa368bab42b5e8b5415b68d6910982ea2}{rec\+\_\+method\+\_\+name} (\hyperlink{structcp__info}{cp\+\_\+info} $\ast$cp, \hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} index, char $\ast$str)
+char $\ast$ \hyperlink{classfile_8c_a580d63d9a7b152364691f69863dc7a4e}{rec\+\_\+method\+\_\+name} (\hyperlink{structcp__info}{cp\+\_\+info} $\ast$cp, \hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} index)
 \begin{DoxyCompactList}\small\item\em Usa um índice no constant pool para procurar o nome de um método recursivamente. \end{DoxyCompactList}\item 
 char $\ast$ \hyperlink{classfile_8c_a09f80f214aa870612fcb23597bcfb4bc}{print\+\_\+reference} (\hyperlink{structcp__info}{cp\+\_\+info} $\ast$cp, \hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} index)
 \begin{DoxyCompactList}\small\item\em Usa um índice na constant pool para retorna uma referência no ponteiro global. \end{DoxyCompactList}\item 
@@ -71,8 +71,8 @@ char $\ast$ \hyperlink{classfile_8c_a50ab5cb2c7741908305afda2e2a0235a}{find\+Nam
 \item 
 void \hyperlink{classfile_8c_a55c80ae86c1c6d0666108a825df64a4b}{execute\+\_\+gvm} ()
 \begin{DoxyCompactList}\small\item\em Função que busca pelo \hyperlink{structFrame}{Frame} no topo da pilha de frames e inicia a execução da \hyperlink{structJVM}{J\+VM}. Essa função é executada enquanto ainda há frames na pilha da \hyperlink{structJVM}{J\+VM}. \end{DoxyCompactList}\item 
-\hyperlink{structmethod__info}{method\+\_\+info} $\ast$ \hyperlink{classfile_8c_acaf2255d12202a819c765194e5e51dba}{find\+\_\+method} (\hyperlink{structClassFile}{Class\+File} $\ast$cf, char $\ast$method)
-\begin{DoxyCompactList}\small\item\em Procura por um método dentro do Classfile carregado em memória. \end{DoxyCompactList}\item 
+\hyperlink{structmethod__info}{method\+\_\+info} $\ast$ \hyperlink{classfile_8c_a915037a0d75520090926e178259cf4bb}{find\+\_\+method} (\hyperlink{structClassFile}{Class\+File} $\ast$cf, char $\ast$method, char $\ast$method\+\_\+description)
+\item 
 \hyperlink{structures_8h_ae391a1d79bb0c8cbc283f0283e3c098b}{u4} \hyperlink{classfile_8c_abd0631a75f72632c5606e72f6d3f00ae}{Class\+Loader} (char $\ast$class\+\_\+name)
 \begin{DoxyCompactList}\small\item\em Aloca espaço para o \hyperlink{structClassFile}{Class\+File} em memória e chama a função read\+\_\+class\+\_\+file para ler o \hyperlink{structClassFile}{Class\+File} recebido nas posições corretas. \end{DoxyCompactList}\item 
 \hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2} \hyperlink{classfile_8c_a64bd697d9f3c3360d6c4edb38f8cdf60}{find\+\_\+class} (char $\ast$class\+\_\+name)
@@ -182,16 +182,13 @@ Procura por um field dentro do \hyperlink{structClassFile}{Class\+File}.
 
 \index{classfile.\+c@{classfile.\+c}!find\+\_\+method@{find\+\_\+method}}
 \index{find\+\_\+method@{find\+\_\+method}!classfile.\+c@{classfile.\+c}}
-\subsubsection[{\texorpdfstring{find\+\_\+method(\+Class\+File $\ast$cf, char $\ast$method)}{find_method(ClassFile *cf, char *method)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf method\+\_\+info}$\ast$ find\+\_\+method (
+\subsubsection[{\texorpdfstring{find\+\_\+method(\+Class\+File $\ast$cf, char $\ast$method, char $\ast$method\+\_\+description)}{find_method(ClassFile *cf, char *method, char *method_description)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf method\+\_\+info}$\ast$ find\+\_\+method (
 \begin{DoxyParamCaption}
 \item[{{\bf Class\+File} $\ast$}]{cf, }
-\item[{char $\ast$}]{method}
+\item[{char $\ast$}]{method, }
+\item[{char $\ast$}]{method\+\_\+description}
 \end{DoxyParamCaption}
-)}\hypertarget{classfile_8c_acaf2255d12202a819c765194e5e51dba}{}\label{classfile_8c_acaf2255d12202a819c765194e5e51dba}
-
-
-Procura por um método dentro do Classfile carregado em memória. 
-
+)}\hypertarget{classfile_8c_a915037a0d75520090926e178259cf4bb}{}\label{classfile_8c_a915037a0d75520090926e178259cf4bb}
 \index{classfile.\+c@{classfile.\+c}!find\+Name\+File@{find\+Name\+File}}
 \index{find\+Name\+File@{find\+Name\+File}!classfile.\+c@{classfile.\+c}}
 \subsubsection[{\texorpdfstring{find\+Name\+File(char $\ast$string)}{findNameFile(char *string)}}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ find\+Name\+File (
@@ -375,13 +372,12 @@ Faz a leitua dos bytes no formato U\+T\+F-\/8.
 
 \index{classfile.\+c@{classfile.\+c}!rec\+\_\+method\+\_\+name@{rec\+\_\+method\+\_\+name}}
 \index{rec\+\_\+method\+\_\+name@{rec\+\_\+method\+\_\+name}!classfile.\+c@{classfile.\+c}}
-\subsubsection[{\texorpdfstring{rec\+\_\+method\+\_\+name(cp\+\_\+info $\ast$cp, u2 index, char $\ast$str)}{rec_method_name(cp_info *cp, u2 index, char *str)}}]{\setlength{\rightskip}{0pt plus 5cm}void rec\+\_\+method\+\_\+name (
+\subsubsection[{\texorpdfstring{rec\+\_\+method\+\_\+name(cp\+\_\+info $\ast$cp, u2 index)}{rec_method_name(cp_info *cp, u2 index)}}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ rec\+\_\+method\+\_\+name (
 \begin{DoxyParamCaption}
 \item[{{\bf cp\+\_\+info} $\ast$}]{cp, }
-\item[{{\bf u2}}]{index, }
-\item[{char $\ast$}]{str}
+\item[{{\bf u2}}]{index}
 \end{DoxyParamCaption}
-)}\hypertarget{classfile_8c_aa368bab42b5e8b5415b68d6910982ea2}{}\label{classfile_8c_aa368bab42b5e8b5415b68d6910982ea2}
+)}\hypertarget{classfile_8c_a580d63d9a7b152364691f69863dc7a4e}{}\label{classfile_8c_a580d63d9a7b152364691f69863dc7a4e}
 
 
 Usa um índice no constant pool para procurar o nome de um método recursivamente. 

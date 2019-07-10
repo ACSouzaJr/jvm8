@@ -89,6 +89,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">stack_operands.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Implementação das structs de pilha de operandos.  Contém as implementações das estruturas de pilha que serão usadas pela <a class="el" href="structJVM.html">JVM</a>.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="structures_8h_source.html">structures.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for stack_operands.h:</div>
@@ -108,13 +111,16 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structStackOperand.html">StackOperand</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estrutura que representa um operando da pilha.  <a href="structStackOperand.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structStackOperand.html">StackOperand</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estrutura que representa um operando da pilha.  <a href="structStackOperand.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:a414156d7562d42dfe1ad10aa2733731b"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structStackOperand.html">StackOperand</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stack__operands_8h.html#a414156d7562d42dfe1ad10aa2733731b">Operand</a></td></tr>
+<tr class="memdesc:a414156d7562d42dfe1ad10aa2733731b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estrutura que representa um operando da pilha.  <a href="#a414156d7562d42dfe1ad10aa2733731b">More...</a><br /></td></tr>
 <tr class="separator:a414156d7562d42dfe1ad10aa2733731b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
@@ -123,7 +129,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ad25a96b2568a831e2358b36ffd9badfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retira o topo da pilha de operandos e retorna para o chamador.  <a href="#ad25a96b2568a831e2358b36ffd9badfa">More...</a><br /></td></tr>
 <tr class="separator:ad25a96b2568a831e2358b36ffd9badfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b8fdbdd132ce76d3351627cc4c4a0c4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stack__operands_8h.html#a9b8fdbdd132ce76d3351627cc4c4a0c4">push_operand</a> (<a class="el" href="structLocalVariable.html">LocalVariable</a> *operand, <a class="el" href="structStackOperand.html">StackOperand</a> *operands)</td></tr>
-<tr class="memdesc:a9b8fdbdd132ce76d3351627cc4c4a0c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adiciona um novo operando dentro da pilha de operandos do <a class="el" href="structFrame.html">Frame</a>.  <a href="#a9b8fdbdd132ce76d3351627cc4c4a0c4">More...</a><br /></td></tr>
+<tr class="memdesc:a9b8fdbdd132ce76d3351627cc4c4a0c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adiciona um novo operando dentro da pilha de operandos do <a class="el" href="structFrame.html" title="Struct que representa um Frame da JVM. ">Frame</a>.  <a href="#a9b8fdbdd132ce76d3351627cc4c4a0c4">More...</a><br /></td></tr>
 <tr class="separator:a9b8fdbdd132ce76d3351627cc4c4a0c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a93503085017543eef1171f1d98fe24d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structLocalVariable.html">LocalVariable</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stack__operands_8h.html#a93503085017543eef1171f1d98fe24d8">top_operand</a> (<a class="el" href="structStackOperand.html">StackOperand</a> *stack_operand)</td></tr>
 <tr class="memdesc:a93503085017543eef1171f1d98fe24d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retorna o topo da pilha de operandos.  <a href="#a93503085017543eef1171f1d98fe24d8">More...</a><br /></td></tr>
@@ -134,7 +140,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a4bb1325b53dcb653e95a7935165c3b0e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stack__operands_8h.html#a4bb1325b53dcb653e95a7935165c3b0e">print_stack</a> ()</td></tr>
 <tr class="separator:a4bb1325b53dcb653e95a7935165c3b0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Typedef Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Implementação das structs de pilha de operandos.  Contém as implementações das estruturas de pilha que serão usadas pela <a class="el" href="structJVM.html">JVM</a>. </p>
+</div><h2 class="groupheader">Typedef Documentation</h2>
 <a class="anchor" id="a414156d7562d42dfe1ad10aa2733731b"></a>
 <div class="memitem">
 <div class="memproto">
@@ -144,6 +152,9 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Estrutura que representa um operando da pilha. </p>
+<p>Possui um ponteiro para uma <a class="el" href="structLocalVariable.html" title="Struct para representar a variável local de um Frame. ">LocalVariable</a> e um pointeiro para uma pilha de operandos. </p>
 
 </div>
 </div>
@@ -222,7 +233,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Adiciona um novo operando dentro da pilha de operandos do <a class="el" href="structFrame.html">Frame</a>. </p>
+<p>Adiciona um novo operando dentro da pilha de operandos do <a class="el" href="structFrame.html" title="Struct que representa um Frame da JVM. ">Frame</a>. </p>
 
 </div>
 </div>
