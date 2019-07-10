@@ -5,5 +5,6 @@ var searchData=
   ['helloworld1_2ejava',['HelloWorld1.java',['../HelloWorld1_8java.html',1,'']]],
   ['helpers_2ec',['helpers.c',['../helpers_8c.html',1,'']]],
   ['helpers_2eh',['helpers.h',['../helpers_8h.html',1,'']]],
+  ['hex_5f0',['hex_0',['../interpreter_8c.html#ae04a20e7967bec5173aedbaa07eed1a4',1,'interpreter.c']]],
   ['high_5fbytes',['high_bytes',['../structcp__info.html#a26996f9b4a0caab37c9cdbfd027eaed7',1,'cp_info']]]
 ];

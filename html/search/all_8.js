@@ -69,6 +69,7 @@ var searchData=
   ['inner_5fclass_5finfo_5findex',['inner_class_info_index',['../structClasses.html#a81deba58ea3d27176396999857216eba',1,'Classes']]],
   ['inner_5fname_5findex',['inner_name_index',['../structClasses.html#ae675c3ce50aa5f7714c632aef5b004b9',1,'Classes']]],
   ['innerclasses_5fattribute',['InnerClasses_attribute',['../unionattribute__types.html#af84c3875a56f217878eec232fe8e33f3',1,'attribute_types']]],
+  ['instancefield',['InstanceField',['../structInstanceField.html',1,'']]],
   ['instanceof_5feval',['instanceof_eval',['../interpreter_8c.html#ac3f747a5f2857c283d123278ce5a3293',1,'instanceof_eval(Frame *f):&#160;interpreter.c'],['../interpreter_8h.html#ac3f747a5f2857c283d123278ce5a3293',1,'instanceof_eval(Frame *f):&#160;interpreter.c']]],
   ['instanceofg',['instanceofg',['../instructions_8h.html#a06fc87d81c62e9abb8790b6e5713c55ba7d50404eedc23ede3ebcb1b51b501842',1,'instructions.h']]],
   ['instructions',['instructions',['../instructions_8h.html#ad80be7537d54389cd2647bb57b4cbf35',1,'instructions.h']]],

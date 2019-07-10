@@ -95,13 +95,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Include dependency graph for classfile.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="classfile_8h__incl.png" border="0" usemap="#classfile_8h" alt=""/></div>
-<!-- MAP 0 -->
+<map name="classfile_8h" id="classfile_8h">
+<area shape="rect" id="node3" href="structures_8h.html" title="Implementação das estruturas de dados da JVM. &#160;Contém as implementações das principais estruturas de ..." alt="" coords="109,304,200,331"/>
+<area shape="rect" id="node5" href="stack__frame_8h.html" title="stack_frame.h" alt="" coords="142,80,247,107"/>
+<area shape="rect" id="node6" href="frame_8h.html" title="frame.h" alt="" coords="161,155,228,181"/>
+<area shape="rect" id="node7" href="stack__operands_8h.html" title="Implementação das structs de pilha de operandos. &#160;Contém as implementações das estruturas de pilha qu..." alt="" coords="192,229,317,256"/>
+</map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="classfile_8h__dep__incl.png" border="0" usemap="#classfile_8hdep" alt=""/></div>
-<!-- MAP 1 -->
+<map name="classfile_8hdep" id="classfile_8hdep">
+<area shape="rect" id="node2" href="classfile_8c.html" title="Classfile functions &#160;Funções de apoio e leitura do ClassFile (bytecode) " alt="" coords="5,80,87,107"/>
+<area shape="rect" id="node3" href="frame_8c.html" title="Criação do Frame da JVM. " alt="" coords="111,80,178,107"/>
+<area shape="rect" id="node4" href="interpreter_8c.html" title="Implementação das instruções de execução da JVM. &#160;Contém a implementação de todas as instruções da JV..." alt="" coords="202,80,293,107"/>
+<area shape="rect" id="node5" href="main_8c.html" title="main.c" alt="" coords="317,80,378,107"/>
+</map>
 </div>
 </div>
 <p><a href="classfile_8h_source.html">Go to the source code of this file.</a></p>
@@ -141,9 +151,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a774f5149d9c3dadc60b2c0ca012bf51d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile_8h.html#a774f5149d9c3dadc60b2c0ca012bf51d">recursive_print</a> (<a class="el" href="structcp__info.html">cp_info</a> *cp, <a class="el" href="structures_8h.html#a55ef8d87fd202b8417704c089899c5b9">u2</a> index, char *str)</td></tr>
 <tr class="memdesc:a774f5149d9c3dadc60b2c0ca012bf51d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Usa um índice para acessar a constant pool e printar recusrivamente os campos.  <a href="#a774f5149d9c3dadc60b2c0ca012bf51d">More...</a><br /></td></tr>
 <tr class="separator:a774f5149d9c3dadc60b2c0ca012bf51d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa368bab42b5e8b5415b68d6910982ea2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile_8h.html#aa368bab42b5e8b5415b68d6910982ea2">rec_method_name</a> (<a class="el" href="structcp__info.html">cp_info</a> *cp, <a class="el" href="structures_8h.html#a55ef8d87fd202b8417704c089899c5b9">u2</a> index, char *str)</td></tr>
-<tr class="memdesc:aa368bab42b5e8b5415b68d6910982ea2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Usa um índice no constant pool para procurar o nome de um método recursivamente.  <a href="#aa368bab42b5e8b5415b68d6910982ea2">More...</a><br /></td></tr>
-<tr class="separator:aa368bab42b5e8b5415b68d6910982ea2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a580d63d9a7b152364691f69863dc7a4e"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile_8h.html#a580d63d9a7b152364691f69863dc7a4e">rec_method_name</a> (<a class="el" href="structcp__info.html">cp_info</a> *cp, <a class="el" href="structures_8h.html#a55ef8d87fd202b8417704c089899c5b9">u2</a> index)</td></tr>
+<tr class="memdesc:a580d63d9a7b152364691f69863dc7a4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Usa um índice no constant pool para procurar o nome de um método recursivamente.  <a href="#a580d63d9a7b152364691f69863dc7a4e">More...</a><br /></td></tr>
+<tr class="separator:a580d63d9a7b152364691f69863dc7a4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a627193785e98bc076b257c97ccd5892b"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile_8h.html#a627193785e98bc076b257c97ccd5892b">ret_method_name</a> (<a class="el" href="structcp__info.html">cp_info</a> *cp, <a class="el" href="structures_8h.html#a55ef8d87fd202b8417704c089899c5b9">u2</a> index)</td></tr>
 <tr class="memdesc:a627193785e98bc076b257c97ccd5892b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retorna o nome de um método no ponteiro global.  <a href="#a627193785e98bc076b257c97ccd5892b">More...</a><br /></td></tr>
 <tr class="separator:a627193785e98bc076b257c97ccd5892b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -183,11 +193,10 @@ Functions</h2></td></tr>
 <tr class="memdesc:abd0631a75f72632c5606e72f6d3f00ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aloca espaço para o <a class="el" href="structClassFile.html" title="Struct que representa os campos do bytecode. ">ClassFile</a> em memória e chama a função read_class_file para ler o <a class="el" href="structClassFile.html" title="Struct que representa os campos do bytecode. ">ClassFile</a> recebido nas posições corretas.  <a href="#abd0631a75f72632c5606e72f6d3f00ae">More...</a><br /></td></tr>
 <tr class="separator:abd0631a75f72632c5606e72f6d3f00ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a55c80ae86c1c6d0666108a825df64a4b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile_8h.html#a55c80ae86c1c6d0666108a825df64a4b">execute_gvm</a> ()</td></tr>
-<tr class="memdesc:a55c80ae86c1c6d0666108a825df64a4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que busca pelo <a class="el" href="structFrame.html">Frame</a> no topo da pilha de frames e inicia a execução da <a class="el" href="structJVM.html">JVM</a>. Essa função é executada enquanto ainda há frames na pilha da <a class="el" href="structJVM.html">JVM</a>.  <a href="#a55c80ae86c1c6d0666108a825df64a4b">More...</a><br /></td></tr>
+<tr class="memdesc:a55c80ae86c1c6d0666108a825df64a4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que busca pelo <a class="el" href="structFrame.html" title="Struct que representa um Frame da JVM. ">Frame</a> no topo da pilha de frames e inicia a execução da <a class="el" href="structJVM.html">JVM</a>. Essa função é executada enquanto ainda há frames na pilha da <a class="el" href="structJVM.html">JVM</a>.  <a href="#a55c80ae86c1c6d0666108a825df64a4b">More...</a><br /></td></tr>
 <tr class="separator:a55c80ae86c1c6d0666108a825df64a4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acaf2255d12202a819c765194e5e51dba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmethod__info.html">method_info</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile_8h.html#acaf2255d12202a819c765194e5e51dba">find_method</a> (<a class="el" href="structClassFile.html">ClassFile</a> *cf, char *method)</td></tr>
-<tr class="memdesc:acaf2255d12202a819c765194e5e51dba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procura por um método dentro do Classfile carregado em memória.  <a href="#acaf2255d12202a819c765194e5e51dba">More...</a><br /></td></tr>
-<tr class="separator:acaf2255d12202a819c765194e5e51dba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a915037a0d75520090926e178259cf4bb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmethod__info.html">method_info</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile_8h.html#a915037a0d75520090926e178259cf4bb">find_method</a> (<a class="el" href="structClassFile.html">ClassFile</a> *cf, char *method, char *method_description)</td></tr>
+<tr class="separator:a915037a0d75520090926e178259cf4bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64bd697d9f3c3360d6c4edb38f8cdf60"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structures_8h.html#a55ef8d87fd202b8417704c089899c5b9">u2</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile_8h.html#a64bd697d9f3c3360d6c4edb38f8cdf60">find_class</a> (char *class_name)</td></tr>
 <tr class="memdesc:a64bd697d9f3c3360d6c4edb38f8cdf60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procura por cuma classe, e caso não consiga encontrá-la, carrega na memória usando a função ClassLoader.  <a href="#a64bd697d9f3c3360d6c4edb38f8cdf60">More...</a><br /></td></tr>
 <tr class="separator:a64bd697d9f3c3360d6c4edb38f8cdf60"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -212,6 +221,8 @@ Variables</h2></td></tr>
 <tr class="separator:a15f64dbdb65ef3f2f338253004e88b99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aacaf45a8478861c2788165e9f0d24a3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structMethod.html">Method</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile_8h.html#aacaf45a8478861c2788165e9f0d24a3c">Mem</a></td></tr>
 <tr class="separator:aacaf45a8478861c2788165e9f0d24a3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ff2c57ead44ec66c113197fa71ab268"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile_8h.html#a9ff2c57ead44ec66c113197fa71ab268">PATH</a></td></tr>
+<tr class="separator:a9ff2c57ead44ec66c113197fa71ab268"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="abd0631a75f72632c5606e72f6d3f00ae"></a>
@@ -229,6 +240,40 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Aloca espaço para o <a class="el" href="structClassFile.html" title="Struct que representa os campos do bytecode. ">ClassFile</a> em memória e chama a função read_class_file para ler o <a class="el" href="structClassFile.html" title="Struct que representa os campos do bytecode. ">ClassFile</a> recebido nas posições corretas. </p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_abd0631a75f72632c5606e72f6d3f00ae_cgraph.png" border="0" usemap="#classfile_8h_abd0631a75f72632c5606e72f6d3f00ae_cgraph" alt=""/></div>
+<map name="classfile_8h_abd0631a75f72632c5606e72f6d3f00ae_cgraph" id="classfile_8h_abd0631a75f72632c5606e72f6d3f00ae_cgraph">
+<area shape="rect" id="node2" href="classfile_8c.html#a14c4d3f84dd03a43aca0a57bd530f3a2" title="Faz a leitura do arquivo .class. " alt="" coords="148,87,257,113"/>
+<area shape="rect" id="node3" href="classfile_8c.html#aad8c26a8aaff63010bb790df878f0950" title="Faz a leitura de 4 bytes do arquivo .class fornecido no path. " alt="" coords="459,5,525,32"/>
+<area shape="rect" id="node4" href="classfile_8c.html#aae51575c6f1d6ce808fbc88a3037c4ed" title="Faz a leitura de 2 bytes do arquivo .class fornecido no path. " alt="" coords="459,61,525,88"/>
+<area shape="rect" id="node5" href="classfile_8c.html#a13b463381f7cf580d002e6631c0c4ea8" title="Faz a leitura de 1 byte do arquivo .class fornecido no path. " alt="" coords="459,175,525,201"/>
+<area shape="rect" id="node6" href="classfile_8c.html#ab2c33d049c34b50ead32e4568387353c" title="Lê os atributos do bytecode recebido. " alt="" coords="305,124,408,151"/>
+<area shape="rect" id="node7" href="classfile_8c.html#a77c5107c582c86dedb65853efabd9302" title="Faz a leitua dos bytes no formato UTF&#45;8. " alt="" coords="456,124,528,151"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_abd0631a75f72632c5606e72f6d3f00ae_icgraph.png" border="0" usemap="#classfile_8h_abd0631a75f72632c5606e72f6d3f00ae_icgraph" alt=""/></div>
+<map name="classfile_8h_abd0631a75f72632c5606e72f6d3f00ae_icgraph" id="classfile_8h_abd0631a75f72632c5606e72f6d3f00ae_icgraph">
+<area shape="rect" id="node2" href="classfile_8h.html#a64bd697d9f3c3360d6c4edb38f8cdf60" title="Procura por cuma classe, e caso não consiga encontrá&#45;la, carrega na memória usando a função ClassLoad..." alt="" coords="148,157,229,184"/>
+<area shape="rect" id="node6" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="637,233,688,260"/>
+<area shape="rect" id="node3" href="interpreter_8h.html#a0376f00366ddf07cdd7b30699c0ce9ea" title="Pega um campo static de uma classe. " alt="" coords="292,259,395,285"/>
+<area shape="rect" id="node7" href="interpreter_8h.html#ad5d8f4d22094dc598e3a241addeb1376" title="Seta campo static numa classe. " alt="" coords="292,107,395,133"/>
+<area shape="rect" id="node8" href="interpreter_8h.html#a68645b98a8ec61af8d928a18e1108e44" title="Invoca o método de uma instância. " alt="" coords="280,157,407,184"/>
+<area shape="rect" id="node9" href="interpreter_8h.html#a0158225d2969a806067337bb3b7694b5" title="Invoca o método de uma instância, tratando de superclasses, métodos privados. " alt="" coords="277,208,409,235"/>
+<area shape="rect" id="node10" href="interpreter_8h.html#a7945d7df3a93628695ba61a8d8a14315" title="Invoca um método estático de uma classe. " alt="" coords="282,5,405,32"/>
+<area shape="rect" id="node11" href="interpreter_8h.html#a50ee7819621feec3fd084f946cf09cc3" title="Instacia um novo objeto de uma classe. " alt="" coords="305,56,382,83"/>
+<area shape="rect" id="node4" href="classfile_8h.html#a8d5e46a5df7dfb965306e8a277783511" title="todo: avalia os atributos do classfile. " alt="" coords="472,233,575,260"/>
+<area shape="rect" id="node5" href="op__codes__initializer_8c.html#afc6e90df89f862010ce7c75d0663ea08" title="initialize_op_codes" alt="" coords="457,157,589,184"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -270,6 +315,63 @@ Variables</h2></td></tr>
 
 <p>todo: avalia os atributos do classfile. </p>
 
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a8d5e46a5df7dfb965306e8a277783511_cgraph.png" border="0" usemap="#classfile_8h_a8d5e46a5df7dfb965306e8a277783511_cgraph" alt=""/></div>
+<map name="classfile_8h_a8d5e46a5df7dfb965306e8a277783511_cgraph" id="classfile_8h_a8d5e46a5df7dfb965306e8a277783511_cgraph">
+<area shape="rect" id="node2" href="frame_8c.html#a3def2e70c9f5507f4be53e969bd5c4b1" title="Cria um novo Frame para ser colocado na pilha de frames da JVM. " alt="" coords="360,1265,443,1292"/>
+<area shape="rect" id="node3" href="classfile_8c.html#a77c5107c582c86dedb65853efabd9302" title="Faz a leitua dos bytes no formato UTF&#45;8. " alt="" coords="1025,1721,1097,1748"/>
+<area shape="rect" id="node4" href="stack__operands_8c.html#ad8a84e049ef9881ced4324970f42fb2d" title="Adiciona um novo operando dentro da pilha de operandos do Frame. " alt="" coords="350,683,453,709"/>
+<area shape="rect" id="node5" href="stack__frame_8c.html#a9449cf29b3fcf4b4e6d6ea496a63c61b" title="Adiciona um novo Frame na pilha de frames. " alt="" coords="376,1519,427,1545"/>
+<area shape="rect" id="node6" href="stack__frame_8c.html#a420b7f43dadaf2cf35fef826faca9a22" title="Retira o último item na pilha de Frames e o retorna para o chamador. " alt="" coords="380,24,423,51"/>
+<area shape="rect" id="node7" href="stack__operands_8c.html#a93503085017543eef1171f1d98fe24d8" title="Retorna o topo da pilha de operandos. " alt="" coords="175,252,269,279"/>
+<area shape="rect" id="node8" href="interpreter_8c.html#a2000556ea638eb54177a2a540f8815e2" title="Realiza um push de um int constante para a pilha de operandos. " alt="" coords="165,911,279,937"/>
+<area shape="rect" id="node9" href="interpreter_8c.html#a4f0ee8e35303aabf08d39a205677a494" title="Coloca o inteiro constante 0 na pilha de operandos. " alt="" coords="171,961,273,988"/>
+<area shape="rect" id="node10" href="interpreter_8c.html#acc6da34d5edb7c5d0fb87442bc62f55b" title="Coloca o inteiro constante 1 na pilha de operandos. " alt="" coords="171,100,273,127"/>
+<area shape="rect" id="node11" href="interpreter_8c.html#a42908747b0fe9bd6485ab4ac36873889" title="Coloca o inteiro constante 2 na pilha de operandos. " alt="" coords="171,151,273,177"/>
+<area shape="rect" id="node12" href="interpreter_8c.html#aba2835621333a23ec418ac11b914e839" title="Coloca o inteiro constante 3 na pilha de operandos. " alt="" coords="171,201,273,228"/>
+<area shape="rect" id="node13" href="interpreter_8c.html#a7d04f7c0c1bde3cd3d6746386c1d591e" title="Coloca o inteiro constante 4 na pilha de operandos. " alt="" coords="171,303,273,329"/>
+<area shape="rect" id="node14" href="interpreter_8c.html#a2ffb9fcf1a7d5fa9cb7c3df6ecb52e30" title="Coloca o inteiro constante 5 na pilha de operandos. " alt="" coords="171,353,273,380"/>
+<area shape="rect" id="node15" href="interpreter_8c.html#acd79995d2b236b173d1139145c9ff5cc" title="Realiza o push de um item da constant pool. " alt="" coords="187,404,257,431"/>
+<area shape="rect" id="node16" href="interpreter_8c.html#ac02ee60c86eabd03b939a57a5da2e3c3" title="Carrega um inteiro correspondente a posição 0 no vetor de variáveis locais na pilha de operandos..." alt="" coords="175,455,269,481"/>
+<area shape="rect" id="node17" href="interpreter_8c.html#ab936dcb1cb957f9cc264cea51cb9d0d9" title="Carrega um inteiro correspondente a posição 1 no vetor de variáveis locais na pilha de operandos..." alt="" coords="175,505,269,532"/>
+<area shape="rect" id="node18" href="interpreter_8c.html#a367a2ebb1ece5a2bc8b101f340d855c7" title="Carrega um inteiro correspondente a posição 2 no vetor de variáveis locais na pilha de operandos..." alt="" coords="175,556,269,583"/>
+<area shape="rect" id="node19" href="interpreter_8c.html#ad3008a2292b63121ca1814d85db735d4" title="Carrega a referência correspondente a posição 3 no vetor de variáveis locais na pilha de operandos..." alt="" coords="175,607,269,633"/>
+<area shape="rect" id="node20" href="interpreter_8c.html#a2fb27d454dc430c05b37d1fb34580c38" title="Carrega uma referência correspondente ao índice 0 no vetor de variáveis locais na pilha de operandos..." alt="" coords="173,657,271,684"/>
+<area shape="rect" id="node21" href="interpreter_8c.html#a40c6a9c78a190f589bad626d7ddaa6c2" title="Carrega uma referência correspondente ao índice 1 no vetor de variáveis locais na pilha de operandos..." alt="" coords="173,708,271,735"/>
+<area shape="rect" id="node22" href="interpreter_8c.html#ae2716bbc4960196427b92fc07fc231d6" title="Carrega uma referência correspondente ao índice 2 no vetor de variáveis locais na pilha de operandos..." alt="" coords="173,809,271,836"/>
+<area shape="rect" id="node23" href="interpreter_8c.html#a02f7e2da25439ab188aa0e103cc812b1" title="Carrega uma referência correspondente ao índice 3 no vetor de variáveis locais na pilha de operandos..." alt="" coords="173,860,271,887"/>
+<area shape="rect" id="node24" href="interpreter_8c.html#aeeaf914920d00c56708def6a20e2dab0" title="Guarda um inteiro na posição 0 do vetor de variáveis locais. " alt="" coords="173,1367,271,1393"/>
+<area shape="rect" id="node26" href="interpreter_8c.html#a048eec625fdd50195d0109507c77e4ea" title="Guarda um inteiro na posição 1 do vetor de variáveis locais. " alt="" coords="173,1215,271,1241"/>
+<area shape="rect" id="node27" href="interpreter_8c.html#a76db61cd5d14052441c43eac6d7d8ccf" title="Guarda um inteiro na posição 2 do vetor de variáveis locais. " alt="" coords="173,1265,271,1292"/>
+<area shape="rect" id="node28" href="interpreter_8c.html#a3f008d6e706a3033cbfd7e950f3c1312" title="Guarda um inteiro na posição 3 do vetor de variáveis locais. " alt="" coords="173,1316,271,1343"/>
+<area shape="rect" id="node29" href="interpreter_8c.html#a4a42c73a7759c5b3482bf687dae5ae78" title="Realiza a operação de soma de inteiros. " alt="" coords="183,1164,261,1191"/>
+<area shape="rect" id="node30" href="interpreter_8c.html#a93c1d67e437472c250826d6848175d7c" title="Realiza a operação de subtração de inteiros. " alt="" coords="183,1012,261,1039"/>
+<area shape="rect" id="node31" href="interpreter_8c.html#af023e21bb3b15838ba6d49e0c8f890af" title="Realiza a operação de multiplicação de inteiros. " alt="" coords="183,1063,261,1089"/>
+<area shape="rect" id="node32" href="interpreter_8c.html#a91c9bc1c437bf2667c6f7f5b39d7ed1a" title="Realiza a operação de divisão de inteiros. " alt="" coords="185,1113,259,1140"/>
+<area shape="rect" id="node33" href="interpreter_8c.html#ac58fcd542e2a43d21dfa67c308a195b5" title="Retorna void de um método. " alt="" coords="179,49,265,76"/>
+<area shape="rect" id="node34" href="interpreter_8c.html#a0376f00366ddf07cdd7b30699c0ce9ea" title="Pega um campo static de uma classe. " alt="" coords="171,1620,273,1647"/>
+<area shape="rect" id="node47" href="interpreter_8c.html#a0158225d2969a806067337bb3b7694b5" title="Invoca o método de uma instância, tratando de superclasses, métodos privados. " alt="" coords="156,1468,288,1495"/>
+<area shape="rect" id="node25" href="stack__operands_8c.html#ad25a96b2568a831e2358b36ffd9badfa" title="Retira o topo da pilha de operandos e retorna para o chamador. " alt="" coords="353,1215,449,1241"/>
+<area shape="rect" id="node35" href="helpers_8c.html#a0a7debb62b7ecdf5d62fce5afb081b92" title="Retorna um indice a partir de dois bytes. " alt="" coords="336,1569,467,1596"/>
+<area shape="rect" id="node36" href="classfile_8c.html#a627193785e98bc076b257c97ccd5892b" title="Retorna o nome de um método no ponteiro global. " alt="" coords="515,1620,641,1647"/>
+<area shape="rect" id="node39" href="classfile_8c.html#a64bd697d9f3c3360d6c4edb38f8cdf60" title="Procura por cuma classe, e caso não consiga encontrá&#45;la, carrega na memória usando a função ClassLoad..." alt="" coords="361,1671,442,1697"/>
+<area shape="rect" id="node46" href="classfile_8c.html#a0688afe113144b86408f83f83685db04" title="Procura por um field dentro do ClassFile. " alt="" coords="717,1772,791,1799"/>
+<area shape="rect" id="node37" href="classfile_8c.html#a580d63d9a7b152364691f69863dc7a4e" title="Usa um índice no constant pool para procurar o nome de um método recursivamente. " alt="" coords="689,1620,819,1647"/>
+<area shape="rect" id="node38" href="classfile_8c.html#aa73a2b8f66296e2fcdec5b6f029c1f88" title="Printa o tipo CONSTANT. " alt="" coords="867,1620,977,1647"/>
+<area shape="rect" id="node40" href="classfile_8c.html#abd0631a75f72632c5606e72f6d3f00ae" title="Aloca espaço para o ClassFile em memória e chama a função read_class_file para ler o ClassFile recebi..." alt="" coords="531,1823,625,1849"/>
+<area shape="rect" id="node41" href="classfile_8c.html#a14c4d3f84dd03a43aca0a57bd530f3a2" title="Faz a leitura do arquivo .class. " alt="" coords="699,1999,809,2025"/>
+<area shape="rect" id="node42" href="classfile_8c.html#aad8c26a8aaff63010bb790df878f0950" title="Faz a leitura de 4 bytes do arquivo .class fornecido no path. " alt="" coords="1028,2100,1095,2127"/>
+<area shape="rect" id="node43" href="classfile_8c.html#aae51575c6f1d6ce808fbc88a3037c4ed" title="Faz a leitura de 2 bytes do arquivo .class fornecido no path. " alt="" coords="1028,1943,1095,1969"/>
+<area shape="rect" id="node44" href="classfile_8c.html#a13b463381f7cf580d002e6631c0c4ea8" title="Faz a leitura de 1 byte do arquivo .class fornecido no path. " alt="" coords="1028,2031,1095,2057"/>
+<area shape="rect" id="node45" href="classfile_8c.html#ab2c33d049c34b50ead32e4568387353c" title="Lê os atributos do bytecode recebido. " alt="" coords="871,1999,973,2025"/>
+<area shape="rect" id="node48" href="interpreter_8c.html#ad183a922695fe19bb310022deade7713" title="Conta o número de argumentos do método recebido como parâmetro. " alt="" coords="358,1417,445,1444"/>
+<area shape="rect" id="node49" href="classfile_8c.html#a915037a0d75520090926e178259cf4bb" title="find_method" alt="" coords="531,1316,625,1343"/>
+</map>
+</div>
+</p>
+
 </div>
 </div>
 <a class="anchor" id="a55c80ae86c1c6d0666108a825df64a4b"></a>
@@ -285,7 +387,27 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Função que busca pelo <a class="el" href="structFrame.html">Frame</a> no topo da pilha de frames e inicia a execução da <a class="el" href="structJVM.html">JVM</a>. Essa função é executada enquanto ainda há frames na pilha da <a class="el" href="structJVM.html">JVM</a>. </p>
+<p>Função que busca pelo <a class="el" href="structFrame.html" title="Struct que representa um Frame da JVM. ">Frame</a> no topo da pilha de frames e inicia a execução da <a class="el" href="structJVM.html">JVM</a>. Essa função é executada enquanto ainda há frames na pilha da <a class="el" href="structJVM.html">JVM</a>. </p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a55c80ae86c1c6d0666108a825df64a4b_cgraph.png" border="0" usemap="#classfile_8h_a55c80ae86c1c6d0666108a825df64a4b_cgraph" alt=""/></div>
+<map name="classfile_8h_a55c80ae86c1c6d0666108a825df64a4b_cgraph" id="classfile_8h_a55c80ae86c1c6d0666108a825df64a4b_cgraph">
+<area shape="rect" id="node2" href="stack__frame_8c.html#a946d97bd0b6c21223b5b220ca34c7ab1" title="Retorna verdadeiro caso a pilha de Frames esteja vazia. " alt="" coords="153,5,212,32"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a55c80ae86c1c6d0666108a825df64a4b_icgraph.png" border="0" usemap="#classfile_8h_a55c80ae86c1c6d0666108a825df64a4b_icgraph" alt=""/></div>
+<map name="classfile_8h_a55c80ae86c1c6d0666108a825df64a4b_icgraph" id="classfile_8h_a55c80ae86c1c6d0666108a825df64a4b_icgraph">
+<area shape="rect" id="node2" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="153,5,204,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -312,6 +434,18 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a1258b84eec00db8fee377fea434c49b1_cgraph.png" border="0" usemap="#classfile_8h_a1258b84eec00db8fee377fea434c49b1_cgraph" alt=""/></div>
+<map name="classfile_8h_a1258b84eec00db8fee377fea434c49b1_cgraph" id="classfile_8h_a1258b84eec00db8fee377fea434c49b1_cgraph">
+<area shape="rect" id="node2" href="classfile_8c.html#a13b463381f7cf580d002e6631c0c4ea8" title="Faz a leitura de 1 byte do arquivo .class fornecido no path. " alt="" coords="379,5,445,32"/>
+<area shape="rect" id="node3" href="classfile_8c.html#add61e24daf8356973e908b3f1cfd5a24" title="Faz a leitura de 1 byre do arquivo .class fornecido no path. " alt="" coords="180,31,331,57"/>
+<area shape="rect" id="node4" href="classfile_8c.html#aae51575c6f1d6ce808fbc88a3037c4ed" title="Faz a leitura de 2 bytes do arquivo .class fornecido no path. " alt="" coords="379,68,445,95"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -341,6 +475,27 @@ Variables</h2></td></tr>
 
 <p>Faz a leitura de 1 byre do arquivo .class fornecido no path. </p>
 
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_add61e24daf8356973e908b3f1cfd5a24_cgraph.png" border="0" usemap="#classfile_8h_add61e24daf8356973e908b3f1cfd5a24_cgraph" alt=""/></div>
+<map name="classfile_8h_add61e24daf8356973e908b3f1cfd5a24_cgraph" id="classfile_8h_add61e24daf8356973e908b3f1cfd5a24_cgraph">
+<area shape="rect" id="node2" href="classfile_8c.html#a13b463381f7cf580d002e6631c0c4ea8" title="Faz a leitura de 1 byte do arquivo .class fornecido no path. " alt="" coords="204,5,271,32"/>
+<area shape="rect" id="node3" href="classfile_8c.html#aae51575c6f1d6ce808fbc88a3037c4ed" title="Faz a leitura de 2 bytes do arquivo .class fornecido no path. " alt="" coords="204,56,271,83"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_add61e24daf8356973e908b3f1cfd5a24_icgraph.png" border="0" usemap="#classfile_8h_add61e24daf8356973e908b3f1cfd5a24_icgraph" alt=""/></div>
+<map name="classfile_8h_add61e24daf8356973e908b3f1cfd5a24_icgraph" id="classfile_8h_add61e24daf8356973e908b3f1cfd5a24_icgraph">
+<area shape="rect" id="node2" href="classfile_8h.html#a1258b84eec00db8fee377fea434c49b1" title="fillStackMapTable" alt="" coords="204,5,331,32"/>
+</map>
+</div>
+</p>
+
 </div>
 </div>
 <a class="anchor" id="a64bd697d9f3c3360d6c4edb38f8cdf60"></a>
@@ -359,6 +514,43 @@ Variables</h2></td></tr>
 
 <p>Procura por cuma classe, e caso não consiga encontrá-la, carrega na memória usando a função ClassLoader. </p>
 
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a64bd697d9f3c3360d6c4edb38f8cdf60_cgraph.png" border="0" usemap="#classfile_8h_a64bd697d9f3c3360d6c4edb38f8cdf60_cgraph" alt=""/></div>
+<map name="classfile_8h_a64bd697d9f3c3360d6c4edb38f8cdf60_cgraph" id="classfile_8h_a64bd697d9f3c3360d6c4edb38f8cdf60_cgraph">
+<area shape="rect" id="node2" href="classfile_8c.html#a627193785e98bc076b257c97ccd5892b" title="Retorna o nome de um método no ponteiro global. " alt="" coords="135,55,261,81"/>
+<area shape="rect" id="node5" href="classfile_8c.html#abd0631a75f72632c5606e72f6d3f00ae" title="Aloca espaço para o ClassFile em memória e chama a função read_class_file para ler o ClassFile recebi..." alt="" coords="151,117,245,144"/>
+<area shape="rect" id="node3" href="classfile_8c.html#a580d63d9a7b152364691f69863dc7a4e" title="Usa um índice no constant pool para procurar o nome de um método recursivamente. " alt="" coords="309,29,439,56"/>
+<area shape="rect" id="node4" href="classfile_8c.html#aa73a2b8f66296e2fcdec5b6f029c1f88" title="Printa o tipo CONSTANT. " alt="" coords="487,23,597,49"/>
+<area shape="rect" id="node6" href="classfile_8c.html#a14c4d3f84dd03a43aca0a57bd530f3a2" title="Faz a leitura do arquivo .class. " alt="" coords="319,124,429,151"/>
+<area shape="rect" id="node7" href="classfile_8c.html#aad8c26a8aaff63010bb790df878f0950" title="Faz a leitura de 4 bytes do arquivo .class fornecido no path. " alt="" coords="648,80,715,107"/>
+<area shape="rect" id="node8" href="classfile_8c.html#aae51575c6f1d6ce808fbc88a3037c4ed" title="Faz a leitura de 2 bytes do arquivo .class fornecido no path. " alt="" coords="648,136,715,163"/>
+<area shape="rect" id="node9" href="classfile_8c.html#a13b463381f7cf580d002e6631c0c4ea8" title="Faz a leitura de 1 byte do arquivo .class fornecido no path. " alt="" coords="648,249,715,276"/>
+<area shape="rect" id="node10" href="classfile_8c.html#ab2c33d049c34b50ead32e4568387353c" title="Lê os atributos do bytecode recebido. " alt="" coords="491,199,593,225"/>
+<area shape="rect" id="node11" href="classfile_8c.html#a77c5107c582c86dedb65853efabd9302" title="Faz a leitua dos bytes no formato UTF&#45;8. " alt="" coords="645,199,717,225"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a64bd697d9f3c3360d6c4edb38f8cdf60_icgraph.png" border="0" usemap="#classfile_8h_a64bd697d9f3c3360d6c4edb38f8cdf60_icgraph" alt=""/></div>
+<map name="classfile_8h_a64bd697d9f3c3360d6c4edb38f8cdf60_icgraph" id="classfile_8h_a64bd697d9f3c3360d6c4edb38f8cdf60_icgraph">
+<area shape="rect" id="node2" href="interpreter_8h.html#a0376f00366ddf07cdd7b30699c0ce9ea" title="Pega um campo static de uma classe. " alt="" coords="149,5,252,32"/>
+<area shape="rect" id="node6" href="interpreter_8h.html#ad5d8f4d22094dc598e3a241addeb1376" title="Seta campo static numa classe. " alt="" coords="149,208,252,235"/>
+<area shape="rect" id="node7" href="interpreter_8h.html#a68645b98a8ec61af8d928a18e1108e44" title="Invoca o método de uma instância. " alt="" coords="137,259,264,285"/>
+<area shape="rect" id="node8" href="interpreter_8h.html#a0158225d2969a806067337bb3b7694b5" title="Invoca o método de uma instância, tratando de superclasses, métodos privados. " alt="" coords="135,56,267,83"/>
+<area shape="rect" id="node9" href="interpreter_8h.html#a7945d7df3a93628695ba61a8d8a14315" title="Invoca um método estático de uma classe. " alt="" coords="139,107,262,133"/>
+<area shape="rect" id="node10" href="interpreter_8h.html#a50ee7819621feec3fd084f946cf09cc3" title="Instacia um novo objeto de uma classe. " alt="" coords="162,157,239,184"/>
+<area shape="rect" id="node3" href="classfile_8h.html#a8d5e46a5df7dfb965306e8a277783511" title="todo: avalia os atributos do classfile. " alt="" coords="329,44,432,71"/>
+<area shape="rect" id="node4" href="op__codes__initializer_8c.html#afc6e90df89f862010ce7c75d0663ea08" title="initialize_op_codes" alt="" coords="315,120,447,147"/>
+<area shape="rect" id="node5" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="495,120,545,147"/>
+</map>
+</div>
+</p>
+
 </div>
 </div>
 <a class="anchor" id="a39063f00cc6ccce0402e1a81f2f760af"></a>
@@ -376,6 +568,29 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Procura por um init dentro do Classfile. </p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a39063f00cc6ccce0402e1a81f2f760af_cgraph.png" border="0" usemap="#classfile_8h_a39063f00cc6ccce0402e1a81f2f760af_cgraph" alt=""/></div>
+<map name="classfile_8h_a39063f00cc6ccce0402e1a81f2f760af_cgraph" id="classfile_8h_a39063f00cc6ccce0402e1a81f2f760af_cgraph">
+<area shape="rect" id="node2" href="classfile_8c.html#a915037a0d75520090926e178259cf4bb" title="find_method" alt="" coords="131,5,224,32"/>
+<area shape="rect" id="node4" href="frame_8c.html#a3def2e70c9f5507f4be53e969bd5c4b1" title="Cria um novo Frame para ser colocado na pilha de frames da JVM. " alt="" coords="136,56,219,83"/>
+<area shape="rect" id="node5" href="stack__frame_8c.html#a9449cf29b3fcf4b4e6d6ea496a63c61b" title="Adiciona um novo Frame na pilha de frames. " alt="" coords="152,107,203,133"/>
+<area shape="rect" id="node3" href="classfile_8c.html#a77c5107c582c86dedb65853efabd9302" title="Faz a leitua dos bytes no formato UTF&#45;8. " alt="" coords="272,31,344,57"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a39063f00cc6ccce0402e1a81f2f760af_icgraph.png" border="0" usemap="#classfile_8h_a39063f00cc6ccce0402e1a81f2f760af_icgraph" alt=""/></div>
+<map name="classfile_8h_a39063f00cc6ccce0402e1a81f2f760af_icgraph" id="classfile_8h_a39063f00cc6ccce0402e1a81f2f760af_icgraph">
+<area shape="rect" id="node2" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="131,5,181,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -411,9 +626,33 @@ Variables</h2></td></tr>
 
 <p>Procura por um field dentro do <a class="el" href="structClassFile.html" title="Struct que representa os campos do bytecode. ">ClassFile</a>. </p>
 
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a0688afe113144b86408f83f83685db04_cgraph.png" border="0" usemap="#classfile_8h_a0688afe113144b86408f83f83685db04_cgraph" alt=""/></div>
+<map name="classfile_8h_a0688afe113144b86408f83f83685db04_cgraph" id="classfile_8h_a0688afe113144b86408f83f83685db04_cgraph">
+<area shape="rect" id="node2" href="classfile_8c.html#a77c5107c582c86dedb65853efabd9302" title="Faz a leitua dos bytes no formato UTF&#45;8. " alt="" coords="128,5,200,32"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a0688afe113144b86408f83f83685db04_icgraph.png" border="0" usemap="#classfile_8h_a0688afe113144b86408f83f83685db04_icgraph" alt=""/></div>
+<map name="classfile_8h_a0688afe113144b86408f83f83685db04_icgraph" id="classfile_8h_a0688afe113144b86408f83f83685db04_icgraph">
+<area shape="rect" id="node2" href="interpreter_8h.html#a0376f00366ddf07cdd7b30699c0ce9ea" title="Pega um campo static de uma classe. " alt="" coords="128,5,231,32"/>
+<area shape="rect" id="node6" href="interpreter_8h.html#ad5d8f4d22094dc598e3a241addeb1376" title="Seta campo static numa classe. " alt="" coords="128,56,231,83"/>
+<area shape="rect" id="node3" href="classfile_8h.html#a8d5e46a5df7dfb965306e8a277783511" title="todo: avalia os atributos do classfile. " alt="" coords="293,5,396,32"/>
+<area shape="rect" id="node4" href="op__codes__initializer_8c.html#afc6e90df89f862010ce7c75d0663ea08" title="initialize_op_codes" alt="" coords="279,56,411,83"/>
+<area shape="rect" id="node5" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="459,56,509,83"/>
+</map>
+</div>
+</p>
+
 </div>
 </div>
-<a class="anchor" id="acaf2255d12202a819c765194e5e51dba"></a>
+<a class="anchor" id="a915037a0d75520090926e178259cf4bb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -427,7 +666,13 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>method</em>&#160;</td>
+          <td class="paramname"><em>method</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>method_description</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -437,7 +682,31 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Procura por um método dentro do Classfile carregado em memória. </p>
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a915037a0d75520090926e178259cf4bb_cgraph.png" border="0" usemap="#classfile_8h_a915037a0d75520090926e178259cf4bb_cgraph" alt=""/></div>
+<map name="classfile_8h_a915037a0d75520090926e178259cf4bb_cgraph" id="classfile_8h_a915037a0d75520090926e178259cf4bb_cgraph">
+<area shape="rect" id="node2" href="classfile_8c.html#a77c5107c582c86dedb65853efabd9302" title="Faz a leitua dos bytes no formato UTF&#45;8. " alt="" coords="147,5,219,32"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a915037a0d75520090926e178259cf4bb_icgraph.png" border="0" usemap="#classfile_8h_a915037a0d75520090926e178259cf4bb_icgraph" alt=""/></div>
+<map name="classfile_8h_a915037a0d75520090926e178259cf4bb_icgraph" id="classfile_8h_a915037a0d75520090926e178259cf4bb_icgraph">
+<area shape="rect" id="node2" href="classfile_8h.html#a39063f00cc6ccce0402e1a81f2f760af" title="Procura por um init dentro do Classfile. " alt="" coords="354,5,431,32"/>
+<area shape="rect" id="node3" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="507,56,557,83"/>
+<area shape="rect" id="node4" href="interpreter_8h.html#a68645b98a8ec61af8d928a18e1108e44" title="Invoca o método de uma instância. " alt="" coords="149,107,276,133"/>
+<area shape="rect" id="node6" href="interpreter_8h.html#a0158225d2969a806067337bb3b7694b5" title="Invoca o método de uma instância, tratando de superclasses, métodos privados. " alt="" coords="147,208,279,235"/>
+<area shape="rect" id="node8" href="interpreter_8h.html#a7945d7df3a93628695ba61a8d8a14315" title="Invoca um método estático de uma classe. " alt="" coords="151,157,274,184"/>
+<area shape="rect" id="node5" href="op__codes__initializer_8c.html#afc6e90df89f862010ce7c75d0663ea08" title="initialize_op_codes" alt="" coords="327,132,459,159"/>
+<area shape="rect" id="node7" href="classfile_8h.html#a8d5e46a5df7dfb965306e8a277783511" title="todo: avalia os atributos do classfile. " alt="" coords="341,208,444,235"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -454,6 +723,16 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a50ab5cb2c7741908305afda2e2a0235a_icgraph.png" border="0" usemap="#classfile_8h_a50ab5cb2c7741908305afda2e2a0235a_icgraph" alt=""/></div>
+<map name="classfile_8h_a50ab5cb2c7741908305afda2e2a0235a_icgraph" id="classfile_8h_a50ab5cb2c7741908305afda2e2a0235a_icgraph">
+<area shape="rect" id="node2" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="152,5,203,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -472,6 +751,28 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Libera o classfile da memória. </p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a6a7ca9bbe1c17ec34271f8c898832ee0_cgraph.png" border="0" usemap="#classfile_8h_a6a7ca9bbe1c17ec34271f8c898832ee0_cgraph" alt=""/></div>
+<map name="classfile_8h_a6a7ca9bbe1c17ec34271f8c898832ee0_cgraph" id="classfile_8h_a6a7ca9bbe1c17ec34271f8c898832ee0_cgraph">
+<area shape="rect" id="node2" href="classfile_8c.html#a3bfb911a1e769d93bb0e18492aab956b" title="Função utilizada para liberar a memória ocupada pelo classfile. " alt="" coords="160,31,260,57"/>
+<area shape="rect" id="node3" href="classfile_8c.html#a77c5107c582c86dedb65853efabd9302" title="Faz a leitua dos bytes no formato UTF&#45;8. " alt="" coords="339,5,411,32"/>
+<area shape="rect" id="node4" href="classfile_8c.html#ac72c096a138416b9909fe3e29417763e" title="freeStackMapTable" alt="" coords="308,56,443,83"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a6a7ca9bbe1c17ec34271f8c898832ee0_icgraph.png" border="0" usemap="#classfile_8h_a6a7ca9bbe1c17ec34271f8c898832ee0_icgraph" alt=""/></div>
+<map name="classfile_8h_a6a7ca9bbe1c17ec34271f8c898832ee0_icgraph" id="classfile_8h_a6a7ca9bbe1c17ec34271f8c898832ee0_icgraph">
+<area shape="rect" id="node2" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="160,5,211,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -507,6 +808,29 @@ Variables</h2></td></tr>
 
 <p>Função utilizada para liberar a memória ocupada pelo classfile. </p>
 
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a3bfb911a1e769d93bb0e18492aab956b_cgraph.png" border="0" usemap="#classfile_8h_a3bfb911a1e769d93bb0e18492aab956b_cgraph" alt=""/></div>
+<map name="classfile_8h_a3bfb911a1e769d93bb0e18492aab956b_cgraph" id="classfile_8h_a3bfb911a1e769d93bb0e18492aab956b_cgraph">
+<area shape="rect" id="node2" href="classfile_8c.html#a77c5107c582c86dedb65853efabd9302" title="Faz a leitua dos bytes no formato UTF&#45;8. " alt="" coords="333,22,405,49"/>
+<area shape="rect" id="node3" href="classfile_8c.html#a3bfb911a1e769d93bb0e18492aab956b" title="Função utilizada para liberar a memória ocupada pelo classfile. " alt="" coords="153,48,253,74"/>
+<area shape="rect" id="node4" href="classfile_8c.html#ac72c096a138416b9909fe3e29417763e" title="freeStackMapTable" alt="" coords="301,85,436,112"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a3bfb911a1e769d93bb0e18492aab956b_icgraph.png" border="0" usemap="#classfile_8h_a3bfb911a1e769d93bb0e18492aab956b_icgraph" alt=""/></div>
+<map name="classfile_8h_a3bfb911a1e769d93bb0e18492aab956b_icgraph" id="classfile_8h_a3bfb911a1e769d93bb0e18492aab956b_icgraph">
+<area shape="rect" id="node2" href="classfile_8h.html#a6a7ca9bbe1c17ec34271f8c898832ee0" title="Libera o classfile da memória. " alt="" coords="153,29,260,56"/>
+<area shape="rect" id="node3" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="308,29,359,56"/>
+</map>
+</div>
+</p>
+
 </div>
 </div>
 <a class="anchor" id="ac72c096a138416b9909fe3e29417763e"></a>
@@ -533,6 +857,18 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_ac72c096a138416b9909fe3e29417763e_icgraph.png" border="0" usemap="#classfile_8h_ac72c096a138416b9909fe3e29417763e_icgraph" alt=""/></div>
+<map name="classfile_8h_ac72c096a138416b9909fe3e29417763e_icgraph" id="classfile_8h_ac72c096a138416b9909fe3e29417763e_icgraph">
+<area shape="rect" id="node2" href="classfile_8h.html#a3bfb911a1e769d93bb0e18492aab956b" title="Função utilizada para liberar a memória ocupada pelo classfile. " alt="" coords="188,29,288,56"/>
+<area shape="rect" id="node3" href="classfile_8h.html#a6a7ca9bbe1c17ec34271f8c898832ee0" title="Libera o classfile da memória. " alt="" coords="336,29,443,56"/>
+<area shape="rect" id="node4" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="491,29,541,56"/>
+</map>
+</div>
+</p>
+
 </div>
 </div>
 <a class="anchor" id="a67e8b211dae28d036af3a55b698da993"></a>
@@ -550,6 +886,33 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Recebe um classfile como parâmetro e printa seu conteúdo de maneira organizada no terminal. (Utilizado pelo leitor/exibidor de bytecode). </p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a67e8b211dae28d036af3a55b698da993_cgraph.png" border="0" usemap="#classfile_8h_a67e8b211dae28d036af3a55b698da993_cgraph" alt=""/></div>
+<map name="classfile_8h_a67e8b211dae28d036af3a55b698da993_cgraph" id="classfile_8h_a67e8b211dae28d036af3a55b698da993_cgraph">
+<area shape="rect" id="node2" href="classfile_8c.html#abbc0a67a74cf4718872b86f0a898575b" title="Printa a versão do arquivo .class. " alt="" coords="169,5,259,32"/>
+<area shape="rect" id="node3" href="classfile_8c.html#a5636f6173ac96d0316cd018b68b34034" title="Printa a flag correspondente ao tipo recebido. " alt="" coords="178,56,250,83"/>
+<area shape="rect" id="node4" href="classfile_8c.html#a09f80f214aa870612fcb23597bcfb4bc" title="Usa um índice na constant pool para retorna uma referência no ponteiro global. " alt="" coords="313,181,421,208"/>
+<area shape="rect" id="node6" href="classfile_8c.html#aa73a2b8f66296e2fcdec5b6f029c1f88" title="Printa o tipo CONSTANT. " alt="" coords="624,144,735,171"/>
+<area shape="rect" id="node7" href="classfile_8c.html#af82a9138759e74a734c2ba5db6077805" title="Printa os atributos de um classfile. " alt="" coords="163,232,265,259"/>
+<area shape="rect" id="node5" href="classfile_8c.html#a774f5149d9c3dadc60b2c0ca012bf51d" title="Usa um índice para acessar a constant pool e printar recusrivamente os campos. " alt="" coords="469,181,576,208"/>
+<area shape="rect" id="node8" href="classfile_8c.html#a77c5107c582c86dedb65853efabd9302" title="Faz a leitua dos bytes no formato UTF&#45;8. " alt="" coords="331,232,403,259"/>
+<area shape="rect" id="node9" href="classfile_8c.html#aae8cbe5dd2db133b98988d9da5c5efe7" title="Printa o tipo do objeto. " alt="" coords="329,283,405,309"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a67e8b211dae28d036af3a55b698da993_icgraph.png" border="0" usemap="#classfile_8h_a67e8b211dae28d036af3a55b698da993_icgraph" alt=""/></div>
+<map name="classfile_8h_a67e8b211dae28d036af3a55b698da993_icgraph" id="classfile_8h_a67e8b211dae28d036af3a55b698da993_icgraph">
+<area shape="rect" id="node2" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="163,5,213,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -578,6 +941,31 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Usa um índice na constant pool para retorna uma referência no ponteiro global. </p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a09f80f214aa870612fcb23597bcfb4bc_cgraph.png" border="0" usemap="#classfile_8h_a09f80f214aa870612fcb23597bcfb4bc_cgraph" alt=""/></div>
+<map name="classfile_8h_a09f80f214aa870612fcb23597bcfb4bc_cgraph" id="classfile_8h_a09f80f214aa870612fcb23597bcfb4bc_cgraph">
+<area shape="rect" id="node2" href="classfile_8c.html#a774f5149d9c3dadc60b2c0ca012bf51d" title="Usa um índice para acessar a constant pool e printar recusrivamente os campos. " alt="" coords="161,29,268,56"/>
+<area shape="rect" id="node3" href="classfile_8c.html#aa73a2b8f66296e2fcdec5b6f029c1f88" title="Printa o tipo CONSTANT. " alt="" coords="316,29,427,56"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a09f80f214aa870612fcb23597bcfb4bc_icgraph.png" border="0" usemap="#classfile_8h_a09f80f214aa870612fcb23597bcfb4bc_icgraph" alt=""/></div>
+<map name="classfile_8h_a09f80f214aa870612fcb23597bcfb4bc_icgraph" id="classfile_8h_a09f80f214aa870612fcb23597bcfb4bc_icgraph">
+<area shape="rect" id="node2" href="classfile_8h.html#ab694dc30480958e872cdf78b94b9cefa" title="Printa o tipo a partir da tag. " alt="" coords="161,5,324,32"/>
+<area shape="rect" id="node4" href="classfile_8h.html#af82a9138759e74a734c2ba5db6077805" title="Printa os atributos de um classfile. " alt="" coords="191,80,294,107"/>
+<area shape="rect" id="node5" href="classfile_8h.html#a67e8b211dae28d036af3a55b698da993" title="Recebe um classfile como parâmetro e printa seu conteúdo de maneira organizada no terminal..." alt="" coords="387,131,496,157"/>
+<area shape="rect" id="node6" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="559,156,609,183"/>
+<area shape="rect" id="node3" href="classfile_8h.html#a08affa1a8eb0fbd41df9e468f2c02321" title="printStackMapTable" alt="" coords="372,5,511,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -613,6 +1001,32 @@ Variables</h2></td></tr>
 
 <p>Printa os atributos de um classfile. </p>
 
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_af82a9138759e74a734c2ba5db6077805_cgraph.png" border="0" usemap="#classfile_8h_af82a9138759e74a734c2ba5db6077805_cgraph" alt=""/></div>
+<map name="classfile_8h_af82a9138759e74a734c2ba5db6077805_cgraph" id="classfile_8h_af82a9138759e74a734c2ba5db6077805_cgraph">
+<area shape="rect" id="node2" href="classfile_8c.html#a77c5107c582c86dedb65853efabd9302" title="Faz a leitua dos bytes no formato UTF&#45;8. " alt="" coords="325,5,397,32"/>
+<area shape="rect" id="node3" href="classfile_8c.html#a09f80f214aa870612fcb23597bcfb4bc" title="Usa um índice na constant pool para retorna uma referência no ponteiro global. " alt="" coords="307,93,415,120"/>
+<area shape="rect" id="node6" href="classfile_8c.html#aae8cbe5dd2db133b98988d9da5c5efe7" title="Printa o tipo do objeto. " alt="" coords="323,144,399,171"/>
+<area shape="rect" id="node7" href="classfile_8c.html#af82a9138759e74a734c2ba5db6077805" title="Printa os atributos de um classfile. " alt="" coords="156,61,259,88"/>
+<area shape="rect" id="node4" href="classfile_8c.html#a774f5149d9c3dadc60b2c0ca012bf51d" title="Usa um índice para acessar a constant pool e printar recusrivamente os campos. " alt="" coords="463,93,569,120"/>
+<area shape="rect" id="node5" href="classfile_8c.html#aa73a2b8f66296e2fcdec5b6f029c1f88" title="Printa o tipo CONSTANT. " alt="" coords="617,93,728,120"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_af82a9138759e74a734c2ba5db6077805_icgraph.png" border="0" usemap="#classfile_8h_af82a9138759e74a734c2ba5db6077805_icgraph" alt=""/></div>
+<map name="classfile_8h_af82a9138759e74a734c2ba5db6077805_icgraph" id="classfile_8h_af82a9138759e74a734c2ba5db6077805_icgraph">
+<area shape="rect" id="node2" href="classfile_8h.html#a67e8b211dae28d036af3a55b698da993" title="Recebe um classfile como parâmetro e printa seu conteúdo de maneira organizada no terminal..." alt="" coords="156,29,265,56"/>
+<area shape="rect" id="node3" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="313,29,364,56"/>
+</map>
+</div>
+</p>
+
 </div>
 </div>
 <a class="anchor" id="aa73a2b8f66296e2fcdec5b6f029c1f88"></a>
@@ -647,6 +1061,33 @@ Variables</h2></td></tr>
 
 <p>Printa o tipo CONSTANT. </p>
 
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_aa73a2b8f66296e2fcdec5b6f029c1f88_icgraph.png" border="0" usemap="#classfile_8h_aa73a2b8f66296e2fcdec5b6f029c1f88_icgraph" alt=""/></div>
+<map name="classfile_8h_aa73a2b8f66296e2fcdec5b6f029c1f88_icgraph" id="classfile_8h_aa73a2b8f66296e2fcdec5b6f029c1f88_icgraph">
+<area shape="rect" id="node2" href="classfile_8h.html#a774f5149d9c3dadc60b2c0ca012bf51d" title="Usa um índice para acessar a constant pool e printar recusrivamente os campos. " alt="" coords="175,129,282,155"/>
+<area shape="rect" id="node7" href="classfile_8h.html#a67e8b211dae28d036af3a55b698da993" title="Recebe um classfile como parâmetro e printa seu conteúdo de maneira organizada no terminal..." alt="" coords="741,78,851,105"/>
+<area shape="rect" id="node9" href="classfile_8h.html#a580d63d9a7b152364691f69863dc7a4e" title="Usa um índice no constant pool para procurar o nome de um método recursivamente. " alt="" coords="164,293,293,319"/>
+<area shape="rect" id="node3" href="classfile_8h.html#a09f80f214aa870612fcb23597bcfb4bc" title="Usa um índice na constant pool para retorna uma referência no ponteiro global. " alt="" coords="351,129,459,155"/>
+<area shape="rect" id="node4" href="classfile_8h.html#ab694dc30480958e872cdf78b94b9cefa" title="Printa o tipo a partir da tag. " alt="" coords="516,154,679,181"/>
+<area shape="rect" id="node6" href="classfile_8h.html#af82a9138759e74a734c2ba5db6077805" title="Printa os atributos de um classfile. " alt="" coords="546,53,649,79"/>
+<area shape="rect" id="node8" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="1093,205,1144,231"/>
+<area shape="rect" id="node5" href="classfile_8h.html#a08affa1a8eb0fbd41df9e468f2c02321" title="printStackMapTable" alt="" coords="727,154,865,181"/>
+<area shape="rect" id="node10" href="classfile_8h.html#a627193785e98bc076b257c97ccd5892b" title="Retorna o nome de um método no ponteiro global. " alt="" coords="341,382,468,409"/>
+<area shape="rect" id="node11" href="classfile_8h.html#a64bd697d9f3c3360d6c4edb38f8cdf60" title="Procura por cuma classe, e caso não consiga encontrá&#45;la, carrega na memória usando a função ClassLoad..." alt="" coords="557,407,638,434"/>
+<area shape="rect" id="node12" href="interpreter_8h.html#a0376f00366ddf07cdd7b30699c0ce9ea" title="Pega um campo static de uma classe. " alt="" coords="745,458,847,485"/>
+<area shape="rect" id="node15" href="interpreter_8h.html#ad5d8f4d22094dc598e3a241addeb1376" title="Seta campo static numa classe. " alt="" coords="745,255,847,282"/>
+<area shape="rect" id="node16" href="interpreter_8h.html#a68645b98a8ec61af8d928a18e1108e44" title="Invoca o método de uma instância. " alt="" coords="733,306,859,333"/>
+<area shape="rect" id="node17" href="interpreter_8h.html#a0158225d2969a806067337bb3b7694b5" title="Invoca o método de uma instância, tratando de superclasses, métodos privados. " alt="" coords="730,509,862,535"/>
+<area shape="rect" id="node18" href="interpreter_8h.html#a7945d7df3a93628695ba61a8d8a14315" title="Invoca um método estático de uma classe. " alt="" coords="735,357,857,383"/>
+<area shape="rect" id="node19" href="interpreter_8h.html#a50ee7819621feec3fd084f946cf09cc3" title="Instacia um novo objeto de uma classe. " alt="" coords="757,407,835,434"/>
+<area shape="rect" id="node13" href="classfile_8h.html#a8d5e46a5df7dfb965306e8a277783511" title="todo: avalia os atributos do classfile. " alt="" coords="928,483,1031,510"/>
+<area shape="rect" id="node14" href="op__codes__initializer_8c.html#afc6e90df89f862010ce7c75d0663ea08" title="initialize_op_codes" alt="" coords="913,357,1045,383"/>
+</map>
+</div>
+</p>
+
 </div>
 </div>
 <a class="anchor" id="a5636f6173ac96d0316cd018b68b34034"></a>
@@ -674,6 +1115,17 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Printa a flag correspondente ao tipo recebido. </p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a5636f6173ac96d0316cd018b68b34034_icgraph.png" border="0" usemap="#classfile_8h_a5636f6173ac96d0316cd018b68b34034_icgraph" alt=""/></div>
+<map name="classfile_8h_a5636f6173ac96d0316cd018b68b34034_icgraph" id="classfile_8h_a5636f6173ac96d0316cd018b68b34034_icgraph">
+<area shape="rect" id="node2" href="classfile_8h.html#a67e8b211dae28d036af3a55b698da993" title="Recebe um classfile como parâmetro e printa seu conteúdo de maneira organizada no terminal..." alt="" coords="125,5,235,32"/>
+<area shape="rect" id="node3" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="283,5,333,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -706,6 +1158,19 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a08affa1a8eb0fbd41df9e468f2c02321_cgraph.png" border="0" usemap="#classfile_8h_a08affa1a8eb0fbd41df9e468f2c02321_cgraph" alt=""/></div>
+<map name="classfile_8h_a08affa1a8eb0fbd41df9e468f2c02321_cgraph" id="classfile_8h_a08affa1a8eb0fbd41df9e468f2c02321_cgraph">
+<area shape="rect" id="node2" href="classfile_8c.html#ab694dc30480958e872cdf78b94b9cefa" title="Printa o tipo a partir da tag. " alt="" coords="192,29,355,56"/>
+<area shape="rect" id="node3" href="classfile_8c.html#a09f80f214aa870612fcb23597bcfb4bc" title="Usa um índice na constant pool para retorna uma referência no ponteiro global. " alt="" coords="403,29,511,56"/>
+<area shape="rect" id="node4" href="classfile_8c.html#a774f5149d9c3dadc60b2c0ca012bf51d" title="Usa um índice para acessar a constant pool e printar recusrivamente os campos. " alt="" coords="559,29,665,56"/>
+<area shape="rect" id="node5" href="classfile_8c.html#aa73a2b8f66296e2fcdec5b6f029c1f88" title="Printa o tipo CONSTANT. " alt="" coords="713,29,824,56"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -741,6 +1206,28 @@ Variables</h2></td></tr>
 
 <p>Printa o tipo a partir da tag. </p>
 
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_ab694dc30480958e872cdf78b94b9cefa_cgraph.png" border="0" usemap="#classfile_8h_ab694dc30480958e872cdf78b94b9cefa_cgraph" alt=""/></div>
+<map name="classfile_8h_ab694dc30480958e872cdf78b94b9cefa_cgraph" id="classfile_8h_ab694dc30480958e872cdf78b94b9cefa_cgraph">
+<area shape="rect" id="node2" href="classfile_8c.html#a09f80f214aa870612fcb23597bcfb4bc" title="Usa um índice na constant pool para retorna uma referência no ponteiro global. " alt="" coords="216,29,324,56"/>
+<area shape="rect" id="node3" href="classfile_8c.html#a774f5149d9c3dadc60b2c0ca012bf51d" title="Usa um índice para acessar a constant pool e printar recusrivamente os campos. " alt="" coords="372,29,479,56"/>
+<area shape="rect" id="node4" href="classfile_8c.html#aa73a2b8f66296e2fcdec5b6f029c1f88" title="Printa o tipo CONSTANT. " alt="" coords="527,29,637,56"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_ab694dc30480958e872cdf78b94b9cefa_icgraph.png" border="0" usemap="#classfile_8h_ab694dc30480958e872cdf78b94b9cefa_icgraph" alt=""/></div>
+<map name="classfile_8h_ab694dc30480958e872cdf78b94b9cefa_icgraph" id="classfile_8h_ab694dc30480958e872cdf78b94b9cefa_icgraph">
+<area shape="rect" id="node2" href="classfile_8h.html#a08affa1a8eb0fbd41df9e468f2c02321" title="printStackMapTable" alt="" coords="216,5,355,32"/>
+</map>
+</div>
+</p>
+
 </div>
 </div>
 <a class="anchor" id="abbc0a67a74cf4718872b86f0a898575b"></a>
@@ -758,6 +1245,17 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Printa a versão do arquivo .class. </p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_abbc0a67a74cf4718872b86f0a898575b_icgraph.png" border="0" usemap="#classfile_8h_abbc0a67a74cf4718872b86f0a898575b_icgraph" alt=""/></div>
+<map name="classfile_8h_abbc0a67a74cf4718872b86f0a898575b_icgraph" id="classfile_8h_abbc0a67a74cf4718872b86f0a898575b_icgraph">
+<area shape="rect" id="node2" href="classfile_8h.html#a67e8b211dae28d036af3a55b698da993" title="Recebe um classfile como parâmetro e printa seu conteúdo de maneira organizada no terminal..." alt="" coords="144,5,253,32"/>
+<area shape="rect" id="node3" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="301,5,352,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -787,6 +1285,40 @@ Variables</h2></td></tr>
 
 <p>Faz a leitura do arquivo .class. </p>
 <p>Função principal de leitura. Recebe um ponteiro para uma struct do tipo <a class="el" href="structcp__info.html" title="Struct para indicar o tipo de constant_pool. ">cp_info</a>, uma contagem do número de atributos e um ponteiro para o arquivo bytecodee raliza a leitura, byte a byte. </p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a14c4d3f84dd03a43aca0a57bd530f3a2_cgraph.png" border="0" usemap="#classfile_8h_a14c4d3f84dd03a43aca0a57bd530f3a2_cgraph" alt=""/></div>
+<map name="classfile_8h_a14c4d3f84dd03a43aca0a57bd530f3a2_cgraph" id="classfile_8h_a14c4d3f84dd03a43aca0a57bd530f3a2_cgraph">
+<area shape="rect" id="node2" href="classfile_8c.html#aad8c26a8aaff63010bb790df878f0950" title="Faz a leitura de 4 bytes do arquivo .class fornecido no path. " alt="" coords="316,5,383,32"/>
+<area shape="rect" id="node3" href="classfile_8c.html#aae51575c6f1d6ce808fbc88a3037c4ed" title="Faz a leitura de 2 bytes do arquivo .class fornecido no path. " alt="" coords="316,61,383,88"/>
+<area shape="rect" id="node4" href="classfile_8c.html#a13b463381f7cf580d002e6631c0c4ea8" title="Faz a leitura de 1 byte do arquivo .class fornecido no path. " alt="" coords="316,175,383,201"/>
+<area shape="rect" id="node5" href="classfile_8c.html#ab2c33d049c34b50ead32e4568387353c" title="Lê os atributos do bytecode recebido. " alt="" coords="163,124,265,151"/>
+<area shape="rect" id="node6" href="classfile_8c.html#a77c5107c582c86dedb65853efabd9302" title="Faz a leitua dos bytes no formato UTF&#45;8. " alt="" coords="313,124,385,151"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a14c4d3f84dd03a43aca0a57bd530f3a2_icgraph.png" border="0" usemap="#classfile_8h_a14c4d3f84dd03a43aca0a57bd530f3a2_icgraph" alt=""/></div>
+<map name="classfile_8h_a14c4d3f84dd03a43aca0a57bd530f3a2_icgraph" id="classfile_8h_a14c4d3f84dd03a43aca0a57bd530f3a2_icgraph">
+<area shape="rect" id="node2" href="classfile_8h.html#abd0631a75f72632c5606e72f6d3f00ae" title="Aloca espaço para o ClassFile em memória e chama a função read_class_file para ler o ClassFile recebi..." alt="" coords="163,233,257,260"/>
+<area shape="rect" id="node3" href="classfile_8h.html#a64bd697d9f3c3360d6c4edb38f8cdf60" title="Procura por cuma classe, e caso não consiga encontrá&#45;la, carrega na memória usando a função ClassLoad..." alt="" coords="305,157,387,184"/>
+<area shape="rect" id="node7" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="795,233,845,260"/>
+<area shape="rect" id="node4" href="interpreter_8h.html#a0376f00366ddf07cdd7b30699c0ce9ea" title="Pega um campo static de uma classe. " alt="" coords="449,259,552,285"/>
+<area shape="rect" id="node8" href="interpreter_8h.html#ad5d8f4d22094dc598e3a241addeb1376" title="Seta campo static numa classe. " alt="" coords="449,107,552,133"/>
+<area shape="rect" id="node9" href="interpreter_8h.html#a68645b98a8ec61af8d928a18e1108e44" title="Invoca o método de uma instância. " alt="" coords="437,157,564,184"/>
+<area shape="rect" id="node10" href="interpreter_8h.html#a0158225d2969a806067337bb3b7694b5" title="Invoca o método de uma instância, tratando de superclasses, métodos privados. " alt="" coords="435,208,567,235"/>
+<area shape="rect" id="node11" href="interpreter_8h.html#a7945d7df3a93628695ba61a8d8a14315" title="Invoca um método estático de uma classe. " alt="" coords="439,5,562,32"/>
+<area shape="rect" id="node12" href="interpreter_8h.html#a50ee7819621feec3fd084f946cf09cc3" title="Instacia um novo objeto de uma classe. " alt="" coords="462,56,539,83"/>
+<area shape="rect" id="node5" href="classfile_8h.html#a8d5e46a5df7dfb965306e8a277783511" title="todo: avalia os atributos do classfile. " alt="" coords="629,233,732,260"/>
+<area shape="rect" id="node6" href="op__codes__initializer_8c.html#afc6e90df89f862010ce7c75d0663ea08" title="initialize_op_codes" alt="" coords="615,157,747,184"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -822,6 +1354,41 @@ Variables</h2></td></tr>
 
 <p>Lê os atributos do bytecode recebido. </p>
 
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_ab2c33d049c34b50ead32e4568387353c_cgraph.png" border="0" usemap="#classfile_8h_ab2c33d049c34b50ead32e4568387353c_cgraph" alt=""/></div>
+<map name="classfile_8h_ab2c33d049c34b50ead32e4568387353c_cgraph" id="classfile_8h_ab2c33d049c34b50ead32e4568387353c_cgraph">
+<area shape="rect" id="node2" href="classfile_8c.html#aae51575c6f1d6ce808fbc88a3037c4ed" title="Faz a leitura de 2 bytes do arquivo .class fornecido no path. " alt="" coords="309,5,376,32"/>
+<area shape="rect" id="node3" href="classfile_8c.html#aad8c26a8aaff63010bb790df878f0950" title="Faz a leitura de 4 bytes do arquivo .class fornecido no path. " alt="" coords="309,93,376,120"/>
+<area shape="rect" id="node4" href="classfile_8c.html#a77c5107c582c86dedb65853efabd9302" title="Faz a leitua dos bytes no formato UTF&#45;8. " alt="" coords="307,163,379,189"/>
+<area shape="rect" id="node5" href="classfile_8c.html#a13b463381f7cf580d002e6631c0c4ea8" title="Faz a leitura de 1 byte do arquivo .class fornecido no path. " alt="" coords="309,213,376,240"/>
+<area shape="rect" id="node6" href="classfile_8c.html#ab2c33d049c34b50ead32e4568387353c" title="Lê os atributos do bytecode recebido. " alt="" coords="156,121,259,148"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_ab2c33d049c34b50ead32e4568387353c_icgraph.png" border="0" usemap="#classfile_8h_ab2c33d049c34b50ead32e4568387353c_icgraph" alt=""/></div>
+<map name="classfile_8h_ab2c33d049c34b50ead32e4568387353c_icgraph" id="classfile_8h_ab2c33d049c34b50ead32e4568387353c_icgraph">
+<area shape="rect" id="node2" href="classfile_8h.html#a14c4d3f84dd03a43aca0a57bd530f3a2" title="Faz a leitura do arquivo .class. " alt="" coords="156,233,265,260"/>
+<area shape="rect" id="node3" href="classfile_8h.html#abd0631a75f72632c5606e72f6d3f00ae" title="Aloca espaço para o ClassFile em memória e chama a função read_class_file para ler o ClassFile recebi..." alt="" coords="313,233,408,260"/>
+<area shape="rect" id="node4" href="classfile_8h.html#a64bd697d9f3c3360d6c4edb38f8cdf60" title="Procura por cuma classe, e caso não consiga encontrá&#45;la, carrega na memória usando a função ClassLoad..." alt="" coords="456,157,537,184"/>
+<area shape="rect" id="node8" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="945,233,996,260"/>
+<area shape="rect" id="node5" href="interpreter_8h.html#a0376f00366ddf07cdd7b30699c0ce9ea" title="Pega um campo static de uma classe. " alt="" coords="600,259,703,285"/>
+<area shape="rect" id="node9" href="interpreter_8h.html#ad5d8f4d22094dc598e3a241addeb1376" title="Seta campo static numa classe. " alt="" coords="600,107,703,133"/>
+<area shape="rect" id="node10" href="interpreter_8h.html#a68645b98a8ec61af8d928a18e1108e44" title="Invoca o método de uma instância. " alt="" coords="588,157,715,184"/>
+<area shape="rect" id="node11" href="interpreter_8h.html#a0158225d2969a806067337bb3b7694b5" title="Invoca o método de uma instância, tratando de superclasses, métodos privados. " alt="" coords="585,208,717,235"/>
+<area shape="rect" id="node12" href="interpreter_8h.html#a7945d7df3a93628695ba61a8d8a14315" title="Invoca um método estático de uma classe. " alt="" coords="590,5,713,32"/>
+<area shape="rect" id="node13" href="interpreter_8h.html#a50ee7819621feec3fd084f946cf09cc3" title="Instacia um novo objeto de uma classe. " alt="" coords="613,56,690,83"/>
+<area shape="rect" id="node6" href="classfile_8h.html#a8d5e46a5df7dfb965306e8a277783511" title="todo: avalia os atributos do classfile. " alt="" coords="780,233,883,260"/>
+<area shape="rect" id="node7" href="op__codes__initializer_8c.html#afc6e90df89f862010ce7c75d0663ea08" title="initialize_op_codes" alt="" coords="765,157,897,184"/>
+</map>
+</div>
+</p>
+
 </div>
 </div>
 <a class="anchor" id="a77c5107c582c86dedb65853efabd9302"></a>
@@ -850,14 +1417,46 @@ Variables</h2></td></tr>
 
 <p>Faz a leitua dos bytes no formato UTF-8. </p>
 
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a77c5107c582c86dedb65853efabd9302_icgraph.png" border="0" usemap="#classfile_8h_a77c5107c582c86dedb65853efabd9302_icgraph" alt=""/></div>
+<map name="classfile_8h_a77c5107c582c86dedb65853efabd9302_icgraph" id="classfile_8h_a77c5107c582c86dedb65853efabd9302_icgraph">
+<area shape="rect" id="node2" href="classfile_8h.html#ab2c33d049c34b50ead32e4568387353c" title="Lê os atributos do bytecode recebido. " alt="" coords="125,357,228,384"/>
+<area shape="rect" id="node6" href="interpreter_8h.html#a0376f00366ddf07cdd7b30699c0ce9ea" title="Pega um campo static de uma classe. " alt="" coords="747,611,849,637"/>
+<area shape="rect" id="node7" href="classfile_8h.html#a8d5e46a5df7dfb965306e8a277783511" title="todo: avalia os atributos do classfile. " alt="" coords="927,383,1029,409"/>
+<area shape="rect" id="node10" href="interpreter_8h.html#ad5d8f4d22094dc598e3a241addeb1376" title="Seta campo static numa classe. " alt="" coords="747,661,849,688"/>
+<area shape="rect" id="node11" href="interpreter_8h.html#a68645b98a8ec61af8d928a18e1108e44" title="Invoca o método de uma instância. " alt="" coords="735,509,861,536"/>
+<area shape="rect" id="node12" href="interpreter_8h.html#a0158225d2969a806067337bb3b7694b5" title="Invoca o método de uma instância, tratando de superclasses, métodos privados. " alt="" coords="732,357,864,384"/>
+<area shape="rect" id="node13" href="interpreter_8h.html#a7945d7df3a93628695ba61a8d8a14315" title="Invoca um método estático de uma classe. " alt="" coords="737,560,859,587"/>
+<area shape="rect" id="node14" href="interpreter_8h.html#a50ee7819621feec3fd084f946cf09cc3" title="Instacia um novo objeto de uma classe. " alt="" coords="759,712,837,739"/>
+<area shape="rect" id="node15" href="classfile_8h.html#a3bfb911a1e769d93bb0e18492aab956b" title="Função utilizada para liberar a memória ocupada pelo classfile. " alt="" coords="281,29,381,56"/>
+<area shape="rect" id="node17" href="classfile_8h.html#af82a9138759e74a734c2ba5db6077805" title="Printa os atributos de um classfile. " alt="" coords="279,104,382,131"/>
+<area shape="rect" id="node19" href="classfile_8h.html#a915037a0d75520090926e178259cf4bb" title="find_method" alt="" coords="591,256,684,283"/>
+<area shape="rect" id="node21" href="classfile_8h.html#a0688afe113144b86408f83f83685db04" title="Procura por um field dentro do ClassFile. " alt="" coords="600,661,675,688"/>
+<area shape="rect" id="node22" href="frame_8h.html#a3def2e70c9f5507f4be53e969bd5c4b1" title="Cria um novo Frame para ser colocado na pilha de frames da JVM. " alt="" coords="596,408,679,435"/>
+<area shape="rect" id="node23" href="interpreter_8h.html#abf4aca113a8d8c00376d5ceb7c0814e7" title="Acessar um field de um objeto. " alt="" coords="129,864,224,891"/>
+<area shape="rect" id="node24" href="interpreter_8h.html#a7079c73a7d3b34d1e8c42f49c93faafa" title="Seta field de um objeto. " alt="" coords="129,813,224,840"/>
+<area shape="rect" id="node3" href="classfile_8h.html#a14c4d3f84dd03a43aca0a57bd530f3a2" title="Faz a leitura do arquivo .class. " alt="" coords="276,357,385,384"/>
+<area shape="rect" id="node4" href="classfile_8h.html#abd0631a75f72632c5606e72f6d3f00ae" title="Aloca espaço para o ClassFile em memória e chama a função read_class_file para ler o ClassFile recebi..." alt="" coords="441,357,535,384"/>
+<area shape="rect" id="node5" href="classfile_8h.html#a64bd697d9f3c3360d6c4edb38f8cdf60" title="Procura por cuma classe, e caso não consiga encontrá&#45;la, carrega na memória usando a função ClassLoad..." alt="" coords="597,560,678,587"/>
+<area shape="rect" id="node9" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="1092,256,1143,283"/>
+<area shape="rect" id="node8" href="op__codes__initializer_8c.html#afc6e90df89f862010ce7c75d0663ea08" title="initialize_op_codes" alt="" coords="912,611,1044,637"/>
+<area shape="rect" id="node16" href="classfile_8h.html#a6a7ca9bbe1c17ec34271f8c898832ee0" title="Libera o classfile da memória. " alt="" coords="435,53,541,80"/>
+<area shape="rect" id="node18" href="classfile_8h.html#a67e8b211dae28d036af3a55b698da993" title="Recebe um classfile como parâmetro e printa seu conteúdo de maneira organizada no terminal..." alt="" coords="433,104,543,131"/>
+<area shape="rect" id="node20" href="classfile_8h.html#a39063f00cc6ccce0402e1a81f2f760af" title="Procura por um init dentro do Classfile. " alt="" coords="759,307,837,333"/>
+</map>
+</div>
+</p>
+
 </div>
 </div>
-<a class="anchor" id="aa368bab42b5e8b5415b68d6910982ea2"></a>
+<a class="anchor" id="a580d63d9a7b152364691f69863dc7a4e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rec_method_name </td>
+          <td class="memname">char* rec_method_name </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structcp__info.html">cp_info</a> *&#160;</td>
           <td class="paramname"><em>cp</em>, </td>
@@ -866,13 +1465,7 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="structures_8h.html#a55ef8d87fd202b8417704c089899c5b9">u2</a>&#160;</td>
-          <td class="paramname"><em>index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>str</em>&#160;</td>
+          <td class="paramname"><em>index</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -883,6 +1476,37 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Usa um índice no constant pool para procurar o nome de um método recursivamente. </p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a580d63d9a7b152364691f69863dc7a4e_cgraph.png" border="0" usemap="#classfile_8h_a580d63d9a7b152364691f69863dc7a4e_cgraph" alt=""/></div>
+<map name="classfile_8h_a580d63d9a7b152364691f69863dc7a4e_cgraph" id="classfile_8h_a580d63d9a7b152364691f69863dc7a4e_cgraph">
+<area shape="rect" id="node2" href="classfile_8c.html#a580d63d9a7b152364691f69863dc7a4e" title="Usa um índice no constant pool para procurar o nome de um método recursivamente. " alt="" coords="183,29,312,56"/>
+<area shape="rect" id="node3" href="classfile_8c.html#aa73a2b8f66296e2fcdec5b6f029c1f88" title="Printa o tipo CONSTANT. " alt="" coords="360,55,471,81"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a580d63d9a7b152364691f69863dc7a4e_icgraph.png" border="0" usemap="#classfile_8h_a580d63d9a7b152364691f69863dc7a4e_icgraph" alt=""/></div>
+<map name="classfile_8h_a580d63d9a7b152364691f69863dc7a4e_icgraph" id="classfile_8h_a580d63d9a7b152364691f69863dc7a4e_icgraph">
+<area shape="rect" id="node2" href="classfile_8h.html#a627193785e98bc076b257c97ccd5892b" title="Retorna o nome de um método no ponteiro global. " alt="" coords="183,132,309,159"/>
+<area shape="rect" id="node3" href="classfile_8h.html#a64bd697d9f3c3360d6c4edb38f8cdf60" title="Procura por cuma classe, e caso não consiga encontrá&#45;la, carrega na memória usando a função ClassLoad..." alt="" coords="357,132,439,159"/>
+<area shape="rect" id="node4" href="interpreter_8h.html#a0376f00366ddf07cdd7b30699c0ce9ea" title="Pega um campo static de uma classe. " alt="" coords="501,5,604,32"/>
+<area shape="rect" id="node8" href="interpreter_8h.html#ad5d8f4d22094dc598e3a241addeb1376" title="Seta campo static numa classe. " alt="" coords="501,208,604,235"/>
+<area shape="rect" id="node9" href="interpreter_8h.html#a68645b98a8ec61af8d928a18e1108e44" title="Invoca o método de uma instância. " alt="" coords="489,259,616,285"/>
+<area shape="rect" id="node10" href="interpreter_8h.html#a0158225d2969a806067337bb3b7694b5" title="Invoca o método de uma instância, tratando de superclasses, métodos privados. " alt="" coords="487,56,619,83"/>
+<area shape="rect" id="node11" href="interpreter_8h.html#a7945d7df3a93628695ba61a8d8a14315" title="Invoca um método estático de uma classe. " alt="" coords="491,107,614,133"/>
+<area shape="rect" id="node12" href="interpreter_8h.html#a50ee7819621feec3fd084f946cf09cc3" title="Instacia um novo objeto de uma classe. " alt="" coords="514,157,591,184"/>
+<area shape="rect" id="node5" href="classfile_8h.html#a8d5e46a5df7dfb965306e8a277783511" title="todo: avalia os atributos do classfile. " alt="" coords="681,31,784,57"/>
+<area shape="rect" id="node6" href="op__codes__initializer_8c.html#afc6e90df89f862010ce7c75d0663ea08" title="initialize_op_codes" alt="" coords="667,132,799,159"/>
+<area shape="rect" id="node7" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="847,132,897,159"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -918,6 +1542,32 @@ Variables</h2></td></tr>
 
 <p>Usa um índice para acessar a constant pool e printar recusrivamente os campos. </p>
 
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a774f5149d9c3dadc60b2c0ca012bf51d_cgraph.png" border="0" usemap="#classfile_8h_a774f5149d9c3dadc60b2c0ca012bf51d_cgraph" alt=""/></div>
+<map name="classfile_8h_a774f5149d9c3dadc60b2c0ca012bf51d_cgraph" id="classfile_8h_a774f5149d9c3dadc60b2c0ca012bf51d_cgraph">
+<area shape="rect" id="node2" href="classfile_8c.html#a774f5149d9c3dadc60b2c0ca012bf51d" title="Usa um índice para acessar a constant pool e printar recusrivamente os campos. " alt="" coords="160,29,267,56"/>
+<area shape="rect" id="node3" href="classfile_8c.html#aa73a2b8f66296e2fcdec5b6f029c1f88" title="Printa o tipo CONSTANT. " alt="" coords="315,55,425,81"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a774f5149d9c3dadc60b2c0ca012bf51d_icgraph.png" border="0" usemap="#classfile_8h_a774f5149d9c3dadc60b2c0ca012bf51d_icgraph" alt=""/></div>
+<map name="classfile_8h_a774f5149d9c3dadc60b2c0ca012bf51d_icgraph" id="classfile_8h_a774f5149d9c3dadc60b2c0ca012bf51d_icgraph">
+<area shape="rect" id="node2" href="classfile_8h.html#a09f80f214aa870612fcb23597bcfb4bc" title="Usa um índice na constant pool para retorna uma referência no ponteiro global. " alt="" coords="160,105,268,132"/>
+<area shape="rect" id="node3" href="classfile_8h.html#ab694dc30480958e872cdf78b94b9cefa" title="Printa o tipo a partir da tag. " alt="" coords="316,5,479,32"/>
+<area shape="rect" id="node5" href="classfile_8h.html#af82a9138759e74a734c2ba5db6077805" title="Printa os atributos de um classfile. " alt="" coords="346,80,449,107"/>
+<area shape="rect" id="node6" href="classfile_8h.html#a67e8b211dae28d036af3a55b698da993" title="Recebe um classfile como parâmetro e printa seu conteúdo de maneira organizada no terminal..." alt="" coords="541,131,651,157"/>
+<area shape="rect" id="node7" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="713,156,764,183"/>
+<area shape="rect" id="node4" href="classfile_8h.html#a08affa1a8eb0fbd41df9e468f2c02321" title="printStackMapTable" alt="" coords="527,5,665,32"/>
+</map>
+</div>
+</p>
+
 </div>
 </div>
 <a class="anchor" id="af82954dceccc52fab4a547f79967244f"></a>
@@ -935,6 +1585,16 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Remove exetensão de uma string para printar de maneira correta. </p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_af82954dceccc52fab4a547f79967244f_icgraph.png" border="0" usemap="#classfile_8h_af82954dceccc52fab4a547f79967244f_icgraph" alt=""/></div>
+<map name="classfile_8h_af82954dceccc52fab4a547f79967244f_icgraph" id="classfile_8h_af82954dceccc52fab4a547f79967244f_icgraph">
+<area shape="rect" id="node2" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="176,5,227,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -964,6 +1624,36 @@ Variables</h2></td></tr>
 
 <p>Retorna o nome de um método no ponteiro global. </p>
 
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a627193785e98bc076b257c97ccd5892b_cgraph.png" border="0" usemap="#classfile_8h_a627193785e98bc076b257c97ccd5892b_cgraph" alt=""/></div>
+<map name="classfile_8h_a627193785e98bc076b257c97ccd5892b_cgraph" id="classfile_8h_a627193785e98bc076b257c97ccd5892b_cgraph">
+<area shape="rect" id="node2" href="classfile_8c.html#a580d63d9a7b152364691f69863dc7a4e" title="Usa um índice no constant pool para procurar o nome de um método recursivamente. " alt="" coords="180,29,309,56"/>
+<area shape="rect" id="node3" href="classfile_8c.html#aa73a2b8f66296e2fcdec5b6f029c1f88" title="Printa o tipo CONSTANT. " alt="" coords="357,29,468,56"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a627193785e98bc076b257c97ccd5892b_icgraph.png" border="0" usemap="#classfile_8h_a627193785e98bc076b257c97ccd5892b_icgraph" alt=""/></div>
+<map name="classfile_8h_a627193785e98bc076b257c97ccd5892b_icgraph" id="classfile_8h_a627193785e98bc076b257c97ccd5892b_icgraph">
+<area shape="rect" id="node2" href="classfile_8h.html#a64bd697d9f3c3360d6c4edb38f8cdf60" title="Procura por cuma classe, e caso não consiga encontrá&#45;la, carrega na memória usando a função ClassLoad..." alt="" coords="180,132,261,159"/>
+<area shape="rect" id="node3" href="interpreter_8h.html#a0376f00366ddf07cdd7b30699c0ce9ea" title="Pega um campo static de uma classe. " alt="" coords="324,5,427,32"/>
+<area shape="rect" id="node7" href="interpreter_8h.html#ad5d8f4d22094dc598e3a241addeb1376" title="Seta campo static numa classe. " alt="" coords="324,208,427,235"/>
+<area shape="rect" id="node8" href="interpreter_8h.html#a68645b98a8ec61af8d928a18e1108e44" title="Invoca o método de uma instância. " alt="" coords="312,259,439,285"/>
+<area shape="rect" id="node9" href="interpreter_8h.html#a0158225d2969a806067337bb3b7694b5" title="Invoca o método de uma instância, tratando de superclasses, métodos privados. " alt="" coords="309,56,441,83"/>
+<area shape="rect" id="node10" href="interpreter_8h.html#a7945d7df3a93628695ba61a8d8a14315" title="Invoca um método estático de uma classe. " alt="" coords="314,107,437,133"/>
+<area shape="rect" id="node11" href="interpreter_8h.html#a50ee7819621feec3fd084f946cf09cc3" title="Instacia um novo objeto de uma classe. " alt="" coords="337,157,414,184"/>
+<area shape="rect" id="node4" href="classfile_8h.html#a8d5e46a5df7dfb965306e8a277783511" title="todo: avalia os atributos do classfile. " alt="" coords="504,31,607,57"/>
+<area shape="rect" id="node5" href="op__codes__initializer_8c.html#afc6e90df89f862010ce7c75d0663ea08" title="initialize_op_codes" alt="" coords="489,132,621,159"/>
+<area shape="rect" id="node6" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="669,132,720,159"/>
+</map>
+</div>
+</p>
+
 </div>
 </div>
 <a class="anchor" id="a39801833579e32d1d5c844229c82cef1"></a>
@@ -981,6 +1671,30 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Faz a leitura de 1 byte do arquivo .class fornecido no path. </p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a39801833579e32d1d5c844229c82cef1_icgraph.png" border="0" usemap="#classfile_8h_a39801833579e32d1d5c844229c82cef1_icgraph" alt=""/></div>
+<map name="classfile_8h_a39801833579e32d1d5c844229c82cef1_icgraph" id="classfile_8h_a39801833579e32d1d5c844229c82cef1_icgraph">
+<area shape="rect" id="node2" href="classfile_8h.html#ab2c33d049c34b50ead32e4568387353c" title="Lê os atributos do bytecode recebido. " alt="" coords="144,271,247,297"/>
+<area shape="rect" id="node3" href="classfile_8h.html#a14c4d3f84dd03a43aca0a57bd530f3a2" title="Faz a leitura do arquivo .class. " alt="" coords="327,233,437,260"/>
+<area shape="rect" id="node15" href="classfile_8h.html#add61e24daf8356973e908b3f1cfd5a24" title="Faz a leitura de 1 byre do arquivo .class fornecido no path. " alt="" coords="120,372,271,399"/>
+<area shape="rect" id="node16" href="classfile_8h.html#a1258b84eec00db8fee377fea434c49b1" title="fillStackMapTable" alt="" coords="319,347,445,373"/>
+<area shape="rect" id="node4" href="classfile_8h.html#abd0631a75f72632c5606e72f6d3f00ae" title="Aloca espaço para o ClassFile em memória e chama a função read_class_file para ler o ClassFile recebi..." alt="" coords="493,233,588,260"/>
+<area shape="rect" id="node5" href="classfile_8h.html#a64bd697d9f3c3360d6c4edb38f8cdf60" title="Procura por cuma classe, e caso não consiga encontrá&#45;la, carrega na memória usando a função ClassLoad..." alt="" coords="636,157,717,184"/>
+<area shape="rect" id="node9" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="1125,233,1176,260"/>
+<area shape="rect" id="node6" href="interpreter_8h.html#a0376f00366ddf07cdd7b30699c0ce9ea" title="Pega um campo static de uma classe. " alt="" coords="780,259,883,285"/>
+<area shape="rect" id="node10" href="interpreter_8h.html#ad5d8f4d22094dc598e3a241addeb1376" title="Seta campo static numa classe. " alt="" coords="780,107,883,133"/>
+<area shape="rect" id="node11" href="interpreter_8h.html#a68645b98a8ec61af8d928a18e1108e44" title="Invoca o método de uma instância. " alt="" coords="768,157,895,184"/>
+<area shape="rect" id="node12" href="interpreter_8h.html#a0158225d2969a806067337bb3b7694b5" title="Invoca o método de uma instância, tratando de superclasses, métodos privados. " alt="" coords="765,208,897,235"/>
+<area shape="rect" id="node13" href="interpreter_8h.html#a7945d7df3a93628695ba61a8d8a14315" title="Invoca um método estático de uma classe. " alt="" coords="770,5,893,32"/>
+<area shape="rect" id="node14" href="interpreter_8h.html#a50ee7819621feec3fd084f946cf09cc3" title="Instacia um novo objeto de uma classe. " alt="" coords="793,56,870,83"/>
+<area shape="rect" id="node7" href="classfile_8h.html#a8d5e46a5df7dfb965306e8a277783511" title="todo: avalia os atributos do classfile. " alt="" coords="960,233,1063,260"/>
+<area shape="rect" id="node8" href="op__codes__initializer_8c.html#afc6e90df89f862010ce7c75d0663ea08" title="initialize_op_codes" alt="" coords="945,157,1077,184"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -1000,6 +1714,30 @@ Variables</h2></td></tr>
 
 <p>Faz a leitura de 2 bytes do arquivo .class fornecido no path. </p>
 
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a88e62d36ef0e91dda130024e0b07dff2_icgraph.png" border="0" usemap="#classfile_8h_a88e62d36ef0e91dda130024e0b07dff2_icgraph" alt=""/></div>
+<map name="classfile_8h_a88e62d36ef0e91dda130024e0b07dff2_icgraph" id="classfile_8h_a88e62d36ef0e91dda130024e0b07dff2_icgraph">
+<area shape="rect" id="node2" href="classfile_8h.html#ab2c33d049c34b50ead32e4568387353c" title="Lê os atributos do bytecode recebido. " alt="" coords="144,271,247,297"/>
+<area shape="rect" id="node3" href="classfile_8h.html#a14c4d3f84dd03a43aca0a57bd530f3a2" title="Faz a leitura do arquivo .class. " alt="" coords="327,233,437,260"/>
+<area shape="rect" id="node15" href="classfile_8h.html#add61e24daf8356973e908b3f1cfd5a24" title="Faz a leitura de 1 byre do arquivo .class fornecido no path. " alt="" coords="120,372,271,399"/>
+<area shape="rect" id="node16" href="classfile_8h.html#a1258b84eec00db8fee377fea434c49b1" title="fillStackMapTable" alt="" coords="319,347,445,373"/>
+<area shape="rect" id="node4" href="classfile_8h.html#abd0631a75f72632c5606e72f6d3f00ae" title="Aloca espaço para o ClassFile em memória e chama a função read_class_file para ler o ClassFile recebi..." alt="" coords="493,233,588,260"/>
+<area shape="rect" id="node5" href="classfile_8h.html#a64bd697d9f3c3360d6c4edb38f8cdf60" title="Procura por cuma classe, e caso não consiga encontrá&#45;la, carrega na memória usando a função ClassLoad..." alt="" coords="636,157,717,184"/>
+<area shape="rect" id="node9" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="1125,233,1176,260"/>
+<area shape="rect" id="node6" href="interpreter_8h.html#a0376f00366ddf07cdd7b30699c0ce9ea" title="Pega um campo static de uma classe. " alt="" coords="780,259,883,285"/>
+<area shape="rect" id="node10" href="interpreter_8h.html#ad5d8f4d22094dc598e3a241addeb1376" title="Seta campo static numa classe. " alt="" coords="780,107,883,133"/>
+<area shape="rect" id="node11" href="interpreter_8h.html#a68645b98a8ec61af8d928a18e1108e44" title="Invoca o método de uma instância. " alt="" coords="768,157,895,184"/>
+<area shape="rect" id="node12" href="interpreter_8h.html#a0158225d2969a806067337bb3b7694b5" title="Invoca o método de uma instância, tratando de superclasses, métodos privados. " alt="" coords="765,208,897,235"/>
+<area shape="rect" id="node13" href="interpreter_8h.html#a7945d7df3a93628695ba61a8d8a14315" title="Invoca um método estático de uma classe. " alt="" coords="770,5,893,32"/>
+<area shape="rect" id="node14" href="interpreter_8h.html#a50ee7819621feec3fd084f946cf09cc3" title="Instacia um novo objeto de uma classe. " alt="" coords="793,56,870,83"/>
+<area shape="rect" id="node7" href="classfile_8h.html#a8d5e46a5df7dfb965306e8a277783511" title="todo: avalia os atributos do classfile. " alt="" coords="960,233,1063,260"/>
+<area shape="rect" id="node8" href="op__codes__initializer_8c.html#afc6e90df89f862010ce7c75d0663ea08" title="initialize_op_codes" alt="" coords="945,157,1077,184"/>
+</map>
+</div>
+</p>
+
 </div>
 </div>
 <a class="anchor" id="a53b3222e2a57ce27a8ad7a04a35f8f6e"></a>
@@ -1017,6 +1755,28 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Faz a leitura de 4 bytes do arquivo .class fornecido no path. </p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classfile_8h_a53b3222e2a57ce27a8ad7a04a35f8f6e_icgraph.png" border="0" usemap="#classfile_8h_a53b3222e2a57ce27a8ad7a04a35f8f6e_icgraph" alt=""/></div>
+<map name="classfile_8h_a53b3222e2a57ce27a8ad7a04a35f8f6e_icgraph" id="classfile_8h_a53b3222e2a57ce27a8ad7a04a35f8f6e_icgraph">
+<area shape="rect" id="node2" href="classfile_8h.html#ab2c33d049c34b50ead32e4568387353c" title="Lê os atributos do bytecode recebido. " alt="" coords="120,271,223,297"/>
+<area shape="rect" id="node3" href="classfile_8h.html#a14c4d3f84dd03a43aca0a57bd530f3a2" title="Faz a leitura do arquivo .class. " alt="" coords="271,233,380,260"/>
+<area shape="rect" id="node4" href="classfile_8h.html#abd0631a75f72632c5606e72f6d3f00ae" title="Aloca espaço para o ClassFile em memória e chama a função read_class_file para ler o ClassFile recebi..." alt="" coords="428,233,523,260"/>
+<area shape="rect" id="node5" href="classfile_8h.html#a64bd697d9f3c3360d6c4edb38f8cdf60" title="Procura por cuma classe, e caso não consiga encontrá&#45;la, carrega na memória usando a função ClassLoad..." alt="" coords="571,157,652,184"/>
+<area shape="rect" id="node9" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="1060,233,1111,260"/>
+<area shape="rect" id="node6" href="interpreter_8h.html#a0376f00366ddf07cdd7b30699c0ce9ea" title="Pega um campo static de uma classe. " alt="" coords="715,259,817,285"/>
+<area shape="rect" id="node10" href="interpreter_8h.html#ad5d8f4d22094dc598e3a241addeb1376" title="Seta campo static numa classe. " alt="" coords="715,107,817,133"/>
+<area shape="rect" id="node11" href="interpreter_8h.html#a68645b98a8ec61af8d928a18e1108e44" title="Invoca o método de uma instância. " alt="" coords="703,157,829,184"/>
+<area shape="rect" id="node12" href="interpreter_8h.html#a0158225d2969a806067337bb3b7694b5" title="Invoca o método de uma instância, tratando de superclasses, métodos privados. " alt="" coords="700,208,832,235"/>
+<area shape="rect" id="node13" href="interpreter_8h.html#a7945d7df3a93628695ba61a8d8a14315" title="Invoca um método estático de uma classe. " alt="" coords="705,5,827,32"/>
+<area shape="rect" id="node14" href="interpreter_8h.html#a50ee7819621feec3fd084f946cf09cc3" title="Instacia um novo objeto de uma classe. " alt="" coords="727,56,805,83"/>
+<area shape="rect" id="node7" href="classfile_8h.html#a8d5e46a5df7dfb965306e8a277783511" title="todo: avalia os atributos do classfile. " alt="" coords="895,233,997,260"/>
+<area shape="rect" id="node8" href="op__codes__initializer_8c.html#afc6e90df89f862010ce7c75d0663ea08" title="initialize_op_codes" alt="" coords="880,157,1012,184"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -1087,6 +1847,18 @@ Variables</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="structures_8h.html#a64f8055b64cf2a4c299c841130c5c938">u1</a> name_or_type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a9ff2c57ead44ec66c113197fa71ab268"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* PATH</td>
         </tr>
       </table>
 </div><div class="memdoc">

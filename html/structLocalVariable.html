@@ -90,12 +90,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
+<p>Struct para representar a variável local de um <a class="el" href="structFrame.html" title="Struct que representa um Frame da JVM. ">Frame</a>.  
+ <a href="structLocalVariable.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="structures_8h_source.html">structures.h</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for LocalVariable:</div>
 <div class="dyncontent">
 <div class="center"><img src="structLocalVariable__coll__graph.png" border="0" usemap="#LocalVariable_coll__map" alt="Collaboration graph"/></div>
-<!-- MAP 0 -->
+<map name="LocalVariable_coll__map" id="LocalVariable_coll__map">
+<area shape="rect" id="node3" href="structInstanceField.html" title="InstanceField" alt="" coords="5,184,105,211"/>
+<area shape="rect" id="node2" href="structObject.html" title="Object" alt="" coords="85,273,145,300"/>
+<area shape="rect" id="node4" href="structTypeArray.html" title="Representa uma estrutura de dados tipo array dentro da JVM. " alt="" coords="85,5,167,32"/>
+</map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -111,10 +118,15 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a00aed95f94492376028d9c8c2173ed4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14ce1ce413edaa4e01c4d4e1358ed51f"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="structTypeArray.html">TypeArray</a>&#160;&#160;&#160;<a class="el" href="structLocalVariable.html#a6905d4b07d1ff41deaa0189ae8761850">type_array</a></td></tr>
 <tr class="separator:a14ce1ce413edaa4e01c4d4e1358ed51f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a497da554bd4b58d8d49fe2d0854671e3"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="structObject.html">Object</a>&#160;&#160;&#160;<a class="el" href="structLocalVariable.html#ae6f28a6c3ea7313de860a8e46adf661f">type_object</a></td></tr>
+<tr class="separator:a497da554bd4b58d8d49fe2d0854671e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3570d34d2fed3081d2b7a21bb07cf290"><td class="memItemLeft" valign="top">};&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
 <tr class="separator:a3570d34d2fed3081d2b7a21bb07cf290"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Data Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Struct para representar a variável local de um <a class="el" href="structFrame.html" title="Struct que representa um Frame da JVM. ">Frame</a>. </p>
+<p>Utiliza uma union para decidir qual é o tipo da variável. </p>
+</div><h2 class="groupheader">Member Data Documentation</h2>
 <a class="anchor" id="a3570d34d2fed3081d2b7a21bb07cf290"></a>
 <div class="memitem">
 <div class="memproto">
@@ -169,6 +181,18 @@ Public Attributes</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">uint64_t LocalVariable::type_long</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ae6f28a6c3ea7313de860a8e46adf661f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structObject.html">Object</a> LocalVariable::type_object</td>
         </tr>
       </table>
 </div><div class="memdoc">
