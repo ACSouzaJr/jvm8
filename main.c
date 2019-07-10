@@ -69,10 +69,17 @@ int main(int argc, char *argv[])
   {
     initialize_op_codes();
     char *dash;
-    dash = strrchr(argv[1],'/');
-    strncpy(PATH, argv[1], dash-argv[1]);
+    if ((dash = strrchr(argv[1],'/')) != NULL)
+    {
+      strncpy(PATH, argv[1], dash-argv[1]);
+      printf("Path: %s \n", PATH);
+    }
+    else
+    {
+      strcpy(PATH, ".");
+    }
+    
 
-    printf("Path: %s \n", PATH);
 
     if(strcmp( argv[2], "-e") == 0) { /* para modo leitor-exibidor */
       print_class_file(cf);

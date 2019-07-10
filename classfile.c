@@ -2483,6 +2483,7 @@ u4 ClassLoader(char *class_name)
 #endif
   read_class_file(cf, GLOBAL_ptr);
   Mem.classes_arr[Mem.num_classes++] = cf;
+  
   if (Mem.classes_arr[Mem.num_classes - 1] == NULL)
   {
     printf("Erro ao carregar classe!\n");

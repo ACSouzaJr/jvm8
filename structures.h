@@ -19,7 +19,6 @@ extern char *GLOBAL_ptr;
   Tabela contendo o valor para cada tag da constante (tipo id)
 */
 
-
 /**
  * @brief Enum das tags CONSTANT.
  */
@@ -143,7 +142,6 @@ typedef struct
   u2 start_pc;
   u2 line_number;
 } line_number_table_type;
-
 
 /**
  * @brief Struct para representar a estrutura ExceptionTableType.
@@ -436,24 +434,38 @@ typedef struct
   // staticData * staticData;
 } field_info;
 
-typedef struct {
-    void *array;
-    u2 size;
+typedef struct
+{
+  void *array;
+  u2 size;
 } TypeArray;
+
+typedef struct
+{
+  char *field_name;
+  char *field_desc;
+  LocalVariable *value;
+} InstanceField;
+
+typedef struct
+{
+  // class ref
+  u2 class_index;
+  // referencias fieldref
+  InstanceField *fields;
+} Object;
 
 struct LocalVariable
 {
   u1 type;
-  union 
-  {
+  union {
     u4 value; //cat1
     uint64_t type_long;
     uint64_t type_double;
     TypeArray type_array;
+    Object type_object;
   };
-  
 };
-
 
 /**
  * @brief Struct que representa os campos do bytecode
@@ -480,7 +492,6 @@ typedef struct
   u2 attributes_count;
   attribute_info *attributes; //[attributes_count];
 } ClassFile;
-
 
 /**
  * @brief Struct que contém o array de classfiles e o número de classes já carregadas em memória.
