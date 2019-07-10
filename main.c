@@ -72,7 +72,9 @@ int main(int argc, char *argv[])
     if ((dash = strrchr(argv[1],'/')) != NULL)
     {
       strncpy(PATH, argv[1], dash-argv[1]);
+      #if defined DEBUG
       printf("Path: %s \n", PATH);
+      #endif
     }
     else
     {

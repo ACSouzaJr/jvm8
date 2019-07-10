@@ -787,7 +787,7 @@ void aaload_eval(Frame *f)
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
 
-  lv->value = ((u4 *)arrayref->type_array.array)[index->value];
+  lv->type_object = ((Object *)arrayref->type_array.array)[index->value];
   lv->type = CONSTANT_Class;
 
   push_operand(lv, f->operands);
@@ -1352,9 +1352,9 @@ void aastore_eval(Frame *f)
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
 
-  u4 *vetor;
-  vetor = (u4 *)arrayref->type_array.array;
-  vetor[index->value] = value->value;
+  Object *vetor;
+  vetor = (Object *)arrayref->type_array.array;
+  vetor[index->value] = value->type_object;
   #if defined DEBUG
     printf("Referencia array: %d", ((u4 *)arrayref->type_array.array)[index->value]);
   #endif
@@ -3144,11 +3144,11 @@ void ifeq_eval(Frame *f)
   #if defined DEBUG
   printf("valor_ifeq_value: %d\n", value);
   #endif
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
   if (value == 0)
   {
-    u1 branchbyte1, branchbyte2;
-    branchbyte1 = f->bytecode[f->pc++];
-    branchbyte2 = f->bytecode[f->pc++];
 
     int16_t offset = ((branchbyte1 << 8) | branchbyte2);
 
@@ -3173,11 +3173,11 @@ void ifne_eval(Frame *f)
   #if defined DEBUG
   printf("valor_ifne_value: %d\n", value);
   #endif
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
   if (value != 0)
   {
-    u1 branchbyte1, branchbyte2;
-    branchbyte1 = f->bytecode[f->pc++];
-    branchbyte2 = f->bytecode[f->pc++];
 
     int16_t offset = ((branchbyte1 << 8) | branchbyte2);
 
@@ -3202,11 +3202,11 @@ void iflt_eval(Frame *f)
   #if defined DEBUG
   printf("valor_iflt_value: %d\n", value);
   #endif
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
   if (value < 0)
   {
-    u1 branchbyte1, branchbyte2;
-    branchbyte1 = f->bytecode[f->pc++];
-    branchbyte2 = f->bytecode[f->pc++];
 
     int16_t offset = ((branchbyte1 << 8) | branchbyte2);
 
@@ -3231,11 +3231,11 @@ void ifge_eval(Frame *f)
   #if defined DEBUG
   printf("valor_ifge_value: %d\n", value);
   #endif
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
   if (value >= 0)
   {
-    u1 branchbyte1, branchbyte2;
-    branchbyte1 = f->bytecode[f->pc++];
-    branchbyte2 = f->bytecode[f->pc++];
 
     int16_t offset = ((branchbyte1 << 8) | branchbyte2);
 
@@ -3260,11 +3260,11 @@ void ifgt_eval(Frame *f)
   #if defined DEBUG
   printf("valor_ifgt_value: %d\n", value);
   #endif
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
   if (value > 0)
   {
-    u1 branchbyte1, branchbyte2;
-    branchbyte1 = f->bytecode[f->pc++];
-    branchbyte2 = f->bytecode[f->pc++];
 
     int16_t offset = ((branchbyte1 << 8) | branchbyte2);
 
@@ -4350,16 +4350,15 @@ void anewarray_eval(Frame *f)
   count = lv->value;
   void *arrayref = NULL;
   rlv = (LocalVariable *)malloc(sizeof(LocalVariable));
-  u2 name_index = f->cp[index - 1].Class.name_index;
 
   rlv->type = CONSTANT_Class;
 
-  arrayref = (u4 *)malloc((count) * sizeof(u4));
-  rlv->value = *((u4 *)(arrayref));
+  arrayref = (Object *)malloc((count) * sizeof(Object));
+  rlv->type_array.array = (Object*) arrayref;
+  rlv->type_array.size = count;
 
 #if defined DEBUG
-  printf("arrayref: %04x\n", rlv->value);
-  printf("classname_index: %02x\n", name_index);
+  printf("arrayref: %04x\n", rlv->type_array.array);
 #endif
 
   if (count < 0)
@@ -4368,7 +4367,6 @@ void anewarray_eval(Frame *f)
   }
   else
   {
-    // rlv->type_array.array = arrayref;
 
     push_operand(rlv, f->operands);
   }
