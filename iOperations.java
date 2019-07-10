@@ -1,5 +1,5 @@
 class iOperations {
-  public static int main(String[] s) {
+  public static void main(String[] s) {
     int a = 5, b = 4, c;
     c = a - b;
     System.out.println(c);
@@ -10,7 +10,9 @@ class iOperations {
     c = a % b;
     System.out.println(c);
     c = a + b;
-    System.out.println(c);
-    return c;
+    if(a != 0){
+      System.out.println(c);
+    }
+    // return c;
   }
 }

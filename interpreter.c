@@ -3152,7 +3152,7 @@ void dcmpg_eval(Frame *f)
  */
 void ifeq_eval(Frame *f)
 {
-  u4 v1 = pop_operand(f->operands)->value;
+  int32_t v1 = pop_operand(f->operands)->value;
   #if defined DEBUG
   printf("valor_ifeq: %04x\n", v1);
   #endif
@@ -3160,13 +3160,13 @@ void ifeq_eval(Frame *f)
   #if defined DEBUG
   printf("valor_ifeq_value: %d\n", value);
   #endif
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
   if (value == 0)
   {
-    u1 branchbyte1, branchbyte2;
-    branchbyte1 = f->bytecode[f->pc++];
-    branchbyte2 = f->bytecode[f->pc++];
 
-    int16_t offset = ((branchbyte1 << 8) | branchbyte2);
+    int16_t offset = (((int16_t)branchbyte1 << 8) | (int16_t)branchbyte2);
 
 #if defined DEBUG
     printf("ifeq: vou pular %d\n", (offset - 3));
@@ -3181,21 +3181,18 @@ void ifeq_eval(Frame *f)
  */
 void ifne_eval(Frame *f)
 {
-  u4 v1 = pop_operand(f->operands)->value;
-  #if defined DEBUG
-  printf("valor_ifne: %04x\n", v1);
-  #endif
-  int value = *(int *)&(v1);
+  int32_t value = (int32_t) pop_operand(f->operands)->value;
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
+
   #if defined DEBUG
   printf("valor_ifne_value: %d\n", value);
   #endif
   if (value != 0)
   {
-    u1 branchbyte1, branchbyte2;
-    branchbyte1 = f->bytecode[f->pc++];
-    branchbyte2 = f->bytecode[f->pc++];
 
-    int16_t offset = ((branchbyte1 << 8) | branchbyte2);
+    int16_t offset = (((int16_t)branchbyte1 << 8) | (int16_t)branchbyte2);
 
 #if defined DEBUG
     printf("ifne: vou pular %d\n", (offset - 3));
@@ -3210,21 +3207,18 @@ void ifne_eval(Frame *f)
  */
 void iflt_eval(Frame *f)
 {
-  u4 v1 = pop_operand(f->operands)->value;
-  #if defined DEBUG
-  printf("valor_iflt: %04x\n", v1);
-  #endif
-  int value = *(int *)&(v1);
+  int32_t value = pop_operand(f->operands)->value;
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
+
   #if defined DEBUG
   printf("valor_iflt_value: %d\n", value);
   #endif
   if (value < 0)
   {
-    u1 branchbyte1, branchbyte2;
-    branchbyte1 = f->bytecode[f->pc++];
-    branchbyte2 = f->bytecode[f->pc++];
 
-    int16_t offset = ((branchbyte1 << 8) | branchbyte2);
+    int16_t offset = (((int16_t)branchbyte1 << 8) | (int16_t)branchbyte2);
 
 #if defined DEBUG
     printf("iflt: vou pular %d\n", (offset - 3));
@@ -3239,21 +3233,18 @@ void iflt_eval(Frame *f)
  */
 void ifge_eval(Frame *f)
 {
-  u4 v1 = pop_operand(f->operands)->value;
-  #if defined DEBUG
-  printf("valor_ifge: %04x\n", v1);
-  #endif
+  int32_t v1 = pop_operand(f->operands)->value;
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
   int value = *(int *)&(v1);
   #if defined DEBUG
   printf("valor_ifge_value: %d\n", value);
   #endif
   if (value >= 0)
   {
-    u1 branchbyte1, branchbyte2;
-    branchbyte1 = f->bytecode[f->pc++];
-    branchbyte2 = f->bytecode[f->pc++];
 
-    int16_t offset = ((branchbyte1 << 8) | branchbyte2);
+    int16_t offset = (((int16_t)branchbyte1 << 8) | (int16_t)branchbyte2);
 
 #if defined DEBUG
     printf("ifge: vou pular %d\n", (offset - 3));
@@ -3268,21 +3259,18 @@ void ifge_eval(Frame *f)
  */
 void ifgt_eval(Frame *f)
 {
-  u4 v1 = pop_operand(f->operands)->value;
-  #if defined DEBUG
-  printf("valor_ifgt: %04x\n", v1);
-  #endif
-  int value = *(int *)&(v1);
+  int32_t value = pop_operand(f->operands)->value;
+  u1 branchbyte1, branchbyte2;
+  branchbyte1 = f->bytecode[f->pc++];
+  branchbyte2 = f->bytecode[f->pc++];
+
   #if defined DEBUG
   printf("valor_ifgt_value: %d\n", value);
   #endif
   if (value > 0)
   {
-    u1 branchbyte1, branchbyte2;
-    branchbyte1 = f->bytecode[f->pc++];
-    branchbyte2 = f->bytecode[f->pc++];
 
-    int16_t offset = ((branchbyte1 << 8) | branchbyte2);
+    int16_t offset = (((int16_t)branchbyte1 << 8) | (int16_t)branchbyte2);
 
 #if defined DEBUG
     printf("ifgt: vou pular %d\n", (offset - 3));
@@ -3318,8 +3306,6 @@ void ifle_eval(Frame *f)
     #endif
 
     f->pc += offset - 3;
-  } else {
-    
   }
 }
 
@@ -3949,7 +3935,7 @@ void getfield_eval(Frame *f)
   printf("get field desc: %s\n", field_desc);
 #endif
 
-  ClassFile *cf = Mem.classes_arr[(u4)obj_ref->type_object.class_index];
+  ClassFile *cf = Mem.classes_arr[obj_ref->type_object.class_index];
 
   LocalVariable *lv;
 
@@ -3996,7 +3982,7 @@ void putfield_eval(Frame *f)
   LocalVariable *value = pop_operand(f->operands);
   LocalVariable *obj_ref = pop_operand(f->operands);
 
-  ClassFile *cf = Mem.classes_arr[(u4)obj_ref->type_object.class_index];
+  ClassFile *cf = Mem.classes_arr[obj_ref->type_object.class_index];
   // field_info *field = find_field(cf, field_name, field_desc);
 
   for (size_t i = 0; i < cf->fields_count; i++) 
@@ -4490,7 +4476,7 @@ void ifnull_eval(Frame *f)
   branchbyte2 = f->bytecode[f->pc++];
 
   int16_t offset = ((branchbyte1 << 8) | branchbyte2);
-  if (!lv->value)
+  if (lv == NULL)
   {
     f->pc += offset - 3;
   }
@@ -4507,7 +4493,7 @@ void ifnonnull_eval(Frame *f)
   branchbyte2 = f->bytecode[f->pc++];
 
   int16_t offset = ((branchbyte1 << 8) | branchbyte2);
-  if (lv->value)
+  if (lv != NULL)
   {
     f->pc += offset - 3;
   }
