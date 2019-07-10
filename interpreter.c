@@ -513,7 +513,16 @@ void lload_1_eval(Frame *f)
  */
 void lload_2_eval(Frame *f)
 {
-  push_operand(&(f->local_variables[2-1]), f->operands);
+  if (f->local_variables[2-1].type == CONSTANT_Long)
+  {
+    push_operand(&(f->local_variables[2-1]), f->operands);
+  } else if(f->local_variables[2].type == CONSTANT_Long)
+  {
+    push_operand(&(f->local_variables[2]), f->operands);
+  } else {
+    printf("javax.persistence.PersistenceException\n");
+    exit(0);
+  }
 }
 
 /**
@@ -635,15 +644,16 @@ void dload_2_eval(Frame *f)
   #ifdef DEBUG
     printf("dload_2_type: %d\n", f->local_variables[2].type);
   #endif
-  // if (f->local_variables[2-1].type == CONSTANT_Double)
-  // {
+  if (f->local_variables[2-1].type == CONSTANT_Double)
+  {
     push_operand(&(f->local_variables[2-1]), f->operands);
-  // }
-  // else
-  // {
-  //   printf("javax.persistence.PersistenceException\n");
-  //   exit(0);
-  // }
+  } else if(f->local_variables[2].type == CONSTANT_Double)
+  {
+    push_operand(&(f->local_variables[2-1]), f->operands);
+  } else {
+    printf("javax.persistence.PersistenceException\n");
+    exit(0);
+  }
 }
 
 /**
@@ -3395,8 +3405,8 @@ void if_icmpgt_eval(Frame *f)
   branchbyte2 = f->bytecode[f->pc++];
 
   int16_t offset = ((branchbyte1 << 8) | branchbyte2);
-  int32_t value2 = pop_operand(f->operands)->value;
-  int32_t value1 = pop_operand(f->operands)->value;
+  int32_t value2 = (int32_t)pop_operand(f->operands)->value;
+  int32_t value1 = (int32_t)pop_operand(f->operands)->value;
   if (value1 > value2)
   {
     f->pc += offset - 3;

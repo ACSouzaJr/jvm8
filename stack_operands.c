@@ -51,8 +51,8 @@ void push_operand(LocalVariable *operand, StackOperand *stack_operand)
         {
             printf("Acabou de ser empilhado: %04x\n", stack_operand->top->f->value);
         }
-#endif
     }
+#endif
 
     // return *stack_operand;
 }
