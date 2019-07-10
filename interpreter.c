@@ -3238,17 +3238,16 @@ void getfield_eval(Frame *f)
 
   field_info *field = find_field(cf, field_name, field_desc);
 
-  lv->type = CONSTANT_Fieldref;
-  lv->value = *(u4 *)&field;
+  // lv->type = CONSTANT_Fieldref;
+  // lv->value = *(u4 *)&field;
 
-  // EMpilha referencia para o field
-  push_operand(lv, f->operands);
+  // // EMpilha referencia para o field
+  push_operand(field->static_data, f->operands);
 }
 
 void putfield_eval(Frame *f)
 {
   u2 index = getIndexFromb1b2(f);
-  LocalVariable *lv = pop_operand(f->operands);
 
   // Fieldref Name and type
   u2 name_n_type = f->cp[index - 1].Fieldref.name_and_type_index;
@@ -3262,12 +3261,13 @@ void putfield_eval(Frame *f)
   printf("get field desc: %s\n", field_desc);
 #endif
 
-  ClassFile *cf = Mem.classes_arr[lv->value];
-
-  field_info *field = find_field(cf, field_name, field_desc);
-
+  LocalVariable *value = pop_operand(f->operands);
   LocalVariable *obj_ref = pop_operand(f->operands);
 
+  ClassFile *cf = Mem.classes_arr[obj_ref->value];
+  field_info *field = find_field(cf, field_name, field_desc);
+
+  field->static_data = value;
 }
 
 void invokevirtual_eval(Frame *f)
@@ -3424,7 +3424,7 @@ void invokespecial_eval(Frame *f)
   // Adiciona argumestos
   // for (size_t i = args - 1; i >= 0; i--)
   // for (size_t i = 0; i < args; i++)
-  for (int8_t i = args - 1; i >= 0; i--)
+  for (int8_t i = args; i >= 0; i--)
   {
     frame->local_variables[i] = *(pop_operand(f->operands));
 #ifdef DEBUG
