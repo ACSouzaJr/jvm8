@@ -141,9 +141,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a774f5149d9c3dadc60b2c0ca012bf51d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile_8h.html#a774f5149d9c3dadc60b2c0ca012bf51d">recursive_print</a> (<a class="el" href="structcp__info.html">cp_info</a> *cp, <a class="el" href="structures_8h.html#a55ef8d87fd202b8417704c089899c5b9">u2</a> index, char *str)</td></tr>
 <tr class="memdesc:a774f5149d9c3dadc60b2c0ca012bf51d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Usa um índice para acessar a constant pool e printar recusrivamente os campos.  <a href="#a774f5149d9c3dadc60b2c0ca012bf51d">More...</a><br /></td></tr>
 <tr class="separator:a774f5149d9c3dadc60b2c0ca012bf51d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa368bab42b5e8b5415b68d6910982ea2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile_8h.html#aa368bab42b5e8b5415b68d6910982ea2">rec_method_name</a> (<a class="el" href="structcp__info.html">cp_info</a> *cp, <a class="el" href="structures_8h.html#a55ef8d87fd202b8417704c089899c5b9">u2</a> index, char *str)</td></tr>
-<tr class="memdesc:aa368bab42b5e8b5415b68d6910982ea2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Usa um índice no constant pool para procurar o nome de um método recursivamente.  <a href="#aa368bab42b5e8b5415b68d6910982ea2">More...</a><br /></td></tr>
-<tr class="separator:aa368bab42b5e8b5415b68d6910982ea2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a580d63d9a7b152364691f69863dc7a4e"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile_8h.html#a580d63d9a7b152364691f69863dc7a4e">rec_method_name</a> (<a class="el" href="structcp__info.html">cp_info</a> *cp, <a class="el" href="structures_8h.html#a55ef8d87fd202b8417704c089899c5b9">u2</a> index)</td></tr>
+<tr class="memdesc:a580d63d9a7b152364691f69863dc7a4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Usa um índice no constant pool para procurar o nome de um método recursivamente.  <a href="#a580d63d9a7b152364691f69863dc7a4e">More...</a><br /></td></tr>
+<tr class="separator:a580d63d9a7b152364691f69863dc7a4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a627193785e98bc076b257c97ccd5892b"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile_8h.html#a627193785e98bc076b257c97ccd5892b">ret_method_name</a> (<a class="el" href="structcp__info.html">cp_info</a> *cp, <a class="el" href="structures_8h.html#a55ef8d87fd202b8417704c089899c5b9">u2</a> index)</td></tr>
 <tr class="memdesc:a627193785e98bc076b257c97ccd5892b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retorna o nome de um método no ponteiro global.  <a href="#a627193785e98bc076b257c97ccd5892b">More...</a><br /></td></tr>
 <tr class="separator:a627193785e98bc076b257c97ccd5892b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -183,11 +183,10 @@ Functions</h2></td></tr>
 <tr class="memdesc:abd0631a75f72632c5606e72f6d3f00ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aloca espaço para o <a class="el" href="structClassFile.html" title="Struct que representa os campos do bytecode. ">ClassFile</a> em memória e chama a função read_class_file para ler o <a class="el" href="structClassFile.html" title="Struct que representa os campos do bytecode. ">ClassFile</a> recebido nas posições corretas.  <a href="#abd0631a75f72632c5606e72f6d3f00ae">More...</a><br /></td></tr>
 <tr class="separator:abd0631a75f72632c5606e72f6d3f00ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a55c80ae86c1c6d0666108a825df64a4b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile_8h.html#a55c80ae86c1c6d0666108a825df64a4b">execute_gvm</a> ()</td></tr>
-<tr class="memdesc:a55c80ae86c1c6d0666108a825df64a4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que busca pelo <a class="el" href="structFrame.html">Frame</a> no topo da pilha de frames e inicia a execução da <a class="el" href="structJVM.html">JVM</a>. Essa função é executada enquanto ainda há frames na pilha da <a class="el" href="structJVM.html">JVM</a>.  <a href="#a55c80ae86c1c6d0666108a825df64a4b">More...</a><br /></td></tr>
+<tr class="memdesc:a55c80ae86c1c6d0666108a825df64a4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que busca pelo <a class="el" href="structFrame.html" title="Struct que representa um Frame da JVM. ">Frame</a> no topo da pilha de frames e inicia a execução da <a class="el" href="structJVM.html">JVM</a>. Essa função é executada enquanto ainda há frames na pilha da <a class="el" href="structJVM.html">JVM</a>.  <a href="#a55c80ae86c1c6d0666108a825df64a4b">More...</a><br /></td></tr>
 <tr class="separator:a55c80ae86c1c6d0666108a825df64a4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acaf2255d12202a819c765194e5e51dba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmethod__info.html">method_info</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile_8h.html#acaf2255d12202a819c765194e5e51dba">find_method</a> (<a class="el" href="structClassFile.html">ClassFile</a> *cf, char *method)</td></tr>
-<tr class="memdesc:acaf2255d12202a819c765194e5e51dba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procura por um método dentro do Classfile carregado em memória.  <a href="#acaf2255d12202a819c765194e5e51dba">More...</a><br /></td></tr>
-<tr class="separator:acaf2255d12202a819c765194e5e51dba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a915037a0d75520090926e178259cf4bb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmethod__info.html">method_info</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile_8h.html#a915037a0d75520090926e178259cf4bb">find_method</a> (<a class="el" href="structClassFile.html">ClassFile</a> *cf, char *method, char *method_description)</td></tr>
+<tr class="separator:a915037a0d75520090926e178259cf4bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64bd697d9f3c3360d6c4edb38f8cdf60"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structures_8h.html#a55ef8d87fd202b8417704c089899c5b9">u2</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile_8h.html#a64bd697d9f3c3360d6c4edb38f8cdf60">find_class</a> (char *class_name)</td></tr>
 <tr class="memdesc:a64bd697d9f3c3360d6c4edb38f8cdf60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procura por cuma classe, e caso não consiga encontrá-la, carrega na memória usando a função ClassLoader.  <a href="#a64bd697d9f3c3360d6c4edb38f8cdf60">More...</a><br /></td></tr>
 <tr class="separator:a64bd697d9f3c3360d6c4edb38f8cdf60"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -212,6 +211,8 @@ Variables</h2></td></tr>
 <tr class="separator:a15f64dbdb65ef3f2f338253004e88b99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aacaf45a8478861c2788165e9f0d24a3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structMethod.html">Method</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile_8h.html#aacaf45a8478861c2788165e9f0d24a3c">Mem</a></td></tr>
 <tr class="separator:aacaf45a8478861c2788165e9f0d24a3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ff2c57ead44ec66c113197fa71ab268"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile_8h.html#a9ff2c57ead44ec66c113197fa71ab268">PATH</a></td></tr>
+<tr class="separator:a9ff2c57ead44ec66c113197fa71ab268"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="abd0631a75f72632c5606e72f6d3f00ae"></a>
@@ -285,7 +286,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Função que busca pelo <a class="el" href="structFrame.html">Frame</a> no topo da pilha de frames e inicia a execução da <a class="el" href="structJVM.html">JVM</a>. Essa função é executada enquanto ainda há frames na pilha da <a class="el" href="structJVM.html">JVM</a>. </p>
+<p>Função que busca pelo <a class="el" href="structFrame.html" title="Struct que representa um Frame da JVM. ">Frame</a> no topo da pilha de frames e inicia a execução da <a class="el" href="structJVM.html">JVM</a>. Essa função é executada enquanto ainda há frames na pilha da <a class="el" href="structJVM.html">JVM</a>. </p>
 
 </div>
 </div>
@@ -413,7 +414,7 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="acaf2255d12202a819c765194e5e51dba"></a>
+<a class="anchor" id="a915037a0d75520090926e178259cf4bb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -427,7 +428,13 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>method</em>&#160;</td>
+          <td class="paramname"><em>method</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>method_description</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -436,8 +443,6 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Procura por um método dentro do Classfile carregado em memória. </p>
 
 </div>
 </div>
@@ -852,12 +857,12 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa368bab42b5e8b5415b68d6910982ea2"></a>
+<a class="anchor" id="a580d63d9a7b152364691f69863dc7a4e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rec_method_name </td>
+          <td class="memname">char* rec_method_name </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structcp__info.html">cp_info</a> *&#160;</td>
           <td class="paramname"><em>cp</em>, </td>
@@ -866,13 +871,7 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="structures_8h.html#a55ef8d87fd202b8417704c089899c5b9">u2</a>&#160;</td>
-          <td class="paramname"><em>index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>str</em>&#160;</td>
+          <td class="paramname"><em>index</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1087,6 +1086,18 @@ Variables</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="structures_8h.html#a64f8055b64cf2a4c299c841130c5c938">u1</a> name_or_type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a9ff2c57ead44ec66c113197fa71ab268"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* PATH</td>
         </tr>
       </table>
 </div><div class="memdoc">

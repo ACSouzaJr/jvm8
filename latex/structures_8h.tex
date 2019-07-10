@@ -60,19 +60,23 @@ struct \hyperlink{structBootstrap__method}{Bootstrap\+\_\+method}
 struct \hyperlink{structClasses}{Classes}
 \item 
 struct \hyperlink{structLocal__variable__table}{Local\+\_\+variable\+\_\+table}
-\item 
+\begin{DoxyCompactList}\small\item\em Representação da tabela de variáveis locais. \end{DoxyCompactList}\item 
 union \hyperlink{unionattribute__types}{attribute\+\_\+types}
-\item 
+\begin{DoxyCompactList}\small\item\em Implementação dos atributos da \hyperlink{structJVM}{J\+VM} usando uma union. \end{DoxyCompactList}\item 
 struct \hyperlink{structattribute__info}{attribute\+\_\+info}
-\item 
+\begin{DoxyCompactList}\small\item\em Representa as informações dos atributos. \end{DoxyCompactList}\item 
 struct \hyperlink{structmethod__info}{method\+\_\+info}
 \item 
 struct \hyperlink{structfield__info}{field\+\_\+info}
 \item 
 struct \hyperlink{structTypeArray}{Type\+Array}
+\begin{DoxyCompactList}\small\item\em Representa uma estrutura de dados tipo array dentro da \hyperlink{structJVM}{J\+VM}. \end{DoxyCompactList}\item 
+struct \hyperlink{structInstanceField}{Instance\+Field}
+\item 
+struct \hyperlink{structObject}{Object}
 \item 
 struct \hyperlink{structLocalVariable}{Local\+Variable}
-\item 
+\begin{DoxyCompactList}\small\item\em Struct para representar a variável local de um \hyperlink{structFrame}{Frame}. \end{DoxyCompactList}\item 
 struct \hyperlink{structClassFile}{Class\+File}
 \begin{DoxyCompactList}\small\item\em Struct que representa os campos do bytecode. \end{DoxyCompactList}\item 
 struct \hyperlink{structMethod}{Method}
@@ -85,6 +89,8 @@ struct \hyperlink{structMethod}{Method}
 \#define \hyperlink{structures_8h_a55ef8d87fd202b8417704c089899c5b9}{u2}~uint16\+\_\+t
 \item 
 \#define \hyperlink{structures_8h_ae391a1d79bb0c8cbc283f0283e3c098b}{u4}~uint32\+\_\+t
+\item 
+\#define \hyperlink{structures_8h_ad72dbcf6d0153db1b8d8a58001feed83}{D\+E\+B\+UG}
 \end{DoxyCompactItemize}
 \subsection*{Typedefs}
 \begin{DoxyCompactItemize}
@@ -113,7 +119,8 @@ enum \{ \\*
 \hyperlink{structures_8h_adf764cbdea00d65edcd07bb9953ad2b7ac9fdca41420c578c73fadfa67d4ae26a}{C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Method\+Handle} = 15, 
 \\*
 \hyperlink{structures_8h_adf764cbdea00d65edcd07bb9953ad2b7a52dbe317b7b19ea9d13a8b185842d245}{C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Method\+Type} = 16, 
-\hyperlink{structures_8h_adf764cbdea00d65edcd07bb9953ad2b7a914abae8d35d480c7856e97ca4fc00e0}{C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Invoke\+Dynamic} = 18
+\hyperlink{structures_8h_adf764cbdea00d65edcd07bb9953ad2b7a914abae8d35d480c7856e97ca4fc00e0}{C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Invoke\+Dynamic} = 18, 
+\hyperlink{structures_8h_adf764cbdea00d65edcd07bb9953ad2b7a5b46605cbda562202698429d564255b2}{C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Short} = 19
  \}\begin{DoxyCompactList}\small\item\em Enum das tags C\+O\+N\+S\+T\+A\+NT. \end{DoxyCompactList}
 \item 
 enum \{ \\*
@@ -159,6 +166,9 @@ Implementação das estruturas de dados da \hyperlink{structJVM}{J\+VM}.  Conté
 
 
 \subsection{Macro Definition Documentation}
+\index{structures.\+h@{structures.\+h}!D\+E\+B\+UG@{D\+E\+B\+UG}}
+\index{D\+E\+B\+UG@{D\+E\+B\+UG}!structures.\+h@{structures.\+h}}
+\subsubsection[{\texorpdfstring{D\+E\+B\+UG}{DEBUG}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+E\+B\+UG}\hypertarget{structures_8h_ad72dbcf6d0153db1b8d8a58001feed83}{}\label{structures_8h_ad72dbcf6d0153db1b8d8a58001feed83}
 \index{structures.\+h@{structures.\+h}!u1@{u1}}
 \index{u1@{u1}!structures.\+h@{structures.\+h}}
 \subsubsection[{\texorpdfstring{u1}{u1}}]{\setlength{\rightskip}{0pt plus 5cm}\#define u1~uint8\+\_\+t}\hypertarget{structures_8h_a64f8055b64cf2a4c299c841130c5c938}{}\label{structures_8h_a64f8055b64cf2a4c299c841130c5c938}
@@ -216,6 +226,8 @@ C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Method\+Handle\hypertarget{structures_8h_adf764cbd
 C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Method\+Type\hypertarget{structures_8h_adf764cbdea00d65edcd07bb9953ad2b7a52dbe317b7b19ea9d13a8b185842d245}{}\label{structures_8h_adf764cbdea00d65edcd07bb9953ad2b7a52dbe317b7b19ea9d13a8b185842d245}
 }]\index{C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Invoke\+Dynamic@{C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Invoke\+Dynamic}!structures.\+h@{structures.\+h}}\index{structures.\+h@{structures.\+h}!C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Invoke\+Dynamic@{C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Invoke\+Dynamic}}\item[{\em 
 C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Invoke\+Dynamic\hypertarget{structures_8h_adf764cbdea00d65edcd07bb9953ad2b7a914abae8d35d480c7856e97ca4fc00e0}{}\label{structures_8h_adf764cbdea00d65edcd07bb9953ad2b7a914abae8d35d480c7856e97ca4fc00e0}
+}]\index{C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Short@{C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Short}!structures.\+h@{structures.\+h}}\index{structures.\+h@{structures.\+h}!C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Short@{C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Short}}\item[{\em 
+C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Short\hypertarget{structures_8h_adf764cbdea00d65edcd07bb9953ad2b7a5b46605cbda562202698429d564255b2}{}\label{structures_8h_adf764cbdea00d65edcd07bb9953ad2b7a5b46605cbda562202698429d564255b2}
 }]\end{description}
 \end{Desc}
 \subsubsection[{\texorpdfstring{anonymous enum}{anonymous enum}}]{\setlength{\rightskip}{0pt plus 5cm}anonymous enum}\hypertarget{structures_8h_a99fb83031ce9923c84392b4e92f956b5}{}\label{structures_8h_a99fb83031ce9923c84392b4e92f956b5}

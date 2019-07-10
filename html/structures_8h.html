@@ -162,18 +162,27 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structClasses.html">Classes</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLocal__variable__table.html">Local_variable_table</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Representação da tabela de variáveis locais.  <a href="structLocal__variable__table.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unionattribute__types.html">attribute_types</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementação dos atributos da <a class="el" href="structJVM.html">JVM</a> usando uma union.  <a href="unionattribute__types.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structattribute__info.html">attribute_info</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Representa as informações dos atributos.  <a href="structattribute__info.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmethod__info.html">method_info</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfield__info.html">field_info</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTypeArray.html">TypeArray</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Representa uma estrutura de dados tipo array dentro da <a class="el" href="structJVM.html">JVM</a>.  <a href="structTypeArray.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structInstanceField.html">InstanceField</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structObject.html">Object</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLocalVariable.html">LocalVariable</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct para representar a variável local de um <a class="el" href="structFrame.html" title="Struct que representa um Frame da JVM. ">Frame</a>.  <a href="structLocalVariable.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structClassFile.html">ClassFile</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct que representa os campos do bytecode.  <a href="structClassFile.html#details">More...</a><br /></td></tr>
@@ -190,6 +199,8 @@ Macros</h2></td></tr>
 <tr class="separator:a55ef8d87fd202b8417704c089899c5b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae391a1d79bb0c8cbc283f0283e3c098b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structures_8h.html#ae391a1d79bb0c8cbc283f0283e3c098b">u4</a>&#160;&#160;&#160;uint32_t</td></tr>
 <tr class="separator:ae391a1d79bb0c8cbc283f0283e3c098b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad72dbcf6d0153db1b8d8a58001feed83"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structures_8h.html#ad72dbcf6d0153db1b8d8a58001feed83">DEBUG</a></td></tr>
+<tr class="separator:ad72dbcf6d0153db1b8d8a58001feed83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -217,7 +228,8 @@ Enumerations</h2></td></tr>
 <a class="el" href="structures_8h.html#adf764cbdea00d65edcd07bb9953ad2b7ac9fdca41420c578c73fadfa67d4ae26a">CONSTANT_MethodHandle</a> = 15, 
 <br />
 &#160;&#160;<a class="el" href="structures_8h.html#adf764cbdea00d65edcd07bb9953ad2b7a52dbe317b7b19ea9d13a8b185842d245">CONSTANT_MethodType</a> = 16, 
-<a class="el" href="structures_8h.html#adf764cbdea00d65edcd07bb9953ad2b7a914abae8d35d480c7856e97ca4fc00e0">CONSTANT_InvokeDynamic</a> = 18
+<a class="el" href="structures_8h.html#adf764cbdea00d65edcd07bb9953ad2b7a914abae8d35d480c7856e97ca4fc00e0">CONSTANT_InvokeDynamic</a> = 18, 
+<a class="el" href="structures_8h.html#adf764cbdea00d65edcd07bb9953ad2b7a5b46605cbda562202698429d564255b2">CONSTANT_Short</a> = 19
 <br />
  }<tr class="memdesc:adf764cbdea00d65edcd07bb9953ad2b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum das tags CONSTANT.  <a href="structures_8h.html#adf764cbdea00d65edcd07bb9953ad2b7">More...</a><br /></td></tr>
 </td></tr>
@@ -264,6 +276,18 @@ Variables</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implementação das estruturas de dados da <a class="el" href="structJVM.html">JVM</a>.  Contém as implementações das principais estruturas de dados usadas pela <a class="el" href="structJVM.html">JVM</a>. </p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ad72dbcf6d0153db1b8d8a58001feed83"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DEBUG</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a64f8055b64cf2a4c299c841130c5c938"></a>
 <div class="memitem">
 <div class="memproto">
@@ -366,6 +390,8 @@ Variables</h2></td></tr>
 <tr><td class="fieldname"><a class="anchor" id="adf764cbdea00d65edcd07bb9953ad2b7a52dbe317b7b19ea9d13a8b185842d245"></a>CONSTANT_MethodType&#160;</td><td class="fielddoc">
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="adf764cbdea00d65edcd07bb9953ad2b7a914abae8d35d480c7856e97ca4fc00e0"></a>CONSTANT_InvokeDynamic&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="adf764cbdea00d65edcd07bb9953ad2b7a5b46605cbda562202698429d564255b2"></a>CONSTANT_Short&#160;</td><td class="fielddoc">
 </td></tr>
 </table>
 
