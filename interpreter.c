@@ -38,9 +38,9 @@ u2 count_args(char *method_desc)
       while (method_desc[++i] != ';')
         ;
     }
-    if (method_desc[i] == 'J' || method_desc[i] == 'D')
+    if (method_desc[i] == 'D' || method_desc[i] == 'J')
     {
-      args++;
+    	args++;
     }
     args++;
   }
@@ -271,9 +271,9 @@ void sipush_eval(Frame *f)
   lv->value = (uint32_t)val_sipush;
   lv->type = CONSTANT_Integer;
 
-#ifdef DEBUG
+  #ifdef DEBUG
   printf("sipush: %d", val_sipush);
-#endif
+  #endif
 
   push_operand(lv, f->operands);
 }
@@ -533,9 +533,9 @@ void lload_3_eval(Frame *f)
  */
 void fload_0_eval(Frame *f)
 {
-#ifdef DEBUG
-  printf("fload_0 type: %01x\n", f->local_variables[0].type);
-#endif
+  #ifdef DEBUG
+    printf("fload_0 type: %01x\n",f->local_variables[0].type);
+  #endif
   if (f->local_variables[0].type == CONSTANT_Float)
   {
     push_operand(&(f->local_variables[0]), f->operands);
@@ -619,9 +619,9 @@ void dload_1_eval(Frame *f)
 {
   if (f->local_variables[1].type == CONSTANT_Double)
   {
-#ifdef DEBUG
-    printf("DOUBLE TYPE\n");
-#endif
+    #ifdef DEBUG
+        printf("DOUBLE TYPE\n");
+    #endif
     push_operand(&(f->local_variables[1]), f->operands);
   }
   else
@@ -636,12 +636,12 @@ void dload_1_eval(Frame *f)
  */
 void dload_2_eval(Frame *f)
 {
-#ifdef DEBUG
-  printf("dload_2_type: %d\n", f->local_variables[2].type);
-#endif
+  #ifdef DEBUG
+    printf("dload_2_type: %d\n", f->local_variables[2].type);
+  #endif
   // if (f->local_variables[2-1].type == CONSTANT_Double)
   // {
-  push_operand(&(f->local_variables[2]), f->operands);
+    push_operand(&(f->local_variables[2]), f->operands);
   // }
   // else
   // {
@@ -731,7 +731,7 @@ void laload_eval(Frame *f)
   lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
-
+  
   lv->type_long = ((uint64_t *)arrayref->type_array.array)[index->value];
   lv->type = CONSTANT_Long;
 
@@ -750,7 +750,7 @@ void faload_eval(Frame *f)
   lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
-
+  
   u4 *vetor;
   vetor = (u4 *)arrayref->type_array.array;
   lv->value = vetor[index->value];
@@ -771,7 +771,7 @@ void daload_eval(Frame *f)
   lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
-
+  
   lv->type_double = ((uint64_t *)arrayref->type_array.array)[index->value];
   lv->type = CONSTANT_Double;
 
@@ -791,7 +791,7 @@ void aaload_eval(Frame *f)
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
 
-  lv->type_object = ((Object *)arrayref->type_array.array)[index->value];
+  lv->value = ((u4 *)arrayref->type_array.array)[index->value];
   lv->type = CONSTANT_Class;
 
   push_operand(lv, f->operands);
@@ -809,7 +809,7 @@ void baload_eval(Frame *f)
   lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
-
+  
   lv->value = (int8_t)((u1 *)arrayref->type_array.array)[index->value];
   lv->type = CONSTANT_Integer;
 
@@ -828,7 +828,7 @@ void caload_eval(Frame *f)
   lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
-
+  
   lv->value = ((u1 *)arrayref->type_array.array)[index->value];
   lv->type = CONSTANT_Integer;
 
@@ -847,8 +847,8 @@ void saload_eval(Frame *f)
   lv = (LocalVariable *)malloc(sizeof(LocalVariable));
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
-
-  lv->value = (int16_t)((u2 *)arrayref->type_array.array)[index->value];
+  
+  lv->value = (int16_t) ((u2 *)arrayref->type_array.array)[index->value];
   lv->type = CONSTANT_Integer;
 
   push_operand(lv, f->operands);
@@ -866,6 +866,7 @@ void istore_eval(Frame *f)
   printf("istore %d val: %04x\n", index, f->local_variables[index].value);
 #endif
 }
+
 
 /**
  * @brief Recupera um valor long da pilha de operando e guarda esse operando na pilha de variáveis locais.
@@ -1355,12 +1356,12 @@ void aastore_eval(Frame *f)
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
 
-  Object *vetor;
-  vetor = (Object *)arrayref->type_array.array;
-  vetor[index->value] = value->type_object;
-#ifdef DEBUG
-  printf("Referencia array: %d", ((u4 *)arrayref->type_array.array)[index->value]);
-#endif
+  u4 *vetor;
+  vetor = (u4 *)arrayref->type_array.array;
+  vetor[index->value] = value->value;
+  #ifdef DEBUG
+    printf("Referencia array: %d", ((u4 *)arrayref->type_array.array)[index->value]);
+  #endif
 }
 
 /**
@@ -1377,10 +1378,10 @@ void bastore_eval(Frame *f)
 
   u1 *vetor;
   vetor = (u1 *)arrayref->type_array.array;
-  vetor[index->value] = (int8_t)value->value;
-#ifdef DEBUG
-  printf("Referencia array: %d", ((u1 *)arrayref->type_array.array)[index->value]);
-#endif
+  vetor[index->value] = (int8_t) value->value;
+  #ifdef DEBUG
+    printf("Referencia array: %d", ((u1 *)arrayref->type_array.array)[index->value]);
+  #endif
 }
 
 /**
@@ -1398,9 +1399,9 @@ void castore_eval(Frame *f)
   u1 *vetor;
   vetor = (u1 *)arrayref->type_array.array;
   vetor[index->value] = value->value;
-#ifdef DEBUG
-  printf("Referencia array: %d", ((u1 *)arrayref->type_array.array)[index->value]);
-#endif
+  #ifdef DEBUG
+    printf("Referencia array: %d", ((u1 *)arrayref->type_array.array)[index->value]);
+  #endif
 }
 
 /**
@@ -1417,10 +1418,10 @@ void sastore_eval(Frame *f)
 
   u2 *vetor;
   vetor = (u2 *)arrayref->type_array.array;
-  vetor[index->value] = (int16_t)value->value;
-#ifdef DEBUG
-  printf("Referencia array: %d", ((u2 *)arrayref->type_array.array)[index->value]);
-#endif
+  vetor[index->value] = (int16_t) value->value;
+  #ifdef DEBUG
+    printf("Referencia array: %d", ((u2 *)arrayref->type_array.array)[index->value]);
+  #endif
 }
 
 /**
@@ -1480,14 +1481,14 @@ void dup_x2_eval(Frame *f)
   LocalVariable *dup_top2 = pop_operand(f->operands);
 
   // se for cat2 -> implementar => 1 2 1
-  if ((dup_top1->type != CONSTANT_Long && dup_top1->type != CONSTANT_Double) && (dup_top2->type == CONSTANT_Long || dup_top2->type == CONSTANT_Double))
-  {
+  if((dup_top1->type != CONSTANT_Long && dup_top1->type != CONSTANT_Double)
+      && (dup_top2->type == CONSTANT_Long || dup_top2->type == CONSTANT_Double)
+    ) {
     push_operand(dup_top1, f->operands);
     push_operand(dup_top2, f->operands);
     push_operand(dup_top1, f->operands);
   }
-  else
-  {
+  else {
     LocalVariable *dup_top3 = pop_operand(f->operands);
 
     push_operand(dup_top1, f->operands);
@@ -1503,15 +1504,15 @@ void dup_x2_eval(Frame *f)
 void dup2_eval(Frame *f)
 {
   LocalVariable *dup_top1 = pop_operand(f->operands);
-
+  
   // se for cat2 -> implementar => 1 2 1
-  if ((dup_top1->type != CONSTANT_Long && dup_top1->type != CONSTANT_Double) && (f->operands->top->f == CONSTANT_Long || f->operands->top->f == CONSTANT_Double))
-  {
+  if((dup_top1->type != CONSTANT_Long && dup_top1->type != CONSTANT_Double)
+      && (f->operands->top->f == CONSTANT_Long || f->operands->top->f == CONSTANT_Double)
+    ) {
     push_operand(dup_top1, f->operands);
     push_operand(dup_top1, f->operands);
   }
-  else
-  {
+  else {
     LocalVariable *dup_top2 = pop_operand(f->operands);
 
     push_operand(dup_top2, f->operands);
@@ -1529,16 +1530,16 @@ void dup2_x1_eval(Frame *f)
 {
   LocalVariable *dup_top1 = pop_operand(f->operands);
   LocalVariable *dup_top2 = pop_operand(f->operands);
-
+  
   // se for cat2 -> implementar => 1 2 1
-  if ((dup_top1->type != CONSTANT_Long && dup_top1->type != CONSTANT_Double) && (dup_top2->type == CONSTANT_Long && dup_top2->type == CONSTANT_Double))
-  {
+  if((dup_top1->type != CONSTANT_Long && dup_top1->type != CONSTANT_Double)
+      && (dup_top2->type == CONSTANT_Long && dup_top2->type == CONSTANT_Double)
+    ) {
     push_operand(dup_top1, f->operands);
     push_operand(dup_top2, f->operands);
     push_operand(dup_top1, f->operands);
   }
-  else
-  {
+  else {
     LocalVariable *dup_top3 = pop_operand(f->operands);
 
     push_operand(dup_top2, f->operands);
@@ -1558,31 +1559,32 @@ void dup2_x2_eval(Frame *f)
   LocalVariable *dup_top1 = pop_operand(f->operands);
   LocalVariable *dup_top2 = pop_operand(f->operands);
   LocalVariable *dup_top3 = pop_operand(f->operands);
-
+  
   // se for cat2 -> implementar => 1 2 1
-  if ((dup_top1->type == CONSTANT_Long || dup_top1->type == CONSTANT_Double) && (dup_top2->type != CONSTANT_Long && dup_top2->type != CONSTANT_Double) && (dup_top3->type != CONSTANT_Long && dup_top3->type != CONSTANT_Double))
-  {
+  if((dup_top1->type == CONSTANT_Long || dup_top1->type == CONSTANT_Double)
+      && (dup_top2->type != CONSTANT_Long && dup_top2->type != CONSTANT_Double)
+      && (dup_top3->type != CONSTANT_Long && dup_top3->type != CONSTANT_Double)){
     push_operand(dup_top1, f->operands);
     push_operand(dup_top3, f->operands);
     push_operand(dup_top2, f->operands);
     push_operand(dup_top1, f->operands);
   }
-  else if ((dup_top1->type != CONSTANT_Long && dup_top1->type != CONSTANT_Double) && (dup_top2->type != CONSTANT_Long && dup_top2->type != CONSTANT_Double) && (dup_top3->type == CONSTANT_Long || dup_top3->type == CONSTANT_Double))
-  {
+  else if((dup_top1->type != CONSTANT_Long && dup_top1->type != CONSTANT_Double)
+      && (dup_top2->type != CONSTANT_Long && dup_top2->type != CONSTANT_Double)
+      && (dup_top3->type == CONSTANT_Long || dup_top3->type == CONSTANT_Double)) {
     push_operand(dup_top2, f->operands);
     push_operand(dup_top1, f->operands);
     push_operand(dup_top3, f->operands);
     push_operand(dup_top2, f->operands);
     push_operand(dup_top1, f->operands);
   }
-  else if ((dup_top1->type != CONSTANT_Long && dup_top1->type != CONSTANT_Double) && (dup_top2->type != CONSTANT_Long && dup_top2->type != CONSTANT_Double))
-  {
+  else if((dup_top1->type != CONSTANT_Long && dup_top1->type != CONSTANT_Double)
+      && (dup_top2->type != CONSTANT_Long && dup_top2->type != CONSTANT_Double)){
     push_operand(dup_top1, f->operands);
     push_operand(dup_top2, f->operands);
     push_operand(dup_top1, f->operands);
   }
-  else
-  {
+  else {
     LocalVariable *dup_top4 = pop_operand(f->operands);
 
     push_operand(dup_top2, f->operands);
@@ -1715,16 +1717,16 @@ void dadd_eval(Frame *f)
   result->type = CONSTANT_Double;
 
   result->type_double = *(uint64_t *)&resultdouble;
-#ifdef DEBUG
-  printf("v1_double: %f \n", value1);
-#endif
-#ifdef DEBUG
-  printf("v2_double: %f \n", value2);
-  printf("result: %f \n", resultdouble);
-#endif
-#ifdef DEBUG
-  printf("resultado_double: %f\n", result->type_double);
-#endif
+  #ifdef DEBUG
+    printf("v1_double: %f \n", value1);
+  #endif
+  #ifdef DEBUG
+    printf("v2_double: %f \n", value2);
+    printf("result: %f \n", resultdouble);
+  #endif
+  #ifdef DEBUG
+    printf("resultado_double: %f\n", result->type_double);
+  #endif
   push_operand(result, f->operands);
 }
 
@@ -2275,13 +2277,13 @@ void fneg_eval(Frame *f)
   float aux, nunca_esqueca_que_voce_e_limitado = 0;
 
   v1 = pop_operand(f->operands)->value;
-  aux = nunca_esqueca_que_voce_e_limitado - *((float *)&v1);
+  aux = nunca_esqueca_que_voce_e_limitado - *((float*)&v1);
   result->type = CONSTANT_Float;
-  result->value = *((u4 *)&aux);
-#ifdef DEBUG
-  printf("neg_aux: %f\n", aux);
-  printf("resultado_neg: %04x\n", result->value);
-#endif
+  result->value = *((u4*)&aux);
+  #ifdef DEBUG
+    printf("neg_aux: %f\n", aux);
+    printf("resultado_neg: %04x\n", result->value);
+  #endif
 
   push_operand(result, f->operands);
 }
@@ -2580,12 +2582,12 @@ void lor_eval(Frame *f)
   result->type = CONSTANT_Long;
 
   result->type_long = *(uint64_t *)&resultlong;
-#ifdef DEBUG
-  printf("v1_long: %ld \n", value1);
-  printf("v2_long: %ld \n", value2);
-  printf("result: %ld \n", resultlong);
-  printf("resultado_long: %ld \n", result->type_long);
-#endif
+  #ifdef DEBUG
+    printf("v1_long: %ld \n", value1);
+    printf("v2_long: %ld \n", value2);
+    printf("result: %ld \n", resultlong);
+    printf("resultado_long: %ld \n", result->type_long);
+  #endif
   push_operand(result, f->operands);
 }
 
@@ -2631,12 +2633,12 @@ void lxor_eval(Frame *f)
   result->type = CONSTANT_Long;
 
   result->type_long = *(uint64_t *)&resultlong;
-#ifdef DEBUG
-  printf("v1_long: %ld \n", value1);
-  printf("v2_long: %ld \n", value2);
-  printf("result: %ld \n", resultlong);
-  printf("resultado_long: %ld \n", result->type_long);
-#endif
+  #ifdef DEBUG
+    printf("v1_long: %ld \n", value1);
+    printf("v2_long: %ld \n", value2);
+    printf("result: %ld \n", resultlong);
+    printf("resultado_long: %ld \n", result->type_long);
+  #endif
   push_operand(result, f->operands);
 }
 
@@ -2647,10 +2649,10 @@ void iinc_eval(Frame *f)
 {
   u1 index = f->bytecode[f->pc++];
   int32_t value = ((int32_t)((int8_t)f->bytecode[f->pc++]));
-#ifdef DEBUG
-  printf("iinc Index: %d\n", index);
-  printf("iinc Value: %d\n", value);
-#endif
+  #ifdef DEBUG
+    printf("iinc Index: %d\n", index);
+    printf("iinc Value: %d\n", value);
+  #endif
   f->local_variables[index].value += value;
 }
 
@@ -2659,19 +2661,19 @@ void iinc_eval(Frame *f)
  */
 void i2l_eval(Frame *f)
 {
-  int32_t val = *((int32_t *)&pop_operand(f->operands)->value);
+  int32_t val = *((int32_t*)&pop_operand(f->operands)->value);
   long aux;
 
   LocalVariable *long_val = (LocalVariable *)malloc(sizeof(LocalVariable));
   // memcpy(&long_val->value, &val, sizeof(uint64_t));
 
   aux = (long)val;
-  long_val->type_long = *((uint64_t *)&aux);
+  long_val->type_long = *((uint64_t*)&aux);
   long_val->type = CONSTANT_Long;
   push_operand(long_val, f->operands);
-#ifdef DEBUG
-  printf("VALOR CONVERTIDO EM LONG ====> %d\n", *(int *)&long_val->type_long);
-#endif
+  #ifdef DEBUG
+    printf("VALOR CONVERTIDO EM LONG ====> %d\n", *(int *)&long_val->type_long);
+  #endif
 }
 
 /**
@@ -2679,14 +2681,14 @@ void i2l_eval(Frame *f)
  */
 void i2f_eval(Frame *f)
 {
-  int32_t val = *((int32_t *)&pop_operand(f->operands)->value);
+  int32_t val = *((int32_t*)&pop_operand(f->operands)->value);
   float aux;
   LocalVariable *float_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
   // memcpy(&float_val->value, &val, sizeof(uint32_t));
   aux = (float)val;
   float_val->type = CONSTANT_Float;
-  float_val->value = *((u4 *)&aux);
+  float_val->value = *((u4*)&aux);
   push_operand(float_val, f->operands);
 }
 
@@ -2695,7 +2697,7 @@ void i2f_eval(Frame *f)
  */
 void i2d_eval(Frame *f)
 {
-  int32_t val = *((int32_t *)&pop_operand(f->operands)->value);
+  int32_t val = *((int32_t*)&pop_operand(f->operands)->value);
   double aux;
   LocalVariable *double_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
@@ -2705,7 +2707,7 @@ void i2d_eval(Frame *f)
   // printf("i2d_aux: %f\n",aux);
 
   double_val->type = CONSTANT_Double;
-  double_val->type_double = *((uint64_t *)&aux);
+  double_val->type_double = *((uint64_t*)&aux);
   push_operand(double_val, f->operands);
 }
 
@@ -2714,7 +2716,7 @@ void i2d_eval(Frame *f)
  */
 void l2i_eval(Frame *f)
 {
-  int val = (int)pop_operand(f->operands)->value;
+  int val = (int) pop_operand(f->operands)->value;
 
   LocalVariable *int_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
@@ -2735,19 +2737,20 @@ void l2f_eval(Frame *f)
   float aux_float;
   aux = *(long *)(&val);
   aux_float = (float)aux;
-
-#ifdef DEBUG
-  printf("l2d_val: %f\n", aux_float);
-#endif
+  
+  #ifdef DEBUG
+    printf("l2d_val: %f\n", aux_float);
+  #endif
   LocalVariable *float_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  r1 = *((u4 *)(&aux_float));
+  r1 = *((u4*)(&aux_float));
   // memcpy(&float_val->value, &val, sizeof(ulong32_t));
 
   float_val->type = CONSTANT_Float;
   float_val->value = r1;
   push_operand(float_val, f->operands);
 }
+
 
 /**
  * @brief Converte um long para um double.
@@ -2760,13 +2763,13 @@ void l2d_eval(Frame *f)
   double aux_double;
   aux = *(long *)(&val);
   aux_double = (double)aux;
-
-#ifdef DEBUG
-  printf("l2d_val: %f\n", aux_double);
-#endif
+  
+  #ifdef DEBUG
+    printf("l2d_val: %f\n", aux_double);
+  #endif
   LocalVariable *double_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  r1 = *((uint64_t *)(&aux_double));
+  r1 = *((uint64_t*)(&aux_double));
   // memcpy(&float_val->value, &val, sizeof(ulong32_t));
 
   double_val->type = CONSTANT_Double;
@@ -2785,10 +2788,10 @@ void f2i_eval(Frame *f)
   int aux_int;
   aux = *(float *)(&val);
   aux_int = (int)aux;
-
-#ifdef DEBUG
-  printf("f2i_val: %d\n", aux_int);
-#endif
+  
+  #ifdef DEBUG
+    printf("f2i_val: %d\n", aux_int);
+  #endif
   LocalVariable *int_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
   r1 = *((u4 *)(&aux_int));
@@ -2809,10 +2812,10 @@ void f2l_eval(Frame *f)
   long aux_long;
   aux = *(float *)(&val);
   aux_long = (long)aux;
-
-#ifdef DEBUG
-  printf("f2l_val: %ld\n", aux_long);
-#endif
+  
+  #ifdef DEBUG
+    printf("f2l_val: %ld\n", aux_long);
+  #endif
   LocalVariable *long_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
   r1 = *((uint64_t *)(&aux_long));
@@ -2827,18 +2830,18 @@ void f2l_eval(Frame *f)
  */
 void f2d_eval(Frame *f)
 {
-  float val = *((float *)&pop_operand(f->operands)->value);
+  float val = *((float*)&pop_operand(f->operands)->value);
   uint64_t r1;
   double aux_double;
   aux_double = (double)val;
-
-#ifdef DEBUG
-  printf("f2d_val: %f\n", aux_double);
-#endif
+  
+  #ifdef DEBUG
+    printf("f2d_val: %f\n", aux_double);
+  #endif
   // printf("f2d_val: %f\n", aux_double);
   LocalVariable *double_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  r1 = *((uint64_t *)&aux_double);
+  r1 = *((uint64_t*)&aux_double);
   // printf("r1: %ld\n", r1);
   double_val->type = CONSTANT_Double;
   double_val->type_double = r1;
@@ -2857,13 +2860,13 @@ void d2i_eval(Frame *f)
   int aux_int;
   aux = *(double *)(&val);
   aux_int = (int)aux;
-
-#ifdef DEBUG
-  printf("d2f_val: %d\n", aux_int);
-#endif
+  
+  #ifdef DEBUG
+    printf("d2f_val: %d\n", aux_int);
+  #endif
   LocalVariable *float_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  r1 = *((u4 *)(&aux_int));
+  r1 = *((u4*)(&aux_int));
   // memcpy(&float_val->value, &val, sizeof(uint32_t));
 
   float_val->type = CONSTANT_Integer;
@@ -2882,13 +2885,13 @@ void d2l_eval(Frame *f)
   long aux_long;
   aux = *(double *)(&val);
   aux_long = (long)aux;
-
-#ifdef DEBUG
-  printf("d2l_val: %ld\n", aux_long);
-#endif
+  
+  #ifdef DEBUG
+    printf("d2l_val: %ld\n", aux_long);
+  #endif
   LocalVariable *long_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  r1 = *((uint64_t *)(&aux_long));
+  r1 = *((uint64_t*)(&aux_long));
   // memcpy(&float_val->value, &val, sizeof(ulong32_t));
 
   long_val->type = CONSTANT_Long;
@@ -2907,13 +2910,13 @@ void d2f_eval(Frame *f)
   float aux_float;
   aux = *(double *)(&val);
   aux_float = (float)aux;
-
-#ifdef DEBUG
-  printf("d2f_val: %f\n", aux_float);
-#endif
+  
+  #ifdef DEBUG
+    printf("d2f_val: %f\n", aux_float);
+  #endif
   LocalVariable *float_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
-  r1 = *((u4 *)(&aux_float));
+  r1 = *((u4*)(&aux_float));
   // memcpy(&float_val->value, &val, sizeof(uint32_t));
 
   float_val->type = CONSTANT_Float;
@@ -2926,9 +2929,9 @@ void d2f_eval(Frame *f)
  */
 void i2b_eval(Frame *f)
 {
-  int32_t val = *((int32_t *)&pop_operand(f->operands)->value);
+  int32_t val = *((int32_t*)&pop_operand(f->operands)->value);
   int8_t aux;
-  aux = *(int8_t *)&val;
+  aux = *(int8_t*)&val;
   LocalVariable *byte_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
   // memcpy(&byte_val->value, &val, sizeof(uint32_t));
@@ -2944,7 +2947,7 @@ void i2b_eval(Frame *f)
  */
 void i2c_eval(Frame *f)
 {
-  int32_t val = *((int32_t *)&pop_operand(f->operands)->value);
+  int32_t val = *((int32_t*)&pop_operand(f->operands)->value);
   char aux;
   LocalVariable *short_val = (LocalVariable *)malloc(sizeof(LocalVariable));
 
@@ -2960,10 +2963,10 @@ void i2c_eval(Frame *f)
  */
 void i2s_eval(Frame *f)
 {
-  int32_t val = *((int32_t *)&pop_operand(f->operands)->value);
+  int32_t val = *((int32_t*)&pop_operand(f->operands)->value);
   int16_t aux;
   LocalVariable *short_val = (LocalVariable *)malloc(sizeof(LocalVariable));
-  aux = *(int16_t *)&val;
+  aux = *(int16_t*)&val;
   short_val->type = CONSTANT_Integer;
   short_val->value = (hex_0 | aux);
   push_operand(short_val, f->operands);
@@ -3138,18 +3141,18 @@ void dcmpg_eval(Frame *f)
 void ifeq_eval(Frame *f)
 {
   u4 v1 = pop_operand(f->operands)->value;
-#ifdef DEBUG
+  #ifdef DEBUG
   printf("valor_ifeq: %04x\n", v1);
-#endif
+  #endif
   int value = *(int *)&(v1);
-#ifdef DEBUG
+  #ifdef DEBUG
   printf("valor_ifeq_value: %d\n", value);
-#endif
-  u1 branchbyte1, branchbyte2;
-  branchbyte1 = f->bytecode[f->pc++];
-  branchbyte2 = f->bytecode[f->pc++];
+  #endif
   if (value == 0)
   {
+    u1 branchbyte1, branchbyte2;
+    branchbyte1 = f->bytecode[f->pc++];
+    branchbyte2 = f->bytecode[f->pc++];
 
     int16_t offset = ((branchbyte1 << 8) | branchbyte2);
 
@@ -3167,18 +3170,18 @@ void ifeq_eval(Frame *f)
 void ifne_eval(Frame *f)
 {
   u4 v1 = pop_operand(f->operands)->value;
-#ifdef DEBUG
+  #ifdef DEBUG
   printf("valor_ifne: %04x\n", v1);
-#endif
+  #endif
   int value = *(int *)&(v1);
-#ifdef DEBUG
+  #ifdef DEBUG
   printf("valor_ifne_value: %d\n", value);
-#endif
-  u1 branchbyte1, branchbyte2;
-  branchbyte1 = f->bytecode[f->pc++];
-  branchbyte2 = f->bytecode[f->pc++];
+  #endif
   if (value != 0)
   {
+    u1 branchbyte1, branchbyte2;
+    branchbyte1 = f->bytecode[f->pc++];
+    branchbyte2 = f->bytecode[f->pc++];
 
     int16_t offset = ((branchbyte1 << 8) | branchbyte2);
 
@@ -3196,18 +3199,18 @@ void ifne_eval(Frame *f)
 void iflt_eval(Frame *f)
 {
   u4 v1 = pop_operand(f->operands)->value;
-#ifdef DEBUG
+  #ifdef DEBUG
   printf("valor_iflt: %04x\n", v1);
-#endif
+  #endif
   int value = *(int *)&(v1);
-#ifdef DEBUG
+  #ifdef DEBUG
   printf("valor_iflt_value: %d\n", value);
-#endif
-  u1 branchbyte1, branchbyte2;
-  branchbyte1 = f->bytecode[f->pc++];
-  branchbyte2 = f->bytecode[f->pc++];
+  #endif
   if (value < 0)
   {
+    u1 branchbyte1, branchbyte2;
+    branchbyte1 = f->bytecode[f->pc++];
+    branchbyte2 = f->bytecode[f->pc++];
 
     int16_t offset = ((branchbyte1 << 8) | branchbyte2);
 
@@ -3225,18 +3228,18 @@ void iflt_eval(Frame *f)
 void ifge_eval(Frame *f)
 {
   u4 v1 = pop_operand(f->operands)->value;
-#ifdef DEBUG
+  #ifdef DEBUG
   printf("valor_ifge: %04x\n", v1);
-#endif
+  #endif
   int value = *(int *)&(v1);
-#ifdef DEBUG
+  #ifdef DEBUG
   printf("valor_ifge_value: %d\n", value);
-#endif
-  u1 branchbyte1, branchbyte2;
-  branchbyte1 = f->bytecode[f->pc++];
-  branchbyte2 = f->bytecode[f->pc++];
+  #endif
   if (value >= 0)
   {
+    u1 branchbyte1, branchbyte2;
+    branchbyte1 = f->bytecode[f->pc++];
+    branchbyte2 = f->bytecode[f->pc++];
 
     int16_t offset = ((branchbyte1 << 8) | branchbyte2);
 
@@ -3254,18 +3257,18 @@ void ifge_eval(Frame *f)
 void ifgt_eval(Frame *f)
 {
   u4 v1 = pop_operand(f->operands)->value;
-#ifdef DEBUG
+  #ifdef DEBUG
   printf("valor_ifgt: %04x\n", v1);
-#endif
+  #endif
   int value = *(int *)&(v1);
-#ifdef DEBUG
+  #ifdef DEBUG
   printf("valor_ifgt_value: %d\n", value);
-#endif
-  u1 branchbyte1, branchbyte2;
-  branchbyte1 = f->bytecode[f->pc++];
-  branchbyte2 = f->bytecode[f->pc++];
+  #endif
   if (value > 0)
   {
+    u1 branchbyte1, branchbyte2;
+    branchbyte1 = f->bytecode[f->pc++];
+    branchbyte2 = f->bytecode[f->pc++];
 
     int16_t offset = ((branchbyte1 << 8) | branchbyte2);
 
@@ -3283,13 +3286,13 @@ void ifgt_eval(Frame *f)
 void ifle_eval(Frame *f)
 {
   int32_t v1 = (int32_t)pop_operand(f->operands)->value;
-#ifdef DEBUG
+  #ifdef DEBUG
   printf("valor_ifle: %04x\n", v1);
-#endif
+  #endif
   int32_t value = *(int32_t *)&(v1);
-#ifdef DEBUG
+  #ifdef DEBUG
   printf("valor_ifle_value: %d\n", value);
-#endif
+  #endif
   u1 branchbyte1, branchbyte2;
   branchbyte1 = f->bytecode[f->pc++];
   branchbyte2 = f->bytecode[f->pc++];
@@ -3298,14 +3301,13 @@ void ifle_eval(Frame *f)
 
     int16_t offset = ((int16_t)(branchbyte1 << 8) | (int16_t)branchbyte2);
 
-#ifdef DEBUG
-    printf("ifle: vou pular %d\n", (offset - 3));
-#endif
+    #ifdef DEBUG
+        printf("ifle: vou pular %d\n", (offset - 3));
+    #endif
 
     f->pc += offset - 3;
-  }
-  else
-  {
+  } else {
+    
   }
 }
 
@@ -3502,101 +3504,102 @@ void tableswitch_eval(Frame *f)
   u1 defaultbyte1, defaultbyte2, defaultbyte3, defaultbyte4;
   u4 aux_pc, bytes_padding, offset, pc_novo;
   u4 key = pop_operand(f->operands)->value;
-  int32_t default_v, low, high, npairs;
+  int32_t default_v, low, high, npairs; 
   int32_t qtd_offset, posicao;
   uint32_t temp;
   u1 *bytecode = f->method->attributes->info->Code_attribute.code;
 
-  // diz se o novo valor de pc ja esta definido ou nao
-  int definido = 0;
+  // diz se o novo valor de pc ja esta definido ou nao 
+  int definido = 0; 
 
-  // pc auxiliar que iremos seguindo durante a execucao da instrucao
-  aux_pc = f->pc;
-
+  // pc auxiliar que iremos seguindo durante a execucao da instrucao 
+  aux_pc = f->pc; 
+  
   /* passo 1 - le ateh o low. Se o key eh menor que low - define logo o novo valor para PC */
   // pula bytes de preenchimento
   //bytes_preench = (aux_pc + 1) % 4;
-  bytes_padding = (4 - ((aux_pc + 1) % 4)) % 4;
+  bytes_padding = (4 - ((aux_pc + 1) % 4) ) % 4;
   aux_pc += bytes_padding;
   aux_pc++;
-
+  
   // pega bytes do target default
   default_v = 0;
   for (int l = 0; l < 4; l++)
   {
-    default_v = (default_v << 8) + bytecode[aux_pc];
-    aux_pc++;
-  }
+      default_v = (default_v << 8) + bytecode[aux_pc];   
+      aux_pc++;
+  }       
 
   // pega bytes low
   low = 0;
   for (int l = 0; l < 4; l++)
   {
-    low = (low << 8) + bytecode[aux_pc];
-    aux_pc++;
-  }
+      low = (low << 8) + bytecode[aux_pc];   
+      aux_pc++; 
+  }       
+  
 
   // se o key eh menor que o low e ainda nao definimos novo pc
   if (key < low && !definido)
   {
-    definido = 1;
-    pc_novo = f->pc + default_v;
+      definido = 1;
+      pc_novo = f->pc + default_v; 
   }
 
   /* passo 2 - le ateh o high. Se o key eh maior que o high - define o novo valor para PC
-    * caso low ainda nao tenha sido definido */
-  // pega bytes high
+    * caso low ainda nao tenha sido definido */ 
+  // pega bytes high 
   high = 0;
   for (int l = 0; l < 4; l++)
   {
-    high = (high << 8) + bytecode[aux_pc];
-    aux_pc++;
-  }
+      high = (high << 8) + bytecode[aux_pc];   
+      aux_pc++; 
+  }       
 
   // se o key eh maior que o high e ainda nao definimos novo pc
   if (key > high && !definido)
   {
-    definido = 1;
-    pc_novo = f->pc + default_v;
+      definido = 1;
+      pc_novo = f->pc + default_v; 
   }
 
   /* passo 3 - calcula offset na posicao index - low. Coloca novo endereco de PC aqui, caso ainda não tenha sido 
-    * definido */
-  qtd_offset = 1 + high - low;
-  posicao = key - low;
+    * definido */ 
+  qtd_offset = 1 + high - low; 
+  posicao = key - low; 
   for (int32_t l = 0; l < qtd_offset; l++)
   {
-    // se estamos na posicao correta
-    if (l == posicao)
-    {
-      // extrai offset
-      offset = 0;
-      for (int i = 0; i < 4; i++)
+      // se estamos na posicao correta
+      if (l == posicao)
       {
-        offset = (offset << 8) + bytecode[aux_pc];
-        aux_pc++;
+          // extrai offset
+          offset = 0;
+          for (int i = 0; i < 4; i++)
+          {
+              offset = (offset << 8) + bytecode[aux_pc];   
+              aux_pc++; 
+          }       
+          
+          // calcula posicao 
+          pc_novo = f->pc + offset; 
+          definido = 1;
+          
+          // sai do loop 
+          break;
       }
 
-      // calcula posicao
-      pc_novo = f->pc + offset;
-      definido = 1;
-
-      // sai do loop
-      break;
-    }
-
-    // senao, passa pelo offset atual incrementando pc
-    else
-    {
-      for (int i = 0; i < 4; i++)
+      // senao, passa pelo offset atual incrementando pc
+      else
       {
-        aux_pc++;
+          for (int i = 0; i < 4; i++)
+          {
+              aux_pc++;
+          }       
       }
-    }
   }
 
   // poe valor correto em frameCorrente
-  f->pc = pc_novo - 1;
+  f->pc = pc_novo-1;  
 }
 
 /**
@@ -3613,17 +3616,17 @@ void lookupswitch_eval(Frame *f)
   int32_t pairs, match, default_v;
 
   aux_pc = f->pc;
-  bytes_padding = (4 - ((aux_pc + 1) % 4)) % 4;
+  bytes_padding = (4 - ((aux_pc + 1) % 4) ) % 4;
   aux_pc += bytes_padding;
   aux_pc++;
 
-  // pega bytes default
+   // pega bytes default 
   default_v = 0;
   for (int l = 0; l < 4; l++)
   {
-    default_v = (default_v << 8) + bytecode[aux_pc];
-    aux_pc++;
-  }
+      default_v = (default_v << 8) + bytecode[aux_pc];   
+      aux_pc++;
+  }  
 
   pairs = 0;
   for (int l = 0; l < 4; l++)
@@ -3631,51 +3634,49 @@ void lookupswitch_eval(Frame *f)
     pairs = (pairs << 8) + bytecode[aux_pc++];
   }
 
-  // itera pelo numero de pares
+    // itera pelo numero de pares
   for (int32_t l = 0; l < pairs; l++)
   {
-    // pega match atual
-    match = 0;
-    for (int l = 0; l < 4; l++)
-    {
-      match = (match << 8) + bytecode[aux_pc];
-      aux_pc++;
-    }
-
-    // se a key corresponde ao match
-    if (key == match)
-    {
-      // pega offset
-      offset = 0;
+      // pega match atual 
+      match = 0;
       for (int l = 0; l < 4; l++)
       {
-        offset = (offset << 8) + bytecode[aux_pc];
-        aux_pc++;
-      }
-
-      // poe valor correto em pc_novo
-      pc_novo = f->pc + offset;
-
-      // set booleano que achou o match
-      definido = 1;
-    }
-    else
-    {
-      // pula offset
-      for (int i = 0; i < 4; i++)
+          match = (match << 8) + bytecode[aux_pc];   
+          aux_pc++;
+      }       
+      
+      // se a key corresponde ao match 
+      if (key == match)
       {
-        aux_pc++;
+          // pega offset
+          offset = 0;
+          for (int l = 0; l < 4; l++)
+          {
+              offset = (offset << 8) + bytecode[aux_pc];   
+              aux_pc++;
+          }       
+          
+          // poe valor correto em pc_novo
+          pc_novo = f->pc + offset; 
+
+          // set booleano que achou o match
+          definido = 1;
+      } else {
+          // pula offset
+          for(int i = 0; i < 4; i++)
+          {
+              aux_pc++;
+          }
       }
     }
-  }
 
-  if (!definido)
-  {
-    pc_novo = f->pc + default_v;
-  }
+    if (!definido)
+    {
+        pc_novo = f->pc + default_v;
+    }
 
-  // poe valor correto no offset
-  f->pc = pc_novo - 1;
+    // poe valor correto no offset
+    f->pc = pc_novo-1; 
 }
 
 /**
@@ -3944,12 +3945,13 @@ void getfield_eval(Frame *f)
 
   for (size_t i = 0; i < cf->fields_count; i++)
   {
-
+    
     if (strcmp(field_name, obj_ref->type_object.fields[i].field_name) == 0 || strcmp(field_desc, obj_ref->type_object.fields[i].field_desc) == 0)
     {
       lv = obj_ref->type_object.fields[i].value;
       break;
     }
+    
   }
 
   // EMpilha referencia para o field
@@ -3985,7 +3987,7 @@ void putfield_eval(Frame *f)
   ClassFile *cf = Mem.classes_arr[(u4)obj_ref->type_object.class_index];
   // field_info *field = find_field(cf, field_name, field_desc);
 
-  for (size_t i = 0; i < cf->fields_count; i++)
+  for (size_t i = 0; i < cf->fields_count; i++) 
   {
     if (strcmp(field_name, obj_ref->type_object.fields[i].field_name) == 0 || strcmp(field_desc, obj_ref->type_object.fields[i].field_desc) == 0)
     {
@@ -4087,7 +4089,16 @@ void invokevirtual_eval(Frame *f)
     // for (size_t i = 0; i <= args; i++)
     for (int8_t i = args; i >= 0; i--)
     {
-      frame->local_variables[i] = *(pop_operand(f->operands));
+      LocalVariable *lv = pop_operand(f->operands);
+  	if (lv->type == CONSTANT_Double || lv->type == CONSTANT_Long)
+  	{
+  		i--;
+    	frame->local_variables[i] = *lv;
+  	}
+  	else
+  	{
+  		frame->local_variables[i] = *lv;
+  	}
 #ifdef DEBUG
       printf("DEBUG DE VERDADE:  ==== %04x\n", frame->local_variables[i].value);
 #endif
@@ -4160,15 +4171,15 @@ void invokespecial_eval(Frame *f)
   for (int8_t i = args; i >= 0; i--)
   {
     LocalVariable *lv = pop_operand(f->operands);
-    if (lv->type == CONSTANT_Double | lv->type == CONSTANT_Long)
-    {
-      frame->local_variables[i--] = *lv;
-    }
-    else
-    {
-      frame->local_variables[i] = *lv;
-    }
-    
+  	if (lv->type == CONSTANT_Double || lv->type == CONSTANT_Long)
+  	{
+  		i--;
+    	frame->local_variables[i] = *lv;
+  	}
+  	else
+  	{
+  		frame->local_variables[i] = *lv;
+  	}
 #ifdef DEBUG
     printf("DEBUG DE VERDADE:  ==== %04x\n", frame->local_variables[i].value);
 #endif
@@ -4200,9 +4211,9 @@ void invokestatic_eval(Frame *f)
 
   u2 args = count_args(method_desc);
 
-#ifdef DEBUG
-  printf("Argumentos %d", args);
-#endif
+  #ifdef DEBUG
+    printf("Argumentos %d", args);
+  #endif
 
   u2 class_index = find_class(class_name);
 
@@ -4213,10 +4224,19 @@ void invokestatic_eval(Frame *f)
   // for (size_t i = 0; i < args - 1; i++)
   for (int8_t i = args - 1; i >= 0; i--)
   {
-    frame->local_variables[i] = *(pop_operand(f->operands));
-#ifdef DEBUG
-    printf("DEBUG DE VERDADE:  ==== %04x\n", frame->local_variables[i].value);
-#endif
+  	LocalVariable *lv = pop_operand(f->operands);
+  	if (lv->type == CONSTANT_Double || lv->type == CONSTANT_Long)
+  	{
+  		i--;
+    	frame->local_variables[i] = *lv;
+  	}
+  	else
+  	{
+  		frame->local_variables[i] = *lv;
+  	}
+    #ifdef DEBUG
+        printf("DEBUG DE VERDADE:  ==== %04x\n", frame->local_variables[i].value);
+    #endif
   }
 
   push(frame);
@@ -4248,7 +4268,7 @@ void new_eval(Frame *f)
   lv->type_object.class_index = class_index;
   ClassFile *cf = Mem.classes_arr[class_index];
 
-  lv->type_object.fields = (InstanceField *)malloc(sizeof(InstanceField) * cf->fields_count);
+  lv->type_object.fields = (InstanceField*) malloc(sizeof(InstanceField) * cf->fields_count);
 
   for (size_t i = 0; i < cf->fields_count; i++)
   {
@@ -4259,7 +4279,8 @@ void new_eval(Frame *f)
 
     lv->type_object.fields[i].field_desc = field_desc;
 
-    lv->type_object.fields[i].value = (LocalVariable *)malloc(sizeof(LocalVariable));
+    lv->type_object.fields[i].value = (LocalVariable*) malloc(sizeof(LocalVariable));
+
   }
 
   // Empilha referencia para a classe no array de classes;
@@ -4360,15 +4381,16 @@ void anewarray_eval(Frame *f)
   count = lv->value;
   void *arrayref = NULL;
   rlv = (LocalVariable *)malloc(sizeof(LocalVariable));
+  u2 name_index = f->cp[index - 1].Class.name_index;
 
   rlv->type = CONSTANT_Class;
 
-  arrayref = (Object *)malloc((count) * sizeof(Object));
-  rlv->type_array.array = (Object *)arrayref;
-  rlv->type_array.size = count;
+  arrayref = (u4 *)malloc((count) * sizeof(u4));
+  rlv->value = *((u4 *)(arrayref));
 
 #ifdef DEBUG
-  printf("arrayref: %04x\n", rlv->type_array.array);
+  printf("arrayref: %04x\n", rlv->value);
+  printf("classname_index: %02x\n", name_index);
 #endif
 
   if (count < 0)
@@ -4377,6 +4399,7 @@ void anewarray_eval(Frame *f)
   }
   else
   {
+    // rlv->type_array.array = arrayref;
 
     push_operand(rlv, f->operands);
   }
