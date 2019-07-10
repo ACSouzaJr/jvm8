@@ -3494,9 +3494,9 @@ void invokestatic_eval(Frame *f)
   for (int8_t i = args - 1; i >= 0; i--)
   {
     frame->local_variables[i] = *(pop_operand(f->operands));
-#ifdef DEBUG
-    printf("DEBUG DE VERDADE:  ==== %04x\n", frame->local_variables[i].value);
-#endif
+    #ifdef DEBUG
+        printf("DEBUG DE VERDADE:  ==== %04x\n", frame->local_variables[i].value);
+    #endif
   }
 
   push(frame);

@@ -2356,9 +2356,9 @@ void execute_gvm()
     u1 *bytecode = current_frame->method->attributes->info->Code_attribute.code;
     u2 opcode = bytecode[current_frame->pc++];
 
-#ifdef DEBUG
-    printf("\n----  Evaluando ----\n %d) %s\n-----------------------\n\n", ((current_frame->pc) - 1), op_codes_array[opcode].value);
-#endif
+    #ifdef DEBUG
+        printf("\n----  Evaluando ----\n %d) %s\n-----------------------\n\n", ((current_frame->pc) - 1), op_codes_array[opcode].value);
+    #endif
     op_codes_array[opcode].eval(current_frame);
   } while (!empty(JvmStack));
 }
@@ -2372,6 +2372,9 @@ method_info *find_method(ClassFile *cf, char *method)
     // char *method_desc = readUtf8(cf->constant_pool, i->descriptor_index);
     if (strcmp(method_name, method) == 0)
     {
+      #ifdef DEBUG
+        printf("Metodo encontrado: %s\n",method_name);
+      #endif
       return i;
     }
   }
