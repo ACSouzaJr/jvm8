@@ -3,7 +3,7 @@ class testeStatic{
 	private static String nome = "Teste";
 	private static double td = 3.68;
 	private static long tl = 3;
-       private static float tf = 5.8F;
+  private static float tf = 5.8F;
 
 	private static float funfloat(float f1, float f2){
 		return f1*f2;

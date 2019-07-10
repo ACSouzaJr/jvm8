@@ -784,7 +784,7 @@ void daload_eval(Frame *f)
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
   
-  lv->type_double = ((uint32_t *)arrayref->type_array.array)[index->value];
+  lv->type_double = ((uint64_t *)arrayref->type_array.array)[index->value];
   lv->type = CONSTANT_Double;
 
   push_operand(lv, f->operands);
@@ -803,7 +803,7 @@ void aaload_eval(Frame *f)
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
 
-  lv->value = ((u4 *)arrayref->type_array.array)[index->value];
+  lv->type_object = ((Object *)arrayref->type_array.array)[index->value];
   lv->type = CONSTANT_Class;
 
   push_operand(lv, f->operands);
@@ -1368,12 +1368,12 @@ void aastore_eval(Frame *f)
   index = pop_operand(f->operands);
   arrayref = pop_operand(f->operands);
 
-  u4 *vetor;
-  vetor = (u4 *)arrayref->type_array.array;
-  vetor[index->value] = value->value;
-  #ifdef DEBUG
-    printf("Referencia array: %d", ((u4 *)arrayref->type_array.array)[index->value]);
-  #endif
+  Object *vetor;
+  vetor = (Object *)arrayref->type_array.array;
+  vetor[index->value] = value->type_object;
+#ifdef DEBUG
+  printf("Referencia array: %d", ((u4 *)arrayref->type_array.array)[index->value]);
+#endif
 }
 
 /**
@@ -4393,16 +4393,15 @@ void anewarray_eval(Frame *f)
   count = lv->value;
   void *arrayref = NULL;
   rlv = (LocalVariable *)malloc(sizeof(LocalVariable));
-  u2 name_index = f->cp[index - 1].Class.name_index;
 
   rlv->type = CONSTANT_Class;
 
-  arrayref = (u4 *)malloc((count) * sizeof(u4));
-  rlv->value = *((u4 *)(arrayref));
+  arrayref = (Object *)malloc((count) * sizeof(Object));
+  rlv->type_array.array = (Object *)arrayref;
+  rlv->type_array.size = count;
 
 #ifdef DEBUG
-  printf("arrayref: %04x\n", rlv->value);
-  printf("classname_index: %02x\n", name_index);
+  printf("arrayref: %04x\n", rlv->type_array.array);
 #endif
 
   if (count < 0)
