@@ -1,16 +1,15 @@
-# README
-## Projeto Open Source
- ### Problemas:
-  Limitacoes: teste deve estar dentro do diretorio. ok!
-  Problema: 
-    Instancia de Obj ?
-    Nao possui string manip
-    anewarray
-    metodo nao estatico ?
-  Nao tem:
-    Interface
-    Exception
-    multiarray
+# Projeto Open Source
+ ## Problemas:
+ - Limitacoes: teste deve estar dentro do diretorio do programa.
+ - Problema: 
+   - Instancia de Obj ?
+   - anewarray
+   - metodos nao estaticos
+ - Nao tem:
+   - Interface
+   - Exception
+   - Multiarray
+   - Manipulacao de string
 
 ## Tipos de Execução
   - -e: Exibidor
