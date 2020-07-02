@@ -1,10 +1,10 @@
-# Projeto Open Source
+# Projeto JVM 8 SB
  ## Problemas:
  - Limitacoes: teste deve estar dentro do diretorio do programa.
  - Problema: 
    - Instancia de Obj ?
    - anewarray
-   - metodos nao estaticos
+   - metodos não estáticos
  - Nao tem:
    - Interface
    - Exception
